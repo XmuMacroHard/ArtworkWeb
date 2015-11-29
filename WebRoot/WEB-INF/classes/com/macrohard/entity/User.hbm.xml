@@ -8,7 +8,7 @@
     <class name="com.macrohard.entity.User" table="user" catalog="artworkdb">
         <id name="id" type="java.lang.Long">
             <column name="id" />
-            <generator class="identity" />
+            <generator class="identity"></generator>
         </id>
         <property name="account" type="java.lang.String">
             <column name="account" length="20" not-null="true" />
@@ -24,6 +24,9 @@
         </property>
         <property name="balance" type="java.lang.Integer">
             <column name="balance" />
+        </property>
+        <property name="identity" type="java.lang.String">
+            <column name="identity" length="10" />
         </property>
         <set name="informations" inverse="true">
             <key>
