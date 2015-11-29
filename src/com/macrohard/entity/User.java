@@ -1,5 +1,8 @@
 package com.macrohard.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
@@ -11,6 +14,10 @@ public class User implements java.io.Serializable {
 	private Long id;
 	private String account;
 	private String password;
+	private String email;
+	private String nickname;
+	private Integer balance;
+	private Set<Information> informations = new HashSet<Information>(0);
 
 	// Constructors
 
@@ -18,11 +25,21 @@ public class User implements java.io.Serializable {
 	public User() {
 	}
 
-	/** full constructor */
-	public User(Long id, String account, String password) {
-		this.id = id;
+	/** minimal constructor */
+	public User(String account, String password) {
 		this.account = account;
 		this.password = password;
+	}
+
+	/** full constructor */
+	public User(String account, String password, String email, String nickname,
+			Integer balance, Set<Information> informations) {
+		this.account = account;
+		this.password = password;
+		this.email = email;
+		this.nickname = nickname;
+		this.balance = balance;
+		this.informations = informations;
 	}
 
 	// Property accessors
@@ -49,6 +66,38 @@ public class User implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
+	}
+
+	public String getEmail() {
+		return this.email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getNickname() {
+		return this.nickname;
+	}
+
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+
+	public Integer getBalance() {
+		return this.balance;
+	}
+
+	public void setBalance(Integer balance) {
+		this.balance = balance;
+	}
+
+	public Set<Information> getInformations() {
+		return this.informations;
+	}
+
+	public void setInformations(Set<Information> informations) {
+		this.informations = informations;
 	}
 
 }

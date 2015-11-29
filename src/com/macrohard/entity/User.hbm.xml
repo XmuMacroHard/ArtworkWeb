@@ -16,5 +16,20 @@
         <property name="password" type="java.lang.String">
             <column name="password" length="20" not-null="true" />
         </property>
+        <property name="email" type="java.lang.String">
+            <column name="email" length="20" />
+        </property>
+        <property name="nickname" type="java.lang.String">
+            <column name="nickname" length="20" />
+        </property>
+        <property name="balance" type="java.lang.Integer">
+            <column name="balance" />
+        </property>
+        <set name="informations" inverse="true">
+            <key>
+                <column name="editorid" />
+            </key>
+            <one-to-many class="com.macrohard.entity.Information" />
+        </set>
     </class>
 </hibernate-mapping>
