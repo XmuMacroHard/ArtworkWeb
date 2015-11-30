@@ -31,5 +31,11 @@
         <property name="expense" type="java.lang.Float">
             <column name="expense" precision="10" />
         </property>
+        <set name="inforPicses" inverse="true">
+            <key>
+                <column name="inforId" />
+            </key>
+            <one-to-many class="com.macrohard.entity.InforPics" />
+        </set>
     </class>
 </hibernate-mapping>
