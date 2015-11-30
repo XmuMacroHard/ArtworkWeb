@@ -14,6 +14,8 @@ public class UserDao implements IUserDao
 	{
 		System.out.println("in user dao" + user.getAccount() + user.getPassword());
 		getSession().save(user);
+		
+		getSession().close();
 	}
 	
 	
