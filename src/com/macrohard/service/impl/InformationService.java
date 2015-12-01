@@ -33,6 +33,11 @@ public class InformationService implements IInformationService {
 		return informationList;
 	}
 
+	@Override
+	public List getAll(){
+		return InformationDao.getAll();
+	}
+	
 	public IInformationDao getInformationDao() {
 		return InformationDao;
 	}

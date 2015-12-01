@@ -1,2 +1,7 @@
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//WebRoot/jsp/test/submitInfor_test.jsp=UTF-8
+=======
+encoding//WebRoot/index.jsp=UTF-8
+encoding//WebRoot/jsp/backstage/submitInfor.jsp=UTF-8
+>>>>>>> ed14d683eb8a40144852a645d9c0d32a644e2027

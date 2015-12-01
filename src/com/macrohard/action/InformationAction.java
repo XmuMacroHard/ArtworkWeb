@@ -4,9 +4,11 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
+import java.util.Map;
 
 import com.macrohard.entity.Information;
 import com.macrohard.service.IInformationService;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class InformationAction extends ActionSupport 
@@ -43,6 +45,14 @@ public class InformationAction extends ActionSupport
 		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");	
 		List<Information> list = informationService.showInforList(id);
 		ServletActionContext.getRequest().setAttribute("informationList", list);
+		return "success";
+	}
+	
+	public String showInfor()
+	{		
+		List list = informationService.getAll();
+		Map request = (Map) ActionContext.getContext().get("request");
+		request.put("list", list);
 		return "success";
 	}
 	

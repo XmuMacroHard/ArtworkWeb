@@ -5,6 +5,7 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Query;
 
 
 
@@ -60,6 +61,25 @@ public class InformationDao extends GenericDao implements IInformationDao {
 			if(getSession().isOpen())
 				closeSession();
 		}
+	}
+	
+	@Override
+	public List getAll()
+	{
+		List list=null;
+		try {
+			Query query = getSession().createQuery("from Information");
+			list = query.list();
+			closeSession();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally{
+			if(session.isOpen())
+		        session.close();
+		}
+		return list;
 	}
 	/*
 	 * @return return the path stored to the data base.
