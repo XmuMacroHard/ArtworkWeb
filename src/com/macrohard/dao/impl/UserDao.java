@@ -1,7 +1,9 @@
 package com.macrohard.dao.impl;
 
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+
+import java.util.List;
+
+import org.hibernate.*;
 
 import com.macrohard.dao.IUserDao;
 import com.macrohard.entity.User;
@@ -18,6 +20,13 @@ public class UserDao implements IUserDao
 		getSession().close();
 	}
 	
+	public List<User> search(User user)
+	{
+		Query query = getSession().createQuery("From User as user "
+				+ "where user.account = '" + user.getAccount() +"'");
+		
+		return  query.list();
+	}
 	
 	public Session getSession()
 	{

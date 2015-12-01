@@ -10,20 +10,24 @@ public class UserAction extends ActionSupport
 	private User user;
 	private IUserService userService;
 	
-	@Override
-	public String execute() throws Exception {
-		if(user.getAccount().equals("a")&& user.getPassword().equals("b"))
-		{		
-			userService.addUser(user);
-			System.out.println("in action \n");
-			return "success";	
-		}		
-		else 
-		{
-			return "fail";
-		}
-	}
 
+
+	public String login() throws Exception
+	{
+		if(userService.login(user))
+			return "success";
+		else
+			return "fail";
+	}
+	
+	public String register() throws Exception
+	{
+		if(userService.register(user))
+			return "success";
+		else
+			return "fail";
+	}
+	
 	public User getUser() {
 		return user;
 	}
