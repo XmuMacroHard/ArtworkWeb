@@ -1,6 +1,10 @@
 package com.macrohard.service.impl;
 
+import java.io.File;
+
+import com.macrohard.dao.IInforPicsDao;
 import com.macrohard.dao.IInformationDao;
+import com.macrohard.dao.impl.InforPicsDao;
 import com.macrohard.entity.Information;
 import com.macrohard.service.IInformationService;
 
@@ -8,13 +12,16 @@ public class InformationService implements IInformationService {
 
 	
 	public IInformationDao InformationDao;
+	public IInforPicsDao inforPicsDao;
+	
 	
 	@Override
-	public void submit(Information information) {
+	public void submit(Information information, File file, String filename) {
 		
-		InformationDao.save(information);
-
+		InformationDao.save(information, file, filename);
+		//inforPicsDao.storePicures(file, filename);
 	}
+	
 
 	public IInformationDao getInformationDao() {
 		return InformationDao;
@@ -23,6 +30,12 @@ public class InformationService implements IInformationService {
 	public void setInformationDao(IInformationDao informationDao) {
 		InformationDao = informationDao;
 	}
+
+
+	public void setInforPicsDao(IInforPicsDao inforPicsDao) {
+		this.inforPicsDao = inforPicsDao;
+	}
+
 
 		
 	

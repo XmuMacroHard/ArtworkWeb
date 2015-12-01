@@ -1,34 +1,32 @@
 package com.macrohard.dao.impl;
 
-
 import java.io.File;
 
 import org.apache.struts2.ServletActionContext;
 
 import com.macrohard.constants.IStrings;
-import com.macrohard.dao.IInformationDao;
 import com.macrohard.entity.InforPics;
-import com.macrohard.entity.Information;
-import com.macrohard.entity.User;
 import com.macrohard.utils.IFileUtils;
 import com.macrohard.utils.IImageUtils;
 
-public class InformationDao extends GenericDao implements IInformationDao {
-
+public class InforPicsDao extends GenericDao
+{
+	
 	private IFileUtils fileUtils;
 	private IImageUtils imgUtils;
 	
-	@Override
-	public void save(Information information, File file, String filename) {
-		
-		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");		
+	public void storePicures(File file, String filename)
+	{
 		String storedPath = storeImg(file, filename);
+		InforPics inforPics = new InforPics();
+		//inforPics.setInformaionId(id);
 		
-		information.setEditorId(id);
-		information.addPicture(storedPath);
-		
-		getSession().save(information);
-		closeSession();
+	}
+	
+	public void save(InforPics inforPics)
+	{
+		getSession().save(inforPics);
+		getSession().close();
 	}
 	
 	/*
@@ -59,6 +57,6 @@ public class InformationDao extends GenericDao implements IInformationDao {
 	public void setImgUtils(IImageUtils imgUtils) {
 		this.imgUtils = imgUtils;
 	}
-
+	
 	
 }

@@ -8,6 +8,8 @@
 	<!-- all entities -->
 	<bean id="user" class="com.macrohard.entity.User"></bean>
 	<bean id="information" class="com.macrohard.entity.Information"></bean>
+	<bean id="fileUtils" class="com.macrohard.utils.impl.FileUtils"></bean>
+	<bean id="imageUtils" class="com.macrohard.utils.impl.ImageUtils"></bean>
 	
 	<!-- all daos -->
 	<bean id="genericDao" class="com.macrohard.dao.impl.GenericDao">
@@ -17,7 +19,10 @@
 	<bean id="userDao" class="com.macrohard.dao.impl.UserDao" >
 		<property name="sessionFactory" ref="sessionFactory"></property>
 	</bean>		
-	<bean id="informationDao" class="com.macrohard.dao.impl.InformationDao" parent="genericDao"></bean>	
+	<bean id="informationDao" class="com.macrohard.dao.impl.InformationDao" parent="genericDao">
+		<property name="fileUtils" ref="fileUtils"></property>
+		<property name="imgUtils" ref="imageUtils"></property>
+	</bean>	
 	
 	
 	<!-- all services -->

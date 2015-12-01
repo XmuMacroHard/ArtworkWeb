@@ -20,14 +20,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
   </head>
   
   <body>
-	  <s:form action="submitInfor">
-		<div><span>title</span><s:textfield name="information.title"/></div>		
-		<div><span>content</span><s:textfield name="information.content"/></div>
-		
+  <%
+  	long i = 1;
+  	session.setAttribute("userid", i);
+   %>
+	  <s:form action="submitInfor" method="POST" enctype="multipart/form-data">
+		<s:file name="pic" label="uploadfile"/>
 		<s:submit/>
 	   </s:form>
   </body>

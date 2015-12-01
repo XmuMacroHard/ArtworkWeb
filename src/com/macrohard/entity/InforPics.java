@@ -29,6 +29,10 @@ public class InforPics  implements java.io.Serializable {
         this.url = url;
     }
 
+    public void setInformaionId(long id)
+    {
+    	information.setId(id);
+    }
    
     // Property accessors
 
