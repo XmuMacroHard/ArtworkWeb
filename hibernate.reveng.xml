@@ -3,9 +3,19 @@
 
 <hibernate-reverse-engineering>
 
-<table name="user" catalog="artworkdb">
+	<table name="user" catalog="artworkdb">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
+<table name="information" catalog="artworkdb">
 	<primary-key>
 		<generator class="identity"></generator>
 	</primary-key>
 </table>
+<table name="infor_pics" catalog="artworkdb">
+		<primary-key>
+			<generator class="identity"></generator>
+		</primary-key>
+	</table>
 </hibernate-reverse-engineering>
