@@ -8,6 +8,7 @@ import com.macrohard.dao.IUserDao;
 import com.macrohard.dao.impl.UserDao;
 import com.macrohard.entity.User;
 import com.macrohard.service.IUserService;
+import com.opensymphony.xwork2.ActionContext;
 
 public class UserService implements IUserService
 {
@@ -15,7 +16,6 @@ public class UserService implements IUserService
 	
 	public void addUser(User user)
 	{
-		
 		System.out.println("in user service");
 		userDao.insert(user);
 	}
@@ -29,28 +29,25 @@ public class UserService implements IUserService
 	}
 	
 	@Override
-	public boolean register(User user) {
-		if(isExist(user))
-			return false;
-		else
-		{
-			userDao.insert(user);
-			return true;
-		}
+	public void register(User user) throws Exception{
+		userDao.insert(user);
+		ActionContext.getContext().getSession().put("user", user);
 	}
 
 	@Override
-	public boolean login(User user) {
-		if(isExist(user))
-			return true;
+	public String login(User user) {
+		User resultUser = userDao.search(user);
+		if(null == resultUser)
+			return "fail";
 		else
-			return false;
+		{
+			ActionContext.getContext().getSession().put("user", resultUser);
+			if(resultUser.getIdentity().equals("normal"))
+				return "success";
+			else
+				return "admistratorSuccess";
+		}
 	}
 	
-	private boolean isExist(User user) {
-		List<User> list = userDao.search(user);
-		
-		return !list.isEmpty();
-	}
 	
 }

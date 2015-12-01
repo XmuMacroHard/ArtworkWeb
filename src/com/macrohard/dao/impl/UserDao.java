@@ -2,9 +2,7 @@ package com.macrohard.dao.impl;
 
 
 import java.util.List;
-
 import org.hibernate.*;
-
 import com.macrohard.dao.IUserDao;
 import com.macrohard.entity.User;
 
@@ -16,16 +14,15 @@ public class UserDao implements IUserDao
 	{
 		System.out.println("in user dao" + user.getAccount() + user.getPassword());
 		getSession().save(user);
-		
 		getSession().close();
-	}
+	} 
 	
-	public List<User> search(User user)
+	public User search(User user)
 	{
-		Query query = getSession().createQuery("From User as user "
-				+ "where user.account = '" + user.getAccount() +"'");
-		
-		return  query.list();
+		String hql = String.format("From User as user where user.account = '%s' and user.password = '%s'",
+				user.getAccount(), user.getPassword());
+		Query query = getSession().createQuery(hql);
+		return  (User)query.uniqueResult();
 	}
 	
 	public Session getSession()
@@ -41,6 +38,4 @@ public class UserDao implements IUserDao
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
-	
-	
 }

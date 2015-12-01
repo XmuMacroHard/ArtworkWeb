@@ -24,6 +24,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   
   <body>
     <span>User</span> <s:property value ="user.account"/>
-    <span>Password</span><s:property value="user.password"/>
+    <span>Password</span><s:property value="user.password"/><br/>
+    <span>App</span> <s:property value ="#name"/>
   </body>
 </html>
