@@ -24,8 +24,13 @@ public class InformationService implements IInformationService {
 	}
 	
 	@Override
-	public List getAll(){
+	public List<Information> getAll(){
 		return InformationDao.getAll();
+	}
+	
+	@Override
+	public Information findInfor(long id){
+		return InformationDao.findInfor(id);
 	}
 	
 	public IInformationDao getInformationDao() {

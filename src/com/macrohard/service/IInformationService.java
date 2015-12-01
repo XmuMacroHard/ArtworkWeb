@@ -9,5 +9,7 @@ public interface IInformationService
 {
 	public void submit(Information information, File file, String filename);
 	
-	public List getAll();
+	public List<Information> getAll();
+	
+	public Information findInfor(long id);
 }

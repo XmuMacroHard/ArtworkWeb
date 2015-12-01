@@ -2,7 +2,8 @@ package com.macrohard.action;
 
 import java.io.File;
 import java.util.List;
-import java.util.Map;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.macrohard.entity.Information;
 import com.macrohard.service.IInformationService;
@@ -37,13 +38,18 @@ public class InformationAction extends ActionSupport
 	
 	public String showInfor()
 	{		
-		List list = informationService.getAll();
-		Map request = (Map) ActionContext.getContext().get("request");
-		request.put("list", list);
+		List<Information> list = informationService.getAll();
+		ServletActionContext.getRequest().setAttribute("list", list);
 		return "success";
 	}
 	
-	
+	public String getInfor()
+	{		
+		long id =information.getId();
+		Information infor=informationService.findInfor(id);
+		ServletActionContext.getRequest().setAttribute("Infor", infor);
+		return "success";
+	}
 	
 	public void setPic(File pic) {
 		this.pic = pic;
