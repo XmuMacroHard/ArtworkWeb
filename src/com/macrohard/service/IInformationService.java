@@ -12,4 +12,8 @@ public interface IInformationService
 	public List<Information> getAll();
 	
 	public Information findInfor(long id);
+
+	public List<Information> showInforList(long id);
+
+
 }

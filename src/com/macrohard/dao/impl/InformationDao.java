@@ -7,9 +7,12 @@ import java.util.List;
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 
+
+
+import org.hibernate.Query;
+
 import com.macrohard.constants.IStrings;
 import com.macrohard.dao.IInformationDao;
-import com.macrohard.entity.InforPics;
 import com.macrohard.entity.Information;
 import com.macrohard.entity.User;
 import com.macrohard.utils.IFileUtils;
@@ -22,15 +25,42 @@ public class InformationDao extends GenericDao implements IInformationDao {
 	
 	@Override
 	public void save(Information information, File file, String filename) {
+		try {
+			
+			long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");		
+			String storedPath = storeImg(file, filename);
+			
+			information.setEditorId(id);
+			//User user = new User();
+			//user.setId(id);
+			//information.setUser(user);
+			information.addPicture(storedPath);
 		
-		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");		
-		String storedPath = storeImg(file, filename);
+			getSession().save(information);	
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}finally
+		{
+			closeSession();	
+		}
+	}
+
+	
+	public List findAll() {
 		
-		information.setEditorId(id);
-		information.addPicture(storedPath);
-		
-		getSession().save(information);
-		closeSession();
+		try {
+			String queryString = "from Information";
+			Query queryObject = getSession().createQuery(queryString);			
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			throw re;
+		}
+		finally
+		{
+			if(getSession().isOpen())
+				closeSession();
+		}
 	}
 	
 	@Override
@@ -83,6 +113,8 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		return "/" + IStrings.IMAGE_DIR + "/" + realFileName;
 	}
 
+	
+	
 	public IFileUtils getFileUtils() {
 		return fileUtils;
 	}

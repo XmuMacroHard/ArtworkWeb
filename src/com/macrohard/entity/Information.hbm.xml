@@ -8,7 +8,7 @@
     <class name="com.macrohard.entity.Information" table="information" catalog="artworkdb">
         <id name="id" type="java.lang.Long">
             <column name="id" />
-            <generator class="identity" />
+            <generator class="identity"></generator>
         </id>
         <many-to-one name="user" class="com.macrohard.entity.User" fetch="select">
             <column name="editorid" />
@@ -31,7 +31,10 @@
         <property name="expense" type="java.lang.Float">
             <column name="expense" precision="10" />
         </property>
-        <set name="inforPicses" inverse="true" cascade="save-update">
+        <property name="status" type="java.lang.String">
+            <column name="status" length="11" />
+        </property>
+        <set name="inforPicses" cascade="save-update" inverse="true">
             <key>
                 <column name="inforId" />
             </key>

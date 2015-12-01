@@ -1,12 +1,14 @@
 package com.macrohard.service.impl;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.macrohard.dao.IInforPicsDao;
 import com.macrohard.dao.IInformationDao;
-import com.macrohard.dao.impl.InforPicsDao;
+import com.macrohard.dao.IUserDao;
 import com.macrohard.entity.Information;
+import com.macrohard.entity.User;
 import com.macrohard.service.IInformationService;
 
 public class InformationService implements IInformationService {
@@ -14,6 +16,7 @@ public class InformationService implements IInformationService {
 	
 	public IInformationDao InformationDao;
 	public IInforPicsDao inforPicsDao;
+	public IUserDao userDao;
 	
 	
 	@Override
@@ -23,6 +26,13 @@ public class InformationService implements IInformationService {
 		//inforPicsDao.storePicures(file, filename);
 	}
 	
+	public List<Information> showInforList(long id)
+	{
+		User user = userDao.findById(id);
+		List<Information> informationList = new ArrayList<Information>(user.getInformations());
+		return informationList;
+	}
+
 	@Override
 	public List<Information> getAll(){
 		return InformationDao.getAll();
@@ -44,6 +54,10 @@ public class InformationService implements IInformationService {
 
 	public void setInforPicsDao(IInforPicsDao inforPicsDao) {
 		this.inforPicsDao = inforPicsDao;
+	}
+
+	public void setUserDao(IUserDao userDao) {
+		this.userDao = userDao;
 	}
 
 

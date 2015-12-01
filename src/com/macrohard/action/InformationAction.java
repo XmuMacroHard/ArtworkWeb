@@ -35,6 +35,17 @@ public class InformationAction extends ActionSupport
 		
 		return "success";
 	}
+
+	/*
+	 * show the information list for the editor
+	 * */
+	public String showInforList()
+	{
+		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");	
+		List<Information> list = informationService.showInforList(id);
+		ServletActionContext.getRequest().setAttribute("informationList", list);
+		return "success";
+	}
 	
 	public String showInfor()
 	{		
@@ -42,7 +53,7 @@ public class InformationAction extends ActionSupport
 		ServletActionContext.getRequest().setAttribute("list", list);
 		return "success";
 	}
-	
+
 	public String getInfor()
 	{		
 		long id =information.getId();

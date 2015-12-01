@@ -13,6 +13,7 @@ public class GenericDao
 	protected Session getSession()
 	{
 		session = sessionFactory.openSession();
+		//session = sessionFactory.getCurrentSession();
 		return session;
 	}
 	
