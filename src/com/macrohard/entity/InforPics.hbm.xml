@@ -8,7 +8,7 @@
     <class name="com.macrohard.entity.InforPics" table="infor_pics" catalog="artworkdb">
         <id name="id" type="java.lang.Long">
             <column name="id" />
-            <generator class="identity" />
+            <generator class="identity"></generator>
         </id>
         <many-to-one name="information" class="com.macrohard.entity.Information" fetch="select">
             <column name="inforId" />

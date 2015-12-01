@@ -20,7 +20,8 @@ public class Information implements java.io.Serializable {
 	private Timestamp endTime;
 	private Boolean location;
 	private Float expense;
-	private Set<InforPics> inforPicses = new HashSet<InforPics>(0);
+	private String status;
+	private Set inforPicses = new HashSet(0);
 
 	// Constructors
 
@@ -31,7 +32,7 @@ public class Information implements java.io.Serializable {
 	/** full constructor */
 	public Information(User user, String title, String content,
 			Timestamp startTime, Timestamp endTime, Boolean location,
-			Float expense, Set<InforPics> inforPicses) {
+			Float expense, String status, Set inforPicses) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
@@ -39,9 +40,10 @@ public class Information implements java.io.Serializable {
 		this.endTime = endTime;
 		this.location = location;
 		this.expense = expense;
+		this.status = status;
 		this.inforPicses = inforPicses;
 	}
-	
+
 	/*business logic methods*/
 	
 	/*
@@ -49,6 +51,7 @@ public class Information implements java.io.Serializable {
 	 * */
 	public void setEditorId(long editorId)
 	{
+		user = new User();		
 		user.setId(editorId);
 	}
 
@@ -66,7 +69,7 @@ public class Information implements java.io.Serializable {
 		inforPicses.add(pic);
 	}
 	
-	/*getter and setter*/
+	// Property accessors
 
 	public Long getId() {
 		return this.id;
@@ -132,11 +135,19 @@ public class Information implements java.io.Serializable {
 		this.expense = expense;
 	}
 
-	public Set<InforPics> getInforPicses() {
+	public String getStatus() {
+		return this.status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Set getInforPicses() {
 		return this.inforPicses;
 	}
 
-	public void setInforPicses(Set<InforPics> inforPicses) {
+	public void setInforPicses(Set inforPicses) {
 		this.inforPicses = inforPicses;
 	}
 

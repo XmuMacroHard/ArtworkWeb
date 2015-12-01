@@ -1,6 +1,9 @@
 package com.macrohard.action;
 
 import java.io.File;
+import java.util.List;
+
+import org.apache.struts2.ServletActionContext;
 
 import com.macrohard.entity.Information;
 import com.macrohard.service.IInformationService;
@@ -32,7 +35,16 @@ public class InformationAction extends ActionSupport
 		return "success";
 	}
 
-	
+	/*
+	 * show the information list for the editor
+	 * */
+	public String showInforList()
+	{
+		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");	
+		List<Information> list = informationService.showInforList(id);
+		ServletActionContext.getRequest().setAttribute("informationList", list);
+		return "success";
+	}
 	
 	
 	public void setPic(File pic) {

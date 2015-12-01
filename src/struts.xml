@@ -16,5 +16,10 @@
             <result name="success">/jsp/success.jsp</result>
             <result name="fail">/jsp/fail.jsp</result>
         </action>      
+        
+        <action name="showInforList" class="inforAction" method="showInforList">
+            <result name="success">/jsp/cztest.jsp</result>
+            <result name="fail">/jsp/fail.jsp</result>
+        </action>        
     </package>
 </struts>    

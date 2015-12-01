@@ -16,9 +16,10 @@ public class User implements java.io.Serializable {
 	private String password;
 	private String email;
 	private String nickname;
-	private Integer balance;
+	private Float balance;
 	private String identity;
-	private Set informations = new HashSet(0);
+	private Boolean isBanned;
+	private Set<Information> informations = new HashSet<Information>(0);
 
 	// Constructors
 
@@ -34,13 +35,14 @@ public class User implements java.io.Serializable {
 
 	/** full constructor */
 	public User(String account, String password, String email, String nickname,
-			Integer balance, String identity, Set informations) {
+			Float balance, String identity, Boolean isBanned, Set<Information> informations) {
 		this.account = account;
 		this.password = password;
 		this.email = email;
 		this.nickname = nickname;
 		this.balance = balance;
 		this.identity = identity;
+		this.isBanned = isBanned;
 		this.informations = informations;
 	}
 
@@ -86,11 +88,11 @@ public class User implements java.io.Serializable {
 		this.nickname = nickname;
 	}
 
-	public Integer getBalance() {
+	public Float getBalance() {
 		return this.balance;
 	}
 
-	public void setBalance(Integer balance) {
+	public void setBalance(Float balance) {
 		this.balance = balance;
 	}
 
@@ -102,11 +104,19 @@ public class User implements java.io.Serializable {
 		this.identity = identity;
 	}
 
-	public Set getInformations() {
+	public Boolean getIsBanned() {
+		return this.isBanned;
+	}
+
+	public void setIsBanned(Boolean isBanned) {
+		this.isBanned = isBanned;
+	}
+
+	public Set<Information> getInformations() {
 		return this.informations;
 	}
 
-	public void setInformations(Set informations) {
+	public void setInformations(Set<Information> informations) {
 		this.informations = informations;
 	}
 
