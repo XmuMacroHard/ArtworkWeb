@@ -11,7 +11,7 @@
             <generator class="identity"></generator>
         </id>
         <property name="account" type="java.lang.String">
-            <column name="account" length="20" not-null="true" />
+            <column name="account" length="20" not-null="true" unique="true" />
         </property>
         <property name="password" type="java.lang.String">
             <column name="password" length="20" not-null="true" />
@@ -22,11 +22,14 @@
         <property name="nickname" type="java.lang.String">
             <column name="nickname" length="20" />
         </property>
-        <property name="balance" type="java.lang.Integer">
-            <column name="balance" />
+        <property name="balance" type="java.lang.Float">
+            <column name="balance" precision="10" />
         </property>
         <property name="identity" type="java.lang.String">
-            <column name="identity" length="10" />
+            <column name="identity" length="11" />
+        </property>
+        <property name="isBanned" type="java.lang.Boolean">
+            <column name="isBanned" />
         </property>
         <set name="informations" inverse="true">
             <key>

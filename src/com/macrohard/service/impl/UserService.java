@@ -6,6 +6,11 @@ import org.apache.jasper.tagplugins.jstl.core.If;
 
 import com.macrohard.dao.IUserDao;
 import com.macrohard.dao.impl.UserDao;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.macrohard.dao.IUserDao;
+import com.macrohard.entity.Information;
 import com.macrohard.entity.User;
 import com.macrohard.service.IUserService;
 import com.opensymphony.xwork2.ActionContext;
@@ -19,6 +24,7 @@ public class UserService implements IUserService
 		System.out.println("in user service");
 		userDao.insert(user);
 	}
+	
 
 	public IUserDao getUserDao() {
 		return userDao;

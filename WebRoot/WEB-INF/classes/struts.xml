@@ -18,6 +18,19 @@
         <action name="submitInfor" class="inforAction" method="submitInfor">
             <result name="success">/jsp/success.jsp</result>
             <result name="fail">/jsp/fail.jsp</result>
+        </action>      
+        
+        <action name="showInforList" class="inforAction" method="showInforList">
+            <result name="success">/jsp/cztest.jsp</result>
+            <result name="fail">/jsp/fail.jsp</result>
+        </action>        
+        
+        <action name="showInfor" class="inforAction" method="showInfor">
+            <result name="success">/jsp/InfoList.jsp</result>
         </action>
+        
+        <action name="getInfor" class="inforAction" method="getInfor">
+            <result name="success">/jsp/DetailInfo.jsp</result>
+        </action>  
     </package>
 </struts>    

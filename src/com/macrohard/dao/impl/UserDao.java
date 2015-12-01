@@ -1,14 +1,18 @@
 package com.macrohard.dao.impl;
 
+import java.util.List;
+
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 
 import java.util.List;
 import org.hibernate.*;
 import com.macrohard.dao.IUserDao;
 import com.macrohard.entity.User;
 
-public class UserDao implements IUserDao 
+public class UserDao extends GenericDao implements IUserDao 
 {
-	SessionFactory sessionFactory;
 	
 	public void insert(User user)
 	{
@@ -29,13 +33,30 @@ public class UserDao implements IUserDao
 	{
 		return sessionFactory.openSession();
 	}
-	
-
-	public SessionFactory getSessionFactory() {
-		return sessionFactory;
+	public List findAll() {
+		
+		try {
+			String queryString = "from User";
+			Query queryObject = getSession().createQuery(queryString);			
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			throw re;
+		}
+		finally
+		{
+			if(getSession().isOpen())
+				closeSession();
+		}
 	}
-
-	public void setSessionFactory(SessionFactory sessionFactory) {
-		this.sessionFactory = sessionFactory;
+	
+	public User findById(long id)
+	{
+		try {
+			User instance = (User) getSession().get(
+					"com.macrohard.entity.User", id);
+			return instance;
+		} catch (RuntimeException re) {
+			throw re;
+		}
 	}
 }
