@@ -1,6 +1,7 @@
 package com.macrohard.service.impl;
 
 import java.io.File;
+import java.util.List;
 
 import com.macrohard.dao.IInforPicsDao;
 import com.macrohard.dao.IInformationDao;
@@ -22,7 +23,11 @@ public class InformationService implements IInformationService {
 		//inforPicsDao.storePicures(file, filename);
 	}
 	
-
+	@Override
+	public List getAll(){
+		return InformationDao.getAll();
+	}
+	
 	public IInformationDao getInformationDao() {
 		return InformationDao;
 	}
