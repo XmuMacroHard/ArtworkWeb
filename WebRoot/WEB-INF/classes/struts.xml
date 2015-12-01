@@ -15,6 +15,10 @@
         <action name="submitInfor" class="inforAction" method="submitInfor">
             <result name="success">/jsp/success.jsp</result>
             <result name="fail">/jsp/fail.jsp</result>
-        </action>      
+        </action> 
+        
+        <action name="showInfor" class="inforAction" method="showInfor">
+            <result name="success">/jsp/InfoList.jsp</result>
+        </action>     
     </package>
 </struts>    
