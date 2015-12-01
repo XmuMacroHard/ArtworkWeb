@@ -45,6 +45,6 @@
 		<property name="user" ref="user"></property>
 		<property name="userService" ref="userService"></property>
 	</bean>
-	
+
 	<import resource="persistence.xml"/>
 </beans>

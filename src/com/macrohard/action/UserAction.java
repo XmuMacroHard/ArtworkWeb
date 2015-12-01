@@ -52,5 +52,4 @@ public class UserAction extends ActionSupport
 		this.userService = userService;
 	}
 	
-	
 }
