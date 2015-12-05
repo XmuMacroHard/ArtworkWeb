@@ -46,5 +46,9 @@
 		<property name="userService" ref="userService"></property>
 	</bean>
 	
+	<bean id="ajaxAction" class="com.macrohard.action.AjaxAction" scope="prototype">
+		<property name="user" ref="user"></property>
+	</bean>
+	
 	<import resource="persistence.xml"/>
 </beans>
