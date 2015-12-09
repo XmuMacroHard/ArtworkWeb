@@ -27,7 +27,13 @@
         
         <action name="showInfor" class="inforAction" method="showInfor">
             <result name="success">/jsp/newslist.jsp</result>
-        </action>
+        </action>        
+    </package>
+    
+    <package name="struts2-ajax" namespace="/" extends="json-default">
+             <action name="ajaxAction" class="ajaxAction">
+            	<result name="success" type="json"></result>
+        	</action>
         
         <action name="getInfor" class="inforAction" method="getInfor">
             <result name="success">/jsp/DetailInfo.jsp</result>
