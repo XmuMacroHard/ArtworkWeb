@@ -18,9 +18,9 @@ public class Information implements java.io.Serializable {
 	private String content;
 	private Timestamp startTime;
 	private Timestamp endTime;
-	private Boolean location;
 	private Float expense;
 	private String status;
+	private Set datePoses = new HashSet(0);
 	private Set inforPicses = new HashSet(0);
 
 	// Constructors
@@ -31,19 +31,19 @@ public class Information implements java.io.Serializable {
 
 	/** full constructor */
 	public Information(User user, String title, String content,
-			Timestamp startTime, Timestamp endTime, Boolean location,
-			Float expense, String status, Set inforPicses) {
+			Timestamp startTime, Timestamp endTime, Float expense,
+			String status, Set datePoses, Set inforPicses) {
 		this.user = user;
 		this.title = title;
 		this.content = content;
 		this.startTime = startTime;
 		this.endTime = endTime;
-		this.location = location;
 		this.expense = expense;
 		this.status = status;
+		this.datePoses = datePoses;
 		this.inforPicses = inforPicses;
 	}
-
+	
 	/*business logic methods*/
 	
 	/*
@@ -119,14 +119,6 @@ public class Information implements java.io.Serializable {
 		this.endTime = endTime;
 	}
 
-	public Boolean getLocation() {
-		return this.location;
-	}
-
-	public void setLocation(Boolean location) {
-		this.location = location;
-	}
-
 	public Float getExpense() {
 		return this.expense;
 	}
@@ -141,6 +133,14 @@ public class Information implements java.io.Serializable {
 
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public Set getDatePoses() {
+		return this.datePoses;
+	}
+
+	public void setDatePoses(Set datePoses) {
+		this.datePoses = datePoses;
 	}
 
 	public Set getInforPicses() {

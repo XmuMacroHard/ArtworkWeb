@@ -17,7 +17,7 @@
             <column name="title" length="20" />
         </property>
         <property name="content" type="java.lang.String">
-            <column name="content" length="50" />
+            <column name="content" length="1000" />
         </property>
         <property name="startTime" type="java.sql.Timestamp">
             <column name="startTime" length="19" />
@@ -25,16 +25,19 @@
         <property name="endTime" type="java.sql.Timestamp">
             <column name="endTime" length="19" />
         </property>
-        <property name="location" type="java.lang.Boolean">
-            <column name="location" />
-        </property>
         <property name="expense" type="java.lang.Float">
             <column name="expense" precision="10" />
         </property>
         <property name="status" type="java.lang.String">
             <column name="status" length="11" />
         </property>
-        <set name="inforPicses" cascade="save-update" inverse="true">
+        <set name="datePoses" inverse="true">
+            <key>
+                <column name="infoId" not-null="true" />
+            </key>
+            <one-to-many class="com.macrohard.entity.DatePos" />
+        </set>
+        <set name="inforPicses" inverse="true">
             <key>
                 <column name="inforId" />
             </key>

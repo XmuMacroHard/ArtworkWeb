@@ -31,7 +31,14 @@
 			<list>
 				<value>com/macrohard/entity/User.hbm.xml</value>
 				<value>com/macrohard/entity/Information.hbm.xml</value>
-				<value>com/macrohard/entity/InforPics.hbm.xml</value></list>
+				<value>com/macrohard/entity/Commodity.hbm.xml</value>
+				<value>com/macrohard/entity/CommodityPics.hbm.xml</value>
+				<value>com/macrohard/entity/DatePos.hbm.xml</value>
+				<value>com/macrohard/entity/InforPics.hbm.xml</value>
+				<value>com/macrohard/entity/PurchaseOrder.hbm.xml</value>
+				<value>com/macrohard/entity/ShippingAddress.hbm.xml</value>
+				<value>com/macrohard/entity/ShoppingCart.hbm.xml</value>
+			</list>
 		</property></bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
