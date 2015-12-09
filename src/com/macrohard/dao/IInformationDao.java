@@ -11,6 +11,11 @@ import com.macrohard.entity.Information;
 public interface IInformationDao 
 {
 	public void save(Information information, File file, String filename);
+	
+	public List<Information> getAll();
+	
+	public Information findInfor(long id);
+	
 	public List findAll();
-	public List getAll();
+
 }

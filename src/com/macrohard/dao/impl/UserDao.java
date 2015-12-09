@@ -6,6 +6,8 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import java.util.List;
+import org.hibernate.*;
 import com.macrohard.dao.IUserDao;
 import com.macrohard.entity.User;
 
@@ -16,10 +18,21 @@ public class UserDao extends GenericDao implements IUserDao
 	{
 		System.out.println("in user dao" + user.getAccount() + user.getPassword());
 		getSession().save(user);
-		
 		getSession().close();
+	} 
+	
+	public User search(User user)
+	{
+		String hql = String.format("From User as user where user.account = '%s' and user.password = '%s'",
+				user.getAccount(), user.getPassword());
+		Query query = getSession().createQuery(hql);
+		return  (User)query.uniqueResult();
 	}
 	
+	public Session getSession()
+	{
+		return sessionFactory.openSession();
+	}
 	public List findAll() {
 		
 		try {
@@ -46,5 +59,4 @@ public class UserDao extends GenericDao implements IUserDao
 			throw re;
 		}
 	}
-	
 }

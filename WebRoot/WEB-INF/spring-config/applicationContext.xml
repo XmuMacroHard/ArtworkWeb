@@ -41,7 +41,7 @@
 		<property name="informationService" ref="informationService"></property>
 	</bean>	
 	
-	<bean id="LoginAction" class="com.macrohard.action.UserAction" scope="prototype">
+	<bean id="userAction" class="com.macrohard.action.UserAction" scope="prototype">
 		<property name="user" ref="user"></property>
 		<property name="userService" ref="userService"></property>
 	</bean>

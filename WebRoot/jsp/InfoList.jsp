@@ -33,15 +33,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <th>费用</th>
         <th>详细信息</th>
       </tr>
-      <s:iterator id="info" value="#request.list">
+      <s:iterator id="information" value="#request.list">
       <tr align="center" bgcolor="silver">
-        <td><s:property value="#info.title"/></td>
-        <td><s:date name="#info.startTime"/></td>
-        <td><s:date name="#info.endTime"/></td>
-        <td><s:property value="#info.location"/></td>
-        <td><s:property value="#info.expense"/></td>
-        <%-- <td><a href="findXs.action?xs.xh=<s:property value="#xs.xh"/>">详细信息</a></td> --%>
-        <td>详细信息</td>
+        <td><s:property value="#information.title"/></td>
+        <td><s:date name="#information.startTime"/></td>
+        <td><s:date name="#information.endTime"/></td>
+        <td><s:property value="#information.location"/></td>
+        <td><s:property value="#information.expense"/></td>
+        <td><a href="getInfor.action?information.id=<s:property value="#information.id"/>">详细信息</a></td>
       </tr>
       </s:iterator>
    </table> 

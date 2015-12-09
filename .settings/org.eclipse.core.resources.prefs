@@ -1,7 +1,8 @@
+=\=\=\=\=\=\=
+<<<<<<<=HEAD
+>>>>>>>=9501eb4fad8ce821da38f44fa9f2064b013f1b29
 eclipse.preferences.version=1
-<<<<<<< HEAD
-encoding//WebRoot/jsp/test/submitInfor_test.jsp=UTF-8
-=======
 encoding//WebRoot/index.jsp=UTF-8
-encoding//WebRoot/jsp/backstage/submitInfor.jsp=UTF-8
->>>>>>> ed14d683eb8a40144852a645d9c0d32a644e2027
+encoding//WebRoot/jsp/info.jsp=UTF-8
+encoding//WebRoot/jsp/test/submitInfor_test.jsp=UTF-8
+encoding/<project>=UTF-8

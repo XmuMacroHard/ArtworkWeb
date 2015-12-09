@@ -64,9 +64,9 @@ public class InformationDao extends GenericDao implements IInformationDao {
 	}
 	
 	@Override
-	public List getAll()
+	public List<Information> getAll()
 	{
-		List list=null;
+		List<Information> list=null;
 		try {
 			Query query = getSession().createQuery("from Information");
 			list = query.list();
@@ -80,6 +80,25 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		        session.close();
 		}
 		return list;
+	}
+	
+	@Override
+	public Information findInfor(long id)
+	{
+		Information Infor=null;
+		try {
+			Query query = getSession().createQuery("from Information where id="+id);
+			Infor = (Information) query.uniqueResult();
+			closeSession();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally{
+			if(session.isOpen())
+		        session.close();
+		}
+		return Infor;
 	}
 	/*
 	 * @return return the path stored to the data base.
