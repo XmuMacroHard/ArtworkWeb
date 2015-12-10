@@ -30,7 +30,7 @@
 		</property>
 		<property name="packagesToScan">
 			<list>
-				<value>com.macrohard.entity</value>
+				<value>cn.edu.xmu.artwork.entity</value>
 			</list>
 		</property></bean>
 	<bean id="transactionManager"
