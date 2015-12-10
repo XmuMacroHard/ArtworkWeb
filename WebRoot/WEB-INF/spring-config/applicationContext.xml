@@ -30,10 +30,10 @@
 	
 	
 	<!-- all services -->
-	<bean id="userService" class="cn.edu.xmu.artwork.impl.UserService">
+	<bean id="userService" class="cn.edu.xmu.artwork.service.impl.UserService">
 		<property name="userDao" ref="userDao"></property>
 	</bean>	
-	<bean id="informationService" class="cn.edu.xmu.artwork.impl.InformationService">
+	<bean id="informationService" class="cn.edu.xmu.artwork.service.impl.InformationService">
 		<property name="informationDao" ref="informationDao"></property>
 		<property name="userDao" ref="userDao"></property>
 	</bean>	

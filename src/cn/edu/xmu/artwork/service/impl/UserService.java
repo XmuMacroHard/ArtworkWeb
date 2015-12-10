@@ -1,4 +1,4 @@
-package cn.edu.xmu.artwork.impl;
+package cn.edu.xmu.artwork.service.impl;
 
 import java.util.List;
 
