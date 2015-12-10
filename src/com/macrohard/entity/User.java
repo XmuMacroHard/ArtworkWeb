@@ -12,14 +12,15 @@ public class User implements java.io.Serializable {
 	// Fields
 
 	private Long id;
-	private String account;
-	private String password;
 	private String email;
+	private String password;
 	private String nickname;
 	private Float balance;
-	private String identity;
 	private Boolean isBanned;
-	private Set<Information> informations = new HashSet<Information>(0);
+	private String phone;
+	private Set shippingAddresses = new HashSet(0);
+	private Set informations = new HashSet(0);
+	private Set shoppingCarts = new HashSet(0);
 
 	// Constructors
 
@@ -28,22 +29,24 @@ public class User implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public User(String account, String password) {
-		this.account = account;
+	public User(String email, String password) {
+		this.email = email;
 		this.password = password;
 	}
 
 	/** full constructor */
-	public User(String account, String password, String email, String nickname,
-			Float balance, String identity, Boolean isBanned, Set<Information> informations) {
-		this.account = account;
-		this.password = password;
+	public User(String email, String password, String nickname, Float balance,
+			Boolean isBanned, String phone, Set shippingAddresses,
+			Set informations, Set shoppingCarts) {
 		this.email = email;
+		this.password = password;
 		this.nickname = nickname;
 		this.balance = balance;
-		this.identity = identity;
 		this.isBanned = isBanned;
+		this.phone = phone;
+		this.shippingAddresses = shippingAddresses;
 		this.informations = informations;
+		this.shoppingCarts = shoppingCarts;
 	}
 
 	// Property accessors
@@ -56,12 +59,12 @@ public class User implements java.io.Serializable {
 		this.id = id;
 	}
 
-	public String getAccount() {
-		return this.account;
+	public String getEmail() {
+		return this.email;
 	}
 
-	public void setAccount(String account) {
-		this.account = account;
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getPassword() {
@@ -70,14 +73,6 @@ public class User implements java.io.Serializable {
 
 	public void setPassword(String password) {
 		this.password = password;
-	}
-
-	public String getEmail() {
-		return this.email;
-	}
-
-	public void setEmail(String email) {
-		this.email = email;
 	}
 
 	public String getNickname() {
@@ -96,14 +91,6 @@ public class User implements java.io.Serializable {
 		this.balance = balance;
 	}
 
-	public String getIdentity() {
-		return this.identity;
-	}
-
-	public void setIdentity(String identity) {
-		this.identity = identity;
-	}
-
 	public Boolean getIsBanned() {
 		return this.isBanned;
 	}
@@ -112,12 +99,36 @@ public class User implements java.io.Serializable {
 		this.isBanned = isBanned;
 	}
 
-	public Set<Information> getInformations() {
+	public String getPhone() {
+		return this.phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public Set getShippingAddresses() {
+		return this.shippingAddresses;
+	}
+
+	public void setShippingAddresses(Set shippingAddresses) {
+		this.shippingAddresses = shippingAddresses;
+	}
+
+	public Set getInformations() {
 		return this.informations;
 	}
 
-	public void setInformations(Set<Information> informations) {
+	public void setInformations(Set informations) {
 		this.informations = informations;
+	}
+
+	public Set getShoppingCarts() {
+		return this.shoppingCarts;
+	}
+
+	public void setShoppingCarts(Set shoppingCarts) {
+		this.shoppingCarts = shoppingCarts;
 	}
 
 }

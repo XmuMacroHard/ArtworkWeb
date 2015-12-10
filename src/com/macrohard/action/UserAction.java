@@ -1,5 +1,8 @@
 package com.macrohard.action;
 
+import org.hibernate.exception.ConstraintViolationException;
+
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 import com.macrohard.entity.User;
 import com.macrohard.service.*;
@@ -10,20 +13,29 @@ public class UserAction extends ActionSupport
 	private User user;
 	private IUserService userService;
 	
-	@Override
-	public String execute() throws Exception {
-		if(user.getAccount().equals("a")&& user.getPassword().equals("b"))
-		{		
-			userService.addUser(user);
-			System.out.println("in action \n");
-			return "success";	
-		}		
-		else 
-		{
+	public String login() 
+	{
+		// s = {fail, success, admistratorSuccess}
+		String s = userService.login(user);
+		return s;
+	}
+	
+	public String register()  
+	{
+		try {
+			userService.register(user);
+			return "success";
+		} 
+		catch (ConstraintViolationException e) {
+			String faildetail = "用户已存在";
+		    ActionContext.getContext().put("faildetail", faildetail);
+			return "fail";
+		}
+		catch (Exception e) {
 			return "fail";
 		}
 	}
-
+	
 	public User getUser() {
 		return user;
 	}
@@ -39,6 +51,5 @@ public class UserAction extends ActionSupport
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
-	
 	
 }

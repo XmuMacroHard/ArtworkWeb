@@ -5,12 +5,47 @@
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" xmlns:tx="http://www.springframework.org/schema/tx">
 
+	<!-- all entities -->
+	<bean id="user" class="com.macrohard.entity.User"></bean>
+	<bean id="information" class="com.macrohard.entity.Information"></bean>
+	
+	<!-- all daos -->
+	<bean id="genericDao" class="com.macrohard.dao.impl.GenericDao">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="userDao" class="com.macrohard.dao.impl.UserDao" >
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>		
+	<bean id="informationDao" class="com.macrohard.dao.impl.InformationDao" parent="genericDao"></bean>	
+	
+	
+	<!-- all services -->
+	<bean id="userService" class="com.macrohard.service.impl.UserService">
+		<property name="userDao" ref="userDao"></property>
+	</bean>	
+	<bean id="informationService" class="com.macrohard.service.impl.InformationService">
+		<property name="informationDao" ref="informationDao"></property>
+	</bean>	
+	
+	<!-- allActions -->
+	<bean id="inforAction" class="com.macrohard.action.InformationAction" scope="prototype">
+		<property name="information" ref="information"></property>
+		<property name="informationService" ref="informationService"></property>
+	</bean>	
+	
+	<bean id="userAction" class="com.macrohard.action.UserAction" scope="prototype">
+		<property name="user" ref="user"></property>
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+
 	<bean id="dataSource"
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mysql://localhost:3306/artworkdb"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="software"></property>
+		<property name="username" value="hikalif"></property>
+		<property name="password" value="140030"></property>
 	</bean>
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
@@ -31,7 +66,14 @@
 			<list>
 				<value>com/macrohard/entity/User.hbm.xml</value>
 				<value>com/macrohard/entity/Information.hbm.xml</value>
-				<value>com/macrohard/entity/InforPics.hbm.xml</value></list>
+				<value>com/macrohard/entity/Commodity.hbm.xml</value>
+				<value>com/macrohard/entity/CommodityPics.hbm.xml</value>
+				<value>com/macrohard/entity/DatePos.hbm.xml</value>
+				<value>com/macrohard/entity/InforPics.hbm.xml</value>
+				<value>com/macrohard/entity/PurchaseOrder.hbm.xml</value>
+				<value>com/macrohard/entity/ShippingAddress.hbm.xml</value>
+				<value>com/macrohard/entity/ShoppingCart.hbm.xml</value>
+			</list>
 		</property></bean>
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">

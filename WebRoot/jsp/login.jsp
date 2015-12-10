@@ -24,10 +24,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-	<s:form action="login">
+	<s:form action="loginAction">
 		<span>Account</span><s:textfield name="user.account"/>
 		<span>Password</span><s:password name="user.password"/>
 		<s:submit/>
 	</s:form>
   </body>
+  
 </html>
