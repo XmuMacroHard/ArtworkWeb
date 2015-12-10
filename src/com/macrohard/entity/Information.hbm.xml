@@ -17,7 +17,7 @@
             <column name="title" length="20" />
         </property>
         <property name="content" type="java.lang.String">
-            <column name="content" length="50" />
+            <column name="content" length="200" />
         </property>
         <property name="startTime" type="java.sql.Timestamp">
             <column name="startTime" length="19" />
