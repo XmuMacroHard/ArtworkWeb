@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -698,138 +698,74 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="col-main col-sm-9">
           
           <div class="blog-wrapper" id="main"><div class="page-title new_page_title">
-            <h2>Blog</h2>
+            <h2>资讯详情</h2>
           </div>
             <div class="site-content" id="primary">
               <div role="main" id="content">
                 <article class="blog_entry clearfix wow bounceInUp animated" >
                   <header class="blog_entry-header clearfix">
                     <div class="blog_entry-header-inner">
-                      <h2 class="blog_entry-title"> <a rel="bookmark" href="blog_detail.html">Pellentesque habitant morbi</a> </h2>
+                      <h2 class="blog_entry-title"> <a rel="bookmark" href="blog_detail.html">月华如练——玖福玉器和田玉竞拍专场</a> </h2>
                     </div>
                     <!--blog_entry-header-inner--> 
                   </header>
                   <div class="entry-content">
-                    <div class="featured-thumb"><a href="blog_detail.html"><img alt="blog-img4" src="images/blog-img1.jpg"></a></div>
+                    <div class="featured-thumb"><a href="blog_detail.html"><img alt="blog-img4" src="image_repo/56523b2aa5e36.jpg"></a></div>
                     <div class="entry-content">
-                      <p>Fusce ac pharetra urna. Duis non lacus sit amet lacus interdum facilisis sed non est. Ut mi metus, semper eu dictum nec, condimentum sed sapien. Nullam lobortis nunc semper ipsum luctus ut viverra ante eleifend. Nunc pretium velit sed augue luctus accumsan.</p>
-                      <p>Aliquam laoreet consequat malesuada. Integer vitae diam sed dolor euismod laoreet eget ac felis. Donec non erat sed elit bibendum sodales. Donec eu cursus velit. Proin nunc lacus, gravida mollis dictum ut, vulputate eu turpis. Sed felis sapien, commodo in iaculis in, feugiat sed enim. Sed nunc ipsum, fermentum varius dignissim vitae, blandit et ante.Maecenas sagittis, lorem sed congue egestas, lectus purus congue nisl, ac molestie enim ligula nec eros. Sed leo tortor, tincidunt sit amet elementum vel, eleifend at orci. Maecenas ut turpis felis. Donec sit amet quam sem, et aliquet est.</p>
+                      <p>和田玉籽玉羊脂玉，玉质油润，结构紧密，手感温润舒适，传说中的四大神兽之一，以稳中，坚固著称。</p>
+                      <p>我国是世界历史上惟一将玉与人性相融的国家。《诗经》之中，便有这样的说法：言念君子，温其如玉。孔子除认为“君子比德与玉”外，更明确的提出了“玉德”之说，认为玉如君子，有十一德。春秋之后的历朝历代，见诸于古籍的玉德说法多样，大抵有十一德、九德、五德等多种说法。历史对于玉德的最后诠释，来自于东汉许慎的“五德说”。
+五德之一：仁——“润泽以温，仁之方也”。即材质温腻、柔润有光泽。佩戴玉石，就像有个具有仁爱之心，生性温和的君子时刻陪在你的左右，感染着你，让你的性情最终得以蜕变。
+五德之二：义——“理之外，可以知中，义之方也”。从外表看就能看到玉的里面，是否有杂质，这是玉的忠义，也是古时君子必备的一种品德之一。俗话说的好：“画龙画虎难话骨， 知人知面不知心”。“义”字看似简单，真正想要做到，却实在并不容易。
+五德之三：志——“其声舒畅，专以远闻，志者方也” 。敲击玉石，会发出悦耳动听的声音，并且能传到很远的地方，说明玉是有智慧的，并且善于传达给周围的人。这是君子志在四方的表现。
+五德之四：勇——“不挠而折，勇之方也”。不屈不挠，宁为玉碎，不为瓦全!玉的这一特点，代表着君子超人的勇气!
+五德之末：洁——“锐廉而不忮，洁之方也”。当玉断裂的时候边缘会有很锋利的断口，但是我们用手来触摸的时候并不会伤害到我们， 这点与其他任何物质都不同，表明了君子洁身自好的特点。
+至此，玉彻底成为了君子的化身和代表，是纯洁之物，更是中国传统美德的代名词。</p>
                     </div>
-                    <p> <a class="btn" href="blog_detail.html">Read More</a> </p>
+                    
                   </div>
-                  <footer class="entry-meta"> This entry was posted						in <a rel="category tag" title="View all posts in First Category" href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a> On
-                    <time datetime="2014-07-10T06:53:43+00:00" class="entry-date">Jul 10, 2014</time>
-                    . </footer>
-                </article>
-                <article class="blog_entry clearfix wow bounceInUp animated" >
-                  <header class="blog_entry-header clearfix">
-                    <div class="blog_entry-header-inner">
-                      <h2 class="blog_entry-title"> <a rel="bookmark" href="blog_detail.html">Aliquam eget sapien placerat</a> </h2>
-                    </div>
-                    <!--blog_entry-header-inner--> 
-                  </header>
-                  <div class="entry-content">
-                    <div class="featured-thumb"><a href="blog_detail.html"><img alt="blog-img3" src="images/blog-img1.jpg"></a></div>
-                    <div class="entry-content">
-                      <p>Fusce ac pharetra urna. Duis non lacus sit amet lacus interdum facilisis sed non est. Ut mi metus, semper eu dictum nec, condimentum sed sapien. Nullam lobortis nunc semper ipsum luctus ut viverra ante eleifend. Nunc pretium velit sed augue luctus accumsan.</p>
-                      <p>Aliquam laoreet consequat malesuada. Integer vitae diam sed dolor euismod laoreet eget ac felis. Donec non erat sed elit bibendum sodales. Donec eu cursus velit. Proin nunc lacus, gravida mollis dictum ut, vulputate eu turpis. Sed felis sapien, commodo in iaculis in, feugiat sed enim. Sed nunc ipsum, fermentum varius dignissim vitae, blandit et ante.Maecenas sagittis, lorem sed congue egestas, lectus purus congue nisl, ac molestie enim ligula nec eros. Sed leo tortor, tincidunt sit amet elementum vel, eleifend at orci. Maecenas ut turpis felis. Donec sit amet quam sem, et aliquet est.</p>
-                      <p>Quisque nisl lectus, accumsan et euismod eu, sollicitudin ac augue. In sit amet urna magna. Curabitur imperdiet urna nec purus egestas eget aliquet purus iaculis. Nunc porttitor blandit imperdiet. Nulla facilisi. Cras odio ipsum, vehicula nec vehicula sed, convallis scelerisque quam. Phasellus ut odio dui, ut fermentum neque.</p>
-                    </div>
-                    <p> <a class="btn" href="blog_detail.html">Read More</a> </p>
-                  </div>
-                  <footer class="entry-meta"> This entry was posted						in <a rel="category tag" title="View all posts in First Category" href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a> On
-                    <time datetime="2014-07-10T06:59:14+00:00" class="entry-date">Jul 10, 2014</time>
-                    . </footer>
-                </article>
-                <article class="blog_entry clearfix wow bounceInUp animated" >
-                  <header class="blog_entry-header clearfix">
-                    <div class="blog_entry-header-inner">
-                      <h2 class="blog_entry-title"> <a rel="bookmark" href="blog_detail.html">Dolor lorem ipsum</a> </h2>
-                    </div>
-                    <!--blog_entry-header-inner--> 
-                  </header>
-                  <div class="entry-content">
-                    <div class="featured-thumb"><a href="blog_detail.html"><img alt="blog-img2" src="images/blog-img1.jpg"></a></div>
-                    <div class="entry-content">
-                      <p>Fusce ac pharetra urna. Duis non lacus sit amet lacus interdum facilisis sed non est. Ut mi metus, semper eu dictum nec, condimentum sed sapien. Nullam lobortis nunc semper ipsum luctus ut viverra ante eleifend. Nunc pretium velit sed augue luctus accumsan.</p>
-                      <p>Aliquam laoreet consequat malesuada. Integer vitae diam sed dolor euismod laoreet eget ac felis. Donec non erat sed elit bibendum sodales. Donec eu cursus velit. Proin nunc lacus, gravida mollis dictum ut, vulputate eu turpis. Sed felis sapien, commodo in iaculis in, feugiat sed enim. Sed nunc ipsum, fermentum varius dignissim vitae, blandit et ante.Maecenas sagittis, lorem sed congue egestas, lectus purus congue nisl, ac molestie enim ligula nec eros. Sed leo tortor, tincidunt sit amet elementum vel, eleifend at orci. Maecenas ut turpis felis. Donec sit amet quam sem, et aliquet est.</p>
-                    </div>
-                    <p> <a class="btn" href="blog_detail.html">Read More</a> </p>
-                  </div>
-                  <footer class="entry-meta"> This entry was posted						in <a rel="category tag" title="View all posts in First Category" href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a> On
-                    <time datetime="2014-07-10T07:01:18+00:00" class="entry-date">Jul 10, 2014</time>
-                    . </footer>
-                </article>
-                <article class="blog_entry clearfix wow bounceInUp animated" >
-                  <header class="blog_entry-header clearfix">
-                    <div class="blog_entry-header-inner">
-                      <h2 class="blog_entry-title"> <a rel="bookmark" href="blog_detail.html">Pellentesque posuere</a> </h2>
-                    </div>
-                    <!--blog_entry-header-inner--> 
-                  </header>
-                  <div class="entry-content">
-                    <div class="featured-thumb"><a href="blog_detail.html"><img alt="blog-img1" src="images/blog-img1.jpg"></a></div>
-                    <div class="entry-content">
-                      <p>Fusce ac pharetra urna. Duis non lacus sit amet lacus interdum facilisis sed non est. Ut mi metus, semper eu dictum nec, condimentum sed sapien. Nullam lobortis nunc semper ipsum luctus ut viverra ante eleifend. Nunc pretium velit sed augue luctus accumsan.</p>
-                      <p>Aliquam laoreet consequat malesuada. Integer vitae diam sed dolor euismod laoreet eget ac felis. Donec non erat sed elit bibendum sodales. Donec eu cursus velit. Proin nunc lacus, gravida mollis dictum ut, vulputate eu turpis. Sed felis sapien, commodo in iaculis in, feugiat sed enim. Sed nunc ipsum, fermentum varius dignissim vitae, blandit et ante.Maecenas sagittis, lorem sed congue egestas, lectus purus congue nisl, ac molestie enim ligula nec eros. Sed leo tortor, tincidunt sit amet elementum vel, eleifend at orci. Maecenas ut turpis felis. Donec sit amet quam sem, et aliquet est.</p>
-                    </div>
-                    <p> <a class="btn" href="blog_detail.html">Read More</a> </p>
-                  </div>
-                  <footer class="entry-meta"> This entry was posted						in <a rel="category tag" title="View all posts in First Category" href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a> On
-                    <time datetime="2014-07-10T07:09:31+00:00" class="entry-date">Jul 10, 2014</time>
+                  <footer class="entry-meta"> 资讯发布时间：
+                    <time datetime="2014-07-10T06:53:43+00:00" class="entry-date">2014-08-28</time>
                     . </footer>
                 </article>
               </div>
             </div>
-            <div class="pager">
-              <p class="amount"> <strong>4 Item(s)</strong> </p>
-              <div class="limiter">
-                <label>Show</label>
-                <select onChange="setLocation(this.value)">
-                  <option selected="selected" value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=5"> 5 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=10"> 10 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=15"> 15 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=20"> 20 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=all"> All </option>
-                </select>
-                per page </div>
-            </div>
+            
           </div>
         </div>
         <div class="col-right sidebar col-sm-3">
           <div role="complementary" class="widget_wrapper13" id="secondary">
             <div class="popular-posts widget widget__sidebar wow bounceInUp animated" id="recent-posts-4">
-              <h3 class="widget-title">Most Popular Post</h3>
+              <h3 class="widget-title">最新资讯</h3>
               <div class="widget-content">
                 <ul class="posts-list unstyled clearfix">
                   <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
+                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="image_repo/55fff0bfdd728.jpg"> </a> </figure>
                     <!--featured-thumb-->
-                    <h4><a title="Pellentesque posuere" href="blog_detail.html">Pellentesque posuere</a></h4>
+                    <h4><a title="Pellentesque posuere" href="blog_detail.html">海南黄花梨佛珠手串</a></h4>
                     <p class="post-meta"><i class="icon-calendar"></i>
                       <time datetime="2014-07-10T07:09:31+00:00" class="entry-date">Jul 10, 2014</time>
                       .</p>
                   </li>
                   <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
+                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="image_repo/56576a2365dde.jpg"> </a> </figure>
                     <!--featured-thumb-->
-                    <h4><a title="Dolor lorem ipsum" href="blog_detail.html">Dolor lorem ipsum</a></h4>
+                    <h4><a title="Dolor lorem ipsum" href="blog_detail.html">高工 石瓢提梁 原矿老段泥 贾益芳</a></h4>
                     <p class="post-meta"><i class="icon-calendar"></i>
                       <time datetime="2014-07-10T07:01:18+00:00" class="entry-date">Jul 10, 2014</time>
                       .</p>
                   </li>
                   <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
+                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="image_repo/564ee960d90cc.jpg"> </a> </figure>
                     <!--featured-thumb-->
-                    <h4><a title="Aliquam eget sapien placerat" href="blog_detail.html">Aliquam eget sapien placerat</a></h4>
+                    <h4><a title="Aliquam eget sapien placerat" href="blog_detail.html">高级漆艺大师 郑崇尧《鱼村》</a></h4>
                     <p class="post-meta"><i class="icon-calendar"></i>
                       <time datetime="2014-07-10T06:59:14+00:00" class="entry-date">Jul 10, 2014</time>
                       .</p>
                   </li>
                   <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
+                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="image_repo/564d25fc010ff.jpg"> </a> </figure>
                     <!--featured-thumb-->
-                    <h4><a title="Pellentesque habitant morbi" href="blog_detail.html">Pellentesque habitant morbi</a></h4>
+                    <h4><a title="Pellentesque habitant morbi" href="blog_detail.html">金镶嵌天然和田玉竹报平安吊坠</a></h4>
                     <p class="post-meta"><i class="icon-calendar"></i>
                       <time datetime="2014-07-10T06:53:43+00:00" class="entry-date">Jul 10, 2014</time>
                       .</p>
@@ -838,25 +774,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
               <!--widget-content--> 
             </div>
-            <div class="popular-posts widget widget_categories wow bounceInUp animated" id="categories-2">
-              <h3 class="widget-title">Categories</h3>
-              <ul>
-                <li class="cat-item cat-item-19599"><a href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a></li>
-                <li class="cat-item cat-item-19599"><a href="http://demo.magikthemes.com/index.php/eclipseblue/second-category">Second Category</a></li>
-              </ul>
-            </div>
-            <!-- Banner Ad Block -->
-            <div class="ad-spots widget widget__sidebar wow bounceInUp animated">
-              <h3 class="widget-title">Ad Spots</h3>
-              <div class="widget-content"><a target="_self" href="#" title=""><img alt="offer banner" src="images/offerBanner.jpg"></a></div>
-            </div>
-            <!-- Banner Text Block -->
-            <div class="text-widget widget widget__sidebar">
-              <h3 class="widget-title">Text Widget</h3>
-              <div class="widget-content">Mauris at blandit erat. Nam vel tortor non quam scelerisque cursus. Praesent nunc vitae magna pellentesque auctor. Quisque id lectus.<br>
-                <br>
-                Massa, eget eleifend tellus. Proin nec ante leo ssim nunc sit amet velit malesuada pharetra. Nulla neque sapien, sollicitudin non ornare quis, malesuada.</div>
-            </div>
+            
           </div>
         </div>
       </div>

@@ -26,11 +26,8 @@
         </action>        
         
         <action name="showInfor" class="inforAction" method="showInfor">
-            <result name="success">/jsp/InfoList.jsp</result>
-        </action>     
-        
-        
-       
+            <result name="success">/jsp/newslist.jsp</result>
+        </action>        
     </package>
     
     <package name="struts2-ajax" namespace="/" extends="json-default">
