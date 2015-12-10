@@ -4,11 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
-<<<<<<< HEAD
-
 import java.util.Map;
-=======
->>>>>>> 8674b7544e1be2445b4953e83906b76c7c252ba5
 
 import com.macrohard.entity.Information;
 import com.macrohard.service.IInformationService;
@@ -40,6 +36,11 @@ public class InformationAction extends ActionSupport
 		
 		return "success";
 	}
+	
+//	public String test()
+//	{
+//		
+//	}
 
 	/*
 	 * show the information list for the editor

@@ -1,5 +1,10 @@
 package com.macrohard.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+@Entity
+@PrimaryKeyJoinColumn(name="editorId")
 public class Editor extends User 
 {
 	private String rank;

@@ -3,17 +3,20 @@ package com.macrohard.dao.impl;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
 
-public class GenericDao 
+public abstract class GenericDao 
 {
+	@Autowired
 	SessionFactory sessionFactory;
+	
 	Session session;
 	Transaction transaction;
 	
 	protected Session getSession()
 	{
-		session = sessionFactory.openSession();
 		//session = sessionFactory.getCurrentSession();
+		session = sessionFactory.openSession();
 		return session;
 	}
 	

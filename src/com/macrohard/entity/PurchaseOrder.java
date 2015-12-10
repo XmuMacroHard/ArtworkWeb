@@ -1,9 +1,17 @@
 package com.macrohard.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * PurchaseOrder entity. @author MyEclipse Persistence Tools
  */
-
+@Entity
+@Table(name = "purchase_order", catalog = "artworkdb")
 public class PurchaseOrder implements java.io.Serializable {
 
 	// Fields
@@ -27,7 +35,9 @@ public class PurchaseOrder implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -36,6 +46,7 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "orderid", nullable = false, length = 20)
 	public String getOrderid() {
 		return this.orderid;
 	}
@@ -44,6 +55,7 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.orderid = orderid;
 	}
 
+	@Column(name = "type", nullable = false, length = 9)
 	public String getType() {
 		return this.type;
 	}
@@ -52,6 +64,7 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.type = type;
 	}
 
+	@Column(name = "state", nullable = false, length = 10)
 	public String getState() {
 		return this.state;
 	}

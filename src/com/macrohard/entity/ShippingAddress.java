@@ -1,9 +1,20 @@
 package com.macrohard.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 /**
  * ShippingAddress entity. @author MyEclipse Persistence Tools
  */
-
+@Entity
+@Table(name = "shipping_address", catalog = "artworkdb")
 public class ShippingAddress implements java.io.Serializable {
 
 	// Fields
@@ -36,7 +47,9 @@ public class ShippingAddress implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -45,6 +58,8 @@ public class ShippingAddress implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "userid", nullable = false)
 	public User getUser() {
 		return this.user;
 	}
@@ -53,6 +68,7 @@ public class ShippingAddress implements java.io.Serializable {
 		this.user = user;
 	}
 
+	@Column(name = "consignee", nullable = false, length = 10)
 	public String getConsignee() {
 		return this.consignee;
 	}
@@ -61,6 +77,7 @@ public class ShippingAddress implements java.io.Serializable {
 		this.consignee = consignee;
 	}
 
+	@Column(name = "province", nullable = false, length = 10)
 	public String getProvince() {
 		return this.province;
 	}
@@ -69,6 +86,7 @@ public class ShippingAddress implements java.io.Serializable {
 		this.province = province;
 	}
 
+	@Column(name = "city", nullable = false, length = 10)
 	public String getCity() {
 		return this.city;
 	}
@@ -77,6 +95,7 @@ public class ShippingAddress implements java.io.Serializable {
 		this.city = city;
 	}
 
+	@Column(name = "region", nullable = false, length = 10)
 	public String getRegion() {
 		return this.region;
 	}
@@ -85,6 +104,7 @@ public class ShippingAddress implements java.io.Serializable {
 		this.region = region;
 	}
 
+	@Column(name = "detailedAdress", nullable = false, length = 20)
 	public String getDetailedAdress() {
 		return this.detailedAdress;
 	}
@@ -93,6 +113,7 @@ public class ShippingAddress implements java.io.Serializable {
 		this.detailedAdress = detailedAdress;
 	}
 
+	@Column(name = "phone", nullable = false, length = 20)
 	public String getPhone() {
 		return this.phone;
 	}

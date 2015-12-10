@@ -1,7 +1,15 @@
 package com.macrohard.entity;
 
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
+
+@Entity
+@PrimaryKeyJoinColumn(name="artistId")
 public class Artist extends User 
 {
+	//need to be add
+	//icon
+	
 	private String realName;
 	private String identification;
 	private String introduction;

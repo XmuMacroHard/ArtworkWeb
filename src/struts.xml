@@ -28,6 +28,8 @@
         <action name="showInfor" class="inforAction" method="showInfor">
             <result name="success">/jsp/InfoList.jsp</result>
         </action>     
+        
+        
        
     </package>
     

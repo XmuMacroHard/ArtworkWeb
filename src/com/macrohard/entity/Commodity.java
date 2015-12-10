@@ -1,9 +1,17 @@
 package com.macrohard.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Commodity entity. @author MyEclipse Persistence Tools
  */
-
+@Entity
+@Table(name = "commodity", catalog = "artworkdb")
 public class Commodity implements java.io.Serializable {
 
 	// Fields
@@ -34,7 +42,9 @@ public class Commodity implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -43,6 +53,7 @@ public class Commodity implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "name", nullable = false, length = 20)
 	public String getName() {
 		return this.name;
 	}
@@ -51,6 +62,7 @@ public class Commodity implements java.io.Serializable {
 		this.name = name;
 	}
 
+	@Column(name = "introduction", nullable = false, length = 500)
 	public String getIntroduction() {
 		return this.introduction;
 	}
@@ -59,6 +71,7 @@ public class Commodity implements java.io.Serializable {
 		this.introduction = introduction;
 	}
 
+	@Column(name = "price", nullable = false, precision = 15)
 	public Float getPrice() {
 		return this.price;
 	}
@@ -67,6 +80,7 @@ public class Commodity implements java.io.Serializable {
 		this.price = price;
 	}
 
+	@Column(name = "authorId", nullable = false)
 	public Long getAuthorId() {
 		return this.authorId;
 	}
@@ -75,6 +89,7 @@ public class Commodity implements java.io.Serializable {
 		this.authorId = authorId;
 	}
 
+	@Column(name = "type", nullable = false, length = 9)
 	public String getType() {
 		return this.type;
 	}
@@ -83,6 +98,7 @@ public class Commodity implements java.io.Serializable {
 		this.type = type;
 	}
 
+	@Column(name = "isBought", nullable = false)
 	public Boolean getIsBought() {
 		return this.isBought;
 	}

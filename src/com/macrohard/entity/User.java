@@ -3,10 +3,26 @@ package com.macrohard.entity;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+
+import static javax.persistence.GenerationType.IDENTITY;
+
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
-
+@Entity
+@Inheritance(strategy=InheritanceType.JOINED)
+@Table(name = "user", catalog = "artworkdb")
 public class User implements java.io.Serializable {
 
 	// Fields
@@ -18,9 +34,10 @@ public class User implements java.io.Serializable {
 	private Float balance;
 	private Boolean isBanned;
 	private String phone;
-	private Set shippingAddresses = new HashSet(0);
-	private Set informations = new HashSet(0);
-	private Set shoppingCarts = new HashSet(0);
+	private Set<ShippingAddress> shippingAddresses = new HashSet<ShippingAddress>(
+			0);
+	private Set<Information> informations = new HashSet<Information>(0);
+	private Set<ShoppingCart> shoppingCarts = new HashSet<ShoppingCart>(0);
 
 	// Constructors
 
@@ -36,8 +53,9 @@ public class User implements java.io.Serializable {
 
 	/** full constructor */
 	public User(String email, String password, String nickname, Float balance,
-			Boolean isBanned, String phone, Set shippingAddresses,
-			Set informations, Set shoppingCarts) {
+			Boolean isBanned, String phone,
+			Set<ShippingAddress> shippingAddresses,
+			Set<Information> informations, Set<ShoppingCart> shoppingCarts) {
 		this.email = email;
 		this.password = password;
 		this.nickname = nickname;
@@ -50,7 +68,9 @@ public class User implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -59,6 +79,7 @@ public class User implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "email", nullable = false, length = 20)
 	public String getEmail() {
 		return this.email;
 	}
@@ -67,6 +88,7 @@ public class User implements java.io.Serializable {
 		this.email = email;
 	}
 
+	@Column(name = "password", nullable = false, length = 20)
 	public String getPassword() {
 		return this.password;
 	}
@@ -75,6 +97,7 @@ public class User implements java.io.Serializable {
 		this.password = password;
 	}
 
+	@Column(name = "nickname", length = 20)
 	public String getNickname() {
 		return this.nickname;
 	}
@@ -83,6 +106,7 @@ public class User implements java.io.Serializable {
 		this.nickname = nickname;
 	}
 
+	@Column(name = "balance", precision = 10)
 	public Float getBalance() {
 		return this.balance;
 	}
@@ -91,6 +115,7 @@ public class User implements java.io.Serializable {
 		this.balance = balance;
 	}
 
+	@Column(name = "isBanned")
 	public Boolean getIsBanned() {
 		return this.isBanned;
 	}
@@ -99,6 +124,7 @@ public class User implements java.io.Serializable {
 		this.isBanned = isBanned;
 	}
 
+	@Column(name = "phone", length = 20)
 	public String getPhone() {
 		return this.phone;
 	}
@@ -107,27 +133,30 @@ public class User implements java.io.Serializable {
 		this.phone = phone;
 	}
 
-	public Set getShippingAddresses() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<ShippingAddress> getShippingAddresses() {
 		return this.shippingAddresses;
 	}
 
-	public void setShippingAddresses(Set shippingAddresses) {
+	public void setShippingAddresses(Set<ShippingAddress> shippingAddresses) {
 		this.shippingAddresses = shippingAddresses;
 	}
 
-	public Set getInformations() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Information> getInformations() {
 		return this.informations;
 	}
 
-	public void setInformations(Set informations) {
+	public void setInformations(Set<Information> informations) {
 		this.informations = informations;
 	}
 
-	public Set getShoppingCarts() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<ShoppingCart> getShoppingCarts() {
 		return this.shoppingCarts;
 	}
 
-	public void setShoppingCarts(Set shoppingCarts) {
+	public void setShoppingCarts(Set<ShoppingCart> shoppingCarts) {
 		this.shoppingCarts = shoppingCarts;
 	}
 

@@ -3,11 +3,23 @@ package com.macrohard.entity;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
  * Information entity. @author MyEclipse Persistence Tools
  */
-
+@Entity
+@Table(name = "information", catalog = "artworkdb")
 public class Information implements java.io.Serializable {
 
 	// Fields
@@ -20,30 +32,9 @@ public class Information implements java.io.Serializable {
 	private Timestamp endTime;
 	private Float expense;
 	private String status;
-	private Set datePoses = new HashSet(0);
-	private Set inforPicses = new HashSet(0);
+	private Set<DatePos> datePoses = new HashSet<DatePos>(0);
+	private Set<InforPics> inforPicses = new HashSet<InforPics>(0);
 
-	// Constructors
-
-	/** default constructor */
-	public Information() {
-	}
-
-	/** full constructor */
-	public Information(User user, String title, String content,
-			Timestamp startTime, Timestamp endTime, Float expense,
-			String status, Set datePoses, Set inforPicses) {
-		this.user = user;
-		this.title = title;
-		this.content = content;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.expense = expense;
-		this.status = status;
-		this.datePoses = datePoses;
-		this.inforPicses = inforPicses;
-	}
-	
 	/*business logic methods*/
 	
 	/*
@@ -69,8 +60,31 @@ public class Information implements java.io.Serializable {
 		inforPicses.add(pic);
 	}
 	
-	// Property accessors
+	// Constructors
 
+	/** default constructor */
+	public Information() {
+	}
+
+	/** full constructor */
+	public Information(User user, String title, String content,
+			Timestamp startTime, Timestamp endTime, Float expense,
+			String status, Set<DatePos> datePoses, Set<InforPics> inforPicses) {
+		this.user = user;
+		this.title = title;
+		this.content = content;
+		this.startTime = startTime;
+		this.endTime = endTime;
+		this.expense = expense;
+		this.status = status;
+		this.datePoses = datePoses;
+		this.inforPicses = inforPicses;
+	}
+
+	// Property accessors
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -79,6 +93,8 @@ public class Information implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "editorid")
 	public User getUser() {
 		return this.user;
 	}
@@ -87,6 +103,7 @@ public class Information implements java.io.Serializable {
 		this.user = user;
 	}
 
+	@Column(name = "title", length = 20)
 	public String getTitle() {
 		return this.title;
 	}
@@ -95,6 +112,7 @@ public class Information implements java.io.Serializable {
 		this.title = title;
 	}
 
+	@Column(name = "content", length = 1000)
 	public String getContent() {
 		return this.content;
 	}
@@ -103,6 +121,7 @@ public class Information implements java.io.Serializable {
 		this.content = content;
 	}
 
+	@Column(name = "startTime", length = 19)
 	public Timestamp getStartTime() {
 		return this.startTime;
 	}
@@ -111,6 +130,7 @@ public class Information implements java.io.Serializable {
 		this.startTime = startTime;
 	}
 
+	@Column(name = "endTime", length = 19)
 	public Timestamp getEndTime() {
 		return this.endTime;
 	}
@@ -119,6 +139,7 @@ public class Information implements java.io.Serializable {
 		this.endTime = endTime;
 	}
 
+	@Column(name = "expense", precision = 10)
 	public Float getExpense() {
 		return this.expense;
 	}
@@ -127,6 +148,7 @@ public class Information implements java.io.Serializable {
 		this.expense = expense;
 	}
 
+	@Column(name = "status", length = 11)
 	public String getStatus() {
 		return this.status;
 	}
@@ -135,19 +157,21 @@ public class Information implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public Set getDatePoses() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "information")
+	public Set<DatePos> getDatePoses() {
 		return this.datePoses;
 	}
 
-	public void setDatePoses(Set datePoses) {
+	public void setDatePoses(Set<DatePos> datePoses) {
 		this.datePoses = datePoses;
 	}
 
-	public Set getInforPicses() {
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "information")
+	public Set<InforPics> getInforPicses() {
 		return this.inforPicses;
 	}
 
-	public void setInforPicses(Set inforPicses) {
+	public void setInforPicses(Set<InforPics> inforPicses) {
 		this.inforPicses = inforPicses;
 	}
 

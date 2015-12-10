@@ -1,9 +1,17 @@
 package com.macrohard.entity;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import static javax.persistence.GenerationType.IDENTITY;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * CommodityPics entity. @author MyEclipse Persistence Tools
  */
-
+@Entity
+@Table(name = "commodity_pics", catalog = "artworkdb")
 public class CommodityPics implements java.io.Serializable {
 
 	// Fields
@@ -25,7 +33,9 @@ public class CommodityPics implements java.io.Serializable {
 	}
 
 	// Property accessors
-
+	@Id
+	@GeneratedValue(strategy = IDENTITY)
+	@Column(name = "id", unique = true, nullable = false)
 	public Long getId() {
 		return this.id;
 	}
@@ -34,6 +44,7 @@ public class CommodityPics implements java.io.Serializable {
 		this.id = id;
 	}
 
+	@Column(name = "commodityId", nullable = false)
 	public Long getCommodityId() {
 		return this.commodityId;
 	}
@@ -42,6 +53,7 @@ public class CommodityPics implements java.io.Serializable {
 		this.commodityId = commodityId;
 	}
 
+	@Column(name = "url", nullable = false, length = 40)
 	public String getUrl() {
 		return this.url;
 	}

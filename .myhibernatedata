@@ -1,5 +1,5 @@
 #MyEclipse Hibernate Properties
-#Tue Dec 08 23:06:51 CST 2015
+#Thu Dec 10 13:11:13 CST 2015
 genBasicCompId=true
 sessionFactoryName=
 profile=
@@ -14,7 +14,7 @@ keyGenerator=identity
 genVersionTag=false
 sessionFactoryId=sessionFactory
 basePersistenceClass=
-genAnnotations=false
+genAnnotations=true
 reSettingsFile=/ArtworkWeb/hibernate.reveng.xml
 configFile=/ArtworkWeb/src/applicationContext.xml
 createConfigFile=true

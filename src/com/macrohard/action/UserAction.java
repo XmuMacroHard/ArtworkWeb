@@ -27,7 +27,7 @@ public class UserAction extends ActionSupport
 			return "success";
 		} 
 		catch (ConstraintViolationException e) {
-			String faildetail = "用户已存在";
+			String faildetail = "鐢ㄦ埛宸插瓨鍦�";
 		    ActionContext.getContext().put("faildetail", faildetail);
 			return "fail";
 		}

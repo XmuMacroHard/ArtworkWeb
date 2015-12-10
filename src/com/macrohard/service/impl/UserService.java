@@ -48,10 +48,10 @@ public class UserService implements IUserService
 		else
 		{
 			ActionContext.getContext().getSession().put("user", resultUser);
-			if(resultUser.getIdentity().equals("normal"))
+//			if(resultUser.getIdentity().equals("normal"))
 				return "success";
-			else
-				return "admistratorSuccess";
+//			else
+//				return "admistratorSuccess";
 		}
 	}
 	
