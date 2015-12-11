@@ -876,7 +876,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               &nbsp;CA 12345  USA
               </address>
               <div class="phone-footer"><i class="phone-icon">&nbsp;</i> +1 800 123 1234</div>
-              <div class="email-footer"><i class="email-icon">&nbsp;</i> <a href="mailto:support@magikcommerce.com">support@magikcommerce.com</a> </div>
+              <div class="email-footer"><i class="email-icon">&nbsp;</i> <a href="#">support@magikcommerce.com</a> </div>
             </div>
           </div>
         </div>

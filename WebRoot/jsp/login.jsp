@@ -41,11 +41,31 @@ Purchase: http://wrapbootstrap.com
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="assets/js/skins.min.js"></script>
+    
+    <script src="js/jquery.leanModal.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        $(document).ready(function () {
+            //$('#aOpen').leanModal({ top: 100, closeButton: ".modal_close" });
+            $('a[rel*=leanModal]').leanModal({ top: 100});
+        });
+    </script>
+    <style type="text/css">
+        #lean_overlay { position: fixed; z-index: 100; top: 0px; left: 0px; height: 100%; width: 100%; background: #000; display: none; }
+        #OpenWindow { background: none repeat scroll 0 0 #FFFFFF; border-radius: 5px 5px 5px 5px; box-shadow: 0 0 4px rgba(0, 0, 0, 0.7); display: none; padding-bottom: 2px; width: 404px; z-index: 11000; left: 50%; margin-left: -202px; opacity: 1; position: fixed; top: 200px; }
+    </style>
 </head>
 <!--Head Ends-->
 <!--Body-->
 <body>
-    <div class="login-container animated fadeInDown">
+	<div>
+		<a id="aOpen" href="jsp/login.jsp#OpenWindow" rel="leanModal">打开登陆窗口</a>
+	</div>
+	
+	<div id="OpenWindow">
+		<p>哈哈哈哈</p>
+	</div>
+	
+    <div class="login-container">
         <div class="loginbox bg-white">
         	<form action="loginAction">
             <div class="loginbox-title">登录</div>
