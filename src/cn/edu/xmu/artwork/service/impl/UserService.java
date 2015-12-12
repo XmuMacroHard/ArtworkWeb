@@ -6,6 +6,7 @@ import org.apache.jasper.tagplugins.jstl.core.If;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
+import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IUserService;
@@ -57,5 +58,15 @@ public class UserService implements IUserService
 		}
 	}
 	
+	@Override
+	public List<Artist> getArtistList()
+	{
+		return userDao.getArtistList();
+	}
 	
+	@Override
+	public Artist getArtist(long id)
+	{
+		return userDao.getArtist(id);
+	}
 }

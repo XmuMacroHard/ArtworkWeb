@@ -11,6 +11,7 @@ import java.util.List;
 import org.hibernate.*;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
+import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.User;
 
 public class UserDao extends GenericDao implements IUserDao 
@@ -61,5 +62,43 @@ public class UserDao extends GenericDao implements IUserDao
 		} catch (RuntimeException re) {
 			throw re;
 		}
+	}
+	
+	public List<Artist> getArtistList()
+	{
+		List<Artist> list=null;
+		try {
+			Query query = getSession().getNamedQuery("Artist.getArtistList");
+			list = query.list();
+			if(session!=null)
+				closeSession();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally{
+			if(session!=null)
+				closeSession();
+		}
+		return list;
+	}
+	
+	public Artist getArtist(long id)
+	{
+		Artist artist=null;
+		try {
+			Query query = getSession().getNamedQuery("Artist.getArtist").setParameter("Id", id);
+			artist = (Artist) query.uniqueResult();
+			if(session!=null)
+				closeSession();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		finally{
+			if(session!=null)
+				closeSession();
+		}
+		return artist;
 	}
 }

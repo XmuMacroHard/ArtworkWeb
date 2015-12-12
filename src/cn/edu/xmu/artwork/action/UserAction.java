@@ -1,7 +1,14 @@
 package cn.edu.xmu.artwork.action;
 
+import java.util.List;
+
+import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Result;
 import org.hibernate.exception.ConstraintViolationException;
 
+import cn.edu.xmu.artwork.entity.Artist;
+import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.*;
 
@@ -35,6 +42,23 @@ public class UserAction extends ActionSupport
 		catch (Exception e) {
 			return "fail";
 		}
+	}
+	
+	@Action(value="showArtist", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	public String showArtist()
+	{
+		List<Artist> list = userService.getArtistList();
+		ServletActionContext.getRequest().setAttribute("list", list);
+		return SUCCESS;
+	}
+	
+	@Action(value="getArtist", results={@Result(name="success", location="/jsp/test/shenggetArtist_test.jsp")})
+	public String getArtist()
+	{
+		long id =user.getId();
+		Artist artist=userService.getArtist(id);
+		ServletActionContext.getRequest().setAttribute("artist", artist);
+		return SUCCESS;
 	}
 	
 	public User getUser() {

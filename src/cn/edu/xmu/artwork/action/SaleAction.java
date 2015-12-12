@@ -111,7 +111,7 @@ public class SaleAction extends ActionSupport
 	/*
 	 *show the list of shoppingcart 
 	 * */
-	@Action(value="addToCart", results={@Result(name="success", type="json", params={"root", "result"})})
+	@Action(value="ShowshoppingCart", results={@Result(name="success", type="json", params={"root", "result"})})
 	public String showShoppingcart()
 	{
 		//need to be tes.

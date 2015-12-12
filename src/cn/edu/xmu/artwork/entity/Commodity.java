@@ -139,7 +139,7 @@ public class Commodity implements java.io.Serializable {
 		this.isBought = isBought;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="commodity")
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="commodityId")
 	public Set<CommodityPics> getCommodityPices() {
 		return commodityPices;
 	}

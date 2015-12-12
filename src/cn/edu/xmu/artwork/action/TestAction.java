@@ -27,7 +27,7 @@ public class TestAction extends ActionSupport
 	
 	@Action(value="test", results={@Result(name="success", location="/jsp/success.jsp", type="redirect")})
 	public String test() throws Exception 
-	{		
+	{
 		System.out.println(test.getAccount() + test.getPassword());
 		System.out.println("in text action execute");
 		testService.save(test);

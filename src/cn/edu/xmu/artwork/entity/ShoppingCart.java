@@ -22,7 +22,7 @@ import javax.persistence.Table;
 @NamedQueries({
 		@NamedQuery(
 			name = "ShoppingCart.getAllByUserId",
-			query = "from ShoppingCart c where c.userid = :userid"
+			query = "from ShoppingCart"
 		)
 })
 public class ShoppingCart implements java.io.Serializable {

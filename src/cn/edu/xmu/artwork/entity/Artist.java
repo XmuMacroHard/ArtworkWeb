@@ -1,10 +1,23 @@
 package cn.edu.xmu.artwork.entity;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 @PrimaryKeyJoinColumn(name="artistId")
+@NamedQueries({
+	@NamedQuery(
+		name = "Artist.getArtistList",
+		query = "from Artist"
+	),		
+	@NamedQuery(
+			name = "Artist.getArtist",
+			query = "from Artist where id = :Id"
+		)
+})
 public class Artist extends User 
 {
 	//need to be add
@@ -16,7 +29,7 @@ public class Artist extends User
 	private String fileurl;
 	
 	public Artist(){}
-
+	
 	public String getRealName() {
 		return realName;
 	}
@@ -28,11 +41,11 @@ public class Artist extends User
 	public String getIdentification() {
 		return identification;
 	}
-
+	
 	public void setIdentification(String identification) {
 		this.identification = identification;
 	}
-
+	
 	public String getIntroduction() {
 		return introduction;
 	}
@@ -40,7 +53,7 @@ public class Artist extends User
 	public void setIntroduction(String introduction) {
 		this.introduction = introduction;
 	}
-
+	
 	public String getFileurl() {
 		return fileurl;
 	}
