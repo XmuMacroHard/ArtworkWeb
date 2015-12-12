@@ -2,53 +2,56 @@
 <beans
 	xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:p="http://www.springframework.org/schema/p"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd" xmlns:tx="http://www.springframework.org/schema/tx">
+	xsi:schemaLocation="http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans-4.1.xsd 
+	http://www.springframework.org/schema/tx 
+	http://www.springframework.org/schema/tx/spring-tx.xsd 
+	http://www.springframework.org/schema/context
+	http://www.springframework.org/schema/context/spring-context-2.5.xsd" 
+	xmlns:tx="http://www.springframework.org/schema/tx">
 
-
-	<bean id="fileUtils" class="com.macrohard.utils.impl.FileUtils"></bean>
-	<bean id="imageUtils" class="com.macrohard.utils.impl.ImageUtils"></bean>
+	<context:component-scan base-package="cn.edu.xmu.artwork"/>
+	
+	<bean id="fileUtils" class="cn.edu.xmu.artwork.utils.impl.FileUtils"></bean>
+	<bean id="imageUtils" class="cn.edu.xmu.artwork.utils.impl.ImageUtils"></bean>
 	<!-- all entities -->
-	<bean id="user" class="com.macrohard.entity.User"></bean>
-	<bean id="information" class="com.macrohard.entity.Information"></bean>
+	<bean id="user" class="cn.edu.xmu.artwork.entity.User"></bean>
+	<bean id="information" class="cn.edu.xmu.artwork.entity.Information"></bean>
 	
 	<!-- all daos -->
-	<bean id="genericDao" class="com.macrohard.dao.impl.GenericDao">
-		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>
 	
-	<bean id="userDao" class="com.macrohard.dao.impl.UserDao" >
-		<property name="sessionFactory" ref="sessionFactory"></property>
-	</bean>		
-	<bean id="informationDao" class="com.macrohard.dao.impl.InformationDao" parent="genericDao">
+	<bean id="userDao" class="cn.edu.xmu.artwork.dao.impl.UserDao" ></bean>		
+	<bean id="informationDao" class="cn.edu.xmu.artwork.dao.impl.InformationDao">
 		<property name="fileUtils" ref="fileUtils"></property>
 		<property name="imgUtils" ref="imageUtils"></property>
 	</bean>	
 	
 	
 	<!-- all services -->
-	<bean id="userService" class="com.macrohard.service.impl.UserService">
+	<bean id="userService" class="cn.edu.xmu.artwork.service.impl.UserService">
 		<property name="userDao" ref="userDao"></property>
 	</bean>	
-	<bean id="informationService" class="com.macrohard.service.impl.InformationService">
+	<bean id="informationService" class="cn.edu.xmu.artwork.service.impl.InformationService">
 		<property name="informationDao" ref="informationDao"></property>
 		<property name="userDao" ref="userDao"></property>
 	</bean>	
 	
 	<!-- allActions -->
-	<bean id="inforAction" class="com.macrohard.action.InformationAction" scope="prototype">
+	<bean id="inforAction" class="cn.edu.xmu.artwork.action.InformationAction" scope="prototype">
 		<property name="information" ref="information"></property>
 		<property name="informationService" ref="informationService"></property>
 	</bean>	
 	
-	<bean id="userAction" class="com.macrohard.action.UserAction" scope="prototype">
+	<bean id="userAction" class="cn.edu.xmu.artwork.action.UserAction" scope="prototype">
 		<property name="user" ref="user"></property>
 		<property name="userService" ref="userService"></property>
 	</bean>
 	
-	<bean id="ajaxAction" class="com.macrohard.action.AjaxAction" scope="prototype">
+	<bean id="ajaxAction" class="cn.edu.xmu.artwork.action.AjaxAction" scope="prototype">
 		<property name="user" ref="user"></property>
 	</bean>
 	
 	<import resource="persistence.xml"/>
-</beans>
+	</beans>
