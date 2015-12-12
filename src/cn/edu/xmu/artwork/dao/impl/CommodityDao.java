@@ -10,12 +10,6 @@ import org.springframework.stereotype.Repository;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.entity.Commodity;
 
-@NamedQueries(
-	@NamedQuery(
-		name = "getCommoditiesByType",
-		query = "from Commodity c where c.type = :commType"
-	)
-)
 
 @Repository
 public class CommodityDao extends GenericDao implements ICommodityDao 
@@ -23,8 +17,19 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 	@SuppressWarnings("unchecked")
 	public List<Commodity> getCommodityListByType(String commoType)
 	{
-		Query getCommodities = getSession().getNamedQuery("getCommoditiesByType").setParameter("commType", commoType);
+		Query getCommodities = getSession().getNamedQuery("Commodity.getAllByType").setParameter("commType", commoType);
 		List<Commodity> commodities = (List<Commodity>)getCommodities.list();
 		return commodities;
+	}
+	
+	public Commodity getCommodityById(long id)
+	{
+		Query getCommunity = getSession().getNamedQuery("Commodity.getById").setParameter("commId", id);
+		return (Commodity)getCommunity.uniqueResult();
+	}
+	
+	public void saveCommodity(Commodity commodity)
+	{
+		getSession().save(commodity);
 	}
 }

@@ -31,13 +31,10 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		try {
 			
 			long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");		
-			String storedPath = storeImg(file, filename);
+			//String storedPath = storeImg(file, filename);
 			
 			information.setEditorId(id);
-			//User user = new User();
-			//user.setId(id);
-			//information.setUser(user);
-			information.addPicture(storedPath);
+			//information.addPicture(storedPath);
 		
 			getSession().save(information);	
 		} catch (Exception e) {

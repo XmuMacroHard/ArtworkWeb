@@ -48,17 +48,12 @@ public class UserService implements IUserService
 		else
 		{
 			ActionContext.getContext().getSession().put("user", resultUser);
-<<<<<<< HEAD:src/com/macrohard/service/impl/UserService.java
-		
-			return "success";
-=======
 
 //			if(resultUser.getIdentity().equals("normal"))
 				return "success";
 //			else
 //				return "admistratorSuccess";
 
->>>>>>> origin/master:src/cn/edu/xmu/artwork/service/impl/UserService.java
 		}
 	}
 	

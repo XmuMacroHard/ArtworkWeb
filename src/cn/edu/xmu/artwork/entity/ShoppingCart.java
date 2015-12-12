@@ -4,7 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,13 +19,23 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "shopping_cart", catalog = "artworkdb")
+@NamedQueries({
+		@NamedQuery(
+			name = "ShoppingCart.getAllByUserId",
+			query = "from ShoppingCart c where c.userid = :userid"
+		)
+})
 public class ShoppingCart implements java.io.Serializable {
 
 	// Fields
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private Long id;
 	private User user;
-	private Long commodityid;
+	private Commodity commodity;
 
 	// Constructors
 
@@ -30,9 +44,9 @@ public class ShoppingCart implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public ShoppingCart(User user, Long commodityid) {
+	public ShoppingCart(User user, Commodity commodity) {
 		this.user = user;
-		this.commodityid = commodityid;
+		this.commodity = commodity;
 	}
 
 	// Property accessors
@@ -57,13 +71,14 @@ public class ShoppingCart implements java.io.Serializable {
 		this.user = user;
 	}
 
-	@Column(name = "commodityid", nullable = false)
-	public Long getCommodityid() {
-		return this.commodityid;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "commodityid", nullable = false)		
+	public Commodity getCommodity() {
+		return commodity;
 	}
 
-	public void setCommodityid(Long commodityid) {
-		this.commodityid = commodityid;
+	public void setCommodity(Commodity commodity) {
+		this.commodity = commodity;
 	}
 
 }

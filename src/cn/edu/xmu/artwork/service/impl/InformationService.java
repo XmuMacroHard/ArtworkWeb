@@ -23,7 +23,6 @@ public class InformationService implements IInformationService {
 	public void submit(Information information, File file, String filename) {
 		
 		InformationDao.save(information, file, filename);
-		//inforPicsDao.storePicures(file, filename);
 	}
 	
 	public List<Information> showInforList(long id)

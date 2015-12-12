@@ -5,12 +5,9 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 
-import java.util.Map;
-
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.service.IInformationService;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class InformationAction extends ActionSupport 
@@ -38,11 +35,7 @@ public class InformationAction extends ActionSupport
 		
 		return "success";
 	}
-	
-//	public String test()
-//	{
-//		
-//	}
+
 
 	/*
 	 * show the information list for the editor

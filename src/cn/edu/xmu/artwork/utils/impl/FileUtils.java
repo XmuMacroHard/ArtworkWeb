@@ -8,8 +8,11 @@ import java.io.FileOutputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
 
+import org.springframework.stereotype.Component;
+
 import cn.edu.xmu.artwork.utils.IFileUtils;
 
+@Component
 public class FileUtils implements IFileUtils {
 
 	private static final int BUFFER_SIZE = 16 * 1024;
