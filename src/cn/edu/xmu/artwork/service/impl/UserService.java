@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.service.impl;
 import java.util.List;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.opensymphony.xwork2.ActionContext;
+@Transactional
 
 public class UserService implements IUserService
 {
@@ -68,5 +70,17 @@ public class UserService implements IUserService
 	public Artist getArtist(long id)
 	{
 		return userDao.getArtist(id);
+	}
+	
+	@Override
+	public List<Artist> getArtistBySort(String identification)
+	{
+		return userDao.getArtistBySort(identification);
+	}
+	
+	@Override
+	public List<Artist> getArtistByName(String name)
+	{
+		return userDao.getArtistByName(name);
 	}
 }

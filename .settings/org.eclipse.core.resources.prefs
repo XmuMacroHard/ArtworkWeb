@@ -4,5 +4,6 @@
 eclipse.preferences.version=1
 encoding//WebRoot/index.jsp=UTF-8
 encoding//WebRoot/jsp/info.jsp=UTF-8
+encoding//WebRoot/jsp/test/shengtest.jsp=UTF-8
 encoding//WebRoot/jsp/test/submitInfor_test.jsp=UTF-8
 encoding/<project>=UTF-8

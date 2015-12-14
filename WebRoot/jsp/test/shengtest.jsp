@@ -1,5 +1,5 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -10,26 +10,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'submitInfor.jsp' starting page</title>
+    <title>My JSP 'shengtest.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">
+	<meta http-equiv="expires" content="0">    
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
-  <%
-  	long i = 1;
-  	session.setAttribute("userid", i);
-   %>
-	  <s:form action="submitInfor" method="POST" enctype="multipart/form-data">
-		<s:file name="pic" label="uploadfile"/>
-		<s:submit/>
-	   </s:form>
+    This is my JSP page. <br>
+        <a href="showInfor.action">咨询列表</a><br>
+    <a href="showArtist.action">艺术家列表</a><br>
+    <a href="findArtist.action?user.id=1">艺术家1</a><br>
+     <a href="getArtistBySort.action?artist.identification=4">艺术家列表(类别包含4)</a><br>
+      <a href="getArtistByName.action?artist.realName=1">艺术家列表(名字包含1)</a>
   </body>
 </html>

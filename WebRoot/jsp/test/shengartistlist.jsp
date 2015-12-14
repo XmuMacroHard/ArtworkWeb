@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <td><s:property value="#artist.id"/></td>
         <td><s:property value="#artist.realName"/></td>
         <td><s:property value="#artist.email"/></td>
-        <td><a href="getArtist.action?user.id=<s:property value="#artist.id"/>">详细信息</a></td>
+        <td><a href="findArtist.action?user.id=<s:property value="#artist.id"/>">详细信息</a></td>
       </tr>
       </s:iterator>
    </table> 

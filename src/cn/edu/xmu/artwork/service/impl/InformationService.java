@@ -4,13 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import cn.edu.xmu.artwork.dao.IInforPicsDao;
 import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IInformationService;
-
+@Transactional
 public class InformationService implements IInformationService {
 
 	

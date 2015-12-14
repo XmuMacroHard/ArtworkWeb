@@ -12,24 +12,35 @@ import javax.persistence.PrimaryKeyJoinColumn;
 	@NamedQuery(
 		name = "Artist.getArtistList",
 		query = "from Artist"
-	),		
+	),
 	@NamedQuery(
 			name = "Artist.getArtist",
 			query = "from Artist where id = :Id"
-		)
+	),
+	@NamedQuery(
+			name = "Artist.getArtistBySort",
+			query = "from Artist where identification like :Search"
+	),
+	@NamedQuery(
+			name = "Artist.getArtistByName",
+			query = "from Artist where realName like :Search"
+	)
 })
 public class Artist extends User 
 {
 	//need to be add
 	//icon
 	
+	private static final long serialVersionUID = 1L;
 	private String realName;
 	private String identification;
 	private String introduction;
 	private String fileurl;
+	private String isapprove;
 	
 	public Artist(){}
 	
+	@Column(name = "realName", nullable = false, length = 20)
 	public String getRealName() {
 		return realName;
 	}
@@ -37,7 +48,8 @@ public class Artist extends User
 	public void setRealName(String realName) {
 		this.realName = realName;
 	}
-
+	
+	@Column(name = "identification", nullable = false, length = 50)
 	public String getIdentification() {
 		return identification;
 	}
@@ -46,6 +58,7 @@ public class Artist extends User
 		this.identification = identification;
 	}
 	
+	@Column(name = "introduction", nullable = false, length = 1000)
 	public String getIntroduction() {
 		return introduction;
 	}
@@ -54,6 +67,7 @@ public class Artist extends User
 		this.introduction = introduction;
 	}
 	
+	@Column(name = "Fileurl", nullable = false, length = 40)
 	public String getFileurl() {
 		return fileurl;
 	}
@@ -62,6 +76,12 @@ public class Artist extends User
 		this.fileurl = fileurl;
 	}
 	
+	@Column(name = "isapprove", nullable = false, length = 11)
+	public String getIsapprove() {
+		return isapprove;
+	}
 	
-	
+	public void setIsapprove(String isapprove) {
+		this.isapprove = isapprove;
+	}
 }

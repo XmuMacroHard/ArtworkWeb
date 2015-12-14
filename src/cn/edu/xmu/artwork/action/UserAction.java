@@ -19,9 +19,10 @@ public class UserAction extends ActionSupport
 {
 	private static final long serialVersionUID = 1L;
 	private User user;
+	private Artist artist;
 	private IUserService userService;
 	
-	public String login() 
+	public String login()
 	{
 		// s = {fail, success, admistratorSuccess}
 		String s = userService.login(user);
@@ -52,12 +53,30 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="getArtist", results={@Result(name="success", location="/jsp/test/shenggetArtist_test.jsp")})
-	public String getArtist()
+	@Action(value="findArtist", results={@Result(name="success", location="/jsp/test/shenggetArtist_test.jsp")})
+	public String findArtist()
 	{
 		long id =user.getId();
 		Artist artist=userService.getArtist(id);
 		ServletActionContext.getRequest().setAttribute("artist", artist);
+		return SUCCESS;
+	}
+	
+	@Action(value="getArtistBySort", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	public String getArtistBySort()
+	{
+		String identification=artist.getIdentification();
+		List<Artist> list = userService.getArtistBySort("%"+identification+"%");
+		ServletActionContext.getRequest().setAttribute("list", list);
+		return SUCCESS;
+	}
+	
+	@Action(value="getArtistByName", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	public String getArtistByName()
+	{
+		String realName=artist.getRealName();
+		List<Artist> list = userService.getArtistByName("%"+realName+"%");
+		ServletActionContext.getRequest().setAttribute("list", list);
 		return SUCCESS;
 	}
 	
@@ -67,6 +86,15 @@ public class UserAction extends ActionSupport
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	
+	public Artist getArtist() {
+		return artist;
+	}
+
+	public void setArtist(Artist artist) {
+		this.artist = artist;
 	}
 
 	public IUserService getUserService() {

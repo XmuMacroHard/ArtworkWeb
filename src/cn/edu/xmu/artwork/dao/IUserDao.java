@@ -12,4 +12,6 @@ public interface IUserDao {
 	public User findById(long id);
 	public List<Artist> getArtistList();
 	public Artist getArtist(long id);
+	public List<Artist> getArtistBySort(String identification);
+	public List<Artist> getArtistByName(String name);
 }

@@ -33,7 +33,7 @@ public class InformationAction extends ActionSupport
 		System.out.println("content:" + information.getContent() + "\ntitle:" + information.getTitle() + "\nstarttime:" + information.getStartTime());	
 		informationService.submit(getInformation(), pic, picFileName);
 		
-		return "success";
+		return SUCCESS;
 	}
 
 
@@ -45,14 +45,14 @@ public class InformationAction extends ActionSupport
 		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");	
 		List<Information> list = informationService.showInforList(id);
 		ServletActionContext.getRequest().setAttribute("informationList", list);
-		return "success";
+		return SUCCESS;
 	}
 	
 	public String showInfor()
 	{		
 		List<Information> list = informationService.getAll();
 		ServletActionContext.getRequest().setAttribute("list", list);
-		return "success";
+		return SUCCESS;
 	}
 
 	public String getInfor()
@@ -60,7 +60,7 @@ public class InformationAction extends ActionSupport
 		long id =information.getId();
 		Information infor=informationService.findInfor(id);
 		ServletActionContext.getRequest().setAttribute("Infor", infor);
-		return "success";
+		return SUCCESS;
 	}
 	
 	public void setPic(File pic) {

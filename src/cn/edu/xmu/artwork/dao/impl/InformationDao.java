@@ -70,14 +70,11 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		try {
 			Query query = getSession().createQuery("from Information");
 			list = query.list();
-			closeSession();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		finally{
-			if(session.isOpen())
-		        session.close();
 		}
 		return list;
 	}
@@ -89,14 +86,11 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		try {
 			Query query = getSession().createQuery("from Information where id="+id);
 			Infor = (Information) query.uniqueResult();
-			closeSession();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		finally{
-			if(session.isOpen())
-		        session.close();
 		}
 		return Infor;
 	}
