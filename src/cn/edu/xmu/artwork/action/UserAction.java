@@ -85,6 +85,13 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	@Action(value="submitArtist", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	public String submitArtist()
+	{
+		userService.submitArtist(artist);
+		return SUCCESS;
+	}
+	
 	public User getUser() {
 		return user;
 	}

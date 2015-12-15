@@ -20,10 +20,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
-
+	
   </head>
   
   <body>
-    This is my JSP page. <br>
+  <form action="submitArtist" method="POST" enctype="multipart/form-data">
+    realName<s:textfield name="artist.realName"/><br>
+    introduction<s:textfield name="artist.introduction"/><br>
+              类别<s:checkbox name="artist.identification" label="书法" fieldValue="calligraphy"/>
+    <s:checkbox name="artist.identification" label="绘画" fieldValue="painting"/>
+    <s:checkbox name="artist.identification" label="雕刻" fieldValue="sculpture"/>
+     <s:checkbox name="artist.identification" label="手工品" fieldValue="handicraft"/><br>
+   	
+   	<br><button type="submit">提交</button>
+   </form>
   </body>
 </html>

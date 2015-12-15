@@ -2,6 +2,7 @@ package cn.edu.xmu.artwork.dao.impl;
 
 import java.util.List;
 
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,7 +10,9 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 
 import org.hibernate.*;
+import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
@@ -40,7 +43,7 @@ public class UserDao extends GenericDao implements IUserDao
 		
 		try {
 			String queryString = "from User";
-			Query queryObject = getSession().createQuery(queryString);			
+			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			throw re;
@@ -126,5 +129,26 @@ public class UserDao extends GenericDao implements IUserDao
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	/**
+	 * 艺术家认证资料提交
+	 * @author sheng
+	 */
+	public void submitArtist(Artist artist)
+	{
+		try {
+			
+			Transaction trans = getSession().beginTransaction();
+			String hql=String.format("update User set type='artist',isapprove='pending',identification='%s',realName='%s',introduction='%s' where id=5",
+					artist.getIdentification(),artist.getRealName(),artist.getIntroduction());
+			Query queryupdate=getSession().createQuery(hql);
+			queryupdate.executeUpdate();
+			trans.commit();
+		
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 }

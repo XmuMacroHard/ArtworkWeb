@@ -83,4 +83,11 @@ public class UserService implements IUserService
 	{
 		return userDao.getArtistByName(name);
 	}
+	
+	@Override
+	public void submitArtist(Artist artist)
+	{
+		userDao.submitArtist(artist);
+	}
+	
 }
