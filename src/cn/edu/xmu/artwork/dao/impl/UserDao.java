@@ -71,9 +71,7 @@ public class UserDao extends GenericDao implements IUserDao
 	public void updateUserState(String userEmail, String state)
 	{
 		System.out.println("in userDao");
-		
-		
-		
+	
 		Transaction trans = getSession().beginTransaction();
 		String hql=String.format("update User user set user.isBanned = %s where user.email = %s", state, userEmail);
 		Query queryupdate=session.createQuery(hql);

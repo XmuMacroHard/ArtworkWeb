@@ -39,6 +39,14 @@ public class AdminAction extends ActionSupport {
 	@Autowired
 	private IAdminService adminService;
 	
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -107,8 +115,9 @@ public class AdminAction extends ActionSupport {
 			System.out.println(user.getEmail());
 			adminService.UserBanning(user.getEmail());
 			
+			jsobj.put("email", user.getEmail());
 			jsobj.put("success", "banning success");
-			result = jsobj.toString();
+			setResult(jsobj.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -117,18 +126,31 @@ public class AdminAction extends ActionSupport {
 	}
 	
 	/**
-	 * 解除用户禁用操作
+	 * 启用用户操作
 	 * @return String
 	 * @author asus1
 	 */
+	@Action(
+			value = "UserRelieve",
+			results = {
+					@Result(name="success", type="json", params={"root", "result"})
+			}
+			)
 	public String UserRelieve()
 	{
-		return "";
+		try {
+			JSONObject jsobj = new JSONObject();
+			
+			System.out.println(user.getEmail());
+			adminService.UserRelieve(user.getEmail());
+			
+			jsobj.put("email", user.getEmail());
+			jsobj.put("success", "relieve success");
+			setResult(jsobj.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "success";
 	}
-
-	
-
-	
-	
-	
 }

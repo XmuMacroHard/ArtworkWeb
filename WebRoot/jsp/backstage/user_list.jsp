@@ -919,10 +919,10 @@ Purchase: http://wrapbootstrap.com
                                         <tbody>
                                         <s:iterator id="user" value="#request.list">
                                             <tr>
-                                                <td id = "<s:property value="#user.email"/>"><s:property value="#user.email"/></td>
+                                                <td><a href="#"><s:property value="#user.email"/></a></td>
                                                 <td><s:property value="#user.nickname"/></td>
                                                 <td><s:property value="#user.phone"/></td>
-                                                <td>
+                                                <td id = "<s:property value="#user.email"/>">
                                                 	<s:if test='%{#user.isBanned == "1"}'>
                                                 		<span class="label label-danger">已禁用</span>
                                                 	</s:if>
@@ -931,12 +931,8 @@ Purchase: http://wrapbootstrap.com
                                                 	</s:elseif>
                                                 </td>
                                                 <td>
-                                                    <s:a href="JavaScript:UserBanning(%{email});" cssClass="btn btn-info btn-xs"><i class="fa fa-edit"></i> Edit</s:a>
-                                                    
-                                                    <s:url id="UserBanning" action="UserBanning">
-                                                    	<s:param name="user.email"><s:property value="#user.email"/></s:param>
-                                                    </s:url>
-                                                    <s:a href="%{UserBanning}" cssClass="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> Delete</s:a>
+                                                    <s:a href="JavaScript:UserRelieve(%{email});" cssClass="btn btn-success btn-xs"><i class="fa fa-edit"></i> 启用</s:a>
+                                                    <s:a href="JavaScript:UserBanning(%{email});" cssClass="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 禁用</s:a>
                                                 </td>
                                             </tr>
                                         </s:iterator>

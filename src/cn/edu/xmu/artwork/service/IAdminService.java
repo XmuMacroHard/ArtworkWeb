@@ -13,6 +13,7 @@ public interface IAdminService {
 	
 	public List ShowAllUserList() throws Exception;
 	public String UserBanning(String userEmail) throws Exception;
+	public String UserRelieve(String userEmail) throws Exception;
 	
 
 }

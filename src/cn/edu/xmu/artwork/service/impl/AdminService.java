@@ -56,5 +56,20 @@ public class AdminService implements IAdminService {
 		return null;
 	}
 	
+	/**
+	 * 启用用户
+	 * @author asus1
+	 * @param 用户email
+	 * @return 结果
+	 */
+	@Override
+	public String UserRelieve(String userEmail) throws Exception {
+		
+		System.out.println("in relieve service");
+		userDao.updateUserState(userEmail, "0");
+		
+		return null;
+	}
+	
 	
 }
