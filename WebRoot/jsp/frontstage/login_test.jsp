@@ -32,7 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
     <div style="text-align: center">
-        <a id="aOpen" href="jsp/frontstage/login_test.jsp#OpenWindow" rel="leanModal">打开登陆窗口</a>
+        <a id="aOpen" href="javascript:void(0)" rel="leanModal" onclick="document.getElementById('OpenWindow').scrollIntoView();">打开登陆窗口</a>
     </div>
     <div id="OpenWindow">
         <div id="signup-ct">

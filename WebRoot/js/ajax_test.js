@@ -8,7 +8,7 @@ function btn()
 		type:"post",
 		url:"ajaxAction",
 		data:{
-			"user.account":$("#account_input").val(),
+			"user.email":$("#account_input").val(),
 			"user.password":$("#password_input").val()
 		},
 		dataType:"json",

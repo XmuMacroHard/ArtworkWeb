@@ -4,10 +4,12 @@ package cn.edu.xmu.artwork.action;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+
 
 
 
@@ -33,6 +35,7 @@ public class SaleAction extends ActionSupport
 	@Autowired
 	private ISaleService saleService;
 	
+	@Action()
 	String showCommListByType()
 	{
 		List<Commodity> commodities = saleService.getCommodityListByType(commodityType);

@@ -9,10 +9,12 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 
 import org.hibernate.*;
+import org.springframework.stereotype.Repository;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.User;
 
+@Repository
 public class UserDao extends GenericDao implements IUserDao 
 {
 	
@@ -32,10 +34,7 @@ public class UserDao extends GenericDao implements IUserDao
 		return  (User)query.uniqueResult();
 	}
 	
-	public Session getSession()
-	{
-		return sessionFactory.openSession();
-	}
+	@SuppressWarnings("rawtypes")
 	public List findAll() {
 		
 		try {
@@ -47,8 +46,7 @@ public class UserDao extends GenericDao implements IUserDao
 		}
 		finally
 		{
-			if(getSession().isOpen())
-				closeSession();
+			closeSession();
 		}
 	}
 	
@@ -61,5 +59,27 @@ public class UserDao extends GenericDao implements IUserDao
 		} catch (RuntimeException re) {
 			throw re;
 		}
+	}
+	
+	/**
+	 * 更新用户状态
+	 * @author asus1
+	 * @param userEmail
+	 * @param state
+	 */
+	public void updateUserState(String userEmail, String state)
+	{
+		System.out.println("in userDao");
+		
+		
+		
+		Transaction trans = getSession().beginTransaction();
+		String hql=String.format("update User user set user.isBanned = %s where user.email = %s", state, userEmail);
+		Query queryupdate=session.createQuery(hql);
+		int ret=queryupdate.executeUpdate();
+		trans.commit();
+		closeSession();
+		
+		System.out.println("in userDao + " + state);
 	}
 }

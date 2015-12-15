@@ -32,7 +32,7 @@ public class User implements java.io.Serializable {
 	private String password;
 	private String nickname;
 	private Float balance;
-	private Boolean isBanned;
+	private String isBanned;//bool->string @author asus1
 	private String phone;
 	private Set<ShippingAddress> shippingAddresses = new HashSet<ShippingAddress>(
 			0);
@@ -53,7 +53,7 @@ public class User implements java.io.Serializable {
 
 	/** full constructor */
 	public User(String email, String password, String nickname, Float balance,
-			Boolean isBanned, String phone,
+			String isBanned, String phone, 
 			Set<ShippingAddress> shippingAddresses,
 			Set<Information> informations, Set<ShoppingCart> shoppingCarts) {
 		this.email = email;
@@ -115,12 +115,12 @@ public class User implements java.io.Serializable {
 		this.balance = balance;
 	}
 
-	@Column(name = "isBanned")
-	public Boolean getIsBanned() {
+	@Column(name = "isBanned", length = 20)
+	public String getIsBanned() {
 		return this.isBanned;
 	}
 
-	public void setIsBanned(Boolean isBanned) {
+	public void setIsBanned(String isBanned) {
 		this.isBanned = isBanned;
 	}
 
