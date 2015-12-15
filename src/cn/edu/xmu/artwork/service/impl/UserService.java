@@ -86,4 +86,9 @@ public class UserService implements IUserService
 	{
 		user.setPassword(md5Util.MD5(user.getPassword()));
 	}
+	@Override
+	public void submitArtist(Artist artist)
+	{
+		userDao.submitArtist(artist);
+	}
 }

@@ -39,7 +39,7 @@ public class AdminService implements IAdminService {
 	public List ShowAllUserList()
 	{
 		System.out.println("userlistService");
-		List<User> userList = userDao.findAll();
+		List userList = userDao.findAll();
 		return userList;
 	}
 	

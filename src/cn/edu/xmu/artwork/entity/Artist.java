@@ -1,13 +1,14 @@
 package cn.edu.xmu.artwork.entity;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(name="artistId")
+@DiscriminatorValue("artist")
 @NamedQueries({
 	@NamedQuery(
 		name = "Artist.getArtistList",
@@ -24,6 +25,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 	@NamedQuery(
 			name = "Artist.getArtistByName",
 			query = "from Artist where realName like :Search"
+	),
+	@NamedQuery(
+			name = "Artist.submit",
+			query = "update User set type='artist',isapprove='pending',identification='%s',realName='%s',introduction='?' where id=?"
 	)
 })
 public class Artist extends User 
