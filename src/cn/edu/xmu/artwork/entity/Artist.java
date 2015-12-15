@@ -45,7 +45,7 @@ public class Artist extends User
 	
 	public Artist(){}
 	
-	@Column(name = "realName", nullable = false, length = 20)
+	@Column(name = "realName", length = 20)
 	public String getRealName() {
 		return realName;
 	}
@@ -54,7 +54,7 @@ public class Artist extends User
 		this.realName = realName;
 	}
 	
-	@Column(name = "identification", nullable = false, length = 50)
+	@Column(name = "identification", length = 50)
 	public String getIdentification() {
 		return identification;
 	}
@@ -63,7 +63,7 @@ public class Artist extends User
 		this.identification = identification;
 	}
 	
-	@Column(name = "introduction", nullable = false, length = 1000)
+	@Column(name = "introduction", length = 1000)
 	public String getIntroduction() {
 		return introduction;
 	}
@@ -72,7 +72,7 @@ public class Artist extends User
 		this.introduction = introduction;
 	}
 	
-	@Column(name = "Fileurl", nullable = false, length = 40)
+	@Column(name = "Fileurl", length = 40)
 	public String getFileurl() {
 		return fileurl;
 	}
@@ -81,7 +81,7 @@ public class Artist extends User
 		this.fileurl = fileurl;
 	}
 	
-	@Column(name = "isapprove", nullable = false, length = 11)
+	@Column(name = "isapprove", length = 11)
 	public String getIsapprove() {
 		return isapprove;
 	}

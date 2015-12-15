@@ -10,12 +10,16 @@ import cn.edu.xmu.artwork.entity.Information;
 
 public interface IInformationDao 
 {
-	public void save(Information information, File file, String filename);
+	public void save(Information information);
 	
 	public List<Information> getAll();
 	
-	public Information findInfor(long id);
+	public Information findInfoById(long id);
 	
 	public List findAll();
+	
+	public List<Information> getTodayInfoByLocation(String location);
+
+	public List<Information> getInfoByColum(String colum);
 
 }

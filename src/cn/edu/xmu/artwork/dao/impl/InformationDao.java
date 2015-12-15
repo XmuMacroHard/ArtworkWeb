@@ -2,18 +2,11 @@ package cn.edu.xmu.artwork.dao.impl;
 
 
 import java.io.File;
+import java.util.Calendar;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
-
-
-
-
-
-
-
-
 
 import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.dao.IInformationDao;
@@ -27,22 +20,12 @@ public class InformationDao extends GenericDao implements IInformationDao {
 	private IImageUtils imgUtils;
 	
 	@Override
-	public void save(Information information, File file, String filename) {
-		try {
-			
-			long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");		
-			//String storedPath = storeImg(file, filename);
-			
-			information.setEditorId(id);
-			//information.addPicture(storedPath);
-		
+	public void save(Information information) {
+		try {			
 			getSession().save(information);	
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
-		}finally
-		{
-			closeSession();	
 		}
 	}
 
@@ -79,32 +62,39 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		return list;
 	}
 	
+	/*get today informations*/
+	@SuppressWarnings("unchecked")
 	@Override
-	public Information findInfor(long id)
+	public List<Information> getTodayInfoByLocation(String location)
+	{
+		Calendar today = Calendar.getInstance();
+		Query query = getSession().getNamedQuery("Information.getInfoShownOnHomePage");
+		query.setDate("today", today.getTime());
+		query.setParameter("location", location);
+		query.setMaxResults(IStrings.INFO_LOCATION_1_NUM);
+		List<Information> informations = query.list();
+		return informations;
+	}
+	
+	@SuppressWarnings("unchecked")
+	public List<Information> getInfoByColum(String colum)
+	{
+		Query query = getSession().getNamedQuery("Information.getInfoByColum").setParameter("colum", colum);
+		return query.list();
+	}
+	
+	@Override
+	public Information findInfoById(long id)
 	{
 		Information Infor=null;
 		try {
-			Query query = getSession().createQuery("from Information where id="+id);
+			Query query = getSession().getNamedQuery("Information.getInfoById").setParameter("infoId", id);
 			Infor = (Information) query.uniqueResult();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
-		finally{
-		}
 		return Infor;
-	}
-	/*
-	 * @return return the path stored to the data base.
-	 * */
-	private String storeImg(File file, String filename)
-	{
-		String rootPath = ServletActionContext.getServletContext().getRealPath(IStrings.IMAGE_DIR);
-		String realFileName = imgUtils.createImgName(filename);
-		String toImgPath = rootPath + "/" + realFileName;
-		fileUtils.copy(file, toImgPath);
-		
-		return "/" + IStrings.IMAGE_DIR + "/" + realFileName;
 	}
 
 	

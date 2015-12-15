@@ -1,10 +1,14 @@
 package cn.edu.xmu.artwork.entity;
 
+import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -21,9 +25,10 @@ public class DatePos implements java.io.Serializable {
 
 	private Long id;
 	private Information information;
-	private Long date;
+	private Date date;
 	private String colum;
-	private Integer pos;
+	private Integer pos;			//record the concrete position of the location
+	private String location;		//record the concrete location in the page  
 
 	// Constructors
 
@@ -32,14 +37,14 @@ public class DatePos implements java.io.Serializable {
 	}
 
 	/** minimal constructor */
-	public DatePos(Information information, Long date, String colum) {
+	public DatePos(Information information, Date date, String colum) {
 		this.information = information;
 		this.date = date;
 		this.colum = colum;
 	}
 
 	/** full constructor */
-	public DatePos(Information information, Long date, String colum, Integer pos) {
+	public DatePos(Information information, Date date, String colum, Integer pos) {
 		this.information = information;
 		this.date = date;
 		this.colum = colum;
@@ -58,7 +63,7 @@ public class DatePos implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "infoId", nullable = false)
 	public Information getInformation() {
 		return this.information;
@@ -67,23 +72,25 @@ public class DatePos implements java.io.Serializable {
 	public void setInformation(Information information) {
 		this.information = information;
 	}
+	
 
-	@Column(name = "date", nullable = false)
-	public Long getDate() {
-		return this.date;
-	}
-
-	public void setDate(Long date) {
-		this.date = date;
-	}
-
-	@Column(name = "colum", nullable = false, length = 10)
+	@Column(name = "colum", length = 10)
 	public String getColum() {
 		return this.colum;
 	}
 
+
 	public void setColum(String colum) {
 		this.colum = colum;
+	}
+
+	@Column(name = "date")
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
 	}
 
 	@Column(name = "pos")
@@ -95,4 +102,14 @@ public class DatePos implements java.io.Serializable {
 		this.pos = pos;
 	}
 
+	@Column(name = "location", length = 20)
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	
 }

@@ -12,9 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import cn.edu.xmu.artwork.entity.Artist;
-import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
-import cn.edu.xmu.artwork.service.*;
+import cn.edu.xmu.artwork.service.IUserService;
 
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
