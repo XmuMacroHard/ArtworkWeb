@@ -1,13 +1,14 @@
 package cn.edu.xmu.artwork.entity;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(name="artistId")
+@DiscriminatorValue("artist")
 @NamedQueries({
 	@NamedQuery(
 		name = "Artist.getArtistList",

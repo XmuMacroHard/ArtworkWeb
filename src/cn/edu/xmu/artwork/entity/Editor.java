@@ -1,10 +1,11 @@
 package cn.edu.xmu.artwork.entity;
 
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@PrimaryKeyJoinColumn(name="editorId")
+@DiscriminatorValue("edior")
 public class Editor extends User 
 {
 	private String rank;

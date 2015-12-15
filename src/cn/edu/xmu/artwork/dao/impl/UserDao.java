@@ -2,6 +2,7 @@ package cn.edu.xmu.artwork.dao.impl;
 
 import java.util.List;
 
+import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -9,6 +10,7 @@ import org.hibernate.SessionFactory;
 import java.util.List;
 
 import org.hibernate.*;
+import org.springframework.beans.BeanUtils;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
@@ -114,5 +116,26 @@ public class UserDao extends GenericDao implements IUserDao
 			e.printStackTrace();
 		}
 		return list;
+	}
+	
+	/**
+	 * 艺术家认证资料提交
+	 * @author sheng
+	 */
+	public void submitArtist(Artist artist)
+	{
+		try {
+			Artist artist2=(Artist) getSession().load(User.class,5L);
+			//long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");		
+			artist2.setIdentification(artist.getIdentification());
+			artist2.setIsapprove("pending");
+			artist2.setRealName(artist.getRealName());
+			artist2.setIntroduction(artist.getIntroduction());
+			
+			getSession().update(artist2);
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
 	}
 }

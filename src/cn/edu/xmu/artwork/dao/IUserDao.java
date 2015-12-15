@@ -14,4 +14,5 @@ public interface IUserDao {
 	public Artist getArtist(long id);
 	public List<Artist> getArtistBySort(String identification);
 	public List<Artist> getArtistByName(String name);
+	public void submitArtist(Artist artist);
 }
