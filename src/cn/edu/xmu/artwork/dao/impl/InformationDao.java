@@ -31,13 +31,10 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		try {
 			
 			long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");		
-			String storedPath = storeImg(file, filename);
+			//String storedPath = storeImg(file, filename);
 			
 			information.setEditorId(id);
-			//User user = new User();
-			//user.setId(id);
-			//information.setUser(user);
-			information.addPicture(storedPath);
+			//information.addPicture(storedPath);
 		
 			getSession().save(information);	
 		} catch (Exception e) {
@@ -73,14 +70,11 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		try {
 			Query query = getSession().createQuery("from Information");
 			list = query.list();
-			closeSession();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		finally{
-			if(session.isOpen())
-		        session.close();
 		}
 		return list;
 	}
@@ -92,14 +86,11 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		try {
 			Query query = getSession().createQuery("from Information where id="+id);
 			Infor = (Information) query.uniqueResult();
-			closeSession();
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
 		finally{
-			if(session.isOpen())
-		        session.close();
 		}
 		return Infor;
 	}

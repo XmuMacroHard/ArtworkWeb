@@ -5,12 +5,9 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 
-import java.util.Map;
-
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.service.IInformationService;
 
-import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class InformationAction extends ActionSupport 
@@ -36,13 +33,9 @@ public class InformationAction extends ActionSupport
 		System.out.println("content:" + information.getContent() + "\ntitle:" + information.getTitle() + "\nstarttime:" + information.getStartTime());	
 		informationService.submit(getInformation(), pic, picFileName);
 		
-		return "success";
+		return SUCCESS;
 	}
-	
-//	public String test()
-//	{
-//		
-//	}
+
 
 	/*
 	 * show the information list for the editor
@@ -52,14 +45,14 @@ public class InformationAction extends ActionSupport
 		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");	
 		List<Information> list = informationService.showInforList(id);
 		ServletActionContext.getRequest().setAttribute("informationList", list);
-		return "success";
+		return SUCCESS;
 	}
 	
 	public String showInfor()
 	{		
 		List<Information> list = informationService.getAll();
 		ServletActionContext.getRequest().setAttribute("list", list);
-		return "success";
+		return SUCCESS;
 	}
 
 	public String getInfor()
@@ -67,7 +60,7 @@ public class InformationAction extends ActionSupport
 		long id =information.getId();
 		Information infor=informationService.findInfor(id);
 		ServletActionContext.getRequest().setAttribute("Infor", infor);
-		return "success";
+		return SUCCESS;
 	}
 	
 	public void setPic(File pic) {

@@ -4,13 +4,15 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.transaction.annotation.Transactional;
+
 import cn.edu.xmu.artwork.dao.IInforPicsDao;
 import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IInformationService;
-
+@Transactional
 public class InformationService implements IInformationService {
 
 	
@@ -23,7 +25,6 @@ public class InformationService implements IInformationService {
 	public void submit(Information information, File file, String filename) {
 		
 		InformationDao.save(information, file, filename);
-		//inforPicsDao.storePicures(file, filename);
 	}
 	
 	public List<Information> showInforList(long id)

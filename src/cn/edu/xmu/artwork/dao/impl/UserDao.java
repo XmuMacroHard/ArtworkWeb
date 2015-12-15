@@ -12,6 +12,7 @@ import org.hibernate.*;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
+import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.User;
 
 @Repository
@@ -81,5 +82,57 @@ public class UserDao extends GenericDao implements IUserDao
 		closeSession();
 		
 		System.out.println("in userDao + " + state);
+	}
+
+	public List<Artist> getArtistList()//获得所有艺术家列表
+	{
+		List<Artist> list=null;
+		try {
+			Query query = getSession().getNamedQuery("Artist.getArtistList");
+			list = query.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public Artist getArtist(long id)//获得一个艺术家资料
+	{
+		Artist artist=null;
+		try {
+			Query query = getSession().getNamedQuery("Artist.getArtist").setParameter("Id", id);
+			artist = (Artist) query.uniqueResult();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return artist;
+	}
+	
+	public List<Artist> getArtistBySort(String identification)//按类别查找艺术家
+	{
+		List<Artist> list=null;
+		try {
+			Query query = getSession().getNamedQuery("Artist.getArtistBySort").setParameter("Search", identification);
+			list = query.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list;
+	}
+	
+	public List<Artist> getArtistByName(String name)//按名字查找艺术家
+	{
+		List<Artist> list=null;
+		try {
+			Query query = getSession().getNamedQuery("Artist.getArtistByName").setParameter("Search", name);
+			list = query.list();
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+		}
+		return list;
 	}
 }

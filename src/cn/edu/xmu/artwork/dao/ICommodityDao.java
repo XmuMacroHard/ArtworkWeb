@@ -8,4 +8,6 @@ import cn.edu.xmu.artwork.entity.Commodity;
 public interface ICommodityDao 
 {
 	public List<Commodity> getCommodityListByType(String commoType);
+	public Commodity getCommodityById(long id);
+	public void saveCommodity(Commodity commodity);
 }

@@ -35,7 +35,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
-    <script src="assets/js/skins.min.js"></script>
+    <script src="assets/js/skins.min.js"></script> 
+
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -897,21 +898,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                         </span>
                                                                     </div>
                                                                 </div>
-                                                                <div class="col-sm-6">
+                                                              <%--   <div class="col-sm-6">
                                                                     <div class="form-group">
                                                                        <!--  <label for="exampleInputEmail2">上传图片</label> -->
                                                                         <span class="input-icon icon-right">
                                                                             <s:file name="pic" cssClass="form-control" label="uploadfile"/>
                                                                         </span>
                                                                     </div>
-                                                                </div>
+                                                                </div> --%>
                                                             </div>
-                                                            <div class="row">
+                                                             <div class="row">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
                                                                         <label for="exampleInputEmail2">开始时间</label>
                                                                         <div class="input-group">
-                                                                        	<s:textfield cssClass="form-control date-picker" id="id-date-picker-1" name="information.startTime" data-date-format="dd-mm-yyyy"/>
+                                                							<input type="date" class="form-control date-picker" id="id-date-picker-1" name="information.startTime"/>
                                                 							<span class="input-group-addon">
                                                     							<i class="fa fa-calendar"></i>
                                                 							</span>
@@ -922,14 +923,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                     <div class="form-group">
                                                                         <label for="exampleInputEmail2">结束时间</label>
                                                                         <div class="input-group">
-                                                                        	<s:textfield cssClass="form-control date-picker" id="id-date-picker-1" name="information.endTime" data-date-format="dd-mm-yyyy"/>
+                                                							<input type="date" class="form-control date-picker" id="id-date-picker-1" name="information.endTime"/>
                                                 							<span class="input-group-addon">
                                                     							<i class="fa fa-calendar"></i>
                                                 							</span>
                                                 						</div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
+                                                            </div> 
                                                             <div class="row">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
@@ -954,10 +955,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                 <div class="col-sm-12">
                                                                     <div class="form-group">
                                                                         <label for="exampleInputEmail2">资讯内容</label>
-                                                                        <span class="input-icon icon-right">
-                                                                            <s:textarea name="information.content" cssClass="form-control" rows="10"/>
-                                                                            <i class="glyphicon glyphicon-briefcase darkorange"></i>
-                                                                        </span>
+                                                                       	
                                                                     </div>
 
                                                                 </div>
@@ -984,8 +982,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
     <!--Basic Scripts-->
-    <script src="assets/js/jquery-2.0.3.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script>
+	<script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script> 
 
     <!--Beyond Scripts-->
     <script src="assets/js/beyond.min.js"></script>

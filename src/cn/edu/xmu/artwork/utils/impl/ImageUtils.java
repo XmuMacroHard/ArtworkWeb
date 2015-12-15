@@ -2,8 +2,11 @@ package cn.edu.xmu.artwork.utils.impl;
 
 import java.util.Date;
 
+import org.springframework.stereotype.Component;
+
 import cn.edu.xmu.artwork.utils.IImageUtils;
 
+@Component
 public class ImageUtils implements IImageUtils 
 {
 	/*

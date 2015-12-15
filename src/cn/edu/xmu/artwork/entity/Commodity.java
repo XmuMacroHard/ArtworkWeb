@@ -1,10 +1,20 @@
 package cn.edu.xmu.artwork.entity;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -12,6 +22,16 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "commodity", catalog = "artworkdb")
+@NamedQueries({
+		@NamedQuery(
+			name = "Commodity.getAllByType",
+			query = "from Commodity c where c.type = :commType"
+		),		
+		@NamedQuery(
+				name = "Commodity.getById",
+				query = "from Commodity c where c.id = :commId"
+			)
+})
 public class Commodity implements java.io.Serializable {
 
 	// Fields
@@ -21,9 +41,10 @@ public class Commodity implements java.io.Serializable {
 	private String introduction;
 	private Float price;
 	private Long authorId;
-	private String type;									//商品所属种类,如书法、
+	private String type;									//商品所属种类,如书法等
 	private Boolean isBought;
-
+	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
+	
 	// Constructors
 
 	/** default constructor */
@@ -41,6 +62,17 @@ public class Commodity implements java.io.Serializable {
 		this.isBought = isBought;
 	}
 
+	
+	public void addPictures(List<String> picPaths)
+	{
+		CommodityPics commodityPic = new CommodityPics();
+		for(String path : picPaths)
+		{
+			commodityPic.setUrl(path);
+			commodityPices.add(commodityPic);
+		}
+	}
+	
 	// Property accessors
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -106,5 +138,16 @@ public class Commodity implements java.io.Serializable {
 	public void setIsBought(Boolean isBought) {
 		this.isBought = isBought;
 	}
+	
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="commodityId")
+	public Set<CommodityPics> getCommodityPices() {
+		return commodityPices;
+	}
+
+	public void setCommodityPices(Set<CommodityPics> commodityPices) {
+		this.commodityPices = commodityPices;
+	}
+	
+	
 
 }
