@@ -25,6 +25,10 @@ import javax.persistence.PrimaryKeyJoinColumn;
 	@NamedQuery(
 			name = "Artist.getArtistByName",
 			query = "from Artist where realName like :Search"
+	),
+	@NamedQuery(
+			name = "Artist.getArtistByName",
+			query = "from Artist where realName like :Search"
 	)
 })
 public class Artist extends User 

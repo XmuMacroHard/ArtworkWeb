@@ -125,14 +125,14 @@ public class UserDao extends GenericDao implements IUserDao
 	public void submitArtist(Artist artist)
 	{
 		try {
-			Artist artist2=(Artist) getSession().load(User.class,5L);
-			//long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");		
-			artist2.setIdentification(artist.getIdentification());
-			artist2.setIsapprove("pending");
-			artist2.setRealName(artist.getRealName());
-			artist2.setIntroduction(artist.getIntroduction());
 			
-			getSession().update(artist2);
+			Transaction trans = getSession().beginTransaction();
+			String hql=String.format("update User set type='artist',isapprove='pending',identification='%s',realName='%s',introduction='%s' where id=5",
+					artist.getIdentification(),artist.getRealName(),artist.getIntroduction());
+			Query queryupdate=getSession().createQuery(hql);
+			queryupdate.executeUpdate();
+			trans.commit();
+		
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
