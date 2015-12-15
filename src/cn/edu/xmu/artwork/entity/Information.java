@@ -1,17 +1,22 @@
 package cn.edu.xmu.artwork.entity;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.sql.Timestamp;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
-import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
@@ -20,6 +25,21 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "information", catalog = "artworkdb")
+
+@NamedQueries({
+	@NamedQuery(
+		name = "Information.getInfoShownOnHomePage",
+		query = "select i from Information i inner join i.datePoses d where d.date = :today and d.location = :location"
+	),
+	@NamedQuery(
+			name = "Information.getInfoById",
+			query = "from Information i where i.id = :infoId"
+		),
+	@NamedQuery(
+		name = "Information.getInfoByColum",
+		query = "select i from Information i inner join i.datePoses d where d.colum = :colum"
+	)	
+})
 public class Information implements java.io.Serializable {
 
 	// Fields
@@ -52,14 +72,22 @@ public class Information implements java.io.Serializable {
 	/*
 	 * add a picture to the set of pictures
 	 * */
-	public void addPicture(String url)
+	public void addPicture(List<String> urls)
 	{
 		InforPics pic = new InforPics();
-		pic.setInformation(this);
-		pic.setUrl(url);
-		inforPicses.add(pic);
+		for(String aUrl : urls)
+		{
+			pic.setInformation(this);
+			pic.setUrl(aUrl);		
+			inforPicses.add(pic);
+		}
 	}
 	
+	public void addDatePos(DatePos  datePos)
+	{
+		datePos.setInformation(this);
+		datePoses.add(datePos);
+	}
 	// Constructors
 
 	/** default constructor */

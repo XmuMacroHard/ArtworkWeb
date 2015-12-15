@@ -4,12 +4,21 @@ import java.io.File;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
+import org.apache.struts2.convention.annotation.Result;
+import org.springframework.context.annotation.Scope;
 
+import cn.edu.xmu.artwork.entity.DatePos;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.service.IInformationService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+@Scope("prototype")
+@ParentPackage("json-default")
+@Namespace("/")
 public class InformationAction extends ActionSupport 
 {
 	/**
@@ -17,21 +26,22 @@ public class InformationAction extends ActionSupport
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public File pic;
-	public String picContentType;
-	public String picFileName;
+	public List<File> pic;
+	public List<String> picContentType;
+	public List<String> picFileName;
 	
 	/*entities*/
 	public Information information;
+	private DatePos datePos = new DatePos();
+	private String colum;
 	
 	/*services*/
 	public IInformationService informationService;
 	
-	/*actions*/
-	public String submitInfor()
-	{
-		System.out.println("content:" + information.getContent() + "\ntitle:" + information.getTitle() + "\nstarttime:" + information.getStartTime());	
-		informationService.submit(getInformation(), pic, picFileName);
+	@Action(value="submitInfo", results={@Result(name="success", location="/jsp/success.jsp")})
+	public String submitInfo()
+	{	
+		informationService.submit(getInformation(),getDatePos(),pic, picFileName);
 		
 		return SUCCESS;
 	}
@@ -48,30 +58,57 @@ public class InformationAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	public String showInfor()
+	@Action(value="showInfoOnHomePage", results={@Result(name="success", location="/index.jsp")})
+	public String showInfoOnHomePage()
 	{		
-		List<Information> list = informationService.getAll();
-		ServletActionContext.getRequest().setAttribute("list", list);
+		List<Information> list = informationService.getTodayInformations();		
+		System.out.println(list.size());
+		ServletActionContext.getRequest().setAttribute("informationList", list);
 		return SUCCESS;
 	}
 
-	public String getInfor()
+	@Action(value="getDetailInfo", results={@Result(name="success", location="/jsp/frontside/information/info_detail.jsp")})
+	public String getDetailInfo()
 	{		
 		long id =information.getId();
-		Information infor=informationService.findInfor(id);
-		ServletActionContext.getRequest().setAttribute("Infor", infor);
+		Information infor=informationService.findInfoById(id);
+		ServletActionContext.getRequest().setAttribute("Information", infor);
 		return SUCCESS;
 	}
 	
-	public void setPic(File pic) {
+	@Action(value="getInfoListByType", results={@Result(name="success", location="/jsp/frontside/information/informations.jsp")})
+	public String getInfoListByType()
+	{
+		informationService.getInfoByColum(datePos.getColum());
+		return SUCCESS;
+	}
+	
+	public List<File> getPic() {
+		return pic;
+	}
+
+
+	public void setPic(List<File> pic) {
 		this.pic = pic;
 	}
 
-	public void setPicContentType(String picContentType) {
+
+	public List<String> getPicContentType() {
+		return picContentType;
+	}
+
+
+	public void setPicContentType(List<String> picContentType) {
 		this.picContentType = picContentType;
 	}
 
-	public void setPicFileName(String picFileName) {
+
+	public List<String> getPicFileName() {
+		return picFileName;
+	}
+
+
+	public void setPicFileName(List<String> picFileName) {
 		this.picFileName = picFileName;
 	}
 
@@ -90,6 +127,16 @@ public class InformationAction extends ActionSupport
 
 	public void setInformationService(IInformationService informationService) {
 		this.informationService = informationService;
+	}
+
+
+	public DatePos getDatePos() {
+		return datePos;
+	}
+
+
+	public void setDatePos(DatePos datePos) {
+		this.datePos = datePos;
 	}
 	
 	
