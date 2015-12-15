@@ -17,12 +17,22 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 /**
  * User entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Inheritance(strategy=InheritanceType.JOINED)
 @Table(name = "user", catalog = "artworkdb")
+
+@NamedQueries(
+		@NamedQuery(
+			name = "getUserByEmailPassword",
+			query = "from User c where c.email = :email and c.password = :password"
+		)
+	)
 public class User implements java.io.Serializable {
 
 	// Fields

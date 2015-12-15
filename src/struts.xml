@@ -3,18 +3,6 @@
 <struts>
     <package name="struts2" namespace="/" extends="struts-default">
         
-  
-        
-        <action name="loginAction" class="userAction" method="login">
-        	<result name="success">/jsp/success.jsp</result>
-        	<result name="fail">/jsp/fail.jsp</result>
-        </action>
-       
-        <action name="registerAction" class="userAction" method="register">
-       		<result name="success">/jsp/success.jsp</result>
-       		<result name="fail">/jsp/fail.jsp</result> 
-        </action>
-        
         <action name="submitInfor" class="inforAction" method="submitInfor">
             <result name="success">/jsp/success.jsp</result>
             <result name="fail">/jsp/fail.jsp</result>

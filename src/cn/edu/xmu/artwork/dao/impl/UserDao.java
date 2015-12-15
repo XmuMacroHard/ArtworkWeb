@@ -19,19 +19,20 @@ import cn.edu.xmu.artwork.entity.User;
 public class UserDao extends GenericDao implements IUserDao 
 {
 	
-	public void insert(User user)
-	{
-//		System.out.println("in user dao" + user.getAccount() + user.getPassword());
-
-		getSession().save(user);
-		getSession().close();
+	public void insert(User user) 
+	{		
+		System.out.println("in user dao" + user.getEmail() + user.getPassword());
+		getSession().save(user);	
+		System.out.println("success");
 	} 
 	
+	//search user by the email and password
 	public User search(User user)
 	{
-		String hql = String.format("From User as user where user.account = '%s' and user.password = '%s'",
-				user.getEmail(), user.getPassword());
-		Query query = getSession().createQuery(hql);
+		System.out.println("search in dao："+ user.getEmail() + "  " + user.getPassword());
+		Query query = getSession().getNamedQuery("getUserByEmailPassword");
+		query.setParameter("email", user.getEmail());
+		query.setParameter("password", user.getPassword());
 		return  (User)query.uniqueResult();
 	}
 	
@@ -44,10 +45,6 @@ public class UserDao extends GenericDao implements IUserDao
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			throw re;
-		}
-		finally
-		{
-			closeSession();
 		}
 	}
 	

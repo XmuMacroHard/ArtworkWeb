@@ -4,8 +4,12 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.Namespace;
+import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.hibernate.exception.ConstraintViolationException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Information;
@@ -15,20 +19,45 @@ import cn.edu.xmu.artwork.service.*;
 import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
+@Scope("prototype")
+@ParentPackage("struts-default")
+@Namespace(value="/")
 public class UserAction extends ActionSupport 
 {
 	private static final long serialVersionUID = 1L;
+	@Autowired
 	private User user;
 	private Artist artist;
+	@Autowired
 	private IUserService userService;
 	
+	@Action(
+			value="loginAction", 
+			results={
+					@Result(name="success", location="/jsp/success.jsp"),
+					@Result(name="fail", location="/jsp/fail.jsp")
+					}
+			)
 	public String login()
 	{
-		// s = {fail, success, admistratorSuccess}
-		String s = userService.login(user);
-		return s;
+		User resultUser = userService.login(user);
+		if(resultUser == null)
+		{
+			return "fail";
+		}
+		else
+		{
+			return SUCCESS;
+		}
 	}
 	
+	@Action(
+			value="registerAction",
+			results={
+					@Result(name="success", location="/jsp/success.jsp"),
+					@Result(name="fail", location="/jsp/fail.jsp")
+					}		
+			)
 	public String register()  
 	{
 		try {
@@ -36,14 +65,18 @@ public class UserAction extends ActionSupport
 			return "success";
 		} 
 		catch (ConstraintViolationException e) {
-			String faildetail = "鐢ㄦ埛宸插瓨鍦�";
+			String faildetail = "Already Exists User!";
+			System.out.print("in register Already Exists User!");
 		    ActionContext.getContext().put("faildetail", faildetail);
 			return "fail";
 		}
 		catch (Exception e) {
+			e.printStackTrace();
+			System.out.print("in register fail");
 			return "fail";
 		}
 	}
+	
 	
 	@Action(value="showArtist", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
 	public String showArtist()
