@@ -5,7 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
-@DiscriminatorValue("edior")
+@DiscriminatorValue("editor")
 public class Editor extends User 
 {
 	private String rank;

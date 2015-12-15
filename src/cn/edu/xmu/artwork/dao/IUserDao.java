@@ -10,6 +10,15 @@ public interface IUserDao {
 	public User search(User user);
 	public List findAll();
 	public User findById(long id);
+	
+	/**
+	 * 更新用户状态
+	 * @author asus1
+	 * @param userEmail
+	 * @param state
+	 */
+	public void updateUserState(String userEmail, String state);
+
 	public List<Artist> getArtistList();
 	public Artist getArtist(long id);
 	public List<Artist> getArtistBySort(String identification);

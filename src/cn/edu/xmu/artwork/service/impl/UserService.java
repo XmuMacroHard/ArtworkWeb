@@ -89,4 +89,5 @@ public class UserService implements IUserService
 	{
 		userDao.submitArtist(artist);
 	}
+	
 }

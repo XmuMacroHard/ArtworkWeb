@@ -11,11 +11,14 @@ import java.util.List;
 
 import org.hibernate.*;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.User;
 
+@Repository
 public class UserDao extends GenericDao implements IUserDao 
 {
 	
@@ -35,23 +38,15 @@ public class UserDao extends GenericDao implements IUserDao
 		return  (User)query.uniqueResult();
 	}
 	
-	public Session getSession()
-	{
-		return sessionFactory.openSession();
-	}
+	@SuppressWarnings("rawtypes")
 	public List findAll() {
 		
 		try {
 			String queryString = "from User";
-			Query queryObject = getSession().createQuery(queryString);			
+			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			throw re;
-		}
-		finally
-		{
-			if(getSession().isOpen())
-				closeSession();
 		}
 	}
 	
@@ -66,6 +61,28 @@ public class UserDao extends GenericDao implements IUserDao
 		}
 	}
 	
+	/**
+	 * 更新用户状态
+	 * @author asus1
+	 * @param userEmail
+	 * @param state
+	 */
+	public void updateUserState(String userEmail, String state)
+	{
+		System.out.println("in userDao");
+		
+		
+		
+		Transaction trans = getSession().beginTransaction();
+		String hql=String.format("update User user set user.isBanned = %s where user.email = %s", state, userEmail);
+		Query queryupdate=session.createQuery(hql);
+		int ret=queryupdate.executeUpdate();
+		trans.commit();
+		closeSession();
+		
+		System.out.println("in userDao + " + state);
+	}
+
 	public List<Artist> getArtistList()//获得所有艺术家列表
 	{
 		List<Artist> list=null;

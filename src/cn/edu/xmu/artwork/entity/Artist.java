@@ -27,8 +27,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 			query = "from Artist where realName like :Search"
 	),
 	@NamedQuery(
-			name = "Artist.getArtistByName",
-			query = "from Artist where realName like :Search"
+			name = "Artist.submit",
+			query = "update User set type='artist',isapprove='pending',identification='%s',realName='%s',introduction='?' where id=?"
 	)
 })
 public class Artist extends User 

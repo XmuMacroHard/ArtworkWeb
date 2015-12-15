@@ -15,13 +15,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-
-
-
-
-
-
-
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.User;
@@ -53,7 +46,7 @@ public class SaleAction extends ActionSupport
 	
 	@Autowired
 	private ISaleService saleService;
-	
+
 	@Autowired
 	private IFileService fileService;
 	

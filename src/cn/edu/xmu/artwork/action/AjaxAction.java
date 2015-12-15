@@ -20,6 +20,7 @@ public class AjaxAction extends ActionSupport
 		
 		JSONObject object = new JSONObject();
 		System.out.println("in ajax action");
+
 //		if(user.getEmail().equals("a") && user.getPassword().equals("b"))
 //		{
 //			System.out.println("login success");

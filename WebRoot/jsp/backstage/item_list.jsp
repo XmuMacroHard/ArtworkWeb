@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -9,7 +9,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'index.jsp' starting page</title>
+    <title>My JSP 'item_list.jsp' starting page</title>
+    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -18,18 +19,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	<!--
 	<link rel="stylesheet" type="text/css" href="styles.css">
 	-->
+
   </head>
   
   <body>
     This is my JSP page. <br>
-
-    <a href="ShowAllUserList.action">用户列表</a>
-
-    <a href="showInfor.action">咨询列表</a><br>
-    <a href="showArtist.action">艺术家列表</a><br>
-    <a href="findArtist.action?user.id=1">艺术家1</a><br>
-     <a href="getArtistBySort.action?artist.identification=4">艺术家列表(类别包含4)</a><br>
-      <a href="getArtistByName.action?artist.realName=1">艺术家列表(名字包含1)</a>
-
   </body>
 </html>
