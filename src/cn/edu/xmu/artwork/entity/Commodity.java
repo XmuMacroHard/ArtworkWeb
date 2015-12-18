@@ -41,7 +41,7 @@ public class Commodity implements java.io.Serializable {
 	private String introduction;
 	private Float price;
 	private Long authorId;
-	private String type;									//商品所属种类,如书法等
+	private String type;							//商品所属种类,如书法等
 	private Boolean isBought;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
 	

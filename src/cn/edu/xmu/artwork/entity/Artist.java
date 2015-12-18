@@ -28,7 +28,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 	),
 	@NamedQuery(
 			name = "Artist.submit",
-			query = "update User set type='artist',isapprove='pending',identification='%s',realName='%s',introduction='?' where id=?"
+			query = "update User set type='artist',isapprove='pending',"
+					+ "identification=?,realName=?,introduction=?,fileurl=?,portrait=? where id=?"
 	)
 })
 public class Artist extends User 
@@ -41,6 +42,7 @@ public class Artist extends User
 	private String identification;
 	private String introduction;
 	private String fileurl;
+	private String portrait;
 	private String isapprove;
 	
 	public Artist(){}
@@ -72,7 +74,7 @@ public class Artist extends User
 		this.introduction = introduction;
 	}
 	
-	@Column(name = "Fileurl", length = 40)
+	@Column(name = "Fileurl",nullable = true, length = 40)
 	public String getFileurl() {
 		return fileurl;
 	}
@@ -81,7 +83,16 @@ public class Artist extends User
 		this.fileurl = fileurl;
 	}
 	
-	@Column(name = "isapprove", length = 11)
+	@Column(name = "portrait", nullable = true, length = 40)
+	public String getPortrait() {
+		return portrait;
+	}
+
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
+	}
+
+	@Column(name = "isapprove", nullable = true, length = 11)
 	public String getIsapprove() {
 		return isapprove;
 	}

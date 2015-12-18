@@ -20,7 +20,6 @@ public class PurchaseOrder implements java.io.Serializable {
 	private String orderid;
 	private String type;
 	private String state;
-
 	
 	// Constructors
 

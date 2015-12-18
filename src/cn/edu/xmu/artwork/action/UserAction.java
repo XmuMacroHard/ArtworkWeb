@@ -1,5 +1,6 @@
 package cn.edu.xmu.artwork.action;
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
@@ -24,8 +25,13 @@ import com.opensymphony.xwork2.ActionSupport;
 public class UserAction extends ActionSupport 
 {
 	private static final long serialVersionUID = 1L;
+	public List<File> pic;
+	public List<String> picContentType;
+	public List<String> picFileName;
+	
 	@Autowired
 	private User user;
+	@Autowired
 	private Artist artist;
 	@Autowired
 	private IUserService userService;
@@ -115,7 +121,7 @@ public class UserAction extends ActionSupport
 	@Action(value="submitArtist", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
 	public String submitArtist()
 	{
-		userService.submitArtist(artist);
+		userService.submitArtist(getArtist(),pic,picFileName);//,data,dataFileName);
 		return SUCCESS;
 	}
 	
@@ -142,6 +148,30 @@ public class UserAction extends ActionSupport
 
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
+	}
+
+	public List<File> getPic() {
+		return pic;
+	}
+
+	public void setPic(List<File> pic) {
+		this.pic = pic;
+	}
+
+	public List<String> getPicContentType() {
+		return picContentType;
+	}
+
+	public void setPicContentType(List<String> picContentType) {
+		this.picContentType = picContentType;
+	}
+
+	public List<String> getPicFileName() {
+		return picFileName;
+	}
+
+	public void setPicFileName(List<String> picFileName) {
+		this.picFileName = picFileName;
 	}
 	
 }

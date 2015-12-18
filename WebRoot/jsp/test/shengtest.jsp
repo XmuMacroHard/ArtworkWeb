@@ -30,6 +30,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <a href="findArtist.action?user.id=3">艺术家1</a><br>
      <a href="getArtistBySort.action?artist.identification=4">艺术家列表(类别包含4)</a><br>
       <a href="getArtistByName.action?artist.realName=1">艺术家列表(名字包含1)</a><br>
-      <a href="jsp/test/shengsubmitArtist.jsp">艺术家认证</a>
+      <a href="jsp/test/shengsubmitArtist.jsp">艺术家认证</a><br>
+      <a href="jsp/test/shengsubmitArtist.jsp">我要定制</a>
   </body>
 </html>

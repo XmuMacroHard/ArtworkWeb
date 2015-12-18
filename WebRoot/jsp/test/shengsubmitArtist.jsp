@@ -14,7 +14,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
-	<meta http-equiv="expires" content="0">    
+	<meta http-equiv="expires" content="0">
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="This is my page">
 	<!--
@@ -31,7 +31,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <s:checkbox name="artist.identification" label="绘画" fieldValue="painting"/>
     <s:checkbox name="artist.identification" label="雕刻" fieldValue="sculpture"/>
      <s:checkbox name="artist.identification" label="手工品" fieldValue="handicraft"/><br>
-   	
+   	<s:file name="pic" label="头像"/><br>
+    <s:file name="pic" label="资料"/>(打包成压缩文件上传)<br>
    	<br><button type="submit">提交</button>
    </form>
   </body>
