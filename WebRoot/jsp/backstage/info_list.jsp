@@ -881,7 +881,7 @@ Purchase: http://wrapbootstrap.com
                         <div class="col-xs-12 col-md-12">
                             <div class="widget">
                                 <div class="widget-header ">
-                                    <span class="widget-caption">所有艺术家</span>
+                                    <span class="widget-caption">咨询列表</span>
                                     <div class="widget-buttons">
                                         <a href="#" data-toggle="maximize">
                                             <i class="fa fa-expand"></i>
@@ -899,16 +899,16 @@ Purchase: http://wrapbootstrap.com
                                         <thead>
                                             <tr role="row">
                                                 <th>
-                                                   	 邮箱
+                                                   	 标题
                                                 </th>
                                                 <th>
-                                                   	姓名
+                                                   	起始时间
                                                 </th>
                                                 <th>
-                                           		         联系电话
+                                           		            价格         
                                                 </th>
                                                 <th>
-                                                  	 状态
+                                                  	状态
                                                 </th>
                                                 <th>
 													操作
@@ -917,22 +917,25 @@ Purchase: http://wrapbootstrap.com
                                         </thead>
 
                                         <tbody>
-                                        <s:iterator id="artist" value="#request.artistList">
+                                        <s:iterator id="info" value="#request.infoList">
                                             <tr>
-                                                <td><a href="#"><s:property value="#artist.email"/></a></td>
-                                                <td><s:property value="#artist.realname"/></td>
-                                                <td><s:property value="#artist.phone"/></td>
-                                                <td id = "<s:property value="#artist.email"/>">
-                                                	<s:if test='%{#artist.isBanned == "1"}'>
-                                                		<span class="label label-danger">已禁用</span>
+                                                <td><a href="#"><s:property value="#info.title"/></a></td>
+                                                <td><s:property value="#info.startTime"/>-<s:property value="#info.endTime"/></td>
+                                                <td><s:property value="#info.expense"/></td>
+                                                <td id = "<s:property value="#info.id"/>">
+                                                	<s:if test='%{#info.status == "1"}'>
+                                                		<span class="label label-success">已审核</span>
                                                 	</s:if>
-                                                	<s:elseif test='%{#artist.isBanned == "0"}'>
-                                                		<span class="label label-success">已启用</span>
+                                                	<s:elseif test='%{#info.status == "0"}'>
+                                                		<span class="label label-danger">已退回</span>
+                                                	</s:elseif>
+                                                	<s:elseif test='%{#info.status == "-1"}'>
+                                                		<span class="label label-info">待审核</span>
                                                 	</s:elseif>
                                                 </td>
                                                 <td>
-                                                    <s:a href="JavaScript:UserRelieve(%{email});" cssClass="btn btn-success btn-xs"><i class="fa fa-edit"></i> 启用</s:a>
-                                                    <s:a href="JavaScript:UserBanning(%{email});" cssClass="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 禁用</s:a>
+                                                    <s:a href="JavaScript:InfoPass(%{id});" cssClass="btn btn-success btn-xs"><i class="fa fa-edit"></i> 通过</s:a>
+                                                    <s:a href="JavaScript:InfoRetreat(%{id});" cssClass="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退回</s:a>
                                                 </td>
                                             </tr>
                                         </s:iterator>

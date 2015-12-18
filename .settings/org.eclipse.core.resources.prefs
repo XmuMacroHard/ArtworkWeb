@@ -2,7 +2,11 @@
 <<<<<<<=HEAD
 >>>>>>>=9501eb4fad8ce821da38f44fa9f2064b013f1b29
 eclipse.preferences.version=1
+<<<<<<< HEAD
 encoding//WebRoot/index.jsp=UTF-8
+=======
+encoding//WebRoot/jsp/backstage/user_list_test.jsp=UTF-8
+>>>>>>> 69f09a99a5b0bb97f226a4d9d08fe8c85e8e401d
 encoding//WebRoot/jsp/frontstage/items.jsp=UTF-8
 encoding//WebRoot/jsp/frontstage/login_test.jsp=UTF-8
 encoding//WebRoot/jsp/info.jsp=UTF-8

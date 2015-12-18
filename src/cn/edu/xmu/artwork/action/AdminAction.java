@@ -34,7 +34,13 @@ public class AdminAction extends ActionSupport {
 	private User user;
 	
 	@Autowired
+	private Information information;
+	
+	@Autowired
 	private List<User> userList;
+	
+	@Autowired
+	private List<Information> infoList;
 
 	@Autowired
 	private IAdminService adminService;
@@ -55,12 +61,28 @@ public class AdminAction extends ActionSupport {
 		this.user = user;
 	}
 	
+	public Information getInformation() {
+		return information;
+	}
+
+	public void setInformation(Information information) {
+		this.information = information;
+	}
+	
 	public List<User> getUserList() {
 		return userList;
 	}
 
 	public void setUserList(List<User> userList) {
 		this.userList = userList;
+	}
+	
+	public List<Information> getInfoList() {
+		return infoList;
+	}
+
+	public void setInfoList(List<Information> infoList) {
+		this.infoList = infoList;
 	}
 	
 	public IAdminService getAdminService() {
@@ -146,6 +168,88 @@ public class AdminAction extends ActionSupport {
 			
 			jsobj.put("email", user.getEmail());
 			jsobj.put("success", "relieve success");
+			setResult(jsobj.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}
+	
+	/**
+	 * 显示所有资讯列表
+	 * @author asus1
+	 */
+	@Action(
+			value = "ShowAllInfoList",
+			results = {
+					@Result(name="success", location="/jsp/backstage/info_list.jsp")
+			}
+			)
+	public String ShowAllInfoList()
+	{
+		try {
+			infoList = adminService.ShowAllInfoList();
+			System.out.println(infoList.get(0).getTitle());
+			ServletActionContext.getRequest().setAttribute("infoList", infoList);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}
+	
+	/**
+	 * 退回资讯操作
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "InfoRetreat",
+			results = {
+					@Result(name="success", type="json", params={"root", "result"})
+			}
+			)
+	public String InfoRetreat()
+	{
+		try {
+			JSONObject jsobj = new JSONObject();
+			
+			System.out.println(information.getTitle());
+			adminService.InfoRetreat(information.getId());
+			
+			jsobj.put("id", information.getId());
+			jsobj.put("success", "banning success");
+			setResult(jsobj.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}
+	
+	/**
+	 * 通过资讯操作
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "InfoPass",
+			results = {
+					@Result(name="success", type="json", params={"root", "result"})
+			}
+			)
+	public String InfoPass()
+	{
+		try {
+			JSONObject jsobj = new JSONObject();
+			
+			System.out.println(information.getTitle());
+			adminService.InfoPass(information.getId());
+			
+			jsobj.put("id", information.getId());
+			jsobj.put("success", "banning success");
 			setResult(jsobj.toString());
 		} catch (Exception e) {
 			e.printStackTrace();

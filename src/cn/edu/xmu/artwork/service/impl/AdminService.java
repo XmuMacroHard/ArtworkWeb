@@ -4,8 +4,11 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
+import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAdminService;
 
@@ -15,19 +18,16 @@ import cn.edu.xmu.artwork.service.IAdminService;
  *
  */
 @Service
+@Transactional
 public class AdminService implements IAdminService {
 	
 	@Autowired
 	private IUserDao userDao;
+	
+	@Autowired
+	private IInformationDao informationDao;
 
-	public IUserDao getUserDao() {
-		return userDao;
-	}
-
-	public void setUserDao(IUserDao userDao) {
-		this.userDao = userDao;
-	}
-
+	
 	/**
 	 * 显示所有用户列表
 	 * @author asus1
@@ -37,7 +37,7 @@ public class AdminService implements IAdminService {
 	public List ShowAllUserList()
 	{
 		System.out.println("userlistService");
-		List<User> userList = userDao.findAll();
+		List userList = userDao.findAll();
 		return userList;
 	}
 	
@@ -70,6 +70,46 @@ public class AdminService implements IAdminService {
 		
 		return null;
 	}
+
+	/**
+	 * 显示所有资讯列表
+	 * @author asus1
+	 */
+	@Override
+	public List<Information> ShowAllInfoList() throws Exception {
+		
+		List<Information> infoList = informationDao.getAll();
+		
+		return infoList;
+	}
+
+	/**
+	 * 退回资讯
+	 * @author asus1
+	 * @param 资讯id
+	 */
+	@Override
+	public String InfoRetreat(long infoId) throws Exception {
+		
+		informationDao.updateInfoStatus(infoId, "0");
+		
+		return null;
+	}
+
+	/**
+	 * 通过资讯
+	 * @author asus1
+	 * @param 资讯id
+	 */
+	@Override
+	public String InfoPass(long infoId) throws Exception {
+
+		informationDao.updateInfoStatus(infoId, "1");
+		
+		return null;
+	}
+	
+	
 	
 	
 }

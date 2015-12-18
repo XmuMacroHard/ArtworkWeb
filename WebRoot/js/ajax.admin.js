@@ -57,3 +57,58 @@ function UserRelieve(email)
 		}
 	});
 }
+
+/**
+ * 退回资讯操作
+ * @author asus1
+ */
+function InfoRetreat(infoId)
+{		
+	$.ajax({
+		type:"post",
+		url:"InfoRetreat",
+		data:{
+			"information.id":infoId
+		},
+		dataType:"json",
+		beforeSend:function(){
+			confirm("您确认退回该资讯吗？");
+		},
+		success:function(result){
+			var jsobj = eval("(" + result + ")");
+			
+			$("#"+jsobj.id).html("<span class='label label-danger'>已退回</span>");
+		},
+		error:function(result){
+			alert("error");
+		}
+	});
+}
+
+/**
+ * 通过资讯操作
+ * @author asus1
+ * @param email
+ */
+function InfoPass(infoId)
+{		
+	$.ajax({
+		type:"post",
+		url:"InfoPass",
+		data:{
+			"information.id":infoId
+		},
+		dataType:"json",
+		beforeSend:function(){
+			confirm("您确认通过该资讯吗？");
+		},
+		success:function(result){
+			var jsobj = eval("(" + result + ")");
+			
+			$("#"+jsobj.id).html("<span class='label label-success'>已通过</span>");
+		},
+		error:function(result){
+			alert("error");
+		}
+	});
+}

@@ -9,9 +9,10 @@ import cn.edu.xmu.artwork.entity.User;
 public interface IUserService {
 	public void addUser(User user);
 	public void register(User user) throws Exception;
-	public String login(User user);
+	public User login(User user);
 	public List<Artist> getArtistList();
 	public Artist getArtist(long id);
 	public List<Artist> getArtistBySort(String identification);
 	public List<Artist> getArtistByName(String name);
+	public void submitArtist(Artist artist);
 }
