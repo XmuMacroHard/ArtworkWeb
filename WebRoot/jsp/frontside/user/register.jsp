@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
             <div class="registerbox-caption ">请如实填写用户信息</div>
             <div class="registerbox-textbox">
-                <s:textfield name="user.account" cssClass="form-control" placeholder="账户" />
+                <s:textfield name="user.email" cssClass="form-control" placeholder="邮箱" />
             </div>
             <div class="registerbox-textbox">
                 <s:password name="user.password" cssClass="form-control" placeholder="密码" 
@@ -74,9 +74,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <hr class="wide" />
             <div class="registerbox-textbox">
                 <s:textfield name="user.nickname" cssClass="form-control" placeholder="昵称" />
-            </div>
-            <div class="registerbox-textbox">
-                <s:textfield name="user.email" cssClass="form-control" placeholder="邮箱" />
             </div>
             <div class="registerbox-textbox no-padding-bottom">
                 <div class="checkbox">

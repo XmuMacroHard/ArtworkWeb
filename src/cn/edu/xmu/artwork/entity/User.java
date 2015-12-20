@@ -93,7 +93,7 @@ public class User implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "email", nullable = false, length = 20)
+	@Column(name = "email", nullable = false, length = 20, unique=true)
 	public String getEmail() {
 		return this.email;
 	}
@@ -102,7 +102,7 @@ public class User implements java.io.Serializable {
 		this.email = email;
 	}
 
-	@Column(name = "password", nullable = false, length = 100)
+	@Column(name = "password", nullable = false, length = 200)
 	public String getPassword() {
 		return this.password;
 	}

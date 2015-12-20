@@ -152,4 +152,5 @@ public class UserDao extends GenericDao implements IUserDao
 			e.printStackTrace();
 		}
 	}
+
 }

@@ -9,6 +9,7 @@ import org.apache.struts2.ServletActionContext;
 import org.hibernate.Query;
 
 import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.utils.IFileUtils;
@@ -71,8 +72,18 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		Query query = getSession().getNamedQuery("Information.getInfoShownOnHomePage");
 		query.setDate("today", today.getTime());
 		query.setParameter("location", location);
-		query.setMaxResults(IStrings.INFO_LOCATION_1_NUM);
+		query.setMaxResults(ITableConstants.INFO_LOCATION_1_NUM);
 		List<Information> informations = query.list();
+		if(informations.size() < ITableConstants.INFO_LOCATION_1_NUM)
+		{
+			Query searchDefault = getSession().getNamedQuery("Information.getDefaultInfos");
+			searchDefault.setParameter("default", ITableConstants.INFO_DEFAULT_STATUS);
+			searchDefault.setMaxResults(ITableConstants.INFO_LOCATION_1_NUM - informations.size());
+			List<Information> defaults = searchDefault.list();
+			informations.addAll(defaults);
+		}
+		
+		
 		return informations;
 	}
 	

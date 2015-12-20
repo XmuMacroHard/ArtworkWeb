@@ -1,11 +1,10 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
 
 <!DOCTYPE>
 <html>
@@ -36,73 +35,73 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="css/blogmate.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
 
+
 <!-- Google Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,700,800,400,600' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <div class="page">
-  <c:import url="../common/header.jsp"/>
+ 	<c:import url="../common/header.jsp"/>
   
   <div class="main-container col2-right-layout">
     <div class="main container">
       <div class="row">
-        <div class="col-main col-sm-9">
+        <div class="col-main col-sm-9 wow bounceInUp animated">
           
           <div class="blog-wrapper" id="main"><div class="page-title new_page_title">
-            <h2>资讯</h2>
+            <h2>商品上传</h2>
           </div>
+          
             <div class="site-content" id="primary">
-              <div role="main" id="content">
-                <c:forEach items="${informationList}" var="information">
-                <article class="blog_entry clearfix wow bounceInUp animated" >
-                  <header class="blog_entry-header clearfix">
-                    <div class="blog_entry-header-inner">
-                      <h2 class="blog_entry-title"> <a rel="bookmark" href="getDetailInfo?information.id=${information.id}"><c:out value="${information.title}"/></a> </h2>
-                    </div>
-                    <!--blog_entry-header-inner--> 
-                  </header>
-                  <div class="entry-content">
-                    <div class="featured-thumb">
-                    	<a href="getDetailInfo?information.id=${information.id}">
-                    	<c:set var="urlsNum" scope="page" value="1"/>  
-							<c:forEach items="${information.inforPicses}" var="pic">   		 	
-								<c:if test = "${urlsNum == 1}">
-									<img alt="blog-img4" src="${server_path}${pic.url}">
-									<c:set var="urlsNum" scope="page" value="2"/>		
-								</c:if>
-	                     	</c:forEach> 
-                    	</a>
-                    </div>
-                    <div class="entry-content">
-                      <p><c:out value="${information.content}"/></p>
-                    </div>
-                    <p> <a class="btn" href="getDetailInfo?information.id=${information.id}">Read More</a> </p>
+              <div role="main" id="content">                
+                <div class="comment-content wow bounceInUp animated">
+                  
+                  <!--comments-wrapper-->                  
+                  <div class="comments-form-wrapper clearfix">
+                    <h3>Leave A reply</h3>
+                    <form class="comment-form" id="postComment" action="uploadCommodity" enctype="multipart/form-data" method="POST">
+                      <div class="field">
+                        <label>商品名<em class="required">*</em></label>
+                        <input type="text" class="input-text" title="Name" value="" id="user" name="commodity.name"/>
+                      </div>
+                      <div class="field">
+                        <label>商品类型<em class="required">*</em></label>
+                        <select title="Country" class="validate-select" id="country" name="commodity.type">
+                          <option value="calligraphy">书法</option>
+                          <option value="painting">绘画</option>
+                          <option value="sculpture">雕刻</option>
+                          <option value="handicraft">手工品</option>
+                        </select>
+                      </div>
+					  <div class="field">
+                        <label>商品价格<em class="required">*</em></label>
+                        <input type="text" class="input-text validate-email" title="Email" value="" name="commodity.price">
+                      </div>
+  						<div class="field">
+                        <label>商品图片<em class="required">*</em></label>
+                        <s:file name="pictures" cssClass="input-text"/>
+                      </div> 
+                      <div class="clear"></div>
+                      <div class="field aw-blog-comment-area">
+                        <label>商品描述<em class="required">*</em></label>
+                        <textarea rows="5" cols="50" class="input-text" title="Comment" id="comment1" name="commodity.introduction"></textarea>
+                      </div> 
+                      <div style="width:96%" class="button-set"> 
+                        <button id="uploadCommodity" type="submit" class="bnt-comment"><span><span>商品上传</span></span></button>
+                      </div>
+                    </form>
                   </div>
-                  <footer class="entry-meta"> This entry was posted						in <a rel="category tag" title="View all posts in First Category" href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a> On
-                    <time datetime="2014-07-10T06:53:43+00:00" class="entry-date">Jul 10, 2014</time>
-                    . </footer>
-                </article>
-                </c:forEach>
+             
+                  <!--comments-form-wrapper clearfix-->        
+                </div>
               </div>
-            </div>
-            <div class="pager">
-              <p class="amount"> <strong>4 Item(s)</strong> </p>
-              <div class="limiter">
-                <label>Show</label>
-                <select onChange="setLocation(this.value)">
-                  <option selected="selected" value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=5"> 5 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=10"> 10 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=15"> 15 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=20"> 20 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=all"> All </option>
-                </select>
-                per page </div>
-            </div>
+            </div>            
           </div>
         </div>
-        <div class="col-right sidebar col-sm-3">
+        
+        <div class="col-right sidebar col-sm-3 wow bounceInUp animated">
           <div role="complementary" class="widget_wrapper13" id="secondary">
-            <div class="popular-posts widget widget__sidebar wow bounceInUp animated" id="recent-posts-4">
+            <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
               <h3 class="widget-title">Most Popular Post</h3>
               <div class="widget-content">
                 <ul class="posts-list unstyled clearfix">
@@ -142,15 +141,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
               <!--widget-content--> 
             </div>
-            <div class="popular-posts widget widget_categories wow bounceInUp animated" id="categories-2">
+            <div class="popular-posts widget widget_categories" id="categories-2">
               <h3 class="widget-title">Categories</h3>
               <ul>
-                <li class="cat-item cat-item-19599"><a href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a></li>
-                <li class="cat-item cat-item-19599"><a href="http://demo.magikthemes.com/index.php/eclipseblue/second-category">Second Category</a></li>
+                <li class="cat-item cat-item-19599"><a href="#first-category">First Category</a></li>
+                <li class="cat-item cat-item-19599"><a href="#second-category">Second Category</a></li>
               </ul>
             </div>
             <!-- Banner Ad Block -->
-            <div class="ad-spots widget widget__sidebar wow bounceInUp animated">
+            <div class="ad-spots widget widget__sidebar">
               <h3 class="widget-title">Ad Spots</h3>
               <div class="widget-content"><a target="_self" href="#" title=""><img alt="offer banner" src="images/offerBanner.jpg"></a></div>
             </div>
@@ -166,7 +165,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       </div>
     </div>
   </div>
-
+ 
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -358,7 +357,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
             </li>
           </ul>
-		  <p class="required">* Required Fields</p>
+		  <p class="required">* Required Fields</p>		  
         </div>
         <!--column sixty-->
         <div class="column fourty last">
@@ -367,7 +366,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <textarea name="comment" title="Comment" class="required-entry input-text" cols="5" rows="3"></textarea>
             <div class="textright">
               <input type="text" name="hideit" value="" style="display:none !important;">
-              <button type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
+              <button id="uploadCommodity" type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
               <img src="images/mgkloading1.gif" id="loader" alt="loader" style="display:none;"> </div>
             <!--textright-->
           </div>
@@ -387,6 +386,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script> 
+<%-- <script type="text/javascript" src="js/frontside/user/uploadCommodity.js"></script> --%>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IInforPicsDao;
 import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
@@ -93,11 +94,15 @@ public class InformationService extends BasicService implements IInformationServ
 		
 	}
 	
+	/*
+	 * get all today informations 
+	 * */
 	@Override
 	public List<Information> getTodayInformations()
 	{
-		List<Information> todayInfos1 = InformationDao.getTodayInfoByLocation(IStrings.INFO_LOCATION_1);
-		List<Information> todayInfos2 = InformationDao.getTodayInfoByLocation(IStrings.INFO_LOCATION_2);
+		List<Information> todayInfos1 = InformationDao.getTodayInfoByLocation(ITableConstants.INFO_LOCATION_1);
+		List<Information> todayInfos2 = InformationDao.getTodayInfoByLocation(ITableConstants.INFO_LOCATION_2);
+		
 		
 		for(Information information : todayInfos1)
 		{
@@ -115,7 +120,12 @@ public class InformationService extends BasicService implements IInformationServ
 	
 	public List<Information> getInfoByColum(String colum)
 	{
-		return InformationDao.getInfoByColum(colum);
+		List<Information> infos = InformationDao.getInfoByColum(colum);
+		for(Information information : infos)
+		{
+			initializeObject(information.getInforPicses());
+		}
+		return infos;
 	}
 	
 	/*
@@ -123,7 +133,9 @@ public class InformationService extends BasicService implements IInformationServ
 	 * */
 	@Override
 	public Information findInfoById(long id){
-		return InformationDao.findInfoById(id);
+		Information info = InformationDao.findInfoById(id);
+		initializeObject(info.getInforPicses());
+		return info;
 	}
 	
 	public IInformationDao getInformationDao() {
