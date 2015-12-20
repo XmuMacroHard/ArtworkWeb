@@ -1,5 +1,8 @@
 package cn.edu.xmu.artwork.entity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
@@ -42,7 +45,7 @@ public class Artist extends User
 	private String introduction;
 	private String fileurl;
 	private String isapprove;
-	
+
 	public Artist(){}
 	
 	@Column(name = "realName", length = 20)

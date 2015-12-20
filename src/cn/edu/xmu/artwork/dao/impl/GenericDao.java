@@ -5,6 +5,8 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import cn.edu.xmu.artwork.entity.Customization;
+
 public abstract class GenericDao 
 {
 	@Autowired
@@ -37,4 +39,5 @@ public abstract class GenericDao
 	{
 		session.close();
 	}
+
 }

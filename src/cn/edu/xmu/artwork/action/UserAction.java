@@ -30,6 +30,7 @@ public class UserAction extends ActionSupport
 	@Autowired
 	private IUserService userService;
 	
+
 	@Action(
 			value="loginAction", 
 			results={

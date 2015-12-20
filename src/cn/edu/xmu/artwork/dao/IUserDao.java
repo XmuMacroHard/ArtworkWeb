@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.dao;
 import java.util.List;
 
 import cn.edu.xmu.artwork.entity.Artist;
+import cn.edu.xmu.artwork.entity.Customization;
 import cn.edu.xmu.artwork.entity.User;
 
 public interface IUserDao {
@@ -24,4 +25,5 @@ public interface IUserDao {
 	public List<Artist> getArtistBySort(String identification);
 	public List<Artist> getArtistByName(String name);
 	public void submitArtist(Artist artist);
+	public List<Customization> getCustomizations();
 }

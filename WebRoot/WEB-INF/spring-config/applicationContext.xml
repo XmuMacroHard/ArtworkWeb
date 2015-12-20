@@ -19,6 +19,7 @@
 	<!-- all entities -->
 	<bean id="user" class="cn.edu.xmu.artwork.entity.User"></bean>
 	<bean id="information" class="cn.edu.xmu.artwork.entity.Information"></bean>
+	<bean id="customization" class="cn.edu.xmu.artwork.entity.Customization"></bean>
 	
 	<!-- all daos -->
 	
