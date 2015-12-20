@@ -31,7 +31,8 @@ import javax.persistence.PrimaryKeyJoinColumn;
 	),
 	@NamedQuery(
 			name = "Artist.submit",
-			query = "update User set type='artist',isapprove='pending',identification='%s',realName='%s',introduction='?' where id=?"
+			query = "update User set type='artist',isapprove='pending',"
+					+ "identification=?,realName=?,introduction=?,fileurl=?,portrait=? where id=?"
 	)
 })
 public class Artist extends User 
@@ -45,7 +46,8 @@ public class Artist extends User
 	private String introduction;
 	private String fileurl;
 	private String isapprove;
-
+	private String portrait;
+	
 	public Artist(){}
 	
 	@Column(name = "realName", length = 20)
@@ -57,7 +59,7 @@ public class Artist extends User
 		this.realName = realName;
 	}
 	
-	@Column(name = "identification", length = 50)
+	@Column(name = "identification", nullable = true,length = 50)
 	public String getIdentification() {
 		return identification;
 	}
@@ -66,7 +68,7 @@ public class Artist extends User
 		this.identification = identification;
 	}
 	
-	@Column(name = "introduction", length = 1000)
+	@Column(name = "introduction", nullable = true,length = 1000)
 	public String getIntroduction() {
 		return introduction;
 	}
@@ -75,7 +77,7 @@ public class Artist extends User
 		this.introduction = introduction;
 	}
 	
-	@Column(name = "Fileurl", length = 40)
+	@Column(name = "Fileurl", nullable = true,length = 40)
 	public String getFileurl() {
 		return fileurl;
 	}
@@ -84,7 +86,16 @@ public class Artist extends User
 		this.fileurl = fileurl;
 	}
 	
-	@Column(name = "isapprove", length = 11)
+	@Column(name = "Portrait",nullable = true, length = 40)
+	public String getPortrait() {
+		return portrait;
+	}
+
+	public void setPortrait(String portrait) {
+		this.portrait = portrait;
+	}
+
+	@Column(name = "isapprove",nullable = true, length = 11)
 	public String getIsapprove() {
 		return isapprove;
 	}

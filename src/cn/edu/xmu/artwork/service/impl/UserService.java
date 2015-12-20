@@ -1,5 +1,6 @@
 package cn.edu.xmu.artwork.service.impl;
 
+import java.io.File;
 import java.util.List;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
@@ -8,10 +9,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
+import cn.edu.xmu.artwork.dao.impl.ArtistDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
+import cn.edu.xmu.artwork.service.IFileService;
 import cn.edu.xmu.artwork.service.IUserService;
 import cn.edu.xmu.artwork.utils.IMD5Util;
 
@@ -24,9 +27,14 @@ import com.opensymphony.xwork2.ActionContext;
 @Service
 public class UserService implements IUserService
 {
+	@Autowired
 	private UserDao userDao;
 	@Autowired
+	private ArtistDao artistDao;
+	@Autowired
 	private IMD5Util md5Util;
+	@Autowired
+	private IFileService fileservice;
 	
 	public void addUser(User user)
 	{
@@ -61,25 +69,25 @@ public class UserService implements IUserService
 	@Override
 	public List<Artist> getArtistList()
 	{
-		return userDao.getArtistList();
+		return artistDao.getArtistList();
 	}
 	
 	@Override
 	public Artist getArtist(long id)
 	{
-		return userDao.getArtist(id);
+		return artistDao.getArtist(id);
 	}
 	
 	@Override
 	public List<Artist> getArtistBySort(String identification)
 	{
-		return userDao.getArtistBySort(identification);
+		return artistDao.getArtistBySort(identification);
 	}
 	
 	@Override
 	public List<Artist> getArtistByName(String name)
 	{
-		return userDao.getArtistByName(name);
+		return artistDao.getArtistByName(name);
 	}
 	
 	private void MD5encypt(User user)
@@ -87,8 +95,11 @@ public class UserService implements IUserService
 		user.setPassword(md5Util.MD5(user.getPassword()));
 	}
 	@Override
-	public void submitArtist(Artist artist)
+	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName)
 	{
-		userDao.submitArtist(artist);
+		fileservice.uploadPicture(pic, picFileName);
+		artist.setPortrait(picFileName.get(0));
+		artist.setFileurl(picFileName.get(1));
+		artistDao.submitArtist(artist);
 	}
 }

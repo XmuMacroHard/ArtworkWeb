@@ -1,5 +1,6 @@
 package cn.edu.xmu.artwork.service;
 
+import java.io.File;
 import java.util.List;
 
 import cn.edu.xmu.artwork.entity.Artist;
@@ -14,5 +15,5 @@ public interface IUserService {
 	public Artist getArtist(long id);
 	public List<Artist> getArtistBySort(String identification);
 	public List<Artist> getArtistByName(String name);
-	public void submitArtist(Artist artist);
+	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);
 }
