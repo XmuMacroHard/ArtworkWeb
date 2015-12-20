@@ -7,10 +7,12 @@ import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
 import org.apache.struts2.json.JSONUtil;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.ShoppingCartDao;
@@ -70,10 +72,23 @@ public class SaleService extends BasicService implements ISaleService
 		commodityDao.saveCommodity(commodity);
 	}
 	
-	public void addToCart(Commodity commodity, User buyer)
+	public JSONObject addToCart(Commodity commodity, User buyer)
 	{
+		JSONObject resultJO = new JSONObject(); 
 		ShoppingCart shoppingCart = new ShoppingCart(buyer, commodity);
-		shoppingCartDao.save(shoppingCart);
+		if(!shoppingCartDao.isExisted(buyer.getId(), commodity.getId()))
+		{
+			shoppingCartDao.save(shoppingCart);
+			resultJO.put(IResultCode.RESULT, IResultCode.SUCCESS);
+			resultJO.put(IResultCode.MESSAGE, IResultCode.SHOPPINGCART_SUCCESS_MESSAGE);
+			return resultJO;
+		}
+		else
+		{
+			resultJO.put(IResultCode.RESULT, IResultCode.ERROR);
+			resultJO.put(IResultCode.MESSAGE, IResultCode.SHOPPINGCART_ERROR_MESSAGE);
+			return resultJO;			
+		}
 	}
 	
 	public List<ShoppingCart> getShoppingCart(long userId)

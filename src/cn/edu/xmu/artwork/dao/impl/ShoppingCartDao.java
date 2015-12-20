@@ -24,4 +24,22 @@ public class ShoppingCartDao extends GenericDao implements IShoppingCartDao
 		List<ShoppingCart> shoppingCart = (List<ShoppingCart>)query.list();
 		return shoppingCart;
 	}
+	/**
+	 * 判断某人的购物车里是否已经有了某件商品
+	 * @param userid
+	 * @param commodityid
+	 * @return
+	 */
+	public boolean isExisted(long userid, long commodityid)
+	{
+		Query query = getSession().getNamedQuery("ShoppingCart.getByUseridCommodityid").setParameter("userid", userid).setParameter("commodityid", commodityid);
+		ShoppingCart shoppingCart = (ShoppingCart)query.uniqueResult();
+		if (shoppingCart != null) {
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+	}
 }

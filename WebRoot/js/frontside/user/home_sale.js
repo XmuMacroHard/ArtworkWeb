@@ -26,7 +26,6 @@ function onload()
                             "<div class='sale-label sale-top-left'>Sale</div>";
 				if(item.commodityPices.length > 0)
 				{
-					alert(item.commodityPices[0].url);
                     commodities += "<img src='" + server_path + item.commodityPices[0].url +"' class='lazyOwl product-mainpic' alt='Sample Product' style='display: block;'> <img class='product-secondpic' alt=' Sample Product' src='" + server_path + item.commodityPices[0].url + "'> </figure>" ;
 				}
 				

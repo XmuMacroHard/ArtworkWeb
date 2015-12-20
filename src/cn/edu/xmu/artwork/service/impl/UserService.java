@@ -66,8 +66,7 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public String login(User user) {
 		MD5encypt(user);
-		User resultUser = userDao.search(user);
-		setSessionInBrower(IStrings.SESSION_USER, user);
+		User resultUser = userDao.search(user);		
 		
 		JSONObject resultJson = new JSONObject();
 		if(resultUser == null)
@@ -77,6 +76,7 @@ public class UserService extends BasicService implements IUserService
 		}
 		else
 		{
+			setSessionInBrower(IStrings.SESSION_USER, resultUser);
 			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
 		}
 		return resultJson.toString();

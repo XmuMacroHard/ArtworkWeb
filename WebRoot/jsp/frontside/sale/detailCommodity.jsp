@@ -97,7 +97,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <div class="price-block">
                     <div class="price-box">
                       <p class="special-price"> <span class="price-label">Special Price</span> <span id="product-price-48" class="price"><c:out value="${commodity.price}"/> </span> </p>
-                    </div>
+                    </div> 
                   </div>
                   <div class="add-to-box">
                     <div class="add-to-cart">
@@ -108,10 +108,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <input type="text" class="input-text qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">
                           <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="icon-plus">&nbsp;</i></button>
                         </div>
+					<div id="hidden_user_id" style="visibility:hidden"><c:out value="${sessionScope.user.id}"/></div>
+   		              <div id="hidden_commodity_id" style="visibility:hidden"><c:out value="${commodity.id}"/></div>
                       </div>
-                      <input id="hidden_user_id" type="hidden" value="${sessionScope.user.id}"/>
-                      <input id="hidden_commodity_id" type="hidden" value="${commodity.id}"/>
-                      <button id="	" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> Add to Cart</span></button>
+                      <button id="addToCart" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> Add to Cart</span></button> 
                     </div>
                     <div class="email-addto-box">
                       <ul class="add-to-links">

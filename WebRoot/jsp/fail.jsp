@@ -27,10 +27,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <s:property value="#faildetail"/><br/>
     fail! <br/>
 <form method="post" action="addToCart">
-    <input id="hidden_user_id"  value="1" name="commodity.id"/>
-    <input id="hidden_commodity_id"  value="2" name="user.id"/>
-    <%-- <button id="" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> Add to Cart</span></button> --%>
-    <button/>
+    <input id="hidden_user_id"  value="5" name="user.id"/>
+    <input id="hidden_commodity_id"  value="2" name="commodity.id"/>
+     
+    <!-- <button/> -->
+    <input type="submit"/> 
   </form>
   </body>
 </html>

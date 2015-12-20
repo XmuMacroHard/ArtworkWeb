@@ -97,9 +97,10 @@ public class SaleAction extends ActionSupport
 	@Action(value="addToCart", results={@Result(name="success", type="json", params={"root", "resultJsonObject"})})
 	public String AddToCart()
 	{
-		saleService.addToCart(commodity, user);
-		resultJsonObject.put(IResultCode.RESULT, IResultCode.SUCCESS);
-		return IResultCode.SUCCESS;
+		JSONObject resultJO = saleService.addToCart(commodity, user);
+		setResultJsonObject(resultJO);
+		
+		return SUCCESS;
 	}
 	
 	/*
@@ -178,6 +179,14 @@ public class SaleAction extends ActionSupport
 
 	public void setResultJsonObject(JSONObject resultJsonObject) {
 		this.resultJsonObject = resultJsonObject;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
 	}
 	
 	

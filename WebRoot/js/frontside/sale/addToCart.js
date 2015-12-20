@@ -8,8 +8,8 @@ $(document).ready(function(){
 
 function addToCart()
 {
-	var userid = $("#hidden_user_id");
-	var commodityid = $("#hidden_commodity_id");
+	var userid = $("#hidden_user_id").text();
+	var commodityid = $("#hidden_commodity_id").text();
 	
 	$.ajax({
 		type:"post",
@@ -21,9 +21,14 @@ function addToCart()
 		success:function(data){
 			if(data.result == "success")
 			{
-				alert("添加到购物车");
+				alert(data.message);
+			}
+			else
+			{
+				alert(data.message);
 			}
 		}
 			
 	});
+	
 }
