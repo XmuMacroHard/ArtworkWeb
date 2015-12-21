@@ -46,7 +46,7 @@ public class Artist extends User
 	private String introduction;
 	private String fileurl;
 	private String isapprove;
-	private String portrait;
+	private String portrait;//头像路径
 	
 	public Artist(){}
 	

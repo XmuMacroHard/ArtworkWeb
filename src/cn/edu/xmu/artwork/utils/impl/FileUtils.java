@@ -24,6 +24,7 @@ public class FileUtils implements IFileUtils {
 			InputStream in = null;
 			OutputStream out = null;
 			try {
+				
 				in = new BufferedInputStream(new FileInputStream(fromFile),
 						BUFFER_SIZE);
 				out = new BufferedOutputStream(new FileOutputStream(toFile),

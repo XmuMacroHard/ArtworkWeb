@@ -54,7 +54,7 @@ public class InformationAction extends ActionSupport
 	{
 		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");	
 		List<Information> list = informationService.showInforList(id);
-		ServletActionContext.getRequest().setAttribute("informationList", list);
+		setAttributeByRequest("informationList", list);
 		return SUCCESS;
 	}
 	
@@ -63,7 +63,7 @@ public class InformationAction extends ActionSupport
 	{		
 		List<Information> list = informationService.getTodayInformations();		
 		System.out.println(list.size());
-		ServletActionContext.getRequest().setAttribute("informationList", list);
+		setAttributeByRequest("informationList", list);
 		return SUCCESS;
 	}
 
@@ -72,15 +72,22 @@ public class InformationAction extends ActionSupport
 	{		
 		long id =information.getId();
 		Information infor=informationService.findInfoById(id);
-		ServletActionContext.getRequest().setAttribute("Information", infor);
+		setAttributeByRequest("information", infor);
 		return SUCCESS;
 	}
 	
 	@Action(value="getInfoListByType", results={@Result(name="success", location="/jsp/frontside/information/informations.jsp")})
 	public String getInfoListByType()
 	{
-		informationService.getInfoByColum(datePos.getColum());
+		System.out.println(datePos.getColum());
+		List<Information> infos = informationService.getInfoByColum(datePos.getColum());
+		setAttributeByRequest("informationList", infos);
 		return SUCCESS;
+	}
+	
+	private void setAttributeByRequest(String key, Object value)
+	{
+		ServletActionContext.getRequest().setAttribute(key, value);
 	}
 	
 	public List<File> getPic() {

@@ -154,9 +154,4 @@ public class UserDao extends GenericDao implements IUserDao
 		}
 	}
 
-	@Override
-	public List<Customization> getCustomizations() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 }

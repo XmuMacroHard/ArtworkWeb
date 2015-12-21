@@ -22,6 +22,14 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 		return commodities;
 	}
 	
+	@SuppressWarnings("unchecked")
+	public List<Commodity> getAllByAuthorId(long authorid)
+	{
+		Query getCommodities = getSession().getNamedQuery("Commodity.getByAuthorId").setParameter("authorid", authorid);
+		List<Commodity> commodities = (List<Commodity>)getCommodities.list();
+		return commodities;		
+	}
+	
 	public Commodity getCommodityById(long id)
 	{
 		Query getCommunity = getSession().getNamedQuery("Commodity.getById").setParameter("commId", id);

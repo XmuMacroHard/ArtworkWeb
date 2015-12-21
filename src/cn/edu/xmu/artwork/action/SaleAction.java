@@ -38,12 +38,14 @@ public class SaleAction extends ActionSupport
 	
 	//used to store the json result
 	private String result;
-	
+	private JSONArray resultJsonArray;
+	private JSONObject resultJsonObject;
+
 	//used to deal with uploading the pictures
 	private List<File> pictures;
 	private List<String> picturesContentType;
 	private List<String> picturesFileName;
-	
+
 	@Autowired
 	private ISaleService saleService;
 
@@ -52,53 +54,53 @@ public class SaleAction extends ActionSupport
 	
 	/*
 	 * show all commodities by type
+	 * @return success
 	 * */
-	@Action(value="showCommodityList", results={@Result(name="success", type="json", params={"root", "result"})})
+	@Action(value="showCommodityList", results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
 	public String showCommListByType()
 	{
-//		System.out.println("in showCommoditiesAction");
-//		System.out.println("commodityType" + commodityType);
-		List<Commodity> commodities = saleService.getCommodityListByType(commodity.getType());
-		//ServletActionContext.getRequest().setAttribute("commodities", commodities);
-		JSONArray commoditiesJsonArray = JSONArray.fromObject(commodities);
-		result = commoditiesJsonArray.toString();
-//		System.out.println("commoditiesJson" + result);
+		System.out.println(commodity.getType());
+		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType());
+		setResultJsonArray(commoditiesJsonArray);
+		System.out.println(commoditiesJsonArray);
 		return IResultCode.SUCCESS;
 	}
 	
 	/*
 	 * get the detailed information of the certain community
 	 * */
-	@Action(value="getDetailedCommunity", results={@Result(name="success", type="json", params={"root", "result"})})
+	@Action(value="getDetailedCommodity", results={@Result(name="success", location="/jsp/frontside/sale/detailCommodity.jsp")})
 	public String getDetailedComm()
 	{
 		Commodity comm = saleService.getCommodityById(commodity.getId());
-		JSONObject commJO = JSONObject.fromObject(comm);
-		result = commJO.toString();
-		System.out.println("commodity" + result);
+		setAttributeByRequest("commodity", comm);
+		
 		return IResultCode.SUCCESS;
 	}
 	
 	/*
 	 * upload the information of the commodity
 	 * */
-	@Action(value="uploadCommodity", results={@Result(name="success", type="json", params={"root", "result"})})
+	@Action(value="uploadCommodity", results={@Result(name="success", location="/jsp/success.jsp")})
 	public String uploadCommodity()
 	{
+		System.out.println("commodity.name" + commodity.getName());
 		List<String> picPaths = fileService.uploadPicture(pictures, picturesFileName);
 		saleService.uploadCommodity(commodity, picPaths);
 		
-		return IResultCode.SUCCESS;
+		return SUCCESS;
 	}
 	
 	/*
 	 * add the commodity to the shopping cart
 	 * */
-	@Action(value="addToCart", results={@Result(name="success", type="json", params={"root", "result"})})
+	@Action(value="addToCart", results={@Result(name="success", type="json", params={"root", "resultJsonObject"})})
 	public String AddToCart()
 	{
-		saleService.addToCart(commodity, user);		
-		return IResultCode.SUCCESS;
+		JSONObject resultJO = saleService.addToCart(commodity, user);
+		setResultJsonObject(resultJO);
+		
+		return SUCCESS;
 	}
 	
 	/*
@@ -109,11 +111,19 @@ public class SaleAction extends ActionSupport
 	{
 		//need to be tes.
 		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		saleService.getShoppingCart(user.getId());		
+		saleService.getShoppingCart(user.getId());	
 		return IResultCode.SUCCESS;
 	}
 	
-	
+	/**
+	 * 
+	 * @param key
+	 * @param value
+	 */
+	private void setAttributeByRequest(String key, Object value)
+	{
+		ServletActionContext.getRequest().setAttribute(key, value);
+	}
 	
 	public Commodity getCommodity() {
 		return commodity;
@@ -123,13 +133,13 @@ public class SaleAction extends ActionSupport
 		this.commodity = commodity;
 	}
 
-	public String getResult() {
+/*	public String getResult() {
 		return result;
 	}
 
 	public void setResult(String result) {
 		this.result = result;
-	}
+	}*/
 
 	public List<File> getPictures() {
 		return pictures;
@@ -155,6 +165,30 @@ public class SaleAction extends ActionSupport
 		this.picturesFileName = picturesFileName;
 	}
 
+	public JSONArray getResultJsonArray() {
+		return resultJsonArray;
+	}
 
+	public void setResultJsonArray(JSONArray resultJsonArray) {
+		this.resultJsonArray = resultJsonArray;
+	}
+
+	public JSONObject getResultJsonObject() {
+		return resultJsonObject;
+	}
+
+	public void setResultJsonObject(JSONObject resultJsonObject) {
+		this.resultJsonObject = resultJsonObject;
+	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	
 	
 }

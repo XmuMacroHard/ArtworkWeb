@@ -1,9 +1,20 @@
 package cn.edu.xmu.artwork.entity;
 
+import java.util.Date;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,15 +26,18 @@ import javax.persistence.Table;
 public class PurchaseOrder implements java.io.Serializable {
 
 	// Fields
-
 	private Long id;
 	private String orderid;
 	private String type;
 	private String state;
 
+	private User user;
+	private Artist artist;
+	private Set<Commodity> commodity;
+	private Date date;
+	private ShippingAddress shippingAddress;
 	
 	// Constructors
-
 	/** default constructor */
 	public PurchaseOrder() {
 	}
@@ -73,5 +87,50 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setState(String state) {
 		this.state = state;
 	}
+	
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="user_id", nullable=false)
+	public User getUser() {
+		return user;
+	}
+	public void setUser(User user) {
+		this.user = user;
+	}
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "artist_id", nullable = false)
+	public Artist getArtist() {
+		return artist;
+	}
+	public void setArtist(Artist artist) {
+		this.artist = artist;
+	}
+	
+	
+	@Column(name = "date")
+	public Date getDate() {
+		return date;
+	}
+	public void setDate(Date date) {
+		this.date = date;
+	}
+	
+	@Column(name = "address")
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
 
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder_id")
+	public Set<Commodity> getCommodity() {
+		return commodity;
+	}
+
+	public void setCommodity(Set<Commodity> commodity) {
+		this.commodity = commodity;
+	}
+
+	
 }

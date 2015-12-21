@@ -3,6 +3,8 @@ package cn.edu.xmu.artwork.action;
 import java.io.File;
 import java.util.List;
 
+import net.sf.json.JSONObject;
+
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -13,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
 import cn.edu.xmu.artwork.entity.Artist;
+import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IUserService;
 
@@ -20,7 +23,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Scope("prototype")
-@ParentPackage("struts-default")
+@ParentPackage("json-default")
 @Namespace(value="/")
 public class UserAction extends ActionSupport 
 {
@@ -35,25 +38,20 @@ public class UserAction extends ActionSupport
 	@Autowired
 	private IUserService userService;
 	
+	private String result;
+	
 
 	@Action(
 			value="loginAction", 
 			results={
-					@Result(name="success", location="/jsp/success.jsp"),
-					@Result(name="fail", location="/jsp/fail.jsp")
+					@Result(name="success", type="json", params={"root", "result"})
 					}
 			)
 	public String login()
 	{
-		User resultUser = userService.login(user);
-		if(resultUser == null)
-		{
-			return "fail";
-		}
-		else
-		{
-			return SUCCESS;
-		}
+		result = userService.login(user);
+		
+		return SUCCESS;
 	}
 	
 	@Action(
@@ -82,6 +80,12 @@ public class UserAction extends ActionSupport
 		}
 	}
 	
+	@Action(value="logoutAction",results={@Result(name="success", location="/jsp/frontside/user/login.jsp")})
+	public String logout()
+	{
+		userService.logout();
+		return SUCCESS;
+	}
 	
 	@Action(value="showArtist", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
 	public String showArtist()
@@ -125,6 +129,24 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 显示艺术家发布的作品
+	 * @author cz
+	 * @return
+	 */
+	@Action(value="showMyCommodity", results={@Result(name="success", location="/jsp/frontside/artist/artistCommodity.jsp")})
+	public  String showMyCommodity()
+	{
+		List<Commodity> myCommodities = userService.showMyCommodity();
+		setAttributeByRequest("commodities", myCommodities);
+		return SUCCESS;
+	}
+	
+	private void setAttributeByRequest(String key, Object value)
+	{
+		ServletActionContext.getRequest().setAttribute(key, value);
+	}
+	
 	public User getUser() {
 		return user;
 	}
@@ -149,6 +171,15 @@ public class UserAction extends ActionSupport
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
+
+	public String getResult() {
+		return result;
+	}
+
+	public void setResult(String result) {
+		this.result = result;
+	}
+	
 
 	public List<File> getPic() {
 		return pic;

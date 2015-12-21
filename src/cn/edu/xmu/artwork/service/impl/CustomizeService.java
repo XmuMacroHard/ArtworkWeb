@@ -1,5 +1,6 @@
 package cn.edu.xmu.artwork.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,6 @@ public class CustomizeService implements ICustomizeService{
 	@Override
 	public void addCustomization(Customization customization) {
 		customizationDao.save(customization);
-		// TODO Auto-generated method stub
 	}
 
 	@Override
