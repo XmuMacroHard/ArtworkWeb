@@ -4,6 +4,7 @@ import java.io.File;
 import java.util.List;
 
 import cn.edu.xmu.artwork.entity.Artist;
+import cn.edu.xmu.artwork.entity.Customization;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 

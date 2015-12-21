@@ -18,13 +18,26 @@ public class CustomizeService implements ICustomizeService{
 	
 	@Override
 	public void addCustomization(Customization customization) {
-		
+		customizationDao.save(customization);
 		// TODO Auto-generated method stub
 	}
 
 	@Override
 	public List<Customization> showCustomizationsList(long id) {
+	
 		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<Customization> getCustomizationsByUser(long id) {
+		customizationDao.getCustomizationsByUser(id);
+		return null;
+	}
+
+	@Override
+	public List<Customization> getCustomizationsByArtist(long id) {
+		customizationDao.getCustomizationsByArtist(id);
 		return null;
 	}
 	

@@ -19,7 +19,6 @@ public interface IUserDao {
 	 * @param state
 	 */
 	public void updateUserState(String userEmail, String state);
-<<<<<<< HEAD
 
 	public List<Artist> getArtistList();
 	public Artist getArtist(long id);
@@ -27,6 +26,4 @@ public interface IUserDao {
 	public List<Artist> getArtistByName(String name);
 	public void submitArtist(Artist artist);
 	public List<Customization> getCustomizations();
-=======
->>>>>>> origin/master
 }
