@@ -44,6 +44,7 @@ public class Commodity implements java.io.Serializable {
 	private Long authorId;
 	private String type;									//商品所属种类,如书法等
 	private Boolean isBought;
+	private String category;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
 	private Customization customization;
 	// Constructors
@@ -51,18 +52,23 @@ public class Commodity implements java.io.Serializable {
 	/** default constructor */
 	public Commodity() {
 	}
-
+	
 	/** full constructor */
-	public Commodity(String name, String introduction, Float price,
-			Long authorId, String type, Boolean isBought) {
+	public Commodity(Long id, String name, String introduction, Float price,
+			Long authorId, String type, Boolean isBought, String category,
+			Set<CommodityPics> commodityPices, Customization customization) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.introduction = introduction;
 		this.price = price;
 		this.authorId = authorId;
 		this.type = type;
 		this.isBought = isBought;
+		this.category = category;
+		this.commodityPices = commodityPices;
+		this.customization = customization;
 	}
-
 	
 	public void addPictures(List<String> picPaths)
 	{
@@ -131,13 +137,22 @@ public class Commodity implements java.io.Serializable {
 		this.type = type;
 	}
 
-	@Column(name = "isBought", nullable = false)
+	@Column(name = "isBought", nullable = true)
 	public Boolean getIsBought() {
 		return this.isBought;
 	}
 
 	public void setIsBought(Boolean isBought) {
 		this.isBought = isBought;
+	}
+	
+	@Column(name = "category", nullable = false, length = 20)
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="commodityId")
@@ -157,7 +172,5 @@ public class Commodity implements java.io.Serializable {
 	public void setCustomization(Customization customization) {
 		this.customization = customization;
 	}
-	
-	
 
 }

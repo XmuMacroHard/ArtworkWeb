@@ -80,7 +80,6 @@ public class UserDao extends GenericDao implements IUserDao
 		
 		System.out.println("in userDao + " + state);
 	}
-<<<<<<< HEAD
 
 	public List<Artist> getArtistList()//获得所有艺术家列表
 	{
@@ -160,6 +159,4 @@ public class UserDao extends GenericDao implements IUserDao
 		// TODO Auto-generated method stub
 		return null;
 	}
-=======
->>>>>>> origin/master
 }

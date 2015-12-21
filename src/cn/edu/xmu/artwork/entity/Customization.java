@@ -26,7 +26,7 @@ public class Customization implements java.io.Serializable{
 	private Date date;
 	private ShippingAddress shippingAddress;
 	
-	public Customization(){	
+	public Customization(){
 	}
 	
 	public Customization(long id, User user, Artist artist,

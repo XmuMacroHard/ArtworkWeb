@@ -10,7 +10,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <head>
     <base href="<%=basePath%>">
     
-    <title>My JSP 'shengtest.jsp' starting page</title>
+    <title>My JSP 'shengusercustomization.jsp' starting page</title>
     
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
@@ -24,13 +24,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-    This is my JSP page. <br>
-        <a href="showInfor.action">咨询列表</a><br>
-    <a href="showArtist.action">艺术家列表</a><br>
-    <a href="findArtist.action?user.id=3">艺术家1</a><br>
-     <a href="getArtistBySort.action?artist.identification=4">艺术家列表(类别包含4)</a><br>
-      <a href="getArtistByName.action?artist.realName=1">艺术家列表(名字包含1)</a><br>
-      <a href="jsp/test/shengsubmitArtist.jsp">艺术家认证</a><br>
-      <a href="jsp/test/shengusercustomization.jsp?artist.id=3">我要定制</a>
+    用户上传定制<br>
+    <form action="CustomizationSubmitAction" method="POST" enctype="multipart/form-data">
+   	 选择的艺术家:<s:property value="#artist.id"/>（这里再用id查找名字会好一点，晚上学习）<br>
+    	定制标题<s:textfield name="commodity.name"/><br>
+    introduction<s:textarea name="commodity.introduction"/><br>
+              类别<s:radio list="#{'calligraphy':'书法','painting':'绘画','sculpture':'雕刻','handicraft':'手工品'}" name="commodity.type" value="calligraphy"/><br>
+   	  定制价格<s:textfield name="commodity.price"/><br>
+   	<br><button type="submit">提交</button>
+   </form>
   </body>
 </html>

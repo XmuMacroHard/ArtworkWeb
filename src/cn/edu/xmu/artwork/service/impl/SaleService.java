@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
@@ -14,6 +15,7 @@ import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ISaleService;
 
 @Service
+@Transactional
 public class SaleService implements ISaleService 
 {
 	@Autowired
@@ -35,6 +37,7 @@ public class SaleService implements ISaleService
 	public void uploadCommodity(Commodity commodity, List<String> picPaths)
 	{
 		commodity.addPictures(picPaths);
+		commodity.setIsBought(false);
 		commodityDao.saveCommodity(commodity);
 	}
 	
