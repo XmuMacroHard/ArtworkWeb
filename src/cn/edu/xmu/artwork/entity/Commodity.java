@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -50,7 +51,7 @@ public class Commodity implements java.io.Serializable {
 	private String type;									//商品所属种类,如书法等
 	private Boolean isBought;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
-	
+	private Customization customization;
 	// Constructors
 
 	/** default constructor */
@@ -154,6 +155,15 @@ public class Commodity implements java.io.Serializable {
 
 	public void setCommodityPices(Set<CommodityPics> commodityPices) {
 		this.commodityPices = commodityPices;
+	}
+
+	@OneToOne(mappedBy = "commodity")
+	public Customization getCustomization() {
+		return customization;
+	}
+
+	public void setCustomization(Customization customization) {
+		this.customization = customization;
 	}
 	
 	

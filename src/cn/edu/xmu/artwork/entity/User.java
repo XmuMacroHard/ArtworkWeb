@@ -52,7 +52,7 @@ public class User implements java.io.Serializable {
 			0);
 	private Set<Information> informations = new HashSet<Information>(0);
 	private Set<ShoppingCart> shoppingCarts = new HashSet<ShoppingCart>(0);
-
+	private Set<Customization> customizations = new HashSet<Customization>(0);
 	// Constructors
 
 	/** default constructor */
@@ -93,7 +93,7 @@ public class User implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "email", nullable = false, length = 20, unique=true)
+	@Column(name = "email", nullable = false, length = 20, unique = true)
 	public String getEmail() {
 		return this.email;
 	}
@@ -172,6 +172,16 @@ public class User implements java.io.Serializable {
 
 	public void setShoppingCarts(Set<ShoppingCart> shoppingCarts) {
 		this.shoppingCarts = shoppingCarts;
+	}
+	
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+	public Set<Customization> getCustomizations() {
+		return customizations;
+	}
+
+	public void setCustomizations(Set<Customization> customizations) {
+		this.customizations = customizations;
 	}
 
 }
