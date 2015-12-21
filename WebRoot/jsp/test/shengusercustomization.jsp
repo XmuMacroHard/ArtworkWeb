@@ -29,7 +29,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    	 选择的艺术家:<s:property value="#artist.id"/>（这里再用id查找名字会好一点，晚上学习）<br>
     	定制标题<s:textfield name="commodity.name"/><br>
     introduction<s:textarea name="commodity.introduction"/><br>
-              类别<s:radio list="#{'calligraphy':'书法','painting':'绘画','sculpture':'雕刻','handicraft':'手工品'}" name="commodity.type" value="calligraphy"/><br>
+              类别<s:radio list="#{'calligraphy':'书法','painting':'绘画','sculpture':'雕刻','handicraft':'手工品'}" name="commodity.type" value="'calligraphy'"/><br>
    	  定制价格<s:textfield name="commodity.price"/><br>
    	<br><button type="submit">提交</button>
    </form>

@@ -26,4 +26,5 @@ public interface IUserDao {
 	public List<Artist> getArtistByName(String name);
 	public void submitArtist(Artist artist);
 	public List<Customization> getCustomizations();
+
 }

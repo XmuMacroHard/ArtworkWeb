@@ -38,7 +38,11 @@ import javax.persistence.Table;
 	@NamedQuery(
 		name = "Information.getInfoByColum",
 		query = "select i from Information i inner join i.datePoses d where d.colum = :colum"
-	)	
+	),
+	@NamedQuery(
+			name = "Information.getDefaultInfos",
+			query = "from Information i where i.status = :default"
+		)	
 })
 public class Information implements java.io.Serializable {
 

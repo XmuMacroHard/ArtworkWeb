@@ -57,17 +57,10 @@ Purchase: http://wrapbootstrap.com
 <!--Head Ends-->
 <!--Body-->
 <body>
-	<div>
-		<a id="aOpen" href="jsp/login.jsp#OpenWindow" rel="leanModal">打开登陆窗口</a>
-	</div>
-	
-	<div id="OpenWindow">
-		<p>哈哈哈哈</p>
-	</div>
 	
     <div class="login-container">
         <div class="loginbox bg-white">
-        	<form action="loginAction">
+        	<!-- <form action="loginAction"> -->
             <div class="loginbox-title">登录</div>
             <div class="loginbox-social">
                 <div class="social-title ">使用第三方登录</div>
@@ -88,18 +81,18 @@ Purchase: http://wrapbootstrap.com
                 <div class="or">OR</div>
             </div>
             <div class="loginbox-textbox">
-                <s:textfield name="user.email" cssClass="form-control" placeholder="账户" />
+                <s:textfield id="email" name="user.email" cssClass="form-control" placeholder="账户" />
             </div>
             <div class="loginbox-textbox">
-                <s:password name="user.password" cssClass="form-control" placeholder="密码" />
+                <s:password id="password" name="user.password" cssClass="form-control" placeholder="密码" />
             </div>
             <div class="loginbox-forgot">
                 <a href="">忘记密码?</a>
             </div>
             <div class="loginbox-submit">
-                <s:submit cssClass="btn btn-primary pull-right" value="登录"/>
+                <s:submit id="loginButton" cssClass="btn btn-primary pull-right" value="登录"/>
             </div>
-            </form>
+            <!-- </form> -->
         </div>
     </div>
 
@@ -123,6 +116,7 @@ Purchase: http://wrapbootstrap.com
         ga('send', 'pageview');
 
     </script>
+    <script src="js/frontside/user/login.js" ></script>
 </body>
 <!--Body Ends-->
 </html>

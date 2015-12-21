@@ -1,11 +1,9 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
 
 <!DOCTYPE>
 <html>
@@ -28,145 +26,124 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <!-- CSS Style -->
-
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.theme.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
-<link rel="stylesheet" href="css/blogmate.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
+
 
 <!-- Google Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,700,800,400,600' rel='stylesheet' type='text/css'>
 </head>
 <body>
 <div class="page">
-  <c:import url="../common/header.jsp"/>
+	<c:import url="../common/header.jsp"/>
   
   <div class="main-container col2-right-layout">
     <div class="main container">
       <div class="row">
-        <div class="col-main col-sm-9">
-          
-          <div class="blog-wrapper" id="main"><div class="page-title new_page_title">
-            <h2>资讯</h2>
-          </div>
-            <div class="site-content" id="primary">
-              <div role="main" id="content">
-                <c:forEach items="${informationList}" var="information">
-                <article class="blog_entry clearfix wow bounceInUp animated" >
-                  <header class="blog_entry-header clearfix">
-                    <div class="blog_entry-header-inner">
-                      <h2 class="blog_entry-title"> <a rel="bookmark" href="getDetailInfo?information.id=${information.id}"><c:out value="${information.title}"/></a> </h2>
+        <section class="col-main col-sm-9 wow bounceInUp animated">
+          <div class="my-account">
+            <div class="page-title">
+              <h2>My Wishlist</h2>
+            </div>
+            <div class="my-wishlist">
+              <div class="table-responsive">
+                <form method="post" action="#/wishlist/index/update/wishlist_id/1/" id="wishlist-view-form">
+                  <fieldset>
+                    <input type="hidden" value="ROBdJO5tIbODPZHZ" name="form_key">
+                    <table id="wishlist-table" class="clean-table linearize-table data-table">
+                      <thead>
+                        <tr class="first last">
+                          <th class="customer-wishlist-item-image"></th>
+                          <th class="customer-wishlist-item-info"></th>
+                          <th class="customer-wishlist-item-quantity">Quantity</th>
+                          <th class="customer-wishlist-item-price">金额（元）</th>
+                          <th class="customer-wishlist-item-cart"></th>
+                          <th class="customer-wishlist-item-remove"></th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                      <c:forEach items="${commodities}" var="commodity">
+                        <tr id="item_31" class="first odd">
+                          <td class="wishlist-cell0 customer-wishlist-item-image"><a title="Softwear Women's Designer" href="product_detail.html" class="product-image"> <img width="150" alt="Softwear Women's Designer" src="products-images/product1.jpg"> </a></td>
+                          <td class="wishlist-cell1 customer-wishlist-item-info"><h3 class="product-name"><a title="Softwear Women's Designer" href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a></h3>
+                            <div class="description std">
+                              <div class="inner"><c:out value="${commodity.introduction}"/></div>
+                            </div>
+                            </td>
+                          <td data-rwd-label="Quantity" class="wishlist-cell2 customer-wishlist-item-quantity"><div class="cart-cell">
+                              <div class="add-to-cart-alt">
+                                <input type="text" value="1" name="qty[31]" class="input-text qty validate-not-negative-number" pattern="\d*">
+                              </div>
+                            </div></td>
+                          <td data-rwd-label="Price" class="wishlist-cell3 customer-wishlist-item-price"><div class="cart-cell">
+                              <div class="price-box"> <span   class="regular-price"> <span class="price"><c:out value="${commodity.price }"/></span> </span> </div>
+                            </div></td>
+                          <td class="wishlist-cell4 customer-wishlist-item-cart"><div class="cart-cell">
+                              <button class="button btn-cart" onClick="addWItemToCart(31);" title="Add to Cart" type="button"><span><span>Add to Cart</span></span></button>
+                            </div>
+                            <p><a href="#/wishlist/index/configure/id/31/" class="">Edit</a></p></td>
+                          <td class="wishlist-cell5 customer-wishlist-item-remove last"><a class="remove-item" title="Clear Cart" onClick="return confirmRemoveWishlistItem();" href="#/wishlist/index/remove/item/31/"><span><span></span></span></a></td>
+                        </tr>
+					</c:forEach>
+                      </tbody>
+                    </table>
+                    <div class="buttons-set buttons-set2">
+                      <button class="button btn-share" title="Share Wishlist" name="save_and_share" type="submit"><span>Share Wishlist</span></button>
+                      <button class="button btn-add" onClick="addAllWItemsToCart()" title="Add All to Cart" type="button"><span>Add All to Cart</span></button>
+                      <button class="button btn-update" title="Update Wishlist" name="do" type="submit"><span>Update Wishlist</span></button>
                     </div>
-                    <!--blog_entry-header-inner--> 
-                  </header>
-                  <div class="entry-content">
-                    <div class="featured-thumb">
-                    	<a href="getDetailInfo?information.id=${information.id}">
-                    	<c:set var="urlsNum" scope="page" value="1"/>  
-							<c:forEach items="${information.inforPicses}" var="pic">   		 	
-								<c:if test = "${urlsNum == 1}">
-									<img alt="blog-img4" src="${server_path}${pic.url}">
-									<c:set var="urlsNum" scope="page" value="2"/>		
-								</c:if>
-	                     	</c:forEach> 
-                    	</a>
-                    </div>
-                    <div class="entry-content">
-                      <p><c:out value="${information.content}"/></p>
-                    </div>
-                    <p> <a class="btn" href="getDetailInfo?information.id=${information.id}">Read More</a> </p>
-                  </div>
-                  <footer class="entry-meta"> This entry was posted						in <a rel="category tag" title="View all posts in First Category" href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a> On
-                    <time datetime="2014-07-10T06:53:43+00:00" class="entry-date">Jul 10, 2014</time>
-                    . </footer>
-                </article>
-                </c:forEach>
+                  </fieldset>
+                </form>
               </div>
             </div>
-            <div class="pager">
-              <p class="amount"> <strong>4 Item(s)</strong> </p>
-              <div class="limiter">
-                <label>Show</label>
-                <select onChange="setLocation(this.value)">
-                  <option selected="selected" value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=5"> 5 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=10"> 10 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=15"> 15 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=20"> 20 </option>
-                  <option value="http://demo.magikthemes.com/index.php/eclipseblue/blog/?limit=all"> All </option>
-                </select>
-                per page </div>
+            <div class="buttons-set">
+              <p class="back-link"><a href="#/customer/account/"><small>« </small>Back</a></p>
             </div>
           </div>
-        </div>
-        <div class="col-right sidebar col-sm-3">
-          <div role="complementary" class="widget_wrapper13" id="secondary">
-            <div class="popular-posts widget widget__sidebar wow bounceInUp animated" id="recent-posts-4">
-              <h3 class="widget-title">Most Popular Post</h3>
-              <div class="widget-content">
-                <ul class="posts-list unstyled clearfix">
-                  <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
-                    <!--featured-thumb-->
-                    <h4><a title="Pellentesque posuere" href="blog_detail.html">Pellentesque posuere</a></h4>
-                    <p class="post-meta"><i class="icon-calendar"></i>
-                      <time datetime="2014-07-10T07:09:31+00:00" class="entry-date">Jul 10, 2014</time>
-                      .</p>
-                  </li>
-                  <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
-                    <!--featured-thumb-->
-                    <h4><a title="Dolor lorem ipsum" href="blog_detail.html">Dolor lorem ipsum</a></h4>
-                    <p class="post-meta"><i class="icon-calendar"></i>
-                      <time datetime="2014-07-10T07:01:18+00:00" class="entry-date">Jul 10, 2014</time>
-                      .</p>
-                  </li>
-                  <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
-                    <!--featured-thumb-->
-                    <h4><a title="Aliquam eget sapien placerat" href="blog_detail.html">Aliquam eget sapien placerat</a></h4>
-                    <p class="post-meta"><i class="icon-calendar"></i>
-                      <time datetime="2014-07-10T06:59:14+00:00" class="entry-date">Jul 10, 2014</time>
-                      .</p>
-                  </li>
-                  <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
-                    <!--featured-thumb-->
-                    <h4><a title="Pellentesque habitant morbi" href="blog_detail.html">Pellentesque habitant morbi</a></h4>
-                    <p class="post-meta"><i class="icon-calendar"></i>
-                      <time datetime="2014-07-10T06:53:43+00:00" class="entry-date">Jul 10, 2014</time>
-                      .</p>
-                  </li>
-                </ul>
-              </div>
-              <!--widget-content--> 
-            </div>
-            <div class="popular-posts widget widget_categories wow bounceInUp animated" id="categories-2">
-              <h3 class="widget-title">Categories</h3>
+        </section>
+        <aside class="col-right sidebar col-sm-3 wow bounceInUp animated">
+          <div class="block block-account">
+            <div class="block-title">My Account</div>
+            <div class="block-content">
               <ul>
-                <li class="cat-item cat-item-19599"><a href="http://demo.magikthemes.com/index.php/eclipseblue/first-category">First Category</a></li>
-                <li class="cat-item cat-item-19599"><a href="http://demo.magikthemes.com/index.php/eclipseblue/second-category">Second Category</a></li>
+                <li ><a href="dashboard.html">Account Dashboard</a></li>
+                <li><a href="#customer/account/edit/">Account Information</a></li>
+                <li><a href="#customer/address/">Address Book</a></li>
+                <li><a href="#sales/order/history/">My Orders</a></li>
+                <li><a href="#sales/billing_agreement/">Billing Agreements</a></li>
+                <li><a href="#sales/recurring_profile/">Recurring Profiles</a></li>
+                <li><a href="#review/customer/">My Product Reviews</a></li>
+                <li><a href="#tag/customer/">My Tags</a></li>
+                <li class="current"><a href="#">My Wishlist</a></li>
+                <li><a href="#downloadable/customer/products/">My Downloadable</a></li>
+                <li class="last"><a href="#newsletter/manage/">Newsletter Subscriptions</a></li>
               </ul>
             </div>
-            <!-- Banner Ad Block -->
-            <div class="ad-spots widget widget__sidebar wow bounceInUp animated">
-              <h3 class="widget-title">Ad Spots</h3>
-              <div class="widget-content"><a target="_self" href="#" title=""><img alt="offer banner" src="images/offerBanner.jpg"></a></div>
-            </div>
-            <!-- Banner Text Block -->
-            <div class="text-widget widget widget__sidebar">
-              <h3 class="widget-title">Text Widget</h3>
-              <div class="widget-content">Mauris at blandit erat. Nam vel tortor non quam scelerisque cursus. Praesent nunc vitae magna pellentesque auctor. Quisque id lectus.<br>
-                <br>
-                Massa, eget eleifend tellus. Proin nec ante leo ssim nunc sit amet velit malesuada pharetra. Nulla neque sapien, sollicitudin non ornare quis, malesuada.</div>
+          </div>
+          <div class="block block-compare">
+            <div class="block-title ">Compare Products (2)</div>
+            <div class="block-content">
+              <ol id="compare-items">
+                <li class="item odd">
+                  <input type="hidden" value="2173" class="compare-item-id">
+                  <a class="btn-remove1" title="Remove This Item" href="#"></a> <a href="#" class="product-name"> Sofa with Box-Edge Polyester Wrapped Cushions</a> </li>
+                <li class="item last even">
+                  <input type="hidden" value="2174" class="compare-item-id">
+                  <a class="btn-remove1" title="Remove This Item" href="#"></a> <a href="#" class="product-name"> Sofa with Box-Edge Down-Blend Wrapped Cushions</a> </li>
+              </ol>
+              <div class="ajax-checkout">
+                <button type="submit" title="Submit" class="button button-compare"><span>Compare</span></button>
+                <button type="submit" title="Submit" class="button button-clear"><span>Clear</span></button>
+              </div>
             </div>
           </div>
-        </div>
+        </aside>
       </div>
     </div>
   </div>
-
   <!-- Footer -->
   <footer>
     <div class="container">
@@ -358,7 +335,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
             </li>
           </ul>
-		  <p class="required">* Required Fields</p>
+
+            <p class="required">* Required Fields</p>
         </div>
         <!--column sixty-->
         <div class="column fourty last">
@@ -368,7 +346,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="textright">
               <input type="text" name="hideit" value="" style="display:none !important;">
               <button type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
-              <img src="images/mgkloading1.gif" id="loader" alt="loader" style="display:none;"> </div>
+              <img src="images/mgkloading1.gif" alt="loader" id="loader" style="display:none;"> </div>
             <!--textright-->
           </div>
           <!--padding-->
@@ -380,7 +358,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <!--right-side-content hidden1-->
 </div>
-
 <!-- JavaScript --> 
 <script type="text/javascript" src="js/jquery.min.js"></script> 
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
