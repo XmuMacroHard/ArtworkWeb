@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -53,7 +54,6 @@ public class Commodity implements java.io.Serializable {
 	private String category;
 	private long purchaseOrder_id;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
-//	private Customization customization;
 	// Constructors
 
 	/** default constructor */
@@ -61,6 +61,23 @@ public class Commodity implements java.io.Serializable {
 	}
 	
 	/** full constructor */
+
+	
+	public void addPictures(List<String> picPaths)
+	{
+		CommodityPics commodityPic = new CommodityPics();
+		for(String path : picPaths)
+		{
+//			commodityPic.setCommodity(this);
+			commodityPic.setUrl(path);
+			commodityPices.add(commodityPic);
+		}
+	}
+	
+
+
+
+
 	public Commodity(Long id, String name, String introduction, Float price,
 			Long authorId, String type, Boolean isBought, String category,
 			long purchaseOrder_id, Set<CommodityPics> commodityPices) {
@@ -76,19 +93,6 @@ public class Commodity implements java.io.Serializable {
 		this.purchaseOrder_id = purchaseOrder_id;
 		this.commodityPices = commodityPices;
 	}
-	
-	public void addPictures(List<String> picPaths)
-	{
-		CommodityPics commodityPic = new CommodityPics();
-		for(String path : picPaths)
-		{
-//			commodityPic.setCommodity(this);
-			commodityPic.setUrl(path);
-			commodityPices.add(commodityPic);
-		}
-	}
-	
-
 
 	// Property accessors
 	@Id
@@ -182,16 +186,6 @@ public class Commodity implements java.io.Serializable {
 	public void setPurchaseOrder_id(long purchaseOrder_id) {
 		this.purchaseOrder_id = purchaseOrder_id;
 	}
-	
-	
-//
-//	@OneToOne(mappedBy = "commodity")
-//	public Customization getCustomization() {
-//		return customization;
-//	}
-//
-//	public void setCustomization(Customization customization) {
-//		this.customization = customization;
-//	}
 
+	
 }

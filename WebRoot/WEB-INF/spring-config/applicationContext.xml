@@ -11,7 +11,7 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-2.5.xsd" 
 	xmlns:tx="http://www.springframework.org/schema/tx">
-
+	
 	<context:component-scan base-package="cn.edu.xmu.artwork"/>
 	
 	<bean id="fileUtils" class="cn.edu.xmu.artwork.utils.impl.FileUtils"></bean>

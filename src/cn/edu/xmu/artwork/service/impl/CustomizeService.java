@@ -40,7 +40,4 @@ public class CustomizeService implements ICustomizeService{
 		customizationDao.getCustomizationsByArtist(id);
 		return null;
 	}
-	
-	
-	
 }

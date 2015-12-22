@@ -39,13 +39,15 @@ public class CustomizationAction extends ActionSupport{
 	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
 	public String CustomizationSubmitAction()
 	{
-		user.setId(1L);//这里的user_id需要从session获取
-		artist=userService.getArtist(3L);//从界面传值
+//		user.setId(1L);
+//		artist.setId(4L);
+//		commodity.setId(1L);
+//		customization.setUser(user);
+//		customization.setArtist(artist);
+//		customization.getCommodity().add(commodity);
+//		customizeService.addCustomization(customization);
 		
-		commodity.setAuthorId(3L);//同样需要艺术家id,这里没有往下传，因为直接用你的service方法了
-		commodity.setCategory("customization");
-		saleService.uploadCommodity(commodity,new ArrayList<String>());
-		customizeService.addCustomization(customization);
+		System.out.println("submit c");
 		return SUCCESS;
 	}
 

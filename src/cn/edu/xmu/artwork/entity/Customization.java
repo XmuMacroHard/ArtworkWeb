@@ -2,17 +2,10 @@ package cn.edu.xmu.artwork.entity;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-import java.util.Date;
-
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.hibernate.annotations.NamedQueries;
@@ -32,17 +25,23 @@ import org.hibernate.annotations.NamedQuery;
 		)
 }
 )
-public class Customization implements java.io.Serializable{
+public class Customization  implements java.io.Serializable{
 	private long id;
 	
 	public Customization(){
 	}
 	
 
+	public Customization(long id) {
+		super();
+		this.id = id;
+	}
+
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name="id", nullable =false, unique=true)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
 	public void setId(long id) {
