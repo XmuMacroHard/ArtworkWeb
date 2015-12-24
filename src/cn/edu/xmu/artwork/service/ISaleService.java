@@ -15,5 +15,5 @@ public interface ISaleService {
 	Commodity getCommodityById(long commodityId);
 	void uploadCommodity(Commodity commodity, List<String> picPaths);
 	JSONObject addToCart(Commodity commodity, User buyer);
-	List<ShoppingCart> getShoppingCart(long userId);
+	List<ShoppingCart> getShoppingCart();
 }

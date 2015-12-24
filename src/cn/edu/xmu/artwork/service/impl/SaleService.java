@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.constants.IResultCode;
+import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.ShoppingCartDao;
@@ -91,8 +92,17 @@ public class SaleService extends BasicService implements ISaleService
 		}
 	}
 	
-	public List<ShoppingCart> getShoppingCart(long userId)
+	public List<ShoppingCart> getShoppingCart()
 	{
-		return shoppingCartDao.getAllByUserId(userId);
+		User user = (User)getSessionInBrower(IStrings.SESSION_USER);
+		
+		List<ShoppingCart> list = shoppingCartDao.getAllByUserId(user.getId()); 
+		for(ShoppingCart shoppingCart : list)
+		{
+			initializeObject(shoppingCart.getCommodity());
+			initializeObject(shoppingCart.getCommodity().getCommodityPices());
+		}
+		
+		return list;
 	}
 }

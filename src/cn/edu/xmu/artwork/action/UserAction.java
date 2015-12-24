@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.action;
 import java.io.File;
 import java.util.List;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
@@ -40,6 +41,8 @@ public class UserAction extends ActionSupport
 	
 	private String result;
 	
+	private JSONArray resultJsonArray;
+	private JSONObject resultJsonObject;
 
 	@Action(
 			value="loginAction", 
@@ -95,7 +98,11 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="findArtist", results={@Result(name="success", location="/jsp/test/shenggetArtist_test.jsp")})
+	/**
+	 * 根据艺术家id查询一个艺术家的详细信息
+	 * @return
+	 */
+	@Action(value="findArtist", results={@Result(name="success", location="/jsp/frontside/order/detailArtist.jsp")})
 	public String findArtist()
 	{
 		long id =user.getId();
@@ -104,12 +111,14 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="getArtistBySort", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
-	public String getArtistBySort()
+	@Action(value="getBriefArtistBySort", results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getBriefArtistBySort()
 	{
 		String identification=artist.getIdentification();
-		List<Artist> list = userService.getArtistBySort("%"+identification+"%");
-		ServletActionContext.getRequest().setAttribute("list", list);
+		setResultJsonArray(userService.getBriefArtistBySort("%"+identification+"%"));
+		System.out.println(resultJsonArray);
+		
+		
 		return SUCCESS;
 	}
 	
@@ -122,7 +131,7 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="submitArtist", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	@Action(value="submitArtist", results={@Result(name="success", location="/jsp/frontside/user/profile.jsp")})
 	public String submitArtist()
 	{
 		userService.submitArtist(artist,pic,picFileName);
@@ -204,5 +213,22 @@ public class UserAction extends ActionSupport
 	public void setPicContentType(List<String> picContentType) {
 		this.picContentType = picContentType;
 	}
+
+	public JSONArray getResultJsonArray() {
+		return resultJsonArray;
+	}
+
+	public void setResultJsonArray(JSONArray resultJsonArray) {
+		this.resultJsonArray = resultJsonArray;
+	}
+
+	public JSONObject getResultJsonObject() {
+		return resultJsonObject;
+	}
+
+	public void setResultJsonObject(JSONObject resultJsonObject) {
+		this.resultJsonObject = resultJsonObject;
+	}
+	
 	
 }

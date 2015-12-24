@@ -1,4 +1,4 @@
-﻿<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -6,10 +6,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE>
+<html>
 <head>
 <base href="<%=basePath%>">
 <meta charset="utf-8">
@@ -39,6 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <!-- Google Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,700,800,400,600' rel='stylesheet' type='text/css'>
 </head>
+
 <body>
 <div class="page">
   <c:import url="../common/header.jsp"/>
@@ -71,7 +70,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="slider-items slider-width-col1"> 
                   
                   <!-- Item -->
-                  <div class="item"> <a href="#x"><img alt="women_banner" src="images/women_banner.png"></a>
+                  <div class="item"> <a href="#x"><img alt="banner" src="images/women_banner.png"></a>
                     <div class="cat-img-title cat-bg cat-box">
                       <h2 class="cat-heading">Category Banner</h2>
                       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
@@ -80,7 +79,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <!-- End Item --> 
                   
                   <!-- Item -->
-                  <div class="item"> <a href="#x"><img alt="women_banner" src="images/women_banner.png"></a> </div>
+                  <div class="item"> <a href="#x"><img alt="banner" src="images/women_banner.png"></a> </div>
                   <!-- End Item --> 
                 </div>
               </div>
@@ -89,7 +88,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="category-products">
             <div class="toolbar">
               <div class="sorter">
-                <div class="view-mode"> <span title="Grid" class="button button-active button-grid">Grid</span><a href="list.html" title="List" class="button button-list">List</a> </div>
+                <div class="view-mode"> <a href="grid.html" title="Grid" class="button button-grid">Grid</a>&nbsp; <span title="List" class="button button-active button-list">List</span>&nbsp; </div>
               </div>
               <div id="sort-by">
                 <label class="left">Sort By: </label>
@@ -123,17 +122,44 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="active"><a href="#">1</a></li>
                     <li><a href="#">2</a></li>
                     <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
                     <li><a href="#">&raquo;</a></li>
                   </ul>
                 </div>
               </div>
             </div>
-            <!-- commodity list -->
-            <ul class="products-grid" id="commodity_list">             
-	        </ul>
-	        <!--end commodity list -->
-          </div>
-		  </div>
+            
+            <!-- artist list -->
+            <ol id="products-list" class="products-list">
+               <li class="item odd">
+                <div class="product-image"> <a href="product_detail.html" title="HTC Rhyme Sense"> <img class="small-image" src="products-images/product1.jpg" alt="product-image" width="230"> </a> </div>
+                <div class="product-shop">
+                  <h2 class="product-name"><a title=" Sample Product" href="product_detail.html"> Sample Product </a></h2>
+                  <div class="price-box">
+                    <p class="old-price"> <span class="price-label"></span> <span id="old-price-212" class="price"> $442.99 </span> </p>
+                    <p class="special-price"> <span class="price-label"></span> <span id="product-price-212" class="price"> $222.99 </span> </p>
+                  </div>
+                  <div class="ratings">
+                    <div class="rating-box">
+                      <div style="width:50%" class="rating"></div>
+                    </div>
+                    <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#review-form">Add Your Review</a> </p>
+                  </div>
+                  <div class="desc std">
+                    <p>Sed volutpat ac massa eget 
+                      lacinia.  
+                      Aenean volutpat lacus at dolor blandit </p>
+                    <p>Sed sed interdum diam. Donec sit ametenim tempor, dapibus nunc eu, 
+                      tincidunt mi. Vivamus dictum nec... <a class="link-learn" title="" href="#">Learn More</a> </p>
+                  </div>
+                  <div class="actions">
+                    <button class="button btn-cart ajx-cart" title="Add to Cart" type="button"><span>Add to Cart</span></button>
+                    <span class="add-to-links"> <a title="Add to Wishlist" class="button link-wishlist" href="wishlist.html"><span>Add to Wishlist</span></a> <a title="Add to Compare" class="button link-compare" href="#"><span>Add to Compare</span></a> </span> </div>
+                </div>
+              </li> 
+            </ol>
+          </div></div>
         </section>
         <aside class="col-left sidebar col-sm-3 col-xs-12 col-sm-pull-9 wow bounceInUp animated">
           <div class="side-nav-categories">
@@ -308,13 +334,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <li class="item"> <a class="product-image" title="Fisher-Price Bubble Mower" href="product_detail.html"><img width="80" alt="product-image" src="products-images/product1.jpg"></a>
                   <div class="product-details">
                     <div class="access"> <a class="btn-remove1" title="Remove This Item" href="#"> <span class="icon"></span> Remove </a> </div>
-                    <p class="product-name"> <a href="product_detail.html">Sample Product</a> </p>
-                  <strong>1</strong> x <span class="price">$19.99</span> </div>
+                    <p class="product-name"> <a href="#">Sample Product</a> </p>
+                    <strong>1</strong> x <span class="price">$19.99</span> </div>
                 </li>
                 <li class="item last"> <a class="product-image" title="Prince Lionheart Jumbo Toy Hammock" href="product_detail.html"><img width="80" alt="product-image" src="products-images/product1.jpg"></a>
                   <div class="product-details">
                     <div class="access"> <a class="btn-remove1" title="Remove This Item" href="#"> <span class="icon"></span> Remove </a> </div>
-                    <p class="product-name"> <a href="product_detail.html"> Sample Product</a> </p>
+                    <p class="product-name"> <a href="#"> Sample Product</a> </p>
                     <strong>1</strong> x <span class="price">$8.00</span> 
                     <!--access clearfix--> 
                   </div>
@@ -570,7 +596,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="">
           <ul>
             <li>
-              <label>First Name</label>
+              <label >First Name</label>
               <input type="text" name="FirstName" class="required-entry">
               <div class="clearfix"></div>
             </li>
@@ -649,14 +675,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <!--right-side-content hidden1-->
 </div>
 
-
 <!-- JavaScript --> 
 <script type="text/javascript" src="js/jquery.min.js"></script> 
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
-<script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/frontside/user/home_sale.js"></script> 
+<script type="text/javascript" src="js/owl.carousel.min.js"></script> 
+<script type="text/javascript" src="js/frontside/order/home_order.js"></script>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

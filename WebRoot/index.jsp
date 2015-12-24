@@ -44,6 +44,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <div class="page">
+  <%-- <c:import url="/jsp/support/constant.jsp"/> --%>
   <c:import url="/jsp/frontside/common/header.jsp"/>
   <!-- Slider -->
   <div class="slider-section">
@@ -59,13 +60,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   	               		 	<c:set var="urlsNum" scope="page" value="1"/>  
 							<c:forEach items="${information.inforPicses}" var="pic">   		 	
 								<c:if test = "${urlsNum == 1}">
-									<img  alt="women image" src="${pic.url}"/>
+									<img height="100%" width="100%" alt="women image" src="${server_path }${pic.url}"/>
 									<c:set var="urlsNum" scope="page" value="2"/>		
 								</c:if>
 	                     	</c:forEach> 	                     	   
 	               		 	</div>
-	               		 	<h2><c:out value="${information.title}"/></h2>   		 	
-	               		 	<p><c:out value="${information.content}"/></p>  
+	               		 	<p><h2><c:out value="${information.title}"/></h2></p>   		 	
 	               		 	<a href="getDetailInfo?information.id=${information.id}">详情</a>  
 	               	</li>
 	               	</c:if> 	               	
@@ -83,7 +83,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               			<c:set var="urlsNum2" scope="page" value="1"/>
               			<c:forEach items="${information.inforPicses}" var="pic">   		 	
 							<c:if test = "${urlsNum2 == 1}">
-								<p><a href="#"> <img src="${pic.url}" alt="banner-img"></a></p>
+								<p><a href="#"> <img height="100%" width="100%" src="${server_path}${pic.url}" alt="banner-img"></a></p>
 								<c:set var="urlsNum2" scope="page" value="2"/>		
 							</c:if>
 	               		 </c:forEach>                		                		

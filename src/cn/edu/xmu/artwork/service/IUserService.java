@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.service;
 import java.io.File;
 import java.util.List;
 
+import net.sf.json.JSONArray;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.Information;
@@ -19,4 +20,5 @@ public interface IUserService {
 	public List<Artist> getArtistByName(String name);
 	public List<Commodity> showMyCommodity();
 	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);
+	public JSONArray getBriefArtistBySort(String identification);
 }

@@ -15,8 +15,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.ShoppingCart;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
 import cn.edu.xmu.artwork.service.ISaleService;
@@ -106,12 +108,11 @@ public class SaleAction extends ActionSupport
 	/*
 	 *show the list of shoppingcart 
 	 * */
-	@Action(value="ShowshoppingCart", results={@Result(name="success", type="json", params={"root", "result"})})
-	public String showShoppingcart()
+	@Action(value="viewCart", results={@Result(name="success", location="/jsp/frontside/user/shoppingCart.jsp")})
+	public String viewCart()
 	{
-		//need to be tes.
-		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		saleService.getShoppingCart(user.getId());	
+		List<ShoppingCart> list = saleService.getShoppingCart();	
+		setAttributeByRequest(IClientConstants.REQUEST_SHOPPING_CART, list);
 		return IResultCode.SUCCESS;
 	}
 	

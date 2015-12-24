@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.service.impl;
 import java.io.File;
 import java.util.List;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
@@ -12,11 +13,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.CommodityDao;
-
 import cn.edu.xmu.artwork.dao.impl.ArtistDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
@@ -83,10 +85,17 @@ public class UserService extends BasicService implements IUserService
 			resultJson.put(IResultCode.RESULT, IResultCode.ERROR);
 			resultJson.put(IResultCode.MESSAGE, IResultCode.LOGIN_ERROR_MESSAGE);
 		}
-		else
+		else if(resultUser instanceof Artist)
 		{
 			setSessionInBrower(IStrings.SESSION_USER, resultUser);
+			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_ARTIST);
 			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+		}
+		else if(resultUser instanceof User)
+		{
+			setSessionInBrower(IStrings.SESSION_USER, resultUser);
+			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_USER);
+			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);			
 		}
 		return resultJson.toString();
 	}
@@ -116,7 +125,31 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public List<Artist> getArtistBySort(String identification)
 	{
-		return artistDao.getArtistBySort(identification);
+		List<Artist> artists = artistDao.getArtistBySort(identification);			
+		return artists;
+	}
+	/**
+	 * 获得列表显示的部分用户的简略信息
+	 * @param identification
+	 * @return
+	 */
+	@Override
+	public JSONArray getBriefArtistBySort(String identification)
+	{
+		List<Artist> artists = getArtistBySort(identification);
+		
+		JSONArray resultJsonArray = new JSONArray();
+		for(Artist artist : artists)
+		{
+			JSONObject jo = new JSONObject();
+			jo.put(ITableConstants.ARTIST_ID, artist.getId());
+			jo.put(ITableConstants.ARTIST_PORTRAIT, artist.getPortrait());
+			jo.put(ITableConstants.ARTIST_REAL_NAME, artist.getRealName());
+			jo.put(ITableConstants.ARTIST_INTRODUCTION, artist.getIntroduction());
+			resultJsonArray.add(jo);
+		}
+		
+		return resultJsonArray;
 	}
 	
 	@Override
@@ -132,9 +165,13 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName)
 	{
-		fileservice.uploadPicture(pic, picFileName);
-		artist.setPortrait(picFileName.get(0));
-		artist.setFileurl(picFileName.get(1));
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		artist.setId(user.getId());
+/*		System.out.println(user.getId());
+		System.out.println(artist.getIdentification());*/
+		List<String> storePath = fileservice.uploadPicture(pic, picFileName);
+		artist.setPortrait(storePath.get(0));
+		artist.setFileurl(storePath.get(1));
 		artistDao.submitArtist(artist);
 	}
 	
@@ -143,7 +180,11 @@ public class UserService extends BasicService implements IUserService
 	{
 		//long id = getSessionInBrower("artwor_user");
 		List<Commodity> commodities = commodityDao.getAllByAuthorId((long)1);
-		initializeObject(commodities);
+		for(Commodity commodity : commodities)
+		{
+			initializeObject(commodity.getCommodityPices());
+		}
+		
 		return commodities;
 	}
 	
