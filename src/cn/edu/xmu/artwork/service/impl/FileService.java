@@ -1,6 +1,10 @@
 package cn.edu.xmu.artwork.service.impl;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -48,5 +52,21 @@ public class FileService implements IFileService
 		fileUtil.copy(file, toImgPath);
 		
 		return "/" + IStrings.IMAGE_DIR + "/" + realFileName;
+	}
+	
+	/**
+	 * 获取下载文件流
+	 * @author asus1
+	 */
+	public InputStream getDownloadFile(String fileName) throws FileNotFoundException, UnsupportedEncodingException
+	{
+		System.out.println(fileName);
+		
+		ServletActionContext.getResponse().setHeader("Content-Disposition","attachment;fileName="
+				+ java.net.URLEncoder.encode(fileName, "UTF-8"));
+		InputStream inputStream = new FileInputStream("F:/"
+				+ fileName);
+		System.out.println(inputStream);
+		return inputStream;
 	}
 }

@@ -6,8 +6,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.dao.IArtistDao;
 import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
+import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAdminService;
@@ -26,6 +28,9 @@ public class AdminService implements IAdminService {
 	
 	@Autowired
 	private IInformationDao informationDao;
+	
+	@Autowired
+	private IArtistDao artistDao;
 
 	
 	/**
@@ -107,6 +112,65 @@ public class AdminService implements IAdminService {
 		informationDao.updateInfoStatus(infoId, "1");
 		
 		return null;
+	}
+
+	/**
+	 * 显示所有艺术家列表
+	 * @author asus1
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public List<Artist> ShowAllArtistList() throws Exception {
+		
+		List<Artist> artistList = artistDao.getArtistList();
+		return artistList;
+
+	}
+
+	/**
+	 * 驳回艺术家认证
+	 * @author asus1
+	 * @param artistId
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public String ArtistBanning(long artistId) throws Exception {
+
+		artistDao.updateArtistStatus(artistId, "0");
+		
+		return null;
+	}
+
+	/**
+	 * 通过艺术家认证
+	 * @author asus1
+	 * @param artistId
+	 * @return
+	 * @throws Exception
+	 */
+	@Override
+	public String ArtistRelieve(long artistId) throws Exception {
+
+		artistDao.updateArtistStatus(artistId, "1");
+		
+		return null;
+	}
+
+	/**
+	 * 查看艺术家详情
+	 * @author asus1
+	 * @param artistId
+	 * @return artist
+	 * @throws Exception
+	 */
+	@Override
+	public Artist ShowArtistDetails(long artistId) throws Exception {
+		
+		Artist artist = artistDao.getArtist(artistId);
+		
+		return artist;
 	}
 	
 	

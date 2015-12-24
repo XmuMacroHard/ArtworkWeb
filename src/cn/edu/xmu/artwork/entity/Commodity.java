@@ -12,9 +12,11 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 /**
@@ -30,7 +32,12 @@ import javax.persistence.Table;
 		@NamedQuery(
 				name = "Commodity.getById",
 				query = "from Commodity c where c.id = :commId"
-			)
+			),
+		@NamedQuery(
+					name = "Commodity.getByAuthorId",
+					query = "from Commodity c where c.authorId = :authorid"
+				)
+			
 })
 public class Commodity implements java.io.Serializable {
 
@@ -44,7 +51,7 @@ public class Commodity implements java.io.Serializable {
 	private String type;									//商品所属种类,如书法等
 	private Boolean isBought;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
-	
+	private Customization customization;
 	// Constructors
 
 	/** default constructor */
@@ -68,6 +75,7 @@ public class Commodity implements java.io.Serializable {
 		CommodityPics commodityPic = new CommodityPics();
 		for(String path : picPaths)
 		{
+//			commodityPic.setCommodity(this);
 			commodityPic.setUrl(path);
 			commodityPices.add(commodityPic);
 		}
@@ -121,7 +129,7 @@ public class Commodity implements java.io.Serializable {
 		this.authorId = authorId;
 	}
 
-	@Column(name = "type", nullable = false, length = 9)
+	@Column(name = "type", nullable = false, length = 40)
 	public String getType() {
 		return this.type;
 	}
@@ -139,13 +147,23 @@ public class Commodity implements java.io.Serializable {
 		this.isBought = isBought;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY, mappedBy="commodityId")
+	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="commodityId")
 	public Set<CommodityPics> getCommodityPices() {
 		return commodityPices;
 	}
 
 	public void setCommodityPices(Set<CommodityPics> commodityPices) {
 		this.commodityPices = commodityPices;
+	}
+
+	@OneToOne(mappedBy = "commodity")
+	public Customization getCustomization() {
+		return customization;
+	}
+
+	public void setCustomization(Customization customization) {
+		this.customization = customization;
 	}
 	
 	

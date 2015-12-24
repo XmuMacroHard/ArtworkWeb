@@ -919,20 +919,20 @@ Purchase: http://wrapbootstrap.com
                                         <tbody>
                                         <s:iterator id="artist" value="#request.artistList">
                                             <tr>
-                                                <td><a href="#"><s:property value="#artist.email"/></a></td>
+                                                <td><a href="ShowArtistDetails?artist.id=${artist.id}"><s:property value="#artist.email"/></a></td>
                                                 <td><s:property value="#artist.realname"/></td>
                                                 <td><s:property value="#artist.phone"/></td>
-                                                <td id = "<s:property value="#artist.email"/>">
-                                                	<s:if test='%{#artist.isBanned == "1"}'>
-                                                		<span class="label label-danger">已禁用</span>
+                                                <td id = "<s:property value="#artist.id"/>">
+                                                	<s:if test='%{#artist.isapprove == "0"}'>
+                                                		<span class="label label-danger">已驳回</span>
                                                 	</s:if>
-                                                	<s:elseif test='%{#artist.isBanned == "0"}'>
-                                                		<span class="label label-success">已启用</span>
+                                                	<s:elseif test='%{#artist.isapprove == "1"}'>
+                                                		<span class="label label-success">已通过</span>
                                                 	</s:elseif>
                                                 </td>
                                                 <td>
-                                                    <s:a href="JavaScript:UserRelieve(%{email});" cssClass="btn btn-success btn-xs"><i class="fa fa-edit"></i> 启用</s:a>
-                                                    <s:a href="JavaScript:UserBanning(%{email});" cssClass="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 禁用</s:a>
+                                                    <s:a href="JavaScript:ArtistRelieve(%{id});" cssClass="btn btn-success btn-xs"><i class="fa fa-edit"></i> 通过</s:a>
+                                                    <s:a href="JavaScript:ArtistBanning(%{id});" cssClass="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 驳回</s:a>
                                                 </td>
                                             </tr>
                                         </s:iterator>

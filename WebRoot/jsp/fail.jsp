@@ -1,4 +1,4 @@
-<%@ page language="java" import="java.util.*" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
@@ -26,5 +26,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <body>
   <s:property value="#faildetail"/><br/>
     fail! <br/>
+<form method="post" action="addToCart">
+    <input id="hidden_user_id"  value="5" name="user.id"/>
+    <input id="hidden_commodity_id"  value="2" name="commodity.id"/>
+     
+    <!-- <button/> -->
+    <input type="submit"/> 
+  </form>
   </body>
 </html>

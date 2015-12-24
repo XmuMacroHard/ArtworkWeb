@@ -19,7 +19,8 @@
 	<!-- all entities -->
 	<bean id="user" class="cn.edu.xmu.artwork.entity.User"></bean>
 	<bean id="information" class="cn.edu.xmu.artwork.entity.Information"></bean>
-	
+	<bean id="customization" class="cn.edu.xmu.artwork.entity.Customization"></bean>
+	<bean id="shippingAddress" class="cn.edu.xmu.artwork.entity.ShippingAddress"></bean>
 	<!-- all daos -->
 	
 	<bean id="userDao" class="cn.edu.xmu.artwork.dao.impl.UserDao" ></bean>		

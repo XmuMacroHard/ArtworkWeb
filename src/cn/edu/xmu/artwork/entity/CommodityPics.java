@@ -2,8 +2,13 @@ package cn.edu.xmu.artwork.entity;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -17,7 +22,6 @@ public class CommodityPics implements java.io.Serializable {
 	// Fields
 
 	private Long id;
-	private Long commodityId;
 	private String url;
 
 	// Constructors
@@ -27,8 +31,7 @@ public class CommodityPics implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public CommodityPics(Long commodityId, String url) {
-		this.commodityId = commodityId;
+	public CommodityPics(String url) {
 		this.url = url;
 	}
 
@@ -42,15 +45,6 @@ public class CommodityPics implements java.io.Serializable {
 
 	public void setId(Long id) {
 		this.id = id;
-	}
-
-	@Column(name = "commodityId", nullable = false)
-	public Long getCommodityId() {
-		return this.commodityId;
-	}
-
-	public void setCommodityId(Long commodityId) {
-		this.commodityId = commodityId;
 	}
 
 	@Column(name = "url", nullable = false, length = 40)

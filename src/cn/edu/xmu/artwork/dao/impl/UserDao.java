@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
+import cn.edu.xmu.artwork.entity.Customization;
 import cn.edu.xmu.artwork.entity.User;
 
 @Repository
@@ -151,4 +152,11 @@ public class UserDao extends GenericDao implements IUserDao
 			e.printStackTrace();
 		}
 	}
+
+	@Override
+	public List<Customization> getCustomizations() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

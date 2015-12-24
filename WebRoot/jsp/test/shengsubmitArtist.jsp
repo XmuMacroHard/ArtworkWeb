@@ -31,7 +31,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <s:checkbox name="artist.identification" label="绘画" fieldValue="painting"/>
     <s:checkbox name="artist.identification" label="雕刻" fieldValue="sculpture"/>
      <s:checkbox name="artist.identification" label="手工品" fieldValue="handicraft"/><br>
-   	
+   	<s:file name="pic" label="头像"/><br>
+   	<s:file name="pic" label="资料"/><br>
    	<br><button type="submit">提交</button>
    </form>
   </body>
