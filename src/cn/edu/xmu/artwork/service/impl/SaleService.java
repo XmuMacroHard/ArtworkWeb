@@ -1,6 +1,9 @@
 package cn.edu.xmu.artwork.service.impl;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -14,9 +17,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
+import cn.edu.xmu.artwork.dao.IPurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.ShoppingCartDao;
+import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
+import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.ShoppingCart;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ISaleService;
@@ -34,8 +41,13 @@ public class SaleService extends BasicService implements ISaleService
 	IShoppingCartDao shoppingCartDao;
 	
 	@Autowired
+	IPurchaseOrderDao purchaseOrderDao;
+	
+	@Autowired
 	IJsonUtils jsonUtils;
 	
+	@Autowired
+	private UserDao userDao;
 /*	public List<Commodity> getCommodityListByType(String commoType)
 	{
 		return commodityDao.getCommodityListByType(commoType);
@@ -94,5 +106,58 @@ public class SaleService extends BasicService implements ISaleService
 	public List<ShoppingCart> getShoppingCart(long userId)
 	{
 		return shoppingCartDao.getAllByUserId(userId);
+	}
+	
+	public void SubmitsaleOrder(User user,List<Long> commodityid,ShippingAddress shippingAddress)
+	{
+		PurchaseOrder purchaseOrder=new PurchaseOrder();
+		purchaseOrder.setUser(user);
+		purchaseOrder.setOrderid(getordernum(user));	
+		purchaseOrder.setState("0");
+		purchaseOrder.setType("sale");
+		purchaseOrder.setDate(new Date());
+		purchaseOrder.setShippingAddress(shippingAddress);
+		
+		float totalprice=0;
+		for(Long id:commodityid)
+		{
+			Commodity commodity=commodityDao.getCommodityById(id);
+			purchaseOrder.getCommodity().add(commodity);
+			commodity.setPurchaseOrder_id(purchaseOrder);
+			totalprice+=commodity.getPrice();
+		}
+		purchaseOrder.setTotalprice(totalprice);
+		purchaseOrderDao.savePurchaseOrder(purchaseOrder);
+	}
+	
+	public String getordernum(User user)
+	{
+		SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");//设置日期格式
+		String number=df.format(new Date())+String.format("%02d",user.getId()%100);
+		Random random=new Random();
+		number=number+String.format("%04d",random.nextInt(10000));
+		return number;
+	}
+	
+	public PurchaseOrder getPurchaseOrderByid(long id)
+	{
+		return purchaseOrderDao.getPurchaseOrderByid(id);
+	}
+	
+	public boolean payment(long id)
+	{
+		PurchaseOrder purchaseOrder=purchaseOrderDao.getPurchaseOrderByid(id);
+		User user = userDao.findById(1L);
+		if(user.getBalance()<purchaseOrder.getTotalprice())
+			return false;
+		else
+		{
+			user.setBalance(user.getBalance()-purchaseOrder.getTotalprice());
+			userDao.update(user);
+			
+			purchaseOrder.setState("1");
+			purchaseOrderDao.update(purchaseOrder);
+			return true;
+		}
 	}
 }

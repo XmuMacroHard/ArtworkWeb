@@ -32,14 +32,14 @@ import org.hibernate.annotations.NamedQuery;
 		)
 }
 )
-public class Customization implements java.io.Serializable{
-	private long id;
+public class Customization extends PurchaseOrder implements java.io.Serializable{
+	//private long id;
 	
 	public Customization(){
 	}
 	
 
-	@Id
+/*	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name="id", nullable =false, unique=true)
 	public long getId() {
@@ -48,6 +48,6 @@ public class Customization implements java.io.Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
+	*/
 
 }

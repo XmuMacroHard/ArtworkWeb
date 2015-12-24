@@ -11,6 +11,7 @@ public interface IUserDao {
 	public User search(User user);
 	public List findAll();
 	public User findById(long id);
+	public void update(User user);
 	
 	/**
 	 * 更新用户状态

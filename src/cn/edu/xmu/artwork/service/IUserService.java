@@ -19,4 +19,5 @@ public interface IUserService {
 	public List<Artist> getArtistByName(String name);
 	public List<Commodity> showMyCommodity();
 	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);
+	public void recharge(float balance);
 }

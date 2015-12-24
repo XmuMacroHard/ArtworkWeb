@@ -16,7 +16,9 @@ import org.springframework.context.annotation.Scope;
 
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.User;
+import cn.edu.xmu.artwork.service.ISaleService;
 import cn.edu.xmu.artwork.service.IUserService;
 
 import com.opensymphony.xwork2.ActionContext;
@@ -37,9 +39,11 @@ public class UserAction extends ActionSupport
 	private Artist artist;
 	@Autowired
 	private IUserService userService;
+	@Autowired
+	private ISaleService SaleService;
 	
 	private String result;
-	
+	private long orderid;
 
 	@Action(
 			value="loginAction", 
@@ -142,6 +146,32 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 充值
+	 * @author sheng
+	 */
+	@Action(value="userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	public  String userrecharge()
+	{
+		userService.recharge(user.getBalance());
+		return SUCCESS;
+	}
+	
+	/**
+	 * 付款
+	 * @author sheng
+	 */
+	@Action(value="userpayment", results={@Result(name="success", location="/jsp/test/shengtest.jsp")
+										,@Result(name="fail", location="/jsp/test/shengrecharge.jsp")})
+	public  String userpayment()
+	{
+		orderid=17L;
+		if(SaleService.payment(orderid))
+			return SUCCESS;
+		else
+			return "fail";
+	}
+	
 	private void setAttributeByRequest(String key, Object value)
 	{
 		ServletActionContext.getRequest().setAttribute(key, value);
@@ -203,6 +233,14 @@ public class UserAction extends ActionSupport
 
 	public void setPicContentType(List<String> picContentType) {
 		this.picContentType = picContentType;
+	}
+	
+	public long getOrderid() {
+		return orderid;
+	}
+
+	public void setOrderid(long orderid) {
+		this.orderid = orderid;
 	}
 	
 }

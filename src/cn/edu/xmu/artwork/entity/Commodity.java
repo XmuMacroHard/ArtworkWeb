@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -51,9 +52,8 @@ public class Commodity implements java.io.Serializable {
 	private String type;									//商品所属种类,如书法等
 	private Boolean isBought;
 	private String category;
-	private long purchaseOrder_id;
+	private PurchaseOrder purchaseOrder_id;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
-//	private Customization customization;
 	// Constructors
 
 	/** default constructor */
@@ -63,7 +63,7 @@ public class Commodity implements java.io.Serializable {
 	/** full constructor */
 	public Commodity(Long id, String name, String introduction, Float price,
 			Long authorId, String type, Boolean isBought, String category,
-			long purchaseOrder_id, Set<CommodityPics> commodityPices) {
+			PurchaseOrder purchaseOrder_id, Set<CommodityPics> commodityPices) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -73,7 +73,7 @@ public class Commodity implements java.io.Serializable {
 		this.type = type;
 		this.isBought = isBought;
 		this.category = category;
-		this.purchaseOrder_id = purchaseOrder_id;
+		this.purchaseOrder_id= purchaseOrder_id;
 		this.commodityPices = commodityPices;
 	}
 	
@@ -87,8 +87,6 @@ public class Commodity implements java.io.Serializable {
 			commodityPices.add(commodityPic);
 		}
 	}
-	
-
 
 	// Property accessors
 	@Id
@@ -175,23 +173,14 @@ public class Commodity implements java.io.Serializable {
 		this.commodityPices = commodityPices;
 	}
 
-	public long getPurchaseOrder_id() {
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="purchaseOrder_Id")
+	public PurchaseOrder getPurchaseOrder_id() {
 		return purchaseOrder_id;
 	}
 
-	public void setPurchaseOrder_id(long purchaseOrder_id) {
+	public void setPurchaseOrder_id(PurchaseOrder purchaseOrder_id) {
 		this.purchaseOrder_id = purchaseOrder_id;
 	}
 	
-	
-//
-//	@OneToOne(mappedBy = "commodity")
-//	public Customization getCustomization() {
-//		return customization;
-//	}
-//
-//	public void setCustomization(Customization customization) {
-//		this.customization = customization;
-//	}
-
 }

@@ -1,7 +1,9 @@
 package cn.edu.xmu.artwork.action;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -33,19 +35,16 @@ public class CustomizationAction extends ActionSupport{
 	private ICustomizeService customizeService;
 	@Autowired
 	private IUserService userService;
-	@Autowired
-	private ISaleService saleService;
 	
 	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
 	public String CustomizationSubmitAction()
 	{
 		user.setId(1L);//这里的user_id需要从session获取
-		artist=userService.getArtist(3L);//从界面传值
 		
-		commodity.setAuthorId(3L);//同样需要艺术家id,这里没有往下传，因为直接用你的service方法了
-		commodity.setCategory("customization");
-		saleService.uploadCommodity(commodity,new ArrayList<String>());
-		customizeService.addCustomization(customization);
+		commodity.setAuthorId(3L);//艺术家id从界面传值
+	
+		customizeService.addCustomization(customization,user,commodity);
+		
 		return SUCCESS;
 	}
 

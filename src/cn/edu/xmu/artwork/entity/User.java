@@ -31,12 +31,12 @@ import org.hibernate.annotations.NamedQuery;
 @DiscriminatorValue("user")
 @Table(name = "user", catalog = "artworkdb")
 
-@NamedQueries(
+@NamedQueries({
 		@NamedQuery(
 			name = "getUserByEmailPassword",
 			query = "from User c where c.email = :email and c.password = :password"
 		)
-	)
+})
 public class User implements java.io.Serializable {
 
 	// Fields

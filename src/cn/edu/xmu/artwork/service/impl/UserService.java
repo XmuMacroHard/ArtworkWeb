@@ -16,8 +16,8 @@ import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.CommodityDao;
-
 import cn.edu.xmu.artwork.dao.impl.ArtistDao;
+import cn.edu.xmu.artwork.dao.impl.PurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
@@ -41,6 +41,9 @@ public class UserService extends BasicService implements IUserService
 	
 	@Autowired
 	private CommodityDao commodityDao;
+	
+	@Autowired
+	PurchaseOrderDao purchaseOrderDao;
 	
 	@Autowired
 	private ArtistDao artistDao;
@@ -68,6 +71,8 @@ public class UserService extends BasicService implements IUserService
 	public void register(User user) throws Exception{
 		System.out.println("in serverice register");
 		MD5encypt(user);
+		user.setBalance((float) 0);
+		user.setIsBanned("0");
 		userDao.insert(user);
 		setSessionInBrower(IStrings.SESSION_USER, user);
 	}
@@ -147,4 +152,11 @@ public class UserService extends BasicService implements IUserService
 		return commodities;
 	}
 	
+	@Override
+	public void recharge(float balance)
+	{
+		User user=userDao.findById(1L);
+		user.setBalance(user.getBalance()-balance);
+		userDao.update(user);
+	}
 }

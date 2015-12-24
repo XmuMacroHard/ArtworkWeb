@@ -1,6 +1,7 @@
 package cn.edu.xmu.artwork.entity;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -32,10 +33,10 @@ public class PurchaseOrder implements java.io.Serializable {
 	private String state;
 
 	private User user;
-	private Artist artist;
-	private Set<Commodity> commodity;
 	private Date date;
 	private ShippingAddress shippingAddress;
+	private Float totalprice;
+	private Set<Commodity> commodity=new HashSet<Commodity>();
 	
 	// Constructors
 	/** default constructor */
@@ -43,10 +44,18 @@ public class PurchaseOrder implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PurchaseOrder(String orderid, String type, String state) {
+	public PurchaseOrder(Long id, String orderid, String type, String state,
+			User user, Date date,
+			ShippingAddress shippingAddress, Set<Commodity> commodity) {
+		super();
+		this.id = id;
 		this.orderid = orderid;
 		this.type = type;
 		this.state = state;
+		this.user = user;
+		this.date = date;
+		this.shippingAddress = shippingAddress;
+		this.commodity = commodity;
 	}
 
 	// Property accessors
@@ -97,16 +106,6 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.user = user;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "artist_id", nullable = false)
-	public Artist getArtist() {
-		return artist;
-	}
-	public void setArtist(Artist artist) {
-		this.artist = artist;
-	}
-	
-	
 	@Column(name = "date")
 	public Date getDate() {
 		return date;
@@ -122,6 +121,15 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setShippingAddress(ShippingAddress shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
+	
+	@Column(name = "totalprice", nullable = true, precision = 15)
+	public Float getTotalprice() {
+		return totalprice;
+	}
+
+	public void setTotalprice(Float totalprice) {
+		this.totalprice = totalprice;
+	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder_id")
 	public Set<Commodity> getCommodity() {
@@ -131,6 +139,5 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setCommodity(Set<Commodity> commodity) {
 		this.commodity = commodity;
 	}
-
 	
 }
