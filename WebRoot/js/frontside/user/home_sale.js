@@ -14,7 +14,7 @@ function onload()
 		data:{"commodity.type":"calligraphy"},
 		dataType:"json",
 		success:function(data){
-			var server_path = "http://localhost:8080/ArtworkWeb/images_repo";
+			var server_path = "http://localhost:8080/ArtworkWeb";
 			var	commodities = "";
 			var $commodityList = $("#commodity_list");
 			$.each(data, function(index, item){

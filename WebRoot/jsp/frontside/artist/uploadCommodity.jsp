@@ -62,11 +62,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <form class="comment-form" id="postComment" action="uploadCommodity" enctype="multipart/form-data" method="POST">
                       <div class="field">
                         <label>商品名<em class="required">*</em></label>
-                        <input type="text" class="input-text" title="Name" value="" id="user" name="commodity.name"/>
+                        <input style="width:60%" type="text" class="input-text" title="Name" value="" id="user" name="commodity.name"/>
                       </div>
                       <div class="field">
                         <label>商品类型<em class="required">*</em></label>
-                        <select title="Country" class="validate-select" id="country" name="commodity.type">
+                        <select title="Country" style="width:60%" class="validate-select" id="country" name="commodity.type">
                           <option value="calligraphy">书法</option>
                           <option value="painting">绘画</option>
                           <option value="sculpture">雕刻</option>
@@ -75,21 +75,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       </div>
 					  <div class="field">
                         <label>商品价格<em class="required">*</em></label>
-                        <input type="text" class="input-text validate-email" title="Email" value="" name="commodity.price">
-                      </div>
-  						<div class="field">
+                        <input style="width:60%" type="text" class="input-text validate-email" title="Email" value="" name="commodity.price">
+                      </div >
+  						<div class="field" >
                         <label>商品图片<em class="required">*</em></label>
-                        <s:file name="pictures" cssClass="input-text"/>
+                        <s:file style="width:60%" name="pictures" cssClass="input-text"/>
                       </div> 
                       <div class="clear"></div>
-                      <div class="field aw-blog-comment-area">
+                      <div class="field aw-blog-comment-area" > 
                         <label>商品描述<em class="required">*</em></label>
-                        <textarea rows="5" cols="50" class="input-text" title="Comment" id="comment1" name="commodity.introduction"></textarea>
+                        <textarea style="width:90%" rows="5" cols="5" class="input-text" title="Comment" id="comment1" name="commodity.introduction"></textarea>
                       </div> 
                       <div style="width:96%" class="button-set"> 
                         <button id="uploadCommodity" type="submit" class="bnt-comment"><span><span>商品上传</span></span></button>
-                      </div>
+                      </div>                                        
+                      
                     </form>
+                    
+                    
                   </div>
              
                   <!--comments-form-wrapper clearfix-->        

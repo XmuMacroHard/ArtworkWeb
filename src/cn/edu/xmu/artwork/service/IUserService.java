@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.service;
 import java.io.File;
 import java.util.List;
 
+import net.sf.json.JSONArray;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.Information;
@@ -25,4 +26,8 @@ public interface IUserService {
 	public List<ShippingAddress> ShowAllAddressList(long userId);
 	public void AddNewAddress(ShippingAddress address);
 	public void DeleteAddress(long id);
+
+	public JSONArray getBriefArtistBySort(String identification);
+	public void recharge(float balance);
+
 }

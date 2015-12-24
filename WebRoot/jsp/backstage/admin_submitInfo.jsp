@@ -908,10 +908,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                 </div>
                                                 <div class="widget-body">
                                                     <div id="registration-form">
-                                                    <%
-  														long i = 1;
-  														session.setAttribute("userid", i);
-   													%>
                                                         <form action="submitInfo" method="POST" enctype="multipart/form-data">
                                                             <div class="form-title">
                                                                 	资讯

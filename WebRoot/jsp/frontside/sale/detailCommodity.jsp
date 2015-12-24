@@ -33,6 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <div class="page">
+ <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
   <c:import url="../common/header.jsp"/>
   <!-- end breadcrumbs -->
   <div class="breadcrumbs">
@@ -60,20 +61,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <div class="new-label new-top-left"> New </div>
                   <div class="product-image">
 							<c:set var="urlsNum" scope="page" value="1"/>  
-							<c:forEach items="${information.inforPicses}" var="pic">   		 	
-								<c:if test = "${urlsNum == 1}">
-                    				<div class="large-image"> <a href="products-images/product1.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img alt="product-image" src="${pic.url}"> </a> </div>
-									<c:set var="urlsNum" scope="page" value="2"/>		
-								</c:if>
+							<c:forEach items="${commodity.commodityPices}" var="pic">   		 	
+								<c:if test = "${urlsNum == 1}"> 
+                    				<div class="large-image" style="height: 350px"> <a href="products-images/product1.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img width="100%" height="100" alt="product-image" src="${server_path }${pic.url}"> </a> </div>
+									<c:set var="urlsNum" scope="page" value="2"/> 		
+								</c:if> 
 	                     	</c:forEach> 
-                    <div class="flexslider flexslider-thumb">
+                     <div class="flexslider flexslider-thumb">
                       <ul class="previews-list slides">
                       	<c:forEach items="${commodity.commodityPices}" var="pic">
-                        <li><a href='products-images/product1.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'products-images/product1.jpg' "><img src="${pic.url}" alt="Thumbnail 1"/></a></li>
+                        	<li><a href='products-images/product1.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'products-images/product1.jpg' "><img src="${server_path }${pic.url}" alt="Thumbnail 1"/></a></li>
                         </c:forEach>
                       </ul>
-                    </div>
-                    
+                    </div>                     
                   </div>
                   <!-- end: more-images -->
                   <div class="clear"></div>

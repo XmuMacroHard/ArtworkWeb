@@ -6,6 +6,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 
+<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+
 <!DOCTYPE>
 <html>
 <head>
@@ -64,7 +66,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <div class="entry-content">
                     <div class="featured-thumb"><a href="#">
                     	<c:forEach items="${information.inforPicses}" var="pic">
-                    		<img alt="blog-img4" src="${pic.url}"/>
+                    		<img alt="blog-img4" src="${server_path}${pic.url}"/>
                     	</c:forEach>
                     	</a>
                     </div>

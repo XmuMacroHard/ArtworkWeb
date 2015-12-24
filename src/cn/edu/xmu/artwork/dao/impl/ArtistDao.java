@@ -75,7 +75,7 @@ public class ArtistDao extends UserDao implements IArtistDao{
 					.setParameter(2, artist.getIntroduction())
 					.setParameter(3, artist.getFileurl())
 					.setParameter(4, artist.getPortrait())
-					.setParameter(5, 4L);
+					.setParameter(5, artist.getId());
 			
 			queryupdate.executeUpdate();
 			

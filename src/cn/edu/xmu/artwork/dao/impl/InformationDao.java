@@ -60,19 +60,22 @@ public class InformationDao extends GenericDao implements IInformationDao {
 	/*get today informations*/
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Information> getTodayInfoByLocation(String location)
+	/**
+	 * 按照资讯的位置， 数量， 默认咨询来获取今天的所有资讯
+	 */
+	public List<Information> getTodayInfoByLocation(String location, int number, String default_status)
 	{
 		Calendar today = Calendar.getInstance();
 		Query query = getSession().getNamedQuery("Information.getInfoShownOnHomePage");
 		query.setDate("today", today.getTime());
 		query.setParameter("location", location);
-		query.setMaxResults(ITableConstants.INFO_LOCATION_1_NUM);
+		query.setMaxResults(number);
 		List<Information> informations = query.list();
-		if(informations.size() < ITableConstants.INFO_LOCATION_1_NUM)
+		if(informations.size() < number)
 		{
 			Query searchDefault = getSession().getNamedQuery("Information.getDefaultInfos");
-			searchDefault.setParameter("default", ITableConstants.INFO_DEFAULT_STATUS);
-			searchDefault.setMaxResults(ITableConstants.INFO_LOCATION_1_NUM - informations.size());
+			searchDefault.setParameter("default", default_status);
+			searchDefault.setMaxResults(number - informations.size());
 			List<Information> defaults = searchDefault.list();
 			informations.addAll(defaults);
 		}

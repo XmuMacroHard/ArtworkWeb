@@ -90,6 +90,7 @@ Purchase: http://wrapbootstrap.com
                                                   data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                                                   data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
             <div class="loginbox-textbox">
+<<<<<<< HEAD
 <<<<<<< HEAD:WebRoot/jsp/login.jsp
                 <input type="text" name="user.email" class="form-control" placeholder="账户" 
                 data-bv-notempty="true"
@@ -97,9 +98,14 @@ Purchase: http://wrapbootstrap.com
 =======
                 <s:textfield id="email" name="user.email" cssClass="form-control" placeholder="账户" />
 >>>>>>> e7b17987db58c98cf21917e069d0ad84c7606ea2:WebRoot/jsp/frontside/user/login.jsp
+=======
+                <s:textfield id="email" name="user.email" cssClass="form-control" placeholder="账户" onblur="checkUser()"/>
+                <span class="text-danger" id="userTip"></span>
+>>>>>>> 993095b812adee6c6f357c42f5e3467d0eba67d4
             </div>
             <div class="loginbox-textbox">
-                <s:password id="password" name="user.password" cssClass="form-control" placeholder="密码" />
+                <s:password id="password" name="user.password" cssClass="form-control" placeholder="密码" onblur="checkPassword()"/>
+                <span class="text-danger" id="passwordTip"></span>
             </div>
             <div class="loginbox-forgot">
                 <a href="">忘记密码?</a>

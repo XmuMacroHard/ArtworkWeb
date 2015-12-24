@@ -2,6 +2,7 @@ package cn.edu.xmu.artwork.action;
 
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -15,8 +16,12 @@ import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.ShoppingCart;
+
+import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
 import cn.edu.xmu.artwork.service.ISaleService;
@@ -35,6 +40,10 @@ public class SaleAction extends ActionSupport
 
 	private Commodity commodity = new Commodity();
 	private User user = new User();
+	
+	//use to store commodity and address in order
+	private List<Long> commodityid=new ArrayList<Long>();
+	private ShippingAddress shippingAddress;
 	
 	//used to store the json result
 	private String result;
@@ -106,14 +115,31 @@ public class SaleAction extends ActionSupport
 	/*
 	 *show the list of shoppingcart 
 	 * */
-	@Action(value="ShowshoppingCart", results={@Result(name="success", type="json", params={"root", "result"})})
-	public String showShoppingcart()
+	@Action(value="viewCart", results={@Result(name="success", location="/jsp/frontside/user/shoppingCart.jsp")})
+	public String viewCart()
 	{
-		//need to be tes.
-		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		saleService.getShoppingCart(user.getId());	
+		List<ShoppingCart> list = saleService.getShoppingCart();	
+		setAttributeByRequest(IClientConstants.REQUEST_SHOPPING_CART, list);
 		return IResultCode.SUCCESS;
 	}
+	
+	/*
+	 *submit sale order 
+	 **/
+	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
+	public String SubmitsaleOrder()
+	{
+		//user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		user.setId(1L);
+		
+		commodityid.add(3L);//实际是从界面接收的
+		commodityid.add(4L);
+		
+		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
+		
+		return SUCCESS;
+	}
+	
 	
 	/**
 	 * 
@@ -188,7 +214,13 @@ public class SaleAction extends ActionSupport
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
+
+	public List<Long> getCommodityid() {
+		return commodityid;
+	}
+
+	public void setCommodityid(List<Long> commodityid) {
+		this.commodityid = commodityid;
+	}
 	
 }

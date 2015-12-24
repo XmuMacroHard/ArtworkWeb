@@ -60,12 +60,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <!-- Header Company -->
                 <div class="dropdown block-company-wrapper hidden-xs"> <a role="button" data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"> 个人中心 <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="about_us.html"> About Us </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/profile.jsp"> 个人信息 </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> Customer Service </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> Privacy Policy </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="sitemap.html">Site Map </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Advanced Search </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/artist_certification.jsp">艺术家认证 </a></li>
                   </ul>
                 </div>
                 <!-- End Header Company -->
@@ -105,33 +105,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <!-- Top Cart -->
             <div class="top-cart-contain">
               <div class="mini-cart">
-                <div data-toggle="dropdown" data-hover="dropdown" class="basket dropdown-toggle"> <a href="#"><span class="hidden-xs">shopping cart (3)</span></a></div>
-                <div>
-                  <div style="display: none;" class="top-cart-content arrow_box">
-                    <div class="block-subtitle">Recently added item(s)</div>
-                    <ul id="cart-sidebar" class="mini-products-list">
-                      <li class="item odd"> <a href="product_detail.html" title="Skater Dress In Leaf Print" class="product-image"><img src="products-images/product1.jpg" alt="Product image" width="55"></a>
-                        <div class="product-details"> <a href="#" title="Remove This Item" onClick="" class="btn-remove1">Remove This Item</a> <a class="btn-edit" title="Edit item" href="#">Edit item</a>
-                          <p class="product-name"><a href="product_detail.html">Sample Product</a> </p>
-                          <strong>1</strong> x <span class="price">$20.00</span> </div>
-                      </li>
-                      <li class="item even"> <a href="product_detail.html" title="Product layout: large content" class="product-image"><img src="products-images/product1.jpg" alt="Product image" width="55"></a>
-                        <div class="product-details"> <a href="#" title="Remove This Item" onClick="" class="btn-remove1">Remove This Item</a> <a class="btn-edit" title="Edit item" href="#">Edit item</a>
-                          <p class="product-name"><a href="product_detail.html">Sample Product</a> </p>
-                          <strong>1</strong> x <span class="price">$230.00</span> </div>
-                      </li>
-                      <li class="item last odd"> <a href="product_detail.html" title="Skater Dress In Leaf Print" class="product-image"><img src="products-images/product1.jpg" alt="Product image" width="55"></a>
-                        <div class="product-details"> <a href="#" title="Remove This Item" onClick="" class="btn-remove1">Remove This Item</a><a class="btn-edit" title="Edit item" href="#">Edit item</a>
-                          <p class="product-name"><a href="product_detail.html">Sample Product</a> </p>
-                          <strong>2</strong> x <span class="price">$420.00</span> </div>
-                      </li>
-                    </ul>
-                    <div class="top-subtotal">Subtotal: <span class="price">$520.00</span></div>
-                    <div class="actions">
-                      <button class="btn-checkout" type="button"><span>Checkout</span></button>
-                      <button class="view-cart" type="button"><span>View Cart</span></button>
-                    </div>
-                  </div>
+                <div class="basket dropdown-toggle"> <a href="viewCart"><span class="hidden-xs">我的购物车</span></a></div>
                 </div>
               </div>
             </div>
@@ -210,7 +184,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </li>
                       </ul>
                     </li>
-                    <li class="level0 nav-2 level-top parent"> <a href="grid.html" class="level-top"> <span>定制</span> </a>
+                    <li class="level0 nav-2 level-top parent"> <a href="jsp/frontside/order/home_order.jsp" class="level-top"> <span>定制</span> </a>
                       <ul class="level0">
                         <li class="level1 nav-2-1 first parent"> <a href="grid.html"> <span>Shoes</span> </a>
                           <ul class="level1">
@@ -351,7 +325,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       </ul>
                     </li>
                     <li class="level0 nav-5 level-top last"> <a href="grid.html" class="level-top"> <span>Fashion</span> </a> </li>
-                    <li class="level0 nav-6 level-top first parent"> <a class="level-top" href="#"> <span>资讯</span> </a>
+                    <li class="level0 nav-6 level-top first parent"> <a class="level-top" href=""> <span>资讯</span> </a>
                       <ul class="level0">
               <li class="level1 first"><a href="getInfoListByType?datePos.colum=calligraphy"><span>书法栏目</span></a></li>
               <li class="level1 nav-10-2"> <a href="getInfoListByType?datePos.colum=painting"> <span>绘画栏目</span> </a> </li>
@@ -370,7 +344,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <ul id="nav" class="hidden-xs">
           <li id="nav-home" class="level0 parent drop-menu active"><a href="showInfoOnHomePage"><span>主页</span> </a>
           </li>
-          <li class="level0 parent drop-menu"><a href="#"><span>资讯</span> </a>
+          <li class="level0 parent drop-menu"><a href=""><span>资讯</span> </a>
             <ul style="display: none;" class="level1">
               <li class="level1 first"><a href="getInfoListByType?datePos.colum=calligraphy"><span>书法栏目</span></a></li>
               <li class="level1 nav-10-2"> <a href="getInfoListByType?datePos.colum=painting"> <span>绘画栏目</span> </a> </li>
@@ -447,7 +421,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
             </div>
           </li>
-          <li class="level0 nav-7 level-top parent"> <a href="grid.html" class="level-top"> <span>定制</span> </a>
+          <li class="level0 nav-7 level-top parent"> <a href="jsp/frontside/order/home_order.jsp" class="level-top"> <span>定制</span> </a>
             <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
               <div class="level0-wrapper2">
                 <div class="nav-block nav-block-center">
@@ -637,6 +611,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </nav>
   <!-- end nav -->
+  <script type="text/javascript" src="js/jquery.min.js"></script> 
+  <script type="text/javascript" src="js/frontside/common/header.js"></script> 
   </body>
 </html>
 

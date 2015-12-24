@@ -5,6 +5,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>

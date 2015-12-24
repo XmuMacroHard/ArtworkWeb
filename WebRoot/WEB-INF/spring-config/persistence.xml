@@ -32,7 +32,9 @@
 			<list>
 				<value>cn.edu.xmu.artwork.entity</value>
 			</list>
-		</property></bean>
+		</property>
+		</bean>
+	
 	<bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<property name="sessionFactory" ref="sessionFactory" />
