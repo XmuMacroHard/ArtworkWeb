@@ -7,7 +7,7 @@ import cn.edu.xmu.artwork.entity.Customization;
 import cn.edu.xmu.artwork.entity.User;
 
 public interface ICustomizationDao {
-	public List<Customization> getCustomizationsByUser(User user);
-	public List<Customization> getCustomizationsByArtist(Artist artist);
+	public List<Customization> getCustomizationsByUser(long id);
+	public List<Customization> getCustomizationsByArtist(long id);
 	public void save(Customization customization);
 }

@@ -20,9 +20,11 @@
 	<bean id="user" class="cn.edu.xmu.artwork.entity.User"></bean>
 	<bean id="information" class="cn.edu.xmu.artwork.entity.Information"></bean>
 	<bean id="customization" class="cn.edu.xmu.artwork.entity.Customization"></bean>
+	<bean id="purchaseorder" class="cn.edu.xmu.artwork.entity.PurchaseOrder"></bean>
+	<bean id="commodity" class="cn.edu.xmu.artwork.entity.Commodity"></bean>
+	
 	
 	<!-- all daos -->
-	
 	<bean id="userDao" class="cn.edu.xmu.artwork.dao.impl.UserDao" ></bean>		
 	<bean id="informationDao" class="cn.edu.xmu.artwork.dao.impl.InformationDao">
 		<property name="fileUtils" ref="fileUtils"></property>

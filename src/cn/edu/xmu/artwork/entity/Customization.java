@@ -15,31 +15,31 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 
 @Entity
 @Table(name="customization", catalog="artworkdb")
-public class Customization implements java.io.Serializable{
-	private long id;
-	private User user;
-	private Artist artist;
-	private Commodity commodity;
-	private Date date;
-	private ShippingAddress shippingAddress;
+@NamedQueries({
+	@NamedQuery(
+			name = "getCustomizationByUser",
+			query = "from Customization c where user_id = :user_id"
+		),
+	@NamedQuery(
+			name = "getCustomizationByArtist",
+			query = "from Customization c where artist_id = :artist_id"
+		)
+}
+)
+public class Customization extends PurchaseOrder implements java.io.Serializable{
+	//private long id;
 	
-	public Customization(){	
+	public Customization(){
 	}
 	
-	public Customization(long id, User user, Artist artist,
-			Commodity commodity, Date date, ShippingAddress shippingAddress) {
-		super();
-		this.id = id;
-		this.user = user;
-		this.artist = artist;
-		this.commodity = commodity;
-		this.date = date;
-		this.shippingAddress = shippingAddress;
-	}
-	@Id
+
+/*	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name="id", nullable =false, unique=true)
 	public long getId() {
@@ -48,47 +48,6 @@ public class Customization implements java.io.Serializable{
 	public void setId(long id) {
 		this.id = id;
 	}
-	
-	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="user_id", nullable=false)
-	public User getUser() {
-		return user;
-	}
-	public void setUser(User user) {
-		this.user = user;
-	}
-	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "artist_id", nullable = false)
-	public Artist getArtist() {
-		return artist;
-	}
-	public void setArtist(Artist artist) {
-		this.artist = artist;
-	}
-	
-	@OneToOne(cascade = CascadeType.ALL)  
-	@JoinColumn(name = "commodity_id")  
-	public Commodity getCommodity() {
-		return commodity;
-	}
-	public void setCommodity(Commodity commodity) {
-		this.commodity = commodity;
-	}
-	
-	@Column(name = "date")
-	public Date getDate() {
-		return date;
-	}
-	public void setDate(Date date) {
-		this.date = date;
-	}
-	
-	@Column(name = "address")
-	public ShippingAddress getShippingAddress() {
-		return shippingAddress;
-	}
-	public void setShippingAddress(ShippingAddress shippingAddress) {
-		this.shippingAddress = shippingAddress;
-	}
+	*/
+
 }

@@ -26,7 +26,7 @@ public class UserDao extends GenericDao implements IUserDao
 	public void insert(User user) 
 	{		
 		System.out.println("in user dao" + user.getEmail() + user.getPassword());
-		getSession().save(user);	
+		getSession().save(user);
 		System.out.println("success");
 	} 
 	
@@ -56,7 +56,7 @@ public class UserDao extends GenericDao implements IUserDao
 	{
 		try {
 			User instance = (User) getSession().get(
-					"com.macrohard.entity.User", id);
+					"cn.edu.xmu.artwork.entity.User", id);
 			return instance;
 		} catch (RuntimeException re) {
 			throw re;
@@ -153,11 +153,10 @@ public class UserDao extends GenericDao implements IUserDao
 			e.printStackTrace();
 		}
 	}
-
-	@Override
-	public List<Customization> getCustomizations() {
-		// TODO Auto-generated method stub
-		return null;
+	
+	public void update(User user)
+	{
+		getSession().update(user);
 	}
 
 }

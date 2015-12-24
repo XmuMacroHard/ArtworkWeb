@@ -13,6 +13,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -50,25 +51,31 @@ public class Commodity implements java.io.Serializable {
 	private Long authorId;
 	private String type;									//商品所属种类,如书法等
 	private Boolean isBought;
+	private String category;
+	private PurchaseOrder purchaseOrder_id;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
-	private Customization customization;
 	// Constructors
 
 	/** default constructor */
 	public Commodity() {
 	}
-
+	
 	/** full constructor */
-	public Commodity(String name, String introduction, Float price,
-			Long authorId, String type, Boolean isBought) {
+	public Commodity(Long id, String name, String introduction, Float price,
+			Long authorId, String type, Boolean isBought, String category,
+			PurchaseOrder purchaseOrder_id, Set<CommodityPics> commodityPices) {
+		super();
+		this.id = id;
 		this.name = name;
 		this.introduction = introduction;
 		this.price = price;
 		this.authorId = authorId;
 		this.type = type;
 		this.isBought = isBought;
+		this.category = category;
+		this.purchaseOrder_id= purchaseOrder_id;
+		this.commodityPices = commodityPices;
 	}
-
 	
 	public void addPictures(List<String> picPaths)
 	{
@@ -80,7 +87,7 @@ public class Commodity implements java.io.Serializable {
 			commodityPices.add(commodityPic);
 		}
 	}
-	
+
 	// Property accessors
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -138,13 +145,22 @@ public class Commodity implements java.io.Serializable {
 		this.type = type;
 	}
 
-	@Column(name = "isBought", nullable = false)
+	@Column(name = "isBought", nullable = true)
 	public Boolean getIsBought() {
 		return this.isBought;
 	}
 
 	public void setIsBought(Boolean isBought) {
 		this.isBought = isBought;
+	}
+	
+	@Column(name = "category", nullable = false, length = 20)
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
 	}
 	
 	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
@@ -157,15 +173,14 @@ public class Commodity implements java.io.Serializable {
 		this.commodityPices = commodityPices;
 	}
 
-	@OneToOne(mappedBy = "commodity")
-	public Customization getCustomization() {
-		return customization;
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="purchaseOrder_Id")
+	public PurchaseOrder getPurchaseOrder_id() {
+		return purchaseOrder_id;
 	}
 
-	public void setCustomization(Customization customization) {
-		this.customization = customization;
+	public void setPurchaseOrder_id(PurchaseOrder purchaseOrder_id) {
+		this.purchaseOrder_id = purchaseOrder_id;
 	}
 	
-	
-
 }

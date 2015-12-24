@@ -42,12 +42,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
     <div class="register-container animated fadeInDown">
         <div class="registerbox bg-white">
-        <form action="registerAction">
+        <form action="registerAction" onsubmit="return CheckregisterSubmit()">
             <div class="registerbox-title">注册</div>
 
             <div class="registerbox-caption ">请如实填写用户信息</div>
             <div class="registerbox-textbox">
-                <s:textfield name="user.email" cssClass="form-control" placeholder="邮箱" />
+                <s:textfield name="user.email" cssClass="form-control" placeholder="邮箱"  onblur="checkUser()"/>
+                <span class="text-danger" id="userTip"></span>
             </div>
             <div class="registerbox-textbox">
                 <s:password name="user.password" cssClass="form-control" placeholder="密码" 
@@ -58,8 +59,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             data-bv-identical-message="The password and its confirm are not the same"
                             data-bv-different="true"
                             data-bv-different-field="user.account"
-                            data-bv-different-message="The password cannot be the same as username"/>
-            </div>
+                            data-bv-different-message="The password cannot be the same as username"
+                            onblur="checkPassword()()"/>
+                <span class="text-danger" id="passwordTip"></span>
+           </div>
             <div class="registerbox-textbox">
                 <s:password name="confirmPassword" cssClass="form-control" placeholder="确认密码" 
                 			data-bv-notempty="true"
@@ -69,22 +72,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             data-bv-identical-message="The password and its confirm are not the same"
                             data-bv-different="true"
                             data-bv-different-field="user.account"
-                            data-bv-different-message="The password cannot be the same as username"/>
+                            data-bv-different-message="The password cannot be the same as username"
+                            onblur="checkPassword_confirm()"/>
+                    <span class="text-danger" id="password_confirmTip"></span>
             </div>
             <hr class="wide" />
             <div class="registerbox-textbox">
                 <s:textfield name="user.nickname" cssClass="form-control" placeholder="昵称" />
             </div>
-            <div class="registerbox-textbox no-padding-bottom">
-                <div class="checkbox">
-                    <label>
-                        <input type="checkbox" class="colored-primary" checked="checked">
-                        <span class="text darkgray">我同意公司 <a class="themeprimary">macrohard条例</a> 和相关法律条文</span>
-                    </label>
-                </div>
-            </div>
             <div class="registerbox-submit">
-                <s:submit cssClass="btn btn-primary pull-right" value="提交"/>
+                <s:submit id="submitbutton" cssClass="btn btn-primary pull-right" value="提交"/>
             </div>
             </form>
         </div>

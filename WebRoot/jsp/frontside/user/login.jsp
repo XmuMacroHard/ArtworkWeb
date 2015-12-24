@@ -81,10 +81,12 @@ Purchase: http://wrapbootstrap.com
                 <div class="or">OR</div>
             </div>
             <div class="loginbox-textbox">
-                <s:textfield id="email" name="user.email" cssClass="form-control" placeholder="账户" />
+                <s:textfield id="email" name="user.email" cssClass="form-control" placeholder="账户" onblur="checkUser()"/>
+                <span class="text-danger" id="userTip"></span>
             </div>
             <div class="loginbox-textbox">
-                <s:password id="password" name="user.password" cssClass="form-control" placeholder="密码" />
+                <s:password id="password" name="user.password" cssClass="form-control" placeholder="密码" onblur="checkPassword()"/>
+                <span class="text-danger" id="passwordTip"></span>
             </div>
             <div class="loginbox-forgot">
                 <a href="">忘记密码?</a>
