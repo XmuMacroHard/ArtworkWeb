@@ -30,17 +30,47 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Customization> getCustomizationsByUser(long id) {
-		Query query =  getSession().getNamedQuery("getCustomizationByUser");
-		query.setParameter("user_id", id);
-		return  query.list();	
+		List<Customization> list = null;
+		try {
+			Query query =  getSession().getNamedQuery("Customization.getByUser");
+			query.setParameter("user_id", id);
+			System.out.println("getCustomization");
+			list = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return list;
 	}
 
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<Customization> getCustomizationsByArtist(long id) {
-		Query query =  getSession().getNamedQuery("getCustomizationByArtist");
-		query.setParameter("artist_id", id);
-		return  query.list();	
+		List<Customization> list = null;
+		try {
+
+			Query query =  getSession().getNamedQuery("Customization.getByArtist");
+			query.setParameter("artist_id", id);
+			list = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return  list;	
 	}
+
+
+	@Override
+	public Customization findInfoById(long id) {
+		Customization customization = null;
+		try {
+			Query query = getSession().getNamedQuery("Customization.getById");
+			query.setParameter("cus_id", id);
+			customization = (Customization) query.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return customization;
+	}
+
+
 }

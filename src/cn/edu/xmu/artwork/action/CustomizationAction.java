@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.action;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
@@ -13,6 +14,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.Customization;
@@ -35,22 +37,58 @@ public class CustomizationAction extends ActionSupport{
 	private IUserService userService;
 	@Autowired
 	private ISaleService saleService;
+	@Autowired
+	private ICustomizationDao customizationDao;
 	
-	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
+	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
 	public String CustomizationSubmitAction()
 	{
-//		user.setId(1L);
-//		artist.setId(4L);
-//		commodity.setId(1L);
-//		customization.setUser(user);
-//		customization.setArtist(artist);
-//		customization.getCommodity().add(commodity);
-//		customizeService.addCustomization(customization);
-		
+     	
+     	List<Customization> lists = customizeService.getCustomizationsByArtist(4L);
+     	if(lists != null)
+     	for(Customization customization:lists)
+     	{
+     		System.out.println("action "+ customization.getId());
+     	}
+     	else
+     		System.out.println("not found");
+     	
 		System.out.println("submit c");
 		return SUCCESS;
 	}
+	
+	
+	@Action(value="getCustomizationsByUserAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	public String getCustomizationsByUser(){
+		int id = 1; // get from session;
+		List<Customization> lists = customizeService.getCustomizationsByUser(id);
+		setAttributeByRequest("informationList", lists);
+		return SUCCESS;
+	}
+	
+	@Action(value="getCustomizationsByArtistAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	public String getCustomizationsByArtist(){
+		int id = 1; // get from session;
+		List<Customization> lists = customizeService.getCustomizationsByArtist(id);
+		setAttributeByRequest("informationList", lists);
+		return SUCCESS;
+	}
 
+	@Action(value="acceptCustomizationAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	public String acceptCustomization(){
+		int id = 3; // get from session;
+		boolean result = customizeService.accetpCustomization(id);
+		if(result)
+			return SUCCESS;
+		else
+			return ERROR;
+	}
+
+	private void setAttributeByRequest(String key, Object value)
+	{
+		ServletActionContext.getRequest().setAttribute(key, value);
+	}
+	
 	public Customization getCustomization() {
 		return customization;
 	}
@@ -82,4 +120,5 @@ public class CustomizationAction extends ActionSupport{
 	public void setCommodity(Commodity commodity) {
 		this.commodity = commodity;
 	}
+	
 }

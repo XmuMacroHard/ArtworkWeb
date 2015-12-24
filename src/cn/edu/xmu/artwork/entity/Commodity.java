@@ -52,7 +52,7 @@ public class Commodity implements java.io.Serializable {
 	private String type;									//商品所属种类,如书法等
 	private Boolean isBought;
 	private String category;
-	private long purchaseOrder_id;
+	private PurchaseOrder purchaseOrder_id;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
 	// Constructors
 
@@ -61,7 +61,21 @@ public class Commodity implements java.io.Serializable {
 	}
 	
 	/** full constructor */
-
+	public Commodity(Long id, String name, String introduction, Float price,
+			Long authorId, String type, Boolean isBought, String category,
+			PurchaseOrder purchaseOrder_id, Set<CommodityPics> commodityPices) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.introduction = introduction;
+		this.price = price;
+		this.authorId = authorId;
+		this.type = type;
+		this.isBought = isBought;
+		this.category = category;
+		this.purchaseOrder_id= purchaseOrder_id;
+		this.commodityPices = commodityPices;
+	}
 	
 	public void addPictures(List<String> picPaths)
 	{
@@ -72,26 +86,6 @@ public class Commodity implements java.io.Serializable {
 			commodityPic.setUrl(path);
 			commodityPices.add(commodityPic);
 		}
-	}
-	
-
-
-
-
-	public Commodity(Long id, String name, String introduction, Float price,
-			Long authorId, String type, Boolean isBought, String category,
-			long purchaseOrder_id, Set<CommodityPics> commodityPices) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.introduction = introduction;
-		this.price = price;
-		this.authorId = authorId;
-		this.type = type;
-		this.isBought = isBought;
-		this.category = category;
-		this.purchaseOrder_id = purchaseOrder_id;
-		this.commodityPices = commodityPices;
 	}
 
 	// Property accessors
@@ -179,13 +173,14 @@ public class Commodity implements java.io.Serializable {
 		this.commodityPices = commodityPices;
 	}
 
-	public long getPurchaseOrder_id() {
+	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
+	@JoinColumn(name="purchaseOrder_Id")
+	public PurchaseOrder getPurchaseOrder_id() {
 		return purchaseOrder_id;
 	}
 
-	public void setPurchaseOrder_id(long purchaseOrder_id) {
+	public void setPurchaseOrder_id(PurchaseOrder purchaseOrder_id) {
 		this.purchaseOrder_id = purchaseOrder_id;
 	}
-
 	
 }

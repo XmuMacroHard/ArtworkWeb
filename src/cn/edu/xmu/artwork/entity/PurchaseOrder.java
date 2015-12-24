@@ -1,6 +1,7 @@
 package cn.edu.xmu.artwork.entity;
 
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -36,8 +37,7 @@ public class PurchaseOrder implements java.io.Serializable {
 	private String state;
 
 	private User user;
-	private Artist artist;
-	private Set<Commodity> commodity;
+	private Set<Commodity> commodity = new HashSet<Commodity>(0);
 	private Date date;
 	private ShippingAddress shippingAddress;
 	
@@ -53,6 +53,7 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.state = state;
 	}
 
+	
 	// Property accessors
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -101,14 +102,7 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.user = user;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "artist_id", nullable = false)
-	public Artist getArtist() {
-		return artist;
-	}
-	public void setArtist(Artist artist) {
-		this.artist = artist;
-	}
+
 	
 	
 	@Column(name = "date")

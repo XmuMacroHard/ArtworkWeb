@@ -32,10 +32,17 @@ import org.hibernate.annotations.NamedQuery;
 @Table(name = "user", catalog = "artworkdb")
 
 @NamedQueries(
+		{
 		@NamedQuery(
 			name = "getUserByEmailPassword",
 			query = "from User c where c.email = :email and c.password = :password"
+		),
+
+		@NamedQuery(
+			name = "getALLUsers",
+			query = "from User"
 		)
+		}
 	)
 public class User implements java.io.Serializable {
 

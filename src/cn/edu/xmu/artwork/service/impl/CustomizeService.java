@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.entity.Customization;
+import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 
 @Transactional
@@ -31,13 +32,24 @@ public class CustomizeService implements ICustomizeService{
 
 	@Override
 	public List<Customization> getCustomizationsByUser(long id) {
-		customizationDao.getCustomizationsByUser(id);
-		return null;
+		return customizationDao.getCustomizationsByUser(id);
 	}
 
 	@Override
 	public List<Customization> getCustomizationsByArtist(long id) {
-		customizationDao.getCustomizationsByArtist(id);
-		return null;
+		return customizationDao.getCustomizationsByArtist(id);
 	}
+
+	@Override
+	public boolean accetpCustomization(long id) {
+			Customization customization = customizationDao.findInfoById(id);
+			if(null == customization)
+				return false;
+			else
+			{
+				customization.setState("accept");
+				return true;	
+			}
+	}
+
 }
