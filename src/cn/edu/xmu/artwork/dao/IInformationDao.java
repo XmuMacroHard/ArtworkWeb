@@ -18,7 +18,7 @@ public interface IInformationDao
 	
 	public List findAll();
 	
-	public List<Information> getTodayInfoByLocation(String location);
+	public List<Information> getTodayInfoByLocation(String location, int number, String default_status);
 
 	public List<Information> getInfoByColum(String colum);
 

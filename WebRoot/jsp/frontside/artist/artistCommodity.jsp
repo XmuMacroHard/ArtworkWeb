@@ -39,6 +39,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <div class="page">
 	<c:import url="../common/header.jsp"/>
+	<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
   
   <div class="main-container col2-right-layout">
     <div class="main container">
@@ -56,8 +57,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <table id="wishlist-table" class="clean-table linearize-table data-table">
                       <thead>
                         <tr class="first last">
-                          <th class="customer-wishlist-item-image"></th>
-                          <th class="customer-wishlist-item-info"></th>
+                          <th class="customer-wishlist-item-image">商品图</th>
+                          <th class="customer-wishlist-item-info">商品名</th>
                           <th class="customer-wishlist-item-quantity">Quantity</th>
                           <th class="customer-wishlist-item-price">金额（元）</th>
                           <th class="customer-wishlist-item-cart"></th>
@@ -67,7 +68,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <tbody>
                       <c:forEach items="${commodities}" var="commodity">
                         <tr id="item_31" class="first odd">
-                          <td class="wishlist-cell0 customer-wishlist-item-image"><a title="Softwear Women's Designer" href="product_detail.html" class="product-image"> <img width="150" alt="Softwear Women's Designer" src="products-images/product1.jpg"> </a></td>
+                          <td class="wishlist-cell0 customer-wishlist-item-image">
+                          	<a title="Softwear Women's Designer" href="product_detail.html" class="product-image"> 
+                          	<c:set var="urlsNum" scope="page" value="1"/>  
+							<c:forEach items="${commodity.commodityPices}" var="pic">   		 	
+								<c:if test = "${urlsNum == 1}">
+									<img width="80" height="60" alt="Softwear Women's Designer" src="${server_path}${pic.url}"> 
+									<c:set var="urlsNum" scope="page" value="2"/>		
+								</c:if>
+	                     	</c:forEach> 
+                          		 
+                          	</a>
+                          </td>
                           <td class="wishlist-cell1 customer-wishlist-item-info"><h3 class="product-name"><a title="Softwear Women's Designer" href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a></h3>
                             <div class="description std">
                               <div class="inner"><c:out value="${commodity.introduction}"/></div>

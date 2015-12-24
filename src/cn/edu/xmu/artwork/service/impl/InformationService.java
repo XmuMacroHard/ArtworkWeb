@@ -45,7 +45,8 @@ public class InformationService extends BasicService implements IInformationServ
 	public void submit(Information information,DatePos datePos,List<File> pic, List<String> picFileName) {
 		
 		List<String> imgPaths = fileService.uploadPicture(pic, picFileName);
-		long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");
+		//long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");
+		long id = 1L;
 		
 		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());
 				
@@ -97,9 +98,9 @@ public class InformationService extends BasicService implements IInformationServ
 	@Override
 	public List<Information> getTodayInformations()
 	{
-		List<Information> todayInfos1 = InformationDao.getTodayInfoByLocation(ITableConstants.INFO_LOCATION_1);
-		List<Information> todayInfos2 = InformationDao.getTodayInfoByLocation(ITableConstants.INFO_LOCATION_2);
-		
+		List<Information> todayInfos1 = InformationDao.getTodayInfoByLocation(ITableConstants.INFO_LOCATION_1, ITableConstants.INFO_LOCATION_1_NUM, ITableConstants.INFO_DEFAULT_INFO_STATUS);
+		List<Information> todayInfos2 = InformationDao.getTodayInfoByLocation(ITableConstants.INFO_LOCATION_2, ITableConstants.INFO_LOCATION_2_NUM, ITableConstants.INFO_DEFAULT_INFO_STATUS);
+		List<Information> todayAdv = InformationDao.getTodayInfoByLocation(ITableConstants.ADV_LOCATION_1, ITableConstants.INFO_ADV_LOCATION_1_NUM, ITableConstants.INFO_DEFAULT_ADV_STATUS);
 		
 		for(Information information : todayInfos1)
 		{
@@ -111,7 +112,13 @@ public class InformationService extends BasicService implements IInformationServ
 			initializeObject(information.getInforPicses());
 		}
 		
+		for(Information information : todayAdv)
+		{
+			initializeObject(information.getInforPicses());
+		}
+		
 		todayInfos1.addAll(todayInfos2);
+		todayInfos1.addAll(todayAdv);
 		return todayInfos1;
 	}
 	

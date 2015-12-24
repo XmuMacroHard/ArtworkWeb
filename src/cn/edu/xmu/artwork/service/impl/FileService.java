@@ -42,7 +42,7 @@ public class FileService implements IFileService
 	 * */
 	private String storeImg(File file, String filename)
 	{
-		String rootPath = ServletActionContext.getServletContext().getRealPath(IStrings.IMAGE_DIR);
+		String rootPath = ServletActionContext.getServletContext().getRealPath(IStrings.IMAGE_DIR);		
 		String realFileName = imgUtil.createImgName(filename);
 		String toImgPath = rootPath + "/" + realFileName;
 		fileUtil.copy(file, toImgPath);

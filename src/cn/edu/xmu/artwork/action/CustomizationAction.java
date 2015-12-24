@@ -1,7 +1,9 @@
 package cn.edu.xmu.artwork.action;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -17,7 +19,7 @@ import com.opensymphony.xwork2.ActionSupport;
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
-import cn.edu.xmu.artwork.entity.Customization;
+import cn.edu.xmu.artwork.entity.CustomizationOrder;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 import cn.edu.xmu.artwork.service.ISaleService;
@@ -27,7 +29,7 @@ import cn.edu.xmu.artwork.service.IUserService;
 @ParentPackage("struts-default")
 @Namespace(value="/")
 public class CustomizationAction extends ActionSupport{
-	private Customization customization;
+	private CustomizationOrder customization;
 	private User user;
 	private Artist artist;
 	private Commodity commodity;
@@ -44,16 +46,6 @@ public class CustomizationAction extends ActionSupport{
 	public String CustomizationSubmitAction()
 	{
      	
-     	List<Customization> lists = customizeService.getCustomizationsByArtist(4L);
-     	if(lists != null)
-     	for(Customization customization:lists)
-     	{
-     		System.out.println("action "+ customization.getId());
-     	}
-     	else
-     		System.out.println("not found");
-     	
-		System.out.println("submit c");
 		return SUCCESS;
 	}
 	
@@ -61,7 +53,7 @@ public class CustomizationAction extends ActionSupport{
 	@Action(value="getCustomizationsByUserAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
 	public String getCustomizationsByUser(){
 		int id = 1; // get from session;
-		List<Customization> lists = customizeService.getCustomizationsByUser(id);
+		List<CustomizationOrder> lists = customizeService.getCustomizationsByUser(id);
 		setAttributeByRequest("informationList", lists);
 		return SUCCESS;
 	}
@@ -69,7 +61,7 @@ public class CustomizationAction extends ActionSupport{
 	@Action(value="getCustomizationsByArtistAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
 	public String getCustomizationsByArtist(){
 		int id = 1; // get from session;
-		List<Customization> lists = customizeService.getCustomizationsByArtist(id);
+		List<CustomizationOrder> lists = customizeService.getCustomizationsByArtist(id);
 		setAttributeByRequest("informationList", lists);
 		return SUCCESS;
 	}
@@ -89,11 +81,11 @@ public class CustomizationAction extends ActionSupport{
 		ServletActionContext.getRequest().setAttribute(key, value);
 	}
 	
-	public Customization getCustomization() {
+	public CustomizationOrder getCustomization() {
 		return customization;
 	}
 
-	public void setCustomization(Customization customization) {
+	public void setCustomization(CustomizationOrder customization) {
 		this.customization = customization;
 	}
 

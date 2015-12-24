@@ -51,8 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	request.setAttribute("colums",colums);
 	
 	HashMap<String, String> locations = new HashMap<String, String>();
-	locations.put("info_location1","资讯栏一");
-	locations.put("info_location2","资讯栏二");
+	locations.put("adv_location1","广告栏一");
 	request.setAttribute("locations",locations);
 	
 	HashMap<Integer, String> poses1 = new HashMap<Integer, String>();
@@ -899,7 +898,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class="col-lg-12 col-sm-12 col-xs-12">
                             <div class="row">
                                 <div class="col-lg-12 col-sm-12 col-xs-12">
-                                    <h5 class="row-title before-magenta"><i class="fa fa-edit magenta"></i>编辑资讯</h5>
+                                    <h5 class="row-title before-magenta"><i class="fa fa-edit magenta"></i>编辑广告</h5>
                                     <div class="row">
                                         <div class="col-lg-12 col-sm-12 col-xs-12">
                                             <div class="widget flat radius-bordered">
@@ -908,6 +907,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                 </div>
                                                 <div class="widget-body">
                                                     <div id="registration-form">
+                                                    <%
+  														long i = 1;
+  														session.setAttribute("userid", i);
+   													%>
                                                         <form action="submitInfo" method="POST" enctype="multipart/form-data">
                                                             <div class="form-title">
                                                                 	资讯
@@ -915,7 +918,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                             <div class="row">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label for="exampleInputEmail2">标题</label>
+                                                                        <label for="exampleInputEmail2">广告名</label>
                                                                         <span class="input-icon icon-right">
                                                                             <s:textfield cssClass="form-control" name="information.title"/>
                                                                             <i class="fa fa-envelope palegreen"></i>
@@ -976,29 +979,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">
-                                                                        <label for="exampleInputName2">栏目</label>
-                                            							<s:select style="width:100%;" name="datePos.colum" list="#request.colums" listKey="key" listValue="value"/>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
                                                                         <label for="exampleInputName2">价格</label>
                                                                         <span class="input-icon icon-right">
                                                                             <s:textfield cssClass="form-control" name="information.expense"/>
                                                                             <i class="fa fa-calendar blue"></i>
                                                                         </span>
                                                                     </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-12">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputEmail2">资讯内容</label>                                                                       	
-                                                                         <span class="input-icon icon-right">
-                                                                            <textarea rows="10" width="100%" class = "form-control" name="information.content"></textarea>
-                                                                        </span>
-                                                                    </div>
-
                                                                 </div>
                                                             </div>
                                                             <button type="submit" class="btn btn-danger">提交</button>

@@ -20,32 +20,31 @@ import org.hibernate.annotations.NamedQuery;
 
 
 @Entity
-@Table(name="customization", catalog="artworkdb")
+@Table(name="customizationorder", catalog="artworkdb")
 @NamedQueries({
 	@NamedQuery(
-			name = "Customization.getByUser",
-			query = "from Customization c where user_id = :user_id"
+			name = "CustomizationOrder.getByUser",
+			query = "from CustomizationOrder c where user_id = :user_id"
 		),
 	@NamedQuery(
-			name = "Customization.getByArtist",
-			query = "from Customization c where artist_id = :artist_id"
+			name = "CustomizationOrder.getByArtist",
+			query = "from CustomizationOrder c where artist_id = :artist_id"
 		),
 	@NamedQuery(
-			name = "Customization.getById",
-			query = "from Customization c where id = :cus_id"
+			name = "CustomizationOrder.getById",
+			query = "from CustomizationOrder c where id = :cus_id"
 			)
 }
 )
 
-public class Customization extends PurchaseOrder implements java.io.Serializable{
+public class CustomizationOrder extends PurchaseOrder implements java.io.Serializable{
 
 	private Artist artist;
-	
-	public Customization(){
+	//private long id;
+	public CustomizationOrder(){
 	}
 
-
-	public Customization(Artist artist) {
+	public CustomizationOrder(Artist artist) {
 		super();
 		this.artist = artist;
 	}
@@ -60,15 +59,5 @@ public class Customization extends PurchaseOrder implements java.io.Serializable
 		this.artist = artist;
 	}
 
-/*	@Id
-	@GeneratedValue(strategy = IDENTITY)
-	@Column(name="id", nullable =false, unique=true)
-	public long getId() {
-		return id;
-	}
-	public void setId(long id) {
-		this.id = id;
-	}
-	*/
 
 }

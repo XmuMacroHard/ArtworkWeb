@@ -67,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     	<c:set var="urlsNum" scope="page" value="1"/>  
 							<c:forEach items="${information.inforPicses}" var="pic">   		 	
 								<c:if test = "${urlsNum == 1}">
-									<img alt="blog-img4" src="${server_path}${pic.url}">
+									<img width="80%" alt="blog-img4" src="${server_path}${pic.url}">
 									<c:set var="urlsNum" scope="page" value="2"/>		
 								</c:if>
 	                     	</c:forEach> 

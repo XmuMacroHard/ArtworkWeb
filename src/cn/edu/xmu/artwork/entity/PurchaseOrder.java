@@ -37,9 +37,10 @@ public class PurchaseOrder implements java.io.Serializable {
 	private String state;
 
 	private User user;
-	private Set<Commodity> commodity = new HashSet<Commodity>(0);
 	private Date date;
 	private ShippingAddress shippingAddress;
+	private Float totalprice;
+	private Set<Commodity> commodity=new HashSet<Commodity>(0);
 	
 	// Constructors
 	/** default constructor */
@@ -47,10 +48,18 @@ public class PurchaseOrder implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PurchaseOrder(String orderid, String type, String state) {
+	public PurchaseOrder(Long id, String orderid, String type, String state,
+			User user, Date date,
+			ShippingAddress shippingAddress, Set<Commodity> commodity) {
+		super();
+		this.id = id;
 		this.orderid = orderid;
 		this.type = type;
 		this.state = state;
+		this.user = user;
+		this.date = date;
+		this.shippingAddress = shippingAddress;
+		this.commodity = commodity;
 	}
 
 	
@@ -98,12 +107,10 @@ public class PurchaseOrder implements java.io.Serializable {
 	public User getUser() {
 		return user;
 	}
+	
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-
-	
 	
 	@Column(name = "date")
 	public Date getDate() {
@@ -120,6 +127,15 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setShippingAddress(ShippingAddress shippingAddress) {
 		this.shippingAddress = shippingAddress;
 	}
+	
+	@Column(name = "totalprice", nullable = true, precision = 15)
+	public Float getTotalprice() {
+		return totalprice;
+	}
+
+	public void setTotalprice(Float totalprice) {
+		this.totalprice = totalprice;
+	}
 
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder_id")
 	public Set<Commodity> getCommodity() {
@@ -129,6 +145,5 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setCommodity(Set<Commodity> commodity) {
 		this.commodity = commodity;
 	}
-
 	
 }

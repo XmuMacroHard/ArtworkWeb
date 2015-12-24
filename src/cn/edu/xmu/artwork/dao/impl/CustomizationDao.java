@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.entity.Artist;
-import cn.edu.xmu.artwork.entity.Customization;
+import cn.edu.xmu.artwork.entity.CustomizationOrder;
 import cn.edu.xmu.artwork.entity.User;
                       
 @Repository
@@ -21,7 +21,7 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 
 
 	@Override
-	public void save(Customization customization) {
+	public void save(CustomizationOrder customization) {
 		getSession().save(customization);
 		// TODO Auto-generated method stub	
 	}
@@ -29,8 +29,8 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Customization> getCustomizationsByUser(long id) {
-		List<Customization> list = null;
+	public List<CustomizationOrder> getCustomizationsByUser(long id) {
+		List<CustomizationOrder> list = null;
 		try {
 			Query query =  getSession().getNamedQuery("Customization.getByUser");
 			query.setParameter("user_id", id);
@@ -45,8 +45,8 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Customization> getCustomizationsByArtist(long id) {
-		List<Customization> list = null;
+	public List<CustomizationOrder> getCustomizationsByArtist(long id) {
+		List<CustomizationOrder> list = null;
 		try {
 
 			Query query =  getSession().getNamedQuery("Customization.getByArtist");
@@ -60,12 +60,12 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 
 
 	@Override
-	public Customization findInfoById(long id) {
-		Customization customization = null;
+	public CustomizationOrder findInfoById(long id) {
+		CustomizationOrder customization = null;
 		try {
 			Query query = getSession().getNamedQuery("Customization.getById");
 			query.setParameter("cus_id", id);
-			customization = (Customization) query.uniqueResult();
+			customization = (CustomizationOrder) query.uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

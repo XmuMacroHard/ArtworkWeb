@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <div class="page">
- <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+  <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
   <c:import url="../common/header.jsp"/>
   <!-- end breadcrumbs -->
   <div class="breadcrumbs">
@@ -60,20 +60,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="product-img-box col-sm-4 col-xs-12">
                   <div class="new-label new-top-left"> New </div>
                   <div class="product-image">
-							<c:set var="urlsNum" scope="page" value="1"/>  
-							<c:forEach items="${commodity.commodityPices}" var="pic">   		 	
-								<c:if test = "${urlsNum == 1}"> 
-                    				<div class="large-image" style="height: 350px"> <a href="products-images/product1.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img width="100%" height="100" alt="product-image" src="${server_path }${pic.url}"> </a> </div>
-									<c:set var="urlsNum" scope="page" value="2"/> 		
-								</c:if> 
-	                     	</c:forEach> 
-                     <div class="flexslider flexslider-thumb">
-                      <ul class="previews-list slides">
-                      	<c:forEach items="${commodity.commodityPices}" var="pic">
-                        	<li><a href='products-images/product1.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'products-images/product1.jpg' "><img src="${server_path }${pic.url}" alt="Thumbnail 1"/></a></li>
-                        </c:forEach>
-                      </ul>
-                    </div>                     
+					<div class="large-image"> <a href="products-images/product1.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img alt="product-image" src="${server_path}${artist.portrait}"> </a> </div>                    
                   </div>
                   <!-- end: more-images -->
                   <div class="clear"></div>
@@ -81,7 +68,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="product-shop col-sm-5 col-xs-12">
                   <div class="product-next-prev"> <a href="#" class="product-next"><span></span></a> <a href="#" class="product-prev"><span></span></a> </div>
                   <div class="product-name">
-                    <h1><c:out value="${commodity.name}"/></h1>
+                    <h1><c:out value="${artist.realName}"/></h1>
                   </div>
                   <div class="ratings">
                     <div class="rating-box">
@@ -91,13 +78,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </div>
                   <div class="short-description">
                     <h2>Quick Overview</h2>
-                    <p><c:out value="${commodity.introduction}"/></p>
-                  </div>
-                  <p class="availability in-stock">Availability: <span>In Stock</span></p>
-                  <div class="price-block">
-                    <div class="price-box">
-                      <p class="special-price"> <span class="price-label">Special Price</span> <span id="product-price-48" class="price"><c:out value="${commodity.price}"/> </span> </p>
-                    </div> 
+                    <p><c:out value="${artist.introduction}"/></p>
                   </div>
                   <div class="add-to-box">
                     <div class="add-to-cart">
@@ -108,8 +89,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <input type="text" class="input-text qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">
                           <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="icon-plus">&nbsp;</i></button>
                         </div>
-					<div id="hidden_user_id" style="visibility:hidden"><c:out value="${sessionScope.user.id}"/></div>
-   		              <div id="hidden_commodity_id" style="visibility:hidden"><c:out value="${commodity.id}"/></div>
                       </div>
                       <button id="addToCart" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> Add to Cart</span></button> 
                     </div>

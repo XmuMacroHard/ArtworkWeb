@@ -5,7 +5,7 @@ import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cn.edu.xmu.artwork.entity.Customization;
+import cn.edu.xmu.artwork.entity.CustomizationOrder;
 
 public abstract class GenericDao 
 {
