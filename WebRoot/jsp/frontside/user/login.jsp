@@ -94,7 +94,6 @@ Purchase: http://wrapbootstrap.com
             <div class="loginbox-submit">
                 <s:submit id="loginButton" cssClass="btn btn-primary pull-right" value="登录"/>
             </div>
-            <!-- </form> -->
         </div>
     </div>
 
