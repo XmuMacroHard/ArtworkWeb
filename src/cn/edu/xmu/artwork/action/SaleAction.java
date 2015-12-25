@@ -132,12 +132,13 @@ public class SaleAction extends ActionSupport
 	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
 	public String SubmitsaleOrder()
 	{
-		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		//user.setId(1L);
+		//user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		user.setId(1L);
 		
-/*		commodityid.add(3L);//实际是从界面接收的
-		commodityid.add(4L);*/
-		
+		commodityid.add(3L);//实际是从界面接收的
+		commodityid.add(4L);
+		shippingAddress=new ShippingAddress();
+		shippingAddress.setId(1L);
 		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
 		
 		return SUCCESS;

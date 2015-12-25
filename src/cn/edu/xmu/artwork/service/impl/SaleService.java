@@ -62,6 +62,7 @@ public class SaleService extends BasicService implements ISaleService
 		List<Commodity> commodities = commodityDao.getCommodityListByType(commoType);
 		int totalpage=(int) Math.ceil((double)commodities.size()/9);
 		setSessionInBrower(IStrings.TOTAL_PAGE,totalpage);
+		
 		commodities=commodities.subList((page-1)*9, page*9<commodities.size()?page*9:commodities.size());
 		page=totalpage;
 		for(Commodity commodity : commodities)
@@ -137,7 +138,7 @@ public class SaleService extends BasicService implements ISaleService
 	{
 		PurchaseOrder purchaseOrder=new PurchaseOrder();
 		purchaseOrder.setUser(user);
-		purchaseOrder.setOrderid(getordernum(user));	
+		purchaseOrder.setOrderid(getordernum(user));
 		purchaseOrder.setState("0");
 		purchaseOrder.setType("sale");
 		purchaseOrder.setDate(new Date());

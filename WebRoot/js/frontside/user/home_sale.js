@@ -6,6 +6,8 @@ $(document).ready(function(){
 	onload(1);
 });
 
+var totalpage='<%=session["total_page"].tostring()%>';
+
 function onload(nowpage)
 {
 	$.ajax({
@@ -17,14 +19,13 @@ function onload(nowpage)
 			var server_path = "http://localhost:8080/ArtworkWeb";
 			var pages = "";
 			var	commodities = "";
-			
-			var totalpage="${nowpage}";//total_page
 			pages+="<li>"+totalpage+"</li>";
+			//var totalpage=2;
 			var $pageList = $("#page_list");
 			$pageList.empty();
 			if(nowpage!=1){
 				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+
-						");\">&laquo;</a></li>"
+						");\">&laquo;</a></li>";
 			}
 			for(var i=nowpage-2;i<=nowpage+2;i++){
 				if(i==nowpage){
