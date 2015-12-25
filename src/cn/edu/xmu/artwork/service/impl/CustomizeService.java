@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
+import cn.edu.xmu.artwork.dao.impl.HTestDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
+import cn.edu.xmu.artwork.entity.Htest;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 
@@ -23,6 +25,8 @@ import cn.edu.xmu.artwork.service.ICustomizeService;
 public class CustomizeService implements ICustomizeService{
 	@Autowired
 	private ICustomizationDao customizationDao;
+	@Autowired
+	private HTestDao htestDao;
 	
 	@Override
 	public void addCustomization(CustomizationOrder customization,User user,Commodity commodity) {
@@ -52,6 +56,7 @@ public class CustomizeService implements ICustomizeService{
 		return customizationDao.getCustomizationsByUser(id);
 	}
 
+	
 	@Override
 	public List<CustomizationOrder> getCustomizationsByArtist(long id) {
 		return customizationDao.getCustomizationsByArtist(id);
@@ -64,7 +69,7 @@ public class CustomizeService implements ICustomizeService{
 				return false;
 			else
 			{
-				customization.setState("accept");
+				customization.setAcceptState("accept");
 				return true;	
 			}
 	}
@@ -78,4 +83,5 @@ public class CustomizeService implements ICustomizeService{
 		number=number+String.format("%04d",random.nextInt(10000));
 		return number;
 	}
+
 }

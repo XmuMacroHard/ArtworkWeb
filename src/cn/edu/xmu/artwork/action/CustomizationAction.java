@@ -20,6 +20,8 @@ import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
+import cn.edu.xmu.artwork.entity.Htest;
+import cn.edu.xmu.artwork.entity.Test;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 import cn.edu.xmu.artwork.service.ISaleService;
@@ -45,7 +47,6 @@ public class CustomizationAction extends ActionSupport{
 	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
 	public String CustomizationSubmitAction()
 	{
-     	
 		return SUCCESS;
 	}
 	
@@ -112,5 +113,4 @@ public class CustomizationAction extends ActionSupport{
 	public void setCommodity(Commodity commodity) {
 		this.commodity = commodity;
 	}
-	
 }
