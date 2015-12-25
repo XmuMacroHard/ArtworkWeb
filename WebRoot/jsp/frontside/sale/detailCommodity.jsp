@@ -102,10 +102,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <div class="add-to-box">
                     <div class="add-to-cart">
                       <div class="pull-left">
+                      		<!-- hidden -->
  							<div id="hidden_user_id" style="visibility:hidden"><c:out value="${sessionScope.user.id}"/></div>
    		              		<div id="hidden_commodity_id" style="visibility:hidden"><c:out value="${commodity.id}"/></div>
+   		              		<!--end hidden -->
                       </div>
-                      <button id="buyNow" onclick="window.location.href=''" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> 立即购买</span></button>
+                      <button id="buyNow" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> 立即购买</span></button>
                       <button id="addToCart" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> 加入购物车</span></button> 
                     </div>
                     <div class="email-addto-box">

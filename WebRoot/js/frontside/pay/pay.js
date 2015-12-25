@@ -6,6 +6,7 @@ $(document).ready(function(){
 	$("#address").children().each(function(){
 		$(this).click(chooseAddress);
 	});
+	
 });
 
 function chooseAddress()

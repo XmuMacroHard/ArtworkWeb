@@ -4,7 +4,7 @@
 
 $(document).ready(function(){
 	$("#addToCart").bind("click", addToCart);
-	$("buyNow").bind("click", buyNow);
+	$("#buyNow").bind("click", buyNow);
 });
 
 function addToCart()
@@ -36,5 +36,6 @@ function addToCart()
 
 function buyNow()
 {
-	window.location.href="";
+	var commodityid = $("#hidden_commodity_id").text();
+	window.location.href="placeOrder?commodityid=" + commodityid;
 }

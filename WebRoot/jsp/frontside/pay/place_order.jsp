@@ -49,11 +49,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         </div>
 		
         <div id="address" class="row">
-        	<%-- <c:forEach items="" var=""> --%> 
-        		<div id=""  class="col-md-1  wrap"><div>收获地址(收获人)</div><hr/><div>详细地址</div></div>
-        		<div id=""  class="col-md-1 wrap"><div>收获地址(收获人)</div><hr/><div>详细地址</div></div>
-        		<div id=""  class="col-md-1 wrap"><div>收获地址(收获人)</div><hr/><div>详细地址</div></div>
-        	<%-- </c:forEach> --%>        
+        	 <c:forEach items="${addressList}" var="address">  
+        		<div id="${address.id}"  class="col-md-1  wrap"><div><c:out value="${address.province}${address.city}${address.region}"/>(<c:out value="${address.consignee}"/>)</div><hr/><div><c:out value="${address.detailedAdress}"/></div></div>
+        	 </c:forEach>        
         </div>
         <hr/>
          <div class="page-title">
@@ -61,7 +59,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <h2>确认订单信息</h2>
         </div>
         <div class="table-responsive">
-          <form method="post" action="#updatePost/">
+          <form method="post" action="SubmitsaleOrder">
             <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key">
             <fieldset>
               <table class="data-table cart-table" id="shopping-cart-table">
@@ -80,20 +78,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tfoot>
                   <tr class="first last">
                     <td class="a-right last" colspan="50"><button onClick="{location.href='jsp/frontside/sale/home_sale.jsp'}" class="button btn-continue" title="Continue Shopping" type="button"><span><span>继续购物</span></span></button>
+                      
                       <!--hidden input  -->
                       <input id="addressid" type="hidden" name="shippingAddress.id" value=""/>
                       <!--end hidden input  -->
-                      <button id="empty_cart_button" onclick="window.location.href='SubmitsaleOrder'" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>提交订单</span></span></button>
+                      
+                      <button id="empty_cart_button" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>提交订单</span></span></button>
                       </td>
                   </tr>
                 </tfoot>
                 <tbody>
-                <c:forEach items="${commodityList}" var="cartItem">
+                <c:forEach items="${commodityList}" var="commodity">
                   <tr class="first odd">
                     <td class="image">
                      	<a class="product-image" title="Sample Product" href="product_detail.html">
 							<c:set var="urlsNum" scope="page" value="1"/>  
-							<c:forEach items="${cartItem.commodity.commodityPices}" var="pic">   		 	
+							<c:forEach items="${commodity.commodityPices}" var="pic">   		 	
 								<c:if test = "${urlsNum == 1}">
 									<img width="75" alt="Sample Product" src="${server_path}${pic.url}"> 
 									<c:set var="urlsNum" scope="page" value="2"/>		
@@ -101,15 +101,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                     	</c:forEach> 
                     	</a> 
                     </td>
-                    <td><h2 class="product-name"> <a href="getDetailedCommodity?commodity.id=${cartItem.commodity.id}"><c:out value="${cartItem.commodity.name}"/></a> </h2></td>
+                    <td><h2 class="product-name"> <a href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a> </h2></td>
                     <td class="a-center"><a title="Edit item parameters" class="edit-bnt" href="#configure/id/15945/"></a></td>
-                    <td class="a-right"><span class="cart-price"> <span class="price"><c:out value="${cartItem.commodity.price}"/></span> </span></td>
+                    <td class="a-right"><span class="cart-price"> <span class="price"><c:out value="${commodity.price}"/></span> </span></td>
                     <td class="a-center movewishlist"><input maxlength="12" class="input-text qty" title="Qty" size="4" value="1" name="cart[15945][qty]"></td>
-                    <td class="a-right movewishlist"><span class="cart-price"> <span class="price"><c:out value="${cartItem.commodity.price}"/></span> </span></td>
+                    <td class="a-right movewishlist"><span class="cart-price"> <span class="price"><c:out value="${commodity.price}"/></span> </span></td>
                     <td class="a-center last"><a class="button remove-item" title="Remove item" href="#"><span><span>Remove item</span></span></a></td>
                   </tr>
                   <!--hidden input  -->
-                  <input  type="hidden" name="commodityid" value="${cartItem.commodity.id}"/>
+                  <input  type="hidden" name="commodityid" value="${commodity.id}"/>
                   <!--end hidden input  -->
                 </c:forEach>
                 </tbody>

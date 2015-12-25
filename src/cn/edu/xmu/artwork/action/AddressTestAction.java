@@ -104,7 +104,7 @@ public class AddressTestAction extends ActionSupport {
 	public String AddNewAddress()
 	{
 		User user = new User();
-		user.setId((long)3);
+		user.setId((long)1);
 		user.setEmail("adfa@qe.com");
 		user.setNickname("看见了");
 		user.setBalance(10000f);

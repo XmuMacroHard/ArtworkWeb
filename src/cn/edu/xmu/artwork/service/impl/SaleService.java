@@ -20,6 +20,7 @@ import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.constants.ITableConstants;
+import cn.edu.xmu.artwork.dao.IAddressDao;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.IPurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
@@ -46,6 +47,9 @@ public class SaleService extends BasicService implements ISaleService
 	
 	@Autowired
 	IPurchaseOrderDao purchaseOrderDao;
+	
+	@Autowired
+	IAddressDao addressDao;
 	
 	@Autowired
 	IJsonUtils jsonUtils;
@@ -191,7 +195,9 @@ public class SaleService extends BasicService implements ISaleService
 		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		long userid = user.getId();
 		
-		//List<ShoppingCart> shoppingCarts = shoppingCartDao.getAllByUserId(userid);
+		try {
+			
+		List<ShippingAddress> shippingAddresses = addressDao.findAllByUserId(userid);
 		List<Commodity> commodities = new ArrayList<Commodity>();
 		
 		for(Long id : commodityids)
@@ -201,7 +207,12 @@ public class SaleService extends BasicService implements ISaleService
 			commodities.add(commodity);
 		}
 		
-		//setAttributeByRequest(sho, value);
+		setAttributeByRequest("addressList", shippingAddresses);
 		setAttributeByRequest("commodityList", commodities);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 }

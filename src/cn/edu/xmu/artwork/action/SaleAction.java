@@ -127,14 +127,19 @@ public class SaleAction extends ActionSupport
 	/*
 	 *submit sale order 
 	 **/
-	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
+	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
 	public String SubmitsaleOrder()
 	{
-		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		//user.setId(1L);
+		//user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		user.setId(1L);
 		
-/*		commodityid.add(3L);//实际是从界面接收的
-		commodityid.add(4L);*/
+		commodityid.add(3L);//实际是从界面接收的
+		commodityid.add(4L);
+		//System.out.println(user.getId());
+		//System.out.println(commodityid.get(0));
+		//System.out.println(shippingAddress.getId());
+		shippingAddress = new ShippingAddress();
+		shippingAddress.setId(2L);
 		
 		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
 		
@@ -147,6 +152,7 @@ public class SaleAction extends ActionSupport
 	@Action(value="placeOrder", results={@Result(name="success", location="/jsp/frontside/pay/place_order.jsp")})
 	public String placeOrder()
 	{
+		System.out.println(commodityid.size());
 		saleService.placeOrder(commodityid);
 		
 		return SUCCESS;
@@ -233,5 +239,14 @@ public class SaleAction extends ActionSupport
 	public void setCommodityid(List<Long> commodityid) {
 		this.commodityid = commodityid;
 	}
+
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+	
 	
 }
