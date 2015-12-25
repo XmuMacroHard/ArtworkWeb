@@ -1,9 +1,12 @@
 =\=\=\=\=\=\=
 <<<<<<<=HEAD
->>>>>>>=9501eb4fad8ce821da38f44fa9f2064b013f1b29
+>>>>>>>=e7b17987db58c98cf21917e069d0ad84c7606ea2
 eclipse.preferences.version=1
-encoding//WebRoot/jsp/backstage/user_list_test.jsp=UTF-8
+encoding//WebRoot/index.jsp=UTF-8
+encoding//WebRoot/jsp/backstage/artist_detail.jsp=UTF-8
 encoding//WebRoot/jsp/fail.jsp=UTF-8
+encoding//WebRoot/jsp/frontside/address/address_list.jsp=UTF-8
+encoding//WebRoot/jsp/frontside/address/address_new.jsp=UTF-8
 encoding//WebRoot/jsp/frontside/common/header.jsp=UTF-8
 encoding//WebRoot/jsp/frontside/order/home_order.jsp=UTF-8
 encoding//WebRoot/jsp/frontside/user/artist_certification.jsp=UTF-8

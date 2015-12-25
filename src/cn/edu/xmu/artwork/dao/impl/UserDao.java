@@ -72,8 +72,7 @@ public class UserDao extends GenericDao implements IUserDao
 	public void updateUserState(String userEmail, String state)
 	{
 		System.out.println("in userDao");
-		
-		
+
 		String hql=String.format("update User user set user.isBanned = %s where user.email = %s", state, userEmail);
 		Query queryupdate= getSession().createQuery(hql);
 		int ret=queryupdate.executeUpdate();
@@ -93,6 +92,7 @@ public class UserDao extends GenericDao implements IUserDao
 		}
 		return list;
 	}
+	
 	
 	public Artist getArtist(long id)//获得一个艺术家资料
 	{

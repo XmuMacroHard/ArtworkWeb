@@ -18,6 +18,7 @@ public abstract class GenericDao
 	protected Session getSession()
 	{
 		session = sessionFactory.getCurrentSession();
+
 		return session;
 	}
 	

@@ -8,11 +8,16 @@ import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
+import cn.edu.xmu.artwork.entity.Artist;
+import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.DatePos;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.service.IInformationService;
+import cn.edu.xmu.artwork.service.ISaleService;
+import cn.edu.xmu.artwork.service.IUserService;
 
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -38,6 +43,12 @@ public class InformationAction extends ActionSupport
 	/*services*/
 	public IInformationService informationService;
 	
+	@Autowired
+	public IUserService userService;
+	@Autowired
+	public ISaleService saleService;
+	 
+	
 	@Action(value="submitInfo", results={@Result(name="success", location="/jsp/success.jsp")})
 	public String submitInfo()
 	{	
@@ -58,12 +69,24 @@ public class InformationAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 显示首页信息：包含资讯、广告、推荐的商品、艺术家、拍卖
+	 * @return
+	 */
 	@Action(value="showInfoOnHomePage", results={@Result(name="success", location="/index.jsp")})
 	public String showInfoOnHomePage()
 	{		
 		List<Information> list = informationService.getTodayInformations();		
+		List<Artist> artists = userService.getRecommendedArtists();
+		List<Commodity> commodities = saleService.getRecommendedCommodity(); 
+		
 		System.out.println(list.size());
+		System.out.println(artists.size());
+		System.out.println(commodities.size());
+		
 		setAttributeByRequest("informationList", list);
+		setAttributeByRequest("artistList", artists);
+		setAttributeByRequest("commodityList", commodities);
 		return SUCCESS;
 	}
 

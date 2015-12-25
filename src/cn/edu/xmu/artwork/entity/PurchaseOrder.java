@@ -120,7 +120,8 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.date = date;
 	}
 	
-	@Column(name = "address")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "address_id")
 	public ShippingAddress getShippingAddress() {
 		return shippingAddress;
 	}

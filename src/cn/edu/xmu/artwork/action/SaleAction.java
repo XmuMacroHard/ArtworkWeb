@@ -42,18 +42,21 @@ public class SaleAction extends ActionSupport
 	private User user = new User();
 	
 	//use to store commodity and address in order
-	private List<Long> commodityid=new ArrayList<Long>();
+	private List<Long> commodityid = new ArrayList<Long>();
 	private ShippingAddress shippingAddress;
 	
 	//used to store the json result
 	private String result;
 	private JSONArray resultJsonArray;
 	private JSONObject resultJsonObject;
+	
 
 	//used to deal with uploading the pictures
 	private List<File> pictures;
 	private List<String> picturesContentType;
 	private List<String> picturesFileName;
+	
+	private int nowpage;
 
 	@Autowired
 	private ISaleService saleService;
@@ -69,7 +72,7 @@ public class SaleAction extends ActionSupport
 	public String showCommListByType()
 	{
 		System.out.println(commodity.getType());
-		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType());
+		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType(),nowpage);
 		setResultJsonArray(commoditiesJsonArray);
 		System.out.println(commoditiesJsonArray);
 		return IResultCode.SUCCESS;
@@ -118,7 +121,7 @@ public class SaleAction extends ActionSupport
 	@Action(value="viewCart", results={@Result(name="success", location="/jsp/frontside/user/shoppingCart.jsp")})
 	public String viewCart()
 	{
-		List<ShoppingCart> list = saleService.getShoppingCart();	
+		List<ShoppingCart> list = saleService.getShoppingCart();
 		setAttributeByRequest(IClientConstants.REQUEST_SHOPPING_CART, list);
 		return IResultCode.SUCCESS;
 	}
@@ -126,7 +129,7 @@ public class SaleAction extends ActionSupport
 	/*
 	 *submit sale order 
 	 **/
-	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
+	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
 	public String SubmitsaleOrder()
 	{
 		//user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
@@ -134,12 +137,24 @@ public class SaleAction extends ActionSupport
 		
 		commodityid.add(3L);//实际是从界面接收的
 		commodityid.add(4L);
-		
+		shippingAddress=new ShippingAddress();
+		shippingAddress.setId(1L);
 		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
 		
 		return SUCCESS;
 	}
 	
+	/*
+	 * 用户发起订单
+	 **/
+	@Action(value="placeOrder", results={@Result(name="success", location="/jsp/frontside/pay/place_order.jsp")})
+	public String placeOrder()
+	{
+		System.out.println(commodityid.size());
+		saleService.placeOrder(commodityid);
+		
+		return SUCCESS;
+	}
 	
 	/**
 	 * 
@@ -221,6 +236,23 @@ public class SaleAction extends ActionSupport
 
 	public void setCommodityid(List<Long> commodityid) {
 		this.commodityid = commodityid;
+	}
+
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+	
+
+	public int getNowpage() {
+		return nowpage;
+	}
+
+	public void setNowpage(int nowpage) {
+		this.nowpage = nowpage;
 	}
 	
 }

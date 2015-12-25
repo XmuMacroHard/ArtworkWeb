@@ -60,7 +60,6 @@ Purchase: http://wrapbootstrap.com
 	
     <div class="login-container">
         <div class="loginbox bg-white">
-        	<!-- <form action="loginAction"> -->
             <div class="loginbox-title">登录</div>
             <div class="loginbox-social">
                 <div class="social-title ">使用第三方登录</div>
@@ -94,7 +93,6 @@ Purchase: http://wrapbootstrap.com
             <div class="loginbox-submit">
                 <s:submit id="loginButton" cssClass="btn btn-primary pull-right" value="登录"/>
             </div>
-            <!-- </form> -->
         </div>
     </div>
 

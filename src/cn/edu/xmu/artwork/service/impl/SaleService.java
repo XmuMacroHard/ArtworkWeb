@@ -1,6 +1,7 @@
 package cn.edu.xmu.artwork.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -15,8 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.constants.ITableConstants;
+import cn.edu.xmu.artwork.dao.IAddressDao;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.IPurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
@@ -45,28 +49,44 @@ public class SaleService extends BasicService implements ISaleService
 	IPurchaseOrderDao purchaseOrderDao;
 	
 	@Autowired
+	IAddressDao addressDao;
+	
+	@Autowired
 	IJsonUtils jsonUtils;
 	
 	@Autowired
 	private UserDao userDao;
-/*	public List<Commodity> getCommodityListByType(String commoType)
-	{
-		return commodityDao.getCommodityListByType(commoType);
-	}*/
 	
 	/**
 	 * 按照商品类型获取所有商品
 	 */
-	public JSONArray getCommodityListByType(String commoType)
+	@Override
+	public JSONArray getCommodityListByType(String commoType,int page)
 	{
 		List<Commodity> commodities = commodityDao.getCommodityListByType(commoType);
-
+		int totalpage=(int) Math.ceil((double)commodities.size()/9);
+		setSessionInBrower(IStrings.TOTAL_PAGE,totalpage);
+		
+		commodities=commodities.subList((page-1)*9, page*9<commodities.size()?page*9:commodities.size());
+		page=totalpage;
 		for(Commodity commodity : commodities)
 		{
 			initializeObject(commodity.getCommodityPices());
-		}		
-		
-		return jsonUtils.List2JsonArray(commodities);
+		}
+		String[] excludes = {"purchaseOrder_id"};
+
+		return jsonUtils.List2JsonArray(commodities, excludes);
+	}
+	
+	@Override
+	public List<Commodity> getRecommendedCommodity()
+	{
+		List<Commodity> commodities = commodityDao.getRecommendedCommodities(ITableConstants.RECOMMENDED_COMMODITY_NUM);
+		for(Commodity commodity : commodities)
+		{
+			initializeObject(commodity.getCommodityPices());
+		}	
+		return commodities;
 	}
 	
 	public Commodity getCommodityById(long commodityId)
@@ -122,7 +142,7 @@ public class SaleService extends BasicService implements ISaleService
 	{
 		PurchaseOrder purchaseOrder=new PurchaseOrder();
 		purchaseOrder.setUser(user);
-		purchaseOrder.setOrderid(getordernum(user));	
+		purchaseOrder.setOrderid(getordernum(user));
 		purchaseOrder.setState("0");
 		purchaseOrder.setType("sale");
 		purchaseOrder.setDate(new Date());
@@ -169,5 +189,35 @@ public class SaleService extends BasicService implements ISaleService
 			purchaseOrderDao.update(purchaseOrder);
 			return true;
 		}
+	}
+
+	/**
+	 * 用户发起一个订单
+	 * @param commodityids 所有订单商品的id
+	 */
+	public void placeOrder(List<Long> commodityids)
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		long userid = user.getId();
+		
+		try {
+			
+		List<ShippingAddress> shippingAddresses = addressDao.findAllByUserId(userid);
+		List<Commodity> commodities = new ArrayList<Commodity>();
+		
+		for(Long id : commodityids)
+		{
+			Commodity commodity = commodityDao.getCommodityById(id);
+			initializeObject(commodity.getCommodityPices());
+			commodities.add(commodity);
+		}
+		
+		setAttributeByRequest("addressList", shippingAddresses);
+		setAttributeByRequest("commodityList", commodities);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 	}
 }

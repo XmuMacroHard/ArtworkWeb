@@ -43,7 +43,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="col-main">
       <div class="cart">
         <div class="page-title">
-          <h2>Shopping Cart</h2>
+          <h2>购物车</h2>
         </div>
         <div class="table-responsive">
           <form method="post" action="#updatePost/">
@@ -54,9 +54,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <thead>
                   <tr class="first last">
                     <th rowspan="1">&nbsp;</th>
-                    <th rowspan="1"><span class="nobr">Product Name</span></th>
+                    <th rowspan="1"><span class="nobr">艺术品名</span></th>
                     <th rowspan="1"></th>
-                    <th colspan="1" class="a-center"><span class="nobr">Unit Price</span></th>
+                    <th colspan="1" class="a-center"><span class="nobr">价格</span></th>
                     <th class="a-center" rowspan="1">Qty</th>
                     <th colspan="1" class="a-center">Subtotal</th>
                     <th class="a-center" rowspan="1">&nbsp;</th>
@@ -497,277 +497,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             
           </div>
         </div>
-        
-        <!--cart-collaterals-->
-        <div class="crosssel">
-          <div class="new_title center">
-            <h2>Based on your selection, you may be interested in the following items:</h2>
-          </div>
-          <div class="category-products">
-            <ul id="crosssell-products-list" class="products-grid first odd">
-              <li class="item col-md-3 col-sm-6 col-xs-12">
-                <div class="item-inner">
-                  <div class="product-block">
-                    <div class="product-image"> <a href="product_detail.html">
-                      <figure class="product-display">
-                        <div class="sale-label sale-top-left">Sale</div>
-                        <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
-                      </a> </div>
-                    <div class="product-meta">
-                      <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a class="quickview" href="javascript:;"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                    </div>
-                  </div>
-                  <div class="item-info">
-                    <div class="info-inner">
-                      <div class="item-title"> <a href="product_detail.html" title="Retis lapen casen"> Sample Product </a> </div>
-                      <div class="item-content">
-                        <div class="item-price">
-                          <div class="price-box"> <span class="regular-price"  > <span class="price">$125.00</span> </span> </div>
-                        </div>
-                        <div class="rating">
-                          <div class="ratings">
-                            <div class="rating-box">
-                              <div class="rating" style="width:80%"></div>
-                            </div>
-                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="item col-md-3 col-sm-6 col-xs-12">
-                <div class="item-inner">
-                  <div class="item-img">
-                    <div class="product-block">
-                      <div class="product-image"> <a href="product_detail.html">
-                        <figure class="product-display">
-                          <div class="new-label new-top-left">New</div>
-                          <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
-                        </a> </div>
-                      <div class="product-meta">
-                        <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a class="quickview" href="javascript:;"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item-info">
-                    <div class="info-inner">
-                      <div class="item-title"> <a href="product_detail.html" title="Ut tincidunt tortor"> Sample Product </a> </div>
-                      <div class="item-content">
-                        <div class="item-price">
-                          <div class="price-box">
-                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"  > $567.00 </span> </p>
-                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" > $456.00 </span> </p>
-                          </div>
-                        </div>
-                        <div class="rating">
-                          <div class="ratings">
-                            <div class="rating-box">
-                              <div class="rating" style="width:50%"></div>
-                            </div>
-                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="item col-md-3 col-sm-6 col-xs-12">
-                <div class="item-inner">
-                  <div class="item-img">
-                    <div class="product-block">
-                      <div class="product-image"> <a href="product_detail.html">
-                        <figure class="product-display">
-                          <div class="sale-label new-top-right">Sale</div>
-                          <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
-                        </a> </div>
-                      <div class="product-meta">
-                        <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a class="quickview" href="javascript:;"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="item-info">
-                    <div class="info-inner">
-                      <div class="item-title"> <a href="product_detail.html" title="Ut tincidunt tortor"> Sample Product </a> </div>
-                      <div class="item-content">
-                        <div class="item-price">
-                          <div class="price-box">
-                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"  > $567.00 </span> </p>
-                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" > $456.00 </span> </p>
-                          </div>
-                        </div>
-                        <div class="rating">
-                          <div class="ratings">
-                            <div class="rating-box">
-                              <div class="rating" style="width:80%"></div>
-                            </div>
-                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="item col-md-3 col-sm-6 col-xs-12">
-                <div class="item-inner">
-                  <div class="product-block">
-                    <div class="product-image"> <a href="product_detail.html">
-                      <figure class="product-display">
-                        <div class="new-label new-top-left">New</div>
-                        <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
-                      </a> </div>
-                    <div class="product-meta">
-                      <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a class="quickview" href="javascript:;"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                    </div>
-                  </div>
-                  <div class="item-info">
-                    <div class="info-inner">
-                      <div class="item-title"> <a href="product_detail.html" title="Stablished fact reader"> Sample Product </a> </div>
-                      <div class="item-content">
-                        <div class="item-price">
-                          <div class="price-box">
-                            <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" id="old-price-27"> $100.00 </span> </p>
-                            <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" id="product-price-27"> $90.00 </span> </p>
-                          </div>
-                        </div>
-                        <div class="rating">
-                          <div class="ratings">
-                            <div class="rating-box">
-                              <div class="rating" style="width:0%"></div>
-                            </div>
-                            <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-        </div>
+
+       
       </div>
     </div>
   </div>
 </section>
 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="inner">
-        <div class="brand-logo">
-          <div class="slider-items-products">
-            <div id="brand-logo-slider" class="product-flexslider hidden-buttons">
-              <div class="slider-items slider-width-col6">
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo1.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo2.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo3.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo4.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo5.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo6.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo1.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo4.png" alt="Image"></a> </div>
-                <!-- End Item -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-middle">
-          <div class="col-md-3 col-sm-12 col-xs-12">
-            <div class="footer-column-1">
-              <div class="footer-logo"><a href="index.html" title="Logo"><img src="images/footer-logo.png" alt="logo" ></a></div>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-              <div class="social">
-                <ul class="link">
-                  <li class="fb"><a href="#"></a></li>
-                  <li class="tw"><a href="#"></a></li>
-                  <li class="googleplus"><a href="#"></a></li>
-                  <li class="rss"><a href="#"></a></li>
-                  <!-- <li class="pintrest"><a href="#"></a></li>-->
-                  <li class="linkedin"><a href="#"></a></li>
-                  <li class="youtube"><a href="#"></a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="green">Shopping Guide</h4>
-            <ul class="links">
-              <li class="first"><a href="about_us.html" title="How to buy">About us</a></li>
-              <li><a href="faq.html" title="FAQs">FAQs</a></li>
-              <li><a href="#" title="Payment">Payment</a></li>
-              <li><a href="#" title="Shipment&lt;/a&gt;">Shipment</a></li>
-              <li><a href="#" title="Where is my order?">Where is my order?</a></li>
-              <li class="last"><a href="#" title="Return policy">Return policy</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="yellow">Style Advisor</h4>
-            <ul class="links">
-              <li class="first"><a title="Your Account" href="login.html">Your Account</a></li>
-              <li><a title="Information" href="#">Information</a></li>
-              <li><a title="Addresses" href="#">Addresses</a></li>
-              <li><a title="Addresses" href="#">Discount</a></li>
-              <li><a title="Orders History" href="#">Orders History</a></li>
-              <li class="last"><a title=" Additional Information" href="#">Additional Information</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="orange">Information</h4>
-            <ul class="links">
-              <li class="first"><a href="sitemap.html" title="Site Map">Site Map</a></li>
-              <li><a href="#/" title="Search Terms">Search Terms</a></li>
-              <li><a href="#" title="Advanced Search">Advanced Search</a></li>
-              <li><a href="contact_us.html" title="Contact Us">Contact Us</a></li>
-              <li><a href="#" title="Suppliers">Suppliers</a></li>
-              <li class=" last"><a href="#" title="Our stores" class="link-rss">Our stores</a></li>
-            </ul>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
-            <h4 class="blue">Contact Us</h4>
-            <div class="contacts-info">
-              <address>
-              <i class="add-icon">&nbsp;</i>123 Main Street, Anytown, <br>
-              &nbsp;CA 12345  USA
-              </address>
-              <div class="phone-footer"><i class="phone-icon">&nbsp;</i> +1 800 123 1234</div>
-              <div class="email-footer"><i class="email-icon">&nbsp;</i> <a href="mailto:support@magikcommerce.com">support@magikcommerce.com</a> </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <div class="col-sm-3 col-xs-12 coppyright"> &copy; 2015 Magikcommerce. All Rights Reserved.</div>
-          <div class="col-sm-9 col-xs-12 company-links">
-            <ul class="links">
-              <li><a href="#" title="Magento Themes">Magento Themes</a></li>
-              <li><a href="#" title="Premium Themes">Premium Themes</a></li>
-              <li><a href="#" title="Responsive Themes">Responsive Themes</a></li>
-              <li class="last"><a href="#" title="Magento Extensions">Magento Extensions</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- End Footer -->
 </div>
 <div class="help_slider">
   <div class="text alignleft">Need Help?</div>

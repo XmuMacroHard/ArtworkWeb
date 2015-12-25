@@ -21,5 +21,13 @@ public interface IInformationDao
 	public List<Information> getTodayInfoByLocation(String location, int number, String default_status);
 
 	public List<Information> getInfoByColum(String colum);
+	
+	/**
+	 * 更新资讯状态
+	 * @author asus1
+	 * @param id
+	 * @param status
+	 */
+	public void updateInfoStatus(long id, String status);
 
 }

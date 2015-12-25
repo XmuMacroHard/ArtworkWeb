@@ -13,7 +13,7 @@ import cn.edu.xmu.artwork.entity.User;
 
 public interface ISaleService {
 	//List<Commodity> getCommodityListByType(String commoType);
-	public JSONArray getCommodityListByType(String commoType);
+	public JSONArray getCommodityListByType(String commoType,int page);
 	List<ShoppingCart> getShoppingCart();
 	public Commodity getCommodityById(long commodityId);
 	public void uploadCommodity(Commodity commodity, List<String> picPaths);
@@ -21,4 +21,6 @@ public interface ISaleService {
 	public void SubmitsaleOrder(User user,List<Long> commodityid,ShippingAddress shippingAddress);
 	public PurchaseOrder getPurchaseOrderByid(long id);
 	public boolean payment(long id);
+	public List<Commodity> getRecommendedCommodity();
+	public void placeOrder(List<Long> commodityids);
 }
