@@ -94,6 +94,7 @@ public class UserDao extends GenericDao implements IUserDao
 		return list;
 	}
 	
+	
 	public Artist getArtist(long id)//获得一个艺术家资料
 	{
 		Artist artist=null;

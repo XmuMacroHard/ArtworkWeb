@@ -122,6 +122,16 @@ public class UserService extends BasicService implements IUserService
 		return artistDao.getArtistList();
 	}
 	
+	/**
+	 * 获取推荐展示的艺术家，暂时按最新注册的艺术家
+	 */
+	@Override
+	public List<Artist> getRecommendedArtists()
+	{
+		
+		return artistDao.getRecommendedArtists(ITableConstants.RECOMMENDED_ARTIST_NUM);
+	}
+	
 	@Override
 	public Artist getArtist(long id)
 	{

@@ -12,4 +12,5 @@ public interface IArtistDao extends IUserDao{
 	public List<Artist> getArtistBySort(String identification);
 	public List<Artist> getArtistByName(String name);
 	public void submitArtist(Artist artist);
+	public List<Artist> getRecommendedArtists(int num);
 }

@@ -40,6 +40,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <div class="page">
   <c:import url="../common/header.jsp"/>
+  <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
   
   <!-- breadcrumbs -->
   
@@ -66,7 +67,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			  <form class="form-horizontal" action="submitArtist" method="POST" enctype="multipart/form-data">
 				<div class="form-group">
   				  	<label class="col-sm-2 control-label" >个人身份</label>
-  				  	<div class="col-sm-10" style="width:40%">
+  				  	<div class="col-sm-10" style="width:80%">
   				  	<c:choose>
   				  		<c:when test="${sessionScope.rank == 'user'}">
   				  			<input class="form-control" name="artist.realName" placeholder="普通用户" readonly/>
@@ -80,26 +81,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				  
   				  <div class="form-group">
   				  	<label class="col-sm-2 control-label" >邮箱</label>
-  				  	<div class="col-sm-10" style="width:40%">
+  				  	<div class="col-sm-10" style="width:80%">
   				  		<input class="form-control" name="artist.email" placeholder="${sessionScope.user.email}" readonly/>
   				  	</div>
   				  </div>
   				  <div class="form-group">
   				  	<label class="col-sm-2 control-label" >电话号码</label>
-  				  	<div class="col-sm-10" style="width:40%">
+  				  	<div class="col-sm-10" style="width:80%">
   				  		<input class="form-control" name="artist.phone" placeholder="${sessionScope.user.phone}" readonly/>
   				  	</div>
   				  </div>					
   				  <c:if test="${sessionScope.rank == 'artist'}">
 					<div class="form-group">
-  				  	<label class="col-sm-2 control-label" >真实头像</label>
-  				  	<div class="col-sm-10" style="width:40%">
-  				  		 <img src="" class="img-rounded"/>
+  				  	<label class="col-sm-2 control-label" >真实照片</label>
+  				  	<div class="col-sm-10" style="width:80%">
+  				  		 <img width="40%" height="40%" src="${server_path}${sessionScope.user.portrait}" class="img-rounded"/>
   				  	</div>			
   				  	</div>		
 					<div class="form-group">
   				  	<label class="col-sm-2 control-label" >真实姓名</label>
-  				  	<div class="col-sm-10" style="width:40%">
+  				  	<div class="col-sm-10" style="width:80%">
   				  		 <input class="form-control" name="artist.phone" placeholder="${sessionScope.user.realName}" readonly/>
   				  	</div>
   				  	</div>

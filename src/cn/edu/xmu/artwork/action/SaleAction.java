@@ -42,13 +42,14 @@ public class SaleAction extends ActionSupport
 	private User user = new User();
 	
 	//use to store commodity and address in order
-	private List<Long> commodityid=new ArrayList<Long>();
+	private List<Long> commodityid = new ArrayList<Long>();
 	private ShippingAddress shippingAddress;
 	
 	//used to store the json result
 	private String result;
 	private JSONArray resultJsonArray;
 	private JSONObject resultJsonObject;
+	
 
 	//used to deal with uploading the pictures
 	private List<File> pictures;
@@ -129,17 +130,27 @@ public class SaleAction extends ActionSupport
 	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
 	public String SubmitsaleOrder()
 	{
-		//user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		user.setId(1L);
+		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		//user.setId(1L);
 		
-		commodityid.add(3L);//实际是从界面接收的
-		commodityid.add(4L);
+/*		commodityid.add(3L);//实际是从界面接收的
+		commodityid.add(4L);*/
 		
 		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
 		
 		return SUCCESS;
 	}
 	
+	/*
+	 * 用户发起订单
+	 **/
+	@Action(value="placeOrder", results={@Result(name="success", location="/jsp/frontside/pay/place_order.jsp")})
+	public String placeOrder()
+	{
+		saleService.placeOrder(commodityid);
+		
+		return SUCCESS;
+	}
 	
 	/**
 	 * 

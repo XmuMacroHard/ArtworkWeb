@@ -63,6 +63,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <h2>艺术家认证</h2>
           </div>
           <div>
+          	<c:choose>
+          	<c:when test = "${sessionScope.rank == 'user'}">
 			  <form class="form-horizontal" action="submitArtist" method="POST" enctype="multipart/form-data">
   				  <div class="form-group">
   				  	<label class="col-sm-2 control-label" >真实姓名</label>
@@ -89,6 +91,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    				 <div class="form-group"><label class="col-sm-2 control-label">资料</label><s:file name="pic"/></div>   					
    				 <div class="form-group"><label class="col-sm-2 control-label"></label><button class="btn btn-info" type="submit">认证</button></div>
    				</form>
+   			</c:when>
+   			<c:otherwise>
+   				<div><label class="col-sm-2 control-label">认证状态</label><div class="col-sm-10"><span class="label label-success">认证成功</span></div></div>				
+   			</c:otherwise>	
+   			</c:choose>
    		  </div>
           </div>
         </section>

@@ -12,13 +12,6 @@ public interface IUserDao {
 	public List findAll();
 	public User findById(long id);
 	public void update(User user);
-	
-	/**
-	 * 更新用户状态
-	 * @author asus1
-	 * @param userEmail
-	 * @param state
-	 */
 	public void updateUserState(String userEmail, String state);
 
 	public List<Artist> getArtistList();

@@ -5,6 +5,7 @@ import java.util.List;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IArtistDao;
 import cn.edu.xmu.artwork.entity.Artist;
 
@@ -83,5 +84,21 @@ public class ArtistDao extends UserDao implements IArtistDao{
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * 获取推荐的艺术家
+	 * @param num 艺术家个数
+	 * @return 艺术家列表
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Artist> getRecommendedArtists(int num)
+	{
+		Query query = getSession().getNamedQuery("Artist.getRecommendedArtists");
+		query.setMaxResults(num);
+		query.setParameter("isBanned", ITableConstants.USER_IS_BANNED_FALSE);
+		query.setParameter("isApproved", ITableConstants.USER_IS_APPROVED_APPROVE);
+		return (List<Artist>)query.list();
 	}
 }

@@ -22,4 +22,5 @@ public interface IUserService {
 	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);
 	public JSONArray getBriefArtistBySort(String identification);
 	public void recharge(float balance);
+	public List<Artist> getRecommendedArtists();
 }

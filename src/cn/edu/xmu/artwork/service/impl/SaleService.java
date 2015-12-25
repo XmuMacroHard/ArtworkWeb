@@ -1,6 +1,7 @@
 package cn.edu.xmu.artwork.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -15,8 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.IPurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
@@ -49,14 +52,11 @@ public class SaleService extends BasicService implements ISaleService
 	
 	@Autowired
 	private UserDao userDao;
-/*	public List<Commodity> getCommodityListByType(String commoType)
-	{
-		return commodityDao.getCommodityListByType(commoType);
-	}*/
 	
 	/**
 	 * 按照商品类型获取所有商品
 	 */
+	@Override
 	public JSONArray getCommodityListByType(String commoType)
 	{
 		List<Commodity> commodities = commodityDao.getCommodityListByType(commoType);
@@ -67,6 +67,17 @@ public class SaleService extends BasicService implements ISaleService
 		}		
 		
 		return jsonUtils.List2JsonArray(commodities);
+	}
+	
+	@Override
+	public List<Commodity> getRecommendedCommodity()
+	{
+		List<Commodity> commodities = commodityDao.getRecommendedCommodities(ITableConstants.RECOMMENDED_COMMODITY_NUM);
+		for(Commodity commodity : commodities)
+		{
+			initializeObject(commodity.getCommodityPices());
+		}	
+		return commodities;
 	}
 	
 	public Commodity getCommodityById(long commodityId)
@@ -169,5 +180,28 @@ public class SaleService extends BasicService implements ISaleService
 			purchaseOrderDao.update(purchaseOrder);
 			return true;
 		}
+	}
+
+	/**
+	 * 用户发起一个订单
+	 * @param commodityids 所有订单商品的id
+	 */
+	public void placeOrder(List<Long> commodityids)
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		long userid = user.getId();
+		
+		//List<ShoppingCart> shoppingCarts = shoppingCartDao.getAllByUserId(userid);
+		List<Commodity> commodities = new ArrayList<Commodity>();
+		
+		for(Long id : commodityids)
+		{
+			Commodity commodity = commodityDao.getCommodityById(id);
+			initializeObject(commodity.getCommodityPices());
+			commodities.add(commodity);
+		}
+		
+		//setAttributeByRequest(sho, value);
+		setAttributeByRequest("commodityList", commodities);
 	}
 }

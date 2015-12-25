@@ -21,7 +21,7 @@ function onload()
 				commodities +="<li class='item col-lg-4 col-md-3 col-sm-4 col-xs-12'>" +
                   				"<div class='item-inner'>"+
                   				"<div class='product-block'>" +
-                  				"<div class='product-image'> <a href='product_detail.html'>" +
+                  				"<div class='product-image'> <a href='getDetailedCommodity?commodity.id=" + item.id + "'>" +
                   				"<figure class='product-display'>" +
                             "<div class='sale-label sale-top-left'>Sale</div>";
 				if(item.commodityPices.length > 0)

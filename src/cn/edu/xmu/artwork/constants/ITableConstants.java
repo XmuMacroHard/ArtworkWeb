@@ -11,11 +11,21 @@ public interface ITableConstants
 	int INFO_LOCATION_2_NUM = 4;
 	int INFO_ADV_LOCATION_1_NUM = 4;
 	
+	int RECOMMENDED_ARTIST_NUM = 4;
+	int RECOMMENDED_COMMODITY_NUM = 4;
+	
 	//the enum value of the information
 	String INFO_DEFAULT_INFO_STATUS = "default_info";
 	String INFO_DEFAULT_ADV_STATUS = "default_adv";
 	
 	//property
+	
+	/*user table*/
+	String USER_IS_APPROVED_APPROVE = "approve";
+	String USER_IS_APPROVED_NOT_APPROVE = "notapprove";
+	String USER_IS_APPROVED_PENDING = "pending";
+	String USER_IS_BANNED_TRUE = "1";
+	String USER_IS_BANNED_FALSE = "0";
 	
 	/*artist table*/
 	String ARTIST_REAL_NAME = "name";
@@ -26,4 +36,5 @@ public interface ITableConstants
 	String ARTIST_INFORMATIONS = "informations";
 	String ARTIST_SHOPPING_CART = "shoppingCarts";
 	String ARTIST_CUSTOMIZATION = "customizations";
+	
 }
