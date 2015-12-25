@@ -11,4 +11,5 @@ public interface ICommodityDao
 	public Commodity getCommodityById(long id);
 	public void saveCommodity(Commodity commodity);
 	public List<Commodity> getAllByAuthorId(long authorid);
+	public List<Commodity> getRecommendedCommodities(int num);
 }

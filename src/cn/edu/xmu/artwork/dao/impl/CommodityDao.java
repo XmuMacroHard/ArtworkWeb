@@ -36,6 +36,19 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 		return (Commodity)getCommunity.uniqueResult();
 	}
 	
+	/**
+	 * 获取num个推荐商品，暂时推荐方法为任取num个最新的商品
+	 * @param num
+	 * @return
+	 */
+	@SuppressWarnings("unchecked")
+	public List<Commodity> getRecommendedCommodities(int num)
+	{
+		Query recommendedQuery = getSession().getNamedQuery("Commodity.getRecommendedCommodities");
+		recommendedQuery.setMaxResults(num);
+		return (List<Commodity>)recommendedQuery.list();
+	}
+	
 	public void saveCommodity(Commodity commodity)
 	{
 		getSession().save(commodity);

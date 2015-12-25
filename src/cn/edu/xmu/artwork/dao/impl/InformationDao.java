@@ -40,11 +40,6 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		} catch (RuntimeException re) {
 			throw re;
 		}
-		finally
-		{
-			if(getSession().isOpen())
-				closeSession();
-		}
 	}
 	
 	@Override
@@ -54,12 +49,11 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		try {
 			Query query = getSession().createQuery("from Information");
 			list = query.list();
+			System.out.println("in infoDao: " + list.get(0).getTitle());
 		} catch (Exception e) {
-			// TODO: handle exception
 			e.printStackTrace();
 		}
-		finally{
-		}
+
 		return list;
 	}
 	
@@ -129,5 +123,23 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		this.imgUtils = imgUtils;
 	}
 
+
+	/**
+	 * 更新用户状态
+	 * @author asus1
+	 * @param 资讯id
+	 * @param 资讯状态
+	 */
+	@Override
+	public void updateInfoStatus(long id, String status) {
+		
+		String hql=String.format("update Information info set info.status = %s where info.id = %d", status, id);
+		Query queryupdate= getSession().createQuery(hql);
+		int ret=queryupdate.executeUpdate();
+		
+	}
+
+	
+	
 	
 }

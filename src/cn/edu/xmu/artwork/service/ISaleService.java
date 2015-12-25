@@ -21,4 +21,6 @@ public interface ISaleService {
 	public void SubmitsaleOrder(User user,List<Long> commodityid,ShippingAddress shippingAddress);
 	public PurchaseOrder getPurchaseOrderByid(long id);
 	public boolean payment(long id);
+	public List<Commodity> getRecommendedCommodity();
+	public void placeOrder(List<Long> commodityids);
 }

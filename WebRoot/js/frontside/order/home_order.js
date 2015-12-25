@@ -19,7 +19,7 @@ function onload()
 			var $artists = $('#products-list');
 			$.each(data, function(index, item){
 				artist += "<li class='item odd'>" +
-                "<div class='product-image'> <a href='product_detail.html' title='HTC Rhyme Sense'> <img class='small-image' src='" + server_path +item.portrait + "' alt='product-image' width='230'> </a> </div>" +
+                "<div class='product-image'> <a href='findArtist?user.id=" + item.id +"' title='HTC Rhyme Sense'> <img class='small-image' src='" + server_path +item.portrait + "' alt='product-image' width='230'> </a> </div>" +
                 "<div class='product-shop'>" +
                  " <h2 class='product-name'><a title=' Sample Product' href='findArtist?user.id=" + item.id  +"'>" + item.name + "</a></h2>" +
                   "<div class='ratings'>" +

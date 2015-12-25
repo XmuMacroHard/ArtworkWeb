@@ -4,7 +4,11 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -15,10 +19,26 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "shipping_address", catalog = "artworkdb")
+@NamedQueries({
+		@NamedQuery(
+			name = "ShippingAddress.findAllByUserId",
+			query = "select address from ShippingAddress address inner join address.user c where c.id = :userid"
+		),
+		@NamedQuery(
+				name = "ShippingAddress.findById",
+				query = "from ShippingAddress address where address.id = :id"
+		),
+		@NamedQuery(
+				name = "ShippingAddress.deleteById",
+				query = "delete from ShippingAddress address where address.id = :id"
+		)
+})
 public class ShippingAddress implements java.io.Serializable {
 
 	// Fields
 
+	private static final long serialVersionUID = 1L;
+	
 	private Long id;
 	private User user;
 	private String consignee;

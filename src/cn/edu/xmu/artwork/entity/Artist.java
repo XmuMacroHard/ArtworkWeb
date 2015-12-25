@@ -33,20 +33,22 @@ import javax.persistence.PrimaryKeyJoinColumn;
 			name = "Artist.submit",
 			query = "update User set type='artist',isapprove='pending',"
 					+ "identification=?,realName=?,introduction=?,fileurl=?,portrait=? where id=?"
+	),
+	@NamedQuery(
+			name = "Artist.getRecommendedArtists",
+			query = "from Artist where isBanned = :isBanned and isapprove = :isApproved"
 	)
 })
 public class Artist extends User 
 {
-	//need to be add
-	//icon
-	
+
 	private static final long serialVersionUID = 1L;
 	private String realName;
 	private String identification;
 	private String introduction;
 	private String fileurl;
 	private String isapprove;
-	private String portrait;//头像路径
+	private String portrait;									//头像路径
 	
 	public Artist(){}
 	
