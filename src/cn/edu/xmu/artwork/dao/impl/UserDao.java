@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
-import cn.edu.xmu.artwork.entity.Customization;
+import cn.edu.xmu.artwork.entity.CustomizationOrder;
 import cn.edu.xmu.artwork.entity.User;
 
 @Repository
@@ -72,8 +72,7 @@ public class UserDao extends GenericDao implements IUserDao
 	public void updateUserState(String userEmail, String state)
 	{
 		System.out.println("in userDao");
-		
-		
+
 		String hql=String.format("update User user set user.isBanned = %s where user.email = %s", state, userEmail);
 		Query queryupdate= getSession().createQuery(hql);
 		int ret=queryupdate.executeUpdate();

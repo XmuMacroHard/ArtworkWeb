@@ -11,7 +11,7 @@
 	http://www.springframework.org/schema/context
 	http://www.springframework.org/schema/context/spring-context-2.5.xsd" 
 	xmlns:tx="http://www.springframework.org/schema/tx">
-
+	
 	<context:component-scan base-package="cn.edu.xmu.artwork"/>
 	
 	<bean id="fileUtils" class="cn.edu.xmu.artwork.utils.impl.FileUtils"></bean>
@@ -19,10 +19,10 @@
 	<!-- all entities -->
 	<bean id="user" class="cn.edu.xmu.artwork.entity.User"></bean>
 	<bean id="information" class="cn.edu.xmu.artwork.entity.Information"></bean>
-	<bean id="customization" class="cn.edu.xmu.artwork.entity.Customization"></bean>
+
+	<bean id="CustomizationOrder" class="cn.edu.xmu.artwork.entity.CustomizationOrder"></bean>
 	<bean id="purchaseorder" class="cn.edu.xmu.artwork.entity.PurchaseOrder"></bean>
 	<bean id="commodity" class="cn.edu.xmu.artwork.entity.Commodity"></bean>
-	
 	
 	<!-- all daos -->
 	<bean id="userDao" class="cn.edu.xmu.artwork.dao.impl.UserDao" ></bean>		

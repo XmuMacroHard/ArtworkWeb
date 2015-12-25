@@ -6,9 +6,13 @@ import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -36,7 +40,7 @@ public class PurchaseOrder implements java.io.Serializable {
 	private Date date;
 	private ShippingAddress shippingAddress;
 	private Float totalprice;
-	private Set<Commodity> commodity=new HashSet<Commodity>();
+	private Set<Commodity> commodity=new HashSet<Commodity>(0);
 	
 	// Constructors
 	/** default constructor */
@@ -58,6 +62,7 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.commodity = commodity;
 	}
 
+	
 	// Property accessors
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
@@ -102,6 +107,7 @@ public class PurchaseOrder implements java.io.Serializable {
 	public User getUser() {
 		return user;
 	}
+	
 	public void setUser(User user) {
 		this.user = user;
 	}

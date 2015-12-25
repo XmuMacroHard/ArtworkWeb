@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
-import cn.edu.xmu.artwork.entity.Customization;
+import cn.edu.xmu.artwork.entity.CustomizationOrder;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 
@@ -25,7 +25,7 @@ public class CustomizeService implements ICustomizeService{
 	private ICustomizationDao customizationDao;
 	
 	@Override
-	public void addCustomization(Customization customization,User user,Commodity commodity) {
+	public void addCustomization(CustomizationOrder customization,User user,Commodity commodity) {
 		commodity.setCategory("customization");//对商品进行处理
 		commodity.setIsBought(false);
 		commodity.setPurchaseOrder_id(customization);
@@ -41,23 +41,34 @@ public class CustomizeService implements ICustomizeService{
 	}
 
 	@Override
-	public List<Customization> showCustomizationsList(long id) {
+	public List<CustomizationOrder> showCustomizationsList(long id) {
 	
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public List<Customization> getCustomizationsByUser(long id) {
-		customizationDao.getCustomizationsByUser(id);
-		return null;
+	public List<CustomizationOrder> getCustomizationsByUser(long id) {
+		return customizationDao.getCustomizationsByUser(id);
 	}
 
 	@Override
-	public List<Customization> getCustomizationsByArtist(long id) {
-		customizationDao.getCustomizationsByArtist(id);
-		return null;
+	public List<CustomizationOrder> getCustomizationsByArtist(long id) {
+		return customizationDao.getCustomizationsByArtist(id);
 	}
+	
+	@Override
+	public boolean accetpCustomization(long id) {
+			CustomizationOrder customization = customizationDao.findInfoById(id);
+			if(null == customization)
+				return false;
+			else
+			{
+				customization.setState("accept");
+				return true;	
+			}
+	}
+
 	
 	public String getordernum(User user)
 	{
@@ -67,5 +78,4 @@ public class CustomizeService implements ICustomizeService{
 		number=number+String.format("%04d",random.nextInt(10000));
 		return number;
 	}
-	
 }

@@ -7,6 +7,7 @@ import net.sf.json.JSONArray;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.Information;
+import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 
 public interface IUserService {
@@ -19,7 +20,11 @@ public interface IUserService {
 	public List<Artist> getArtistBySort(String identification);
 	public List<Artist> getArtistByName(String name);
 	public List<Commodity> showMyCommodity();
-	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);
+	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);	
+	public ShippingAddress SelectAddress(long id);
+	public List<ShippingAddress> ShowAllAddressList(long userId);
+	public void AddNewAddress(ShippingAddress address);
+	public void DeleteAddress(long id);
 	public JSONArray getBriefArtistBySort(String identification);
 	public void recharge(float balance);
 	public List<Artist> getRecommendedArtists();

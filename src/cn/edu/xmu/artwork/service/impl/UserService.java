@@ -16,7 +16,11 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
+
+import cn.edu.xmu.artwork.dao.IAddressDao;
+
 import cn.edu.xmu.artwork.constants.ITableConstants;
+
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.CommodityDao;
 import cn.edu.xmu.artwork.dao.impl.ArtistDao;
@@ -25,6 +29,7 @@ import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.Information;
+import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
 import cn.edu.xmu.artwork.service.IUserService;
@@ -54,6 +59,9 @@ public class UserService extends BasicService implements IUserService
 	private IMD5Util md5Util;
 	@Autowired
 	private IFileService fileservice;
+	
+	@Autowired
+	private IAddressDao addressDao;
 	
 	public void addUser(User user)
 	{
@@ -202,6 +210,67 @@ public class UserService extends BasicService implements IUserService
 		}
 		
 		return commodities;
+	}
+
+
+	/**
+	 * 选择收货地址
+	 * @author asus1
+	 */
+	@Override
+	public ShippingAddress SelectAddress(long id) {
+		
+		ShippingAddress address = new ShippingAddress();
+		try {
+			address = addressDao.findById(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return address;
+	}
+
+	/**
+	 * 查看个人所有地址列表
+	 * @author asus1
+	 */
+	@Override
+	public List<ShippingAddress> ShowAllAddressList(long userId) {
+		List<ShippingAddress> addressList = new ArrayList<ShippingAddress>();
+		try {
+			addressList = addressDao.findAllByUserId(userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return addressList;
+	}
+
+	/**
+	 * 新增地址
+	 * @author asus1
+	 */
+	@Override
+	public void AddNewAddress(ShippingAddress address) {
+		try {
+			addressDao.insert(address);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * 删除地址
+	 * @author asus1
+	 */
+	@Override
+	public void DeleteAddress(long id) {
+		try {
+			addressDao.delete(id);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override

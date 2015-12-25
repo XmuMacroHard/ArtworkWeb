@@ -101,4 +101,16 @@ public class ArtistDao extends UserDao implements IArtistDao{
 		query.setParameter("isApproved", ITableConstants.USER_IS_APPROVED_APPROVE);
 		return (List<Artist>)query.list();
 	}
+	/*
+	 * 更新艺术家审核状态
+	 * @author asus1
+	 * @param id
+	 * @param status
+	 */
+	public void updateArtistStatus(long id, String status)
+	{
+		String hql=String.format("update Artist artist set artist.isapprove = %s where artist.id = %d", status, id);
+		Query queryupdate= getSession().createQuery(hql);
+		int ret=queryupdate.executeUpdate();
+	}
 }

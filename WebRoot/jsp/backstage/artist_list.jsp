@@ -10,7 +10,8 @@ BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3
 Version: 1.0.0
 Purchase: http://wrapbootstrap.com
 -->
-<html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
 	<base href="<%=basePath%>">
@@ -43,6 +44,9 @@ Purchase: http://wrapbootstrap.com
 
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="assets/js/skins.min.js"></script>
+    
+    <!-- Ajax Script -->
+    <script type="text/javascript" src="js/ajax.admin.js"></script>
 </head>
 <!-- /Head -->
 <!-- Body -->
@@ -891,9 +895,6 @@ Purchase: http://wrapbootstrap.com
                                     </div>
                                 </div>
                                 <div class="widget-body">
-                                    <div class="table-toolbar">
-                                        
-                                    </div>
                                     <table class="table table-striped table-hover table-bordered" id="editabledatatable">
                                         <thead>
                                             <tr role="row">
@@ -901,290 +902,42 @@ Purchase: http://wrapbootstrap.com
                                                    	 邮箱
                                                 </th>
                                                 <th>
-                                                   	 昵称
+                                                   	姓名
                                                 </th>
                                                 <th>
-                                                   	 余额
+                                           		         联系电话
                                                 </th>
                                                 <th>
-                              					               联系方式
+                                                  	 状态
                                                 </th>
                                                 <th>
-                                                	状态
-                                                </th>
-                                                <th>
-													   审核
+													操作
                                                 </th>
                                             </tr>
                                         </thead>
+
                                         <tbody>
-                                        <s:iterator id="user" value="#request.list">
+                                        <s:iterator id="artist" value="#request.artistList">
                                             <tr>
-                                                <td>
-                                                	<a href="#"><s:property value="#user.email"/></a>
+                                                <td><a href="ShowArtistDetails?artist.id=${artist.id}"><s:property value="#artist.email"/></a></td>
+                                                <td><s:property value="#artist.realname"/></td>
+                                                <td><s:property value="#artist.phone"/></td>
+                                                <td id = "<s:property value="#artist.id"/>">
+                                                	<s:if test='%{#artist.isapprove == "0"}'>
+                                                		<span class="label label-danger">已驳回</span>
+                                                	</s:if>
+                                                	<s:elseif test='%{#artist.isapprove == "1"}'>
+                                                		<span class="label label-success">已通过</span>
+                                                	</s:elseif>
                                                 </td>
                                                 <td>
-                                                    <s:property value="#user.nickname"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.balance"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.phone"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.isvalid"/>
-                                                </td>
-                                                <td>
-                                                	<s:url id="#" action="#">
-														<s:param name="email">
-															<s:property value="user.email"/>
-														</s:param>
-													</s:url>
-                                                    <s:a href="%{#}" cssClass="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 解禁</s:a>
-                                                    <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> 禁用</a>
+                                                    <s:a href="JavaScript:ArtistRelieve(%{id});" cssClass="btn btn-success btn-xs"><i class="fa fa-edit"></i> 通过</s:a>
+                                                    <s:a href="JavaScript:ArtistBanning(%{id});" cssClass="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 驳回</s:a>
                                                 </td>
                                             </tr>
                                         </s:iterator>
                                         </tbody>
-                                   </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="widget">
-                                <div class="widget-header ">
-                                    <span class="widget-caption">被举报艺术家</span>
-                                    <div class="widget-buttons">
-                                        <a href="#" data-toggle="maximize">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                        <a href="#" data-toggle="collapse">
-                                            <i class="fa fa-minus"></i>
-                                        </a>
-                                        <a href="#" data-toggle="dispose">
-                                            <i class="fa fa-times"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="table-toolbar">
-                                        
-                                    </div>
-                                    <table class="table table-striped table-hover table-bordered" id="editabledatatable">
-                                        <thead>
-                                            <tr role="row">
-                                                <th>
-                                                   	 邮箱
-                                                </th>
-                                                <th>
-                                                   	 昵称
-                                                </th>
-                                                <th>
-                                                   	 余额
-                                                </th>
-                                                <th>
-                              					               联系方式
-                                                </th>
-                                                <th>
-                                                	状态
-                                                </th>
-                                                <th>
-													   审核
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <s:iterator id="user" value="#request.list">
-                                            <tr>
-                                                <td>
-                                                	<a href="#"><s:property value="#user.email"/></a>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.nickname"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.balance"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.phone"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.isvalid"/>
-                                                </td>
-                                                <td>
-                                                	<s:url id="#" action="#">
-														<s:param name="email">
-															<s:property value="user.email"/>
-														</s:param>
-													</s:url>
-                                                    <s:a href="%{#}" cssClass="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 解禁</s:a>
-                                                    <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> 禁用</a>
-                                                </td>
-                                            </tr>
-                                        </s:iterator>
-                                        </tbody>
-                                   </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="widget">
-                                <div class="widget-header ">
-                                    <span class="widget-caption">被禁用艺术家</span>
-                                    <div class="widget-buttons">
-                                        <a href="#" data-toggle="maximize">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                        <a href="#" data-toggle="collapse">
-                                            <i class="fa fa-minus"></i>
-                                        </a>
-                                        <a href="#" data-toggle="dispose">
-                                            <i class="fa fa-times"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="table-toolbar">
-                                        
-                                    </div>
-                                    <table class="table table-striped table-hover table-bordered" id="editabledatatable">
-                                        <thead>
-                                            <tr role="row">
-                                                <th>
-                                                   	 邮箱
-                                                </th>
-                                                <th>
-                                                   	 昵称
-                                                </th>
-                                                <th>
-                                                   	 真名
-                                                </th>
-                                                <th>
-                              					               联系方式
-                                                </th>
-                                                <th>
-                                                	状态
-                                                </th>
-                                                <th>
-													   审核
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <s:iterator id="user" value="#request.list">
-                                            <tr>
-                                                <td>
-                                                	<a href="#"><s:property value="#user.email"/></a>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.nickname"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.balance"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.phone"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.isvalid"/>
-                                                </td>
-                                                <td>
-                                                	<s:url id="#" action="#">
-														<s:param name="email">
-															<s:property value="user.email"/>
-														</s:param>
-													</s:url>
-                                                    <s:a href="%{#}" cssClass="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 解禁</s:a>
-                                                    <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> 禁用</a>
-                                                </td>
-                                            </tr>
-                                        </s:iterator>
-                                        </tbody>
-                                   </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-xs-12 col-md-12">
-                            <div class="widget">
-                                <div class="widget-header ">
-                                    <span class="widget-caption">待审核艺术家</span>
-                                    <div class="widget-buttons">
-                                        <a href="#" data-toggle="maximize">
-                                            <i class="fa fa-expand"></i>
-                                        </a>
-                                        <a href="#" data-toggle="collapse">
-                                            <i class="fa fa-minus"></i>
-                                        </a>
-                                        <a href="#" data-toggle="dispose">
-                                            <i class="fa fa-times"></i>
-                                        </a>
-                                    </div>
-                                </div>
-                                <div class="widget-body">
-                                    <div class="table-toolbar">
-                                        
-                                    </div>
-                                    <table class="table table-striped table-hover table-bordered" id="editabledatatable">
-                                        <thead>
-                                            <tr role="row">
-                                                <th>
-                                                   	 邮箱
-                                                </th>
-                                                <th>
-                                                   	 昵称
-                                                </th>
-                                                <th>
-                                                   	 真名
-                                                </th>
-                                                <th>
-                              					               联系方式
-                                                </th>
-                                                <th>
-                                                	状态
-                                                </th>
-                                                <th>
-													   审核
-                                                </th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                        <s:iterator id="user" value="#request.list">
-                                            <tr>
-                                                <td>
-                                                	<a href="#"><s:property value="#user.email"/></a>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.nickname"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.balance"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.phone"/>
-                                                </td>
-                                                <td>
-                                                    <s:property value="#user.isvalid"/>
-                                                </td>
-                                                <td>
-                                                	<s:url id="#" action="#">
-														<s:param name="email">
-															<s:property value="user.email"/>
-														</s:param>
-													</s:url>
-                                                    <s:a href="%{#}" cssClass="btn btn-info btn-xs edit"><i class="fa fa-edit"></i> 解禁</s:a>
-                                                    <a href="#" class="btn btn-danger btn-xs delete"><i class="fa fa-trash-o"></i> 禁用</a>
-                                                </td>
-                                            </tr>
-                                        </s:iterator>
-                                        </tbody>
-                                   </table>
+                                    </table>
                                 </div>
                             </div>
                         </div>
@@ -1213,11 +966,10 @@ Purchase: http://wrapbootstrap.com
     <script src="assets/js/datatable/dataTables.bootstrap.min.js"></script>
     <script src="assets/js/datatable/datatables-init.js"></script>
     <script>
-    	/*InitiateEditableDataTable.init();
-    	
-       	 InitiateSimpleDataTable.init();
+        InitiateSimpleDataTable.init();
+        InitiateEditableDataTable.init();
         InitiateExpandableDataTable.init();
-        InitiateSearchableDataTable.init(); */
+        InitiateSearchableDataTable.init();
     </script>
     <!--Google Analytics::Demo Only-->
     <script>
@@ -1235,4 +987,3 @@ Purchase: http://wrapbootstrap.com
 </body>
 <!--  /Body -->
 </html>
-
