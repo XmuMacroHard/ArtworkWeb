@@ -3,21 +3,51 @@
  */
 
 $(document).ready(function(){
-	onload();
+	onload(1);
 });
 
-function onload()
+var totalpage='<%=session["total_page"].tostring()%>';
+
+function onload(nowpage)
 {
 	$.ajax({
 		type:"post",
 		url:"showCommodityList",
-		data:{"commodity.type":"calligraphy"},
+		data:{"commodity.type":"calligraphy","nowpage":nowpage},
 		dataType:"json",
 		success:function(data){
 			var server_path = "http://localhost:8080/ArtworkWeb";
+			var pages = "";
 			var	commodities = "";
+			pages+="<li>"+totalpage+"</li>";
+			//var totalpage=2;
+			var $pageList = $("#page_list");
+			$pageList.empty();
+			if(nowpage!=1){
+				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+
+						");\">&laquo;</a></li>";
+			}
+			for(var i=nowpage-2;i<=nowpage+2;i++){
+				if(i==nowpage){
+					pages+="<li class=\"active\"><a href=\"javascript:onload(" +i+
+						");\">"+i+"</a></li>";
+					}
+				else{
+					if(i>0&&i<=totalpage){
+						pages+="<li><a href=\"javascript:onload(" +i+
+						");\">"+i+"</a></li>";
+					}
+				}
+			}
+			if(nowpage!=totalpage){
+				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+
+				");\">&raquo;</a></li>"
+			}
+			$pageList.append(pages);
+			
 			var $commodityList = $("#commodity_list");
-			$.each(data, function(index, item){
+			$commodityList.empty();
+			$.each(data,function(index,item){
 				commodities +="<li class='item col-lg-4 col-md-3 col-sm-4 col-xs-12'>" +
                   				"<div class='item-inner'>"+
                   				"<div class='product-block'>" +

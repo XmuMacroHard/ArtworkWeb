@@ -55,6 +55,8 @@ public class SaleAction extends ActionSupport
 	private List<File> pictures;
 	private List<String> picturesContentType;
 	private List<String> picturesFileName;
+	
+	private int nowpage;
 
 	@Autowired
 	private ISaleService saleService;
@@ -70,7 +72,7 @@ public class SaleAction extends ActionSupport
 	public String showCommListByType()
 	{
 		System.out.println(commodity.getType());
-		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType());
+		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType(),nowpage);
 		setResultJsonArray(commoditiesJsonArray);
 		System.out.println(commoditiesJsonArray);
 		return IResultCode.SUCCESS;
@@ -119,7 +121,7 @@ public class SaleAction extends ActionSupport
 	@Action(value="viewCart", results={@Result(name="success", location="/jsp/frontside/user/shoppingCart.jsp")})
 	public String viewCart()
 	{
-		List<ShoppingCart> list = saleService.getShoppingCart();	
+		List<ShoppingCart> list = saleService.getShoppingCart();
 		setAttributeByRequest(IClientConstants.REQUEST_SHOPPING_CART, list);
 		return IResultCode.SUCCESS;
 	}
@@ -135,12 +137,8 @@ public class SaleAction extends ActionSupport
 		
 		commodityid.add(3L);//实际是从界面接收的
 		commodityid.add(4L);
-		//System.out.println(user.getId());
-		//System.out.println(commodityid.get(0));
-		//System.out.println(shippingAddress.getId());
-		shippingAddress = new ShippingAddress();
-		shippingAddress.setId(2L);
-		
+		shippingAddress=new ShippingAddress();
+		shippingAddress.setId(1L);
 		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
 		
 		return SUCCESS;
@@ -248,5 +246,13 @@ public class SaleAction extends ActionSupport
 		this.shippingAddress = shippingAddress;
 	}
 	
+
+	public int getNowpage() {
+		return nowpage;
+	}
+
+	public void setNowpage(int nowpage) {
+		this.nowpage = nowpage;
+	}
 	
 }

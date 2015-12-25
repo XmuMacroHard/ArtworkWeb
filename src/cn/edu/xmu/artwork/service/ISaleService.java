@@ -12,7 +12,8 @@ import cn.edu.xmu.artwork.entity.User;
 
 
 public interface ISaleService {
-	public JSONArray getCommodityListByType(String commoType);
+	//List<Commodity> getCommodityListByType(String commoType);
+	public JSONArray getCommodityListByType(String commoType,int page);
 	List<ShoppingCart> getShoppingCart();
 	public Commodity getCommodityById(long commodityId);
 	public void uploadCommodity(Commodity commodity, List<String> picPaths);

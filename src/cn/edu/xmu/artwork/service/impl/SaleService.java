@@ -61,16 +61,21 @@ public class SaleService extends BasicService implements ISaleService
 	 * 按照商品类型获取所有商品
 	 */
 	@Override
-	public JSONArray getCommodityListByType(String commoType)
+	public JSONArray getCommodityListByType(String commoType,int page)
 	{
 		List<Commodity> commodities = commodityDao.getCommodityListByType(commoType);
-
+		int totalpage=(int) Math.ceil((double)commodities.size()/9);
+		setSessionInBrower(IStrings.TOTAL_PAGE,totalpage);
+		
+		commodities=commodities.subList((page-1)*9, page*9<commodities.size()?page*9:commodities.size());
+		page=totalpage;
 		for(Commodity commodity : commodities)
 		{
 			initializeObject(commodity.getCommodityPices());
-		}		
-		
-		return jsonUtils.List2JsonArray(commodities);
+		}
+		String[] excludes = {"purchaseOrder_id"};
+
+		return jsonUtils.List2JsonArray(commodities, excludes);
 	}
 	
 	@Override
@@ -137,7 +142,7 @@ public class SaleService extends BasicService implements ISaleService
 	{
 		PurchaseOrder purchaseOrder=new PurchaseOrder();
 		purchaseOrder.setUser(user);
-		purchaseOrder.setOrderid(getordernum(user));	
+		purchaseOrder.setOrderid(getordernum(user));
 		purchaseOrder.setState("0");
 		purchaseOrder.setType("sale");
 		purchaseOrder.setDate(new Date());
