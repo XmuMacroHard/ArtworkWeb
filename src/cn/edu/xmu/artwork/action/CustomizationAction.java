@@ -16,7 +16,10 @@ import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import cn.edu.xmu.artwork.dao.IArtistDao;
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
+import cn.edu.xmu.artwork.dao.IUserDao;
+import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
@@ -47,6 +50,13 @@ public class CustomizationAction extends ActionSupport{
 	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
 	public String CustomizationSubmitAction()
 	{
+		Commodity commodity = new Commodity();
+		commodity.setAuthorId(4L);
+		commodity.setIntroduction("good");
+		commodity.setPrice((float)100);
+		commodity.setName("test com");
+		commodity.setType("picture");
+		customizeService.addCustomization(1L, 4L, commodity);
 		return SUCCESS;
 	}
 	

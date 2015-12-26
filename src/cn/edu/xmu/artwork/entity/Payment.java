@@ -2,7 +2,6 @@ package cn.edu.xmu.artwork.entity;
 
 import java.sql.Date;
 
-import javax.annotation.Generated;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,17 +9,43 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 
 @Entity
 @Table(name = "payment", catalog = "artworkdb")
+@NamedQueries({
+			@NamedQuery(
+					name = "Payment.getById",
+					query = "from Payment p where p.id = :id"
+					),
+			@NamedQuery(
+					name = "Payment.getByUserId",
+					query = "from Payment p where p.user_id = :user_id"
+					),
+			@NamedQuery(
+					name = "Payment.getAllByOrderId",
+					query = "from Payment p where purchaseOrder_id = :id"
+					),
+			@NamedQuery(
+					name = "Payment.getUnPaiedByOrderId",
+					query = "from Payment p where purchaseOrder_id = :id and state = 0 "
+							+ "order by date"
+					)
+			
+					
+}
+)
 public class Payment {
 	private Long id;
 	private Long user_id;					//付款人
 	private Long artist_id; 				//收款人
-	private PurchaseOrder purchaseOrder;    //付款订单;
+	private PurchaseOrder purchaseOrder;    //付款订单
 	private Float money;	 				//付款额度
 	private int state;      				//付款状态  0未付款 1 已付款
 	private Date date;      				//付款时间
@@ -36,7 +61,7 @@ public class Payment {
 	}
 	
 
-	@Column(name = "user", nullable= false)
+	@Column(name = "user_id", nullable= false)
 	public Long getUser_id() {
 		return user_id;
 	}
@@ -53,10 +78,11 @@ public class Payment {
 	}
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-	@Column(name = "purchaseOrder_id", nullable= false)
+	@JoinColumn(name = "purchaseOrder_id", nullable= false)
 	public PurchaseOrder getPurchaseOrder() {
 		return purchaseOrder;
 	}
+	
 	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
 		this.purchaseOrder = purchaseOrder;
 	}

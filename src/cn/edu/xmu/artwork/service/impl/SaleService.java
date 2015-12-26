@@ -22,11 +22,13 @@ import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IAddressDao;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
+import cn.edu.xmu.artwork.dao.IPaymentDao;
 import cn.edu.xmu.artwork.dao.IPurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.ShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.ShoppingCart;
@@ -47,6 +49,9 @@ public class SaleService extends BasicService implements ISaleService
 	
 	@Autowired
 	IPurchaseOrderDao purchaseOrderDao;
+	
+	@Autowired
+	IPaymentDao paymentDao;
 	
 	@Autowired
 	IAddressDao addressDao;
@@ -153,7 +158,7 @@ public class SaleService extends BasicService implements ISaleService
 		{
 			Commodity commodity=commodityDao.getCommodityById(id);
 			purchaseOrder.getCommodity().add(commodity);
-			commodity.setPurchaseOrder_id(purchaseOrder);
+			commodity.setPurchaseOrder(purchaseOrder);
 			totalprice+=commodity.getPrice();
 		}
 		purchaseOrder.setTotalprice(totalprice);
@@ -171,12 +176,12 @@ public class SaleService extends BasicService implements ISaleService
 	
 	public PurchaseOrder getPurchaseOrderByid(long id)
 	{
-		return purchaseOrderDao.getPurchaseOrderByid(id);
+		return purchaseOrderDao.findById(id);
 	}
 	
 	public boolean payment(long id)
 	{
-		PurchaseOrder purchaseOrder=purchaseOrderDao.getPurchaseOrderByid(id);
+		PurchaseOrder purchaseOrder=purchaseOrderDao.findById(id);
 		User user = userDao.findById(1L);
 		if(user.getBalance()<purchaseOrder.getTotalprice())
 			return false;
@@ -219,5 +224,37 @@ public class SaleService extends BasicService implements ISaleService
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} 
+	}
+	
+
+	@Override
+	public boolean payPurchaseOrder(long id) {
+		try{
+			PurchaseOrder purchaseOrder = purchaseOrderDao.findById(id);
+			User user = purchaseOrder.getUser();
+			List<Payment> payments = paymentDao.getUnPaidPaymentsByArtistId(purchaseOrder.getId());
+			for(Payment p : payments)
+			{
+				System.out.println("id: " + p.getId() + " Date: " + p.getDate());
+			}
+			Payment payment = payments.get(0);
+			user.setBalance(user.getBalance() - payment.getMoney());
+			payment.setState(1);
+			purchaseOrder.setLeftprice(purchaseOrder.getLeftprice() - payment.getMoney());
+			if(purchaseOrder.getLeftprice() == 0)
+				purchaseOrder.setState("1");
+			return true; 
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean payToArtistByPurchaseOrder(long id) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 }

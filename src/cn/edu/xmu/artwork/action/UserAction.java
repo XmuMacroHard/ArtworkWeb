@@ -35,9 +35,9 @@ public class UserAction extends ActionSupport
 	public List<File> pic;
 	public List<String> picFileName;
 	public List<String> picContentType;
-	@Autowired
 	private User user;
 	private Artist artist;
+	
 	@Autowired
 	private IUserService userService;
 	@Autowired
@@ -48,7 +48,7 @@ public class UserAction extends ActionSupport
 	private JSONArray resultJsonArray;
 	private JSONObject resultJsonObject;
 
-	private long orderid;
+	private long orderid = 1;
 
 
 	@Action(
@@ -104,6 +104,9 @@ public class UserAction extends ActionSupport
 		ServletActionContext.getRequest().setAttribute("list", list);
 		return SUCCESS;
 	}
+	
+
+	
 	
 	/**
 	 * 根据艺术家id查询一个艺术家的详细信息
@@ -271,5 +274,7 @@ public class UserAction extends ActionSupport
 	public void setOrderid(long orderid) {
 		this.orderid = orderid;
 	}
+	
+	
 	
 }

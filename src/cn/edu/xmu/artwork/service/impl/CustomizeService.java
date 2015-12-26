@@ -11,8 +11,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.dao.IArtistDao;
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
+import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.HTestDao;
+import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
@@ -26,22 +29,33 @@ public class CustomizeService implements ICustomizeService{
 	@Autowired
 	private ICustomizationDao customizationDao;
 	@Autowired
-	private HTestDao htestDao;
+	private IUserDao userDao;
+	@Autowired
+	private IArtistDao artistDao;
 	
 	@Override
-	public void addCustomization(CustomizationOrder customization,User user,Commodity commodity) {
+	public void addCustomization(long user_id, long artist_id ,Commodity commodity) {
+
+		User user = userDao.findById(user_id);
+		Artist artist = artistDao.findById(artist_id);
+		CustomizationOrder customizationOrder = new CustomizationOrder();
+		
 		commodity.setCategory("customization");//对商品进行处理
 		commodity.setIsBought(false);
-		commodity.setPurchaseOrder_id(customization);
+		commodity.setPurchaseOrder(customizationOrder);
 		
-		customization.setTotalprice(commodity.getPrice());
-		customization.setUser(user);
-		customization.getCommodity().add(commodity);
-		customization.setOrderid(getordernum(user));	
-		customization.setState("0");
-		customization.setType("customize");
-		customization.setDate(new Date());
-		customizationDao.save(customization);
+		customizationOrder.setTotalprice(commodity.getPrice());
+		customizationOrder.setLeftprice(commodity.getPrice());
+		customizationOrder.setUser(user);
+		customizationOrder.setArtist(artist);
+		customizationOrder.getCommodity().add(commodity);
+		//customization.setOrderid(getordernum(user));	
+		customizationOrder.setOrderid("1234");
+		customizationOrder.setState("0");
+		customizationOrder.setType("customize");
+		customizationOrder.setDate(new Date());
+		
+		customizationDao.save(customizationOrder);
 	}
 
 	@Override

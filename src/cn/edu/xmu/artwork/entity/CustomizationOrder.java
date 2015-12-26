@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -20,7 +21,7 @@ import org.hibernate.annotations.NamedQuery;
 
 
 @Entity
-@Table(name="customizationorder", catalog="artworkdb")
+@DiscriminatorValue("customization_order")
 @NamedQueries({
 	@NamedQuery(
 			name = "CustomizationOrder.getByUser",

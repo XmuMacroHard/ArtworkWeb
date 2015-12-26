@@ -20,7 +20,6 @@ import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.ShoppingCart;
-
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -56,6 +55,7 @@ public class SaleAction extends ActionSupport
 	private List<String> picturesContentType;
 	private List<String> picturesFileName;
 	
+	private long pid;
 	private int nowpage;
 
 	@Autowired
@@ -112,6 +112,15 @@ public class SaleAction extends ActionSupport
 		JSONObject resultJO = saleService.addToCart(commodity, user);
 		setResultJsonObject(resultJO);
 		
+		return SUCCESS;
+	}
+	
+	@Action(value="payPurchaseOrderAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	public String payPurchaseOrder()
+	{
+		long i = 2;
+		saleService.payPurchaseOrder(1);
+		//System.out.println(" pid : " + pid);
 		return SUCCESS;
 	}
 	
@@ -254,5 +263,6 @@ public class SaleAction extends ActionSupport
 	public void setNowpage(int nowpage) {
 		this.nowpage = nowpage;
 	}
+	
 	
 }

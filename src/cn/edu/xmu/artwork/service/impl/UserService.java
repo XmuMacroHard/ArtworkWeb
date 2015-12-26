@@ -8,6 +8,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,19 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
-
 import cn.edu.xmu.artwork.dao.IAddressDao;
-
 import cn.edu.xmu.artwork.constants.ITableConstants;
-
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.CommodityDao;
 import cn.edu.xmu.artwork.dao.impl.ArtistDao;
+import cn.edu.xmu.artwork.dao.impl.PaymentDao;
 import cn.edu.xmu.artwork.dao.impl.PurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.Information;
+import cn.edu.xmu.artwork.entity.Payment;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -37,6 +38,7 @@ import cn.edu.xmu.artwork.utils.IMD5Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -52,6 +54,9 @@ public class UserService extends BasicService implements IUserService
 	
 	@Autowired
 	PurchaseOrderDao purchaseOrderDao;
+	
+	@Autowired
+	private PaymentDao paymentDao;
 	
 	@Autowired
 	private ArtistDao artistDao;
@@ -280,4 +285,8 @@ public class UserService extends BasicService implements IUserService
 		user.setBalance(user.getBalance()-balance);
 		userDao.update(user);
 	}
+
+
+
+	
 }

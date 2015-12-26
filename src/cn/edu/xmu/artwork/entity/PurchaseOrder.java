@@ -23,11 +23,24 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 /**
  * PurchaseOrder entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "purchase_order", catalog = "artworkdb")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="order_type")
+@DiscriminatorValue("purchase_order")
+@NamedQueries({
+	@NamedQuery(
+			name = "PurchaseOrder.getById",
+			query = "from PurchaseOrder p where p.id = :id"
+			),
+}
+)
 public class PurchaseOrder implements java.io.Serializable {
 
 	// Fields
@@ -39,7 +52,8 @@ public class PurchaseOrder implements java.io.Serializable {
 	private User user;
 	private Date date;
 	private ShippingAddress shippingAddress;
-	private Float totalprice;
+	private Float totalprice;				//应付款
+	private Float leftprice;       			//未付款
 	private Set<Commodity> commodity=new HashSet<Commodity>(0);
 	private Set<Payment> payments = new HashSet<Payment>(0);
 	// Constructors
@@ -138,7 +152,16 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.totalprice = totalprice;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder_id")
+	@Column(name = "leftprice", nullable = true, precision = 15)
+	public Float getLeftprice() {
+		return leftprice;
+	}
+
+	public void setLeftprice(Float leftprice) {
+		this.leftprice = leftprice;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder")
 	public Set<Commodity> getCommodity() {
 		return commodity;
 	}
@@ -147,7 +170,7 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.commodity = commodity;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder")
 	public Set<Payment> getPayments() {
 		return payments;
 	}
@@ -155,7 +178,4 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setPayments(Set<Payment> payments) {
 		this.payments = payments;
 	}
-
-
-	
 }
