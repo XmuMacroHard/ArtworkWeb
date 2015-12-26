@@ -10,6 +10,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
+import org.apache.catalina.connector.Response;
 import org.apache.struts2.json.JSONUtil;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -66,14 +67,11 @@ public class SaleService extends BasicService implements ISaleService
 	 * 按照商品类型获取所有商品
 	 */
 	@Override
-	public JSONArray getCommodityListByType(String commoType,int page)
+	public JSONArray getCommodityListByType(String commoType)
 	{
 		List<Commodity> commodities = commodityDao.getCommodityListByType(commoType);
-		int totalpage=(int) Math.ceil((double)commodities.size()/9);
-		setSessionInBrower(IStrings.TOTAL_PAGE,totalpage);
+		System.out.println(commodities.size());
 		
-		commodities=commodities.subList((page-1)*9, page*9<commodities.size()?page*9:commodities.size());
-		page=totalpage;
 		for(Commodity commodity : commodities)
 		{
 			initializeObject(commodity.getCommodityPices());
@@ -81,6 +79,7 @@ public class SaleService extends BasicService implements ISaleService
 		String[] excludes = {"purchaseOrder_id"};
 
 		return jsonUtils.List2JsonArray(commodities, excludes);
+		
 	}
 	
 	@Override

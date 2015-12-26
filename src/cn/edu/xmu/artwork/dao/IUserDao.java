@@ -11,6 +11,7 @@ public interface IUserDao {
 	public User search(User user);
 	public List findAll();
 	public User findById(long id);
+	public boolean findByEmail(String email);
 	public void update(User user);
 	public void updateUserState(String userEmail, String state);
 

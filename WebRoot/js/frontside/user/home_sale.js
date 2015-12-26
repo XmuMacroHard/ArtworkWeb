@@ -6,26 +6,28 @@ $(document).ready(function(){
 	onload(1);
 });
 
-var totalpage='<%=session["total_page"].tostring()%>';
-
 function onload(nowpage)
 {
 	$.ajax({
 		type:"post",
 		url:"showCommodityList",
-		data:{"commodity.type":"calligraphy","nowpage":nowpage},
+		data:{"commodity.type":"calligraphy"},
 		dataType:"json",
 		success:function(data){
 			var server_path = "http://localhost:8080/ArtworkWeb";
 			var pages = "";
 			var	commodities = "";
-			pages+="<li>"+totalpage+"</li>";
-			//var totalpage=2;
+			
+			var pagesize=9;
+			var totalcount=data.length;
+			var totalpage=Math.ceil(totalcount/pagesize);
+			
 			var $pageList = $("#page_list");
 			$pageList.empty();
 			if(nowpage!=1){
+				pages+="<li><a href=\"javascript:onload(1);\">&lt;&lt;</a></li>";
 				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+
-						");\">&laquo;</a></li>";
+				");\">&lt;</a></li>";
 			}
 			for(var i=nowpage-2;i<=nowpage+2;i++){
 				if(i==nowpage){
@@ -41,13 +43,17 @@ function onload(nowpage)
 			}
 			if(nowpage!=totalpage){
 				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+
-				");\">&raquo;</a></li>"
+				");\">&gt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(" +totalpage+
+				");\">&gt;&gt;</a></li>"
 			}
 			$pageList.append(pages);
 			
 			var $commodityList = $("#commodity_list");
 			$commodityList.empty();
-			$.each(data,function(index,item){
+			var start=pagesize*(nowpage-1);
+			for(var i=start;i<=start+pagesize-1&&i<=totalcount-1;i++){
+				var item=data[i];
 				commodities +="<li class='item col-lg-4 col-md-3 col-sm-4 col-xs-12'>" +
                   				"<div class='item-inner'>"+
                   				"<div class='product-block'>" +
@@ -58,7 +64,6 @@ function onload(nowpage)
 				{
                     commodities += "<img src='" + server_path + item.commodityPices[0].url +"' class='lazyOwl product-mainpic' alt='Sample Product' style='display: block;'> <img class='product-secondpic' alt=' Sample Product' src='" + server_path + item.commodityPices[0].url + "'> </figure>" ;
 				}
-				
 				commodities +=" </a> </div>" +
                         "<div class='product-meta'>"+
                           "<div class='product-action'> <a class='addcart' href='shopping_cart.html'> <i class='icon-shopping-cart'>&nbsp;</i> Add to cart </a>" +                 
@@ -87,7 +92,7 @@ function onload(nowpage)
                   "</div>" +
                 "</li>"; 								
 			
-			});
+			};
 			$commodityList.append(commodities);
 		}
 		

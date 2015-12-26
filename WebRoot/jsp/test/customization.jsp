@@ -67,7 +67,7 @@ Purchase: http://wrapbootstrap.com
 	
     <div class="login-container">
         <div class="loginbox bg-white">
-        	<form action=payPurchaseOrderAction>
+        	<form action=CustomizationSubmitAction>
             <div class="loginbox-title">登录</div>
             <div class="loginbox-social">
                 <div class="social-title ">使用第三方登录</div>

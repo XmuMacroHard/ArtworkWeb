@@ -67,6 +67,22 @@ public class UserDao extends GenericDao implements IUserDao
 	}
 	
 	/**
+	 * 
+	 */
+	public boolean findByEmail(String email)
+	{
+		try {
+			Query query = getSession().getNamedQuery("getUsersbyEmail").setParameter("email", email);
+			if(query.list().size()==0)
+				return true;
+			else
+				return false;
+		} catch (RuntimeException re) {
+			throw re;
+		}
+	}
+	
+	/**
 	 * 更新用户状态
 	 * @author asus1
 	 * @param userEmail
