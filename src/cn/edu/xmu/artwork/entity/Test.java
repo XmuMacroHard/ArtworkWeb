@@ -1,9 +1,14 @@
 package cn.edu.xmu.artwork.entity;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.ManyToOne;
+
 import static javax.persistence.GenerationType.IDENTITY;
+
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -15,13 +20,12 @@ import javax.persistence.Table;
 public class Test implements java.io.Serializable {
 
 	// Fields
-
 	private Long id;
 	private String account;
 	private String password;
-
+	private Htest htest;
+	
 	// Constructors
-
 	/** default constructor */
 	public Test() {
 	}
@@ -53,7 +57,7 @@ public class Test implements java.io.Serializable {
 		this.account = account;
 	}
 
-	@Column(name = "password", length = 20)
+	//@Column(name = "password", length = 20)
 	public String getPassword() {
 		return this.password;
 	}
@@ -61,5 +65,15 @@ public class Test implements java.io.Serializable {
 	public void setPassword(String password) {
 		this.password = password;
 	}
+	
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	public Htest getHtest() {
+		return htest;
+	}
 
+	public void setHtest(Htest htest) {
+		this.htest = htest;
+	}
+	
+	
 }

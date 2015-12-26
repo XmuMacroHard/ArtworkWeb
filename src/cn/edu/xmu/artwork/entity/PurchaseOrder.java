@@ -41,7 +41,7 @@ public class PurchaseOrder implements java.io.Serializable {
 	private ShippingAddress shippingAddress;
 	private Float totalprice;
 	private Set<Commodity> commodity=new HashSet<Commodity>(0);
-	
+	private Set<Payment> payments = new HashSet<Payment>(0);
 	// Constructors
 	/** default constructor */
 	public PurchaseOrder() {
@@ -146,5 +146,16 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setCommodity(Set<Commodity> commodity) {
 		this.commodity = commodity;
 	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	public Set<Payment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(Set<Payment> payments) {
+		this.payments = payments;
+	}
+
+
 	
 }
