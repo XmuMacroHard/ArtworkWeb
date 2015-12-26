@@ -40,7 +40,11 @@ import org.hibernate.annotations.NamedQuery;
 		@NamedQuery(
 			name = "getALLUsers",
 			query = "from User"
-		)
+		),
+		@NamedQuery(
+				name = "getUsersbyEmail",
+				query = "from User where email = :email"
+			)
 })
 public class User implements java.io.Serializable {
 

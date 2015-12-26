@@ -55,8 +55,6 @@ public class SaleAction extends ActionSupport
 	private List<File> pictures;
 	private List<String> picturesContentType;
 	private List<String> picturesFileName;
-	
-	private int nowpage;
 
 	@Autowired
 	private ISaleService saleService;
@@ -72,7 +70,7 @@ public class SaleAction extends ActionSupport
 	public String showCommListByType()
 	{
 		System.out.println(commodity.getType());
-		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType(),nowpage);
+		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType());
 		setResultJsonArray(commoditiesJsonArray);
 		System.out.println(commoditiesJsonArray);
 		return IResultCode.SUCCESS;
@@ -135,8 +133,8 @@ public class SaleAction extends ActionSupport
 		//user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
 		user.setId(1L);
 		
-		commodityid.add(3L);//实际是从界面接收的
-		commodityid.add(4L);
+		commodityid.add(6L);//实际是从界面接收的
+		commodityid.add(7L);
 		shippingAddress=new ShippingAddress();
 		shippingAddress.setId(1L);
 		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
@@ -244,15 +242,6 @@ public class SaleAction extends ActionSupport
 
 	public void setShippingAddress(ShippingAddress shippingAddress) {
 		this.shippingAddress = shippingAddress;
-	}
-	
-
-	public int getNowpage() {
-		return nowpage;
-	}
-
-	public void setNowpage(int nowpage) {
-		this.nowpage = nowpage;
 	}
 	
 }

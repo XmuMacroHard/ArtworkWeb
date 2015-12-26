@@ -38,6 +38,7 @@ public class UserAction extends ActionSupport
 	@Autowired
 	private User user;
 	private Artist artist;
+	private String newpassword;
 	@Autowired
 	private IUserService userService;
 	@Autowired
@@ -67,27 +68,47 @@ public class UserAction extends ActionSupport
 	@Action(
 			value="registerAction",
 			results={
-					@Result(name="success", location="/jsp/success.jsp"),
-					@Result(name="fail", location="/jsp/fail.jsp")
+					@Result(name="success", type="json", params={"root", "result"})
 					}		
 			)
 	public String register()  
 	{
-		try {
-			userService.register(user);
-			return "success";
-		} 
-		catch (ConstraintViolationException e) {
-			String faildetail = "Already Exists User!";
-			System.out.print("in register Already Exists User!");
-		    ActionContext.getContext().put("faildetail", faildetail);
-			return "fail";
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-			System.out.print("in register fail");
-			return "fail";
-		}
+		result = userService.register(user);
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 修改密码
+	 * @return 修改成功或失败
+	 */
+	@Action(
+			value="alterpasswordAction", 
+			results={
+					@Result(name="success", type="json", params={"root", "result"})
+					}
+			)
+	public String alterpassword()
+	{
+		result = userService.alterpassword(user,newpassword);
+		
+		return SUCCESS;
+	}
+	
+	/**
+	 * 修改个人信息
+	 */
+	@Action(
+			value="alterinfoAction", 
+			results={
+					@Result(name="success", type="json", params={"root", "result"})
+					}
+			)
+	public String alterinfo()
+	{
+		result = userService.alterinfo(user,artist);
+		
+		return SUCCESS;
 	}
 	
 	@Action(value="logoutAction",results={@Result(name="success", location="/jsp/frontside/user/login.jsp")})
@@ -270,6 +291,14 @@ public class UserAction extends ActionSupport
 
 	public void setOrderid(long orderid) {
 		this.orderid = orderid;
+	}
+
+	public String getNewpassword() {
+		return newpassword;
+	}
+
+	public void setNewpassword(String newpassword) {
+		this.newpassword = newpassword;
 	}
 	
 }
