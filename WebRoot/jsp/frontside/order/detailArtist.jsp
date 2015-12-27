@@ -57,6 +57,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="product-essential">
               <form action="#" method="post" id="product_addtocart_form">
                 <input name="form_key" value="6UbXroakyQlbfQzK" type="hidden">
+                
+                <!--hidden  -->
+                <input id="artistid_hidden_input" type="hidden" value="${artist.id}"/>
+                <input id="artistrn_hidden_input" type="hidden" value="${artist.realName}"/>
+                <!--end hidden  -->
+                
                 <div class="product-img-box col-sm-4 col-xs-12">
                   <div class="product-image">
 					<div class="large-image"> <a href="products-images/product1.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img alt="product-image" src="${server_path}${artist.portrait}"> </a> </div>                    
@@ -80,7 +86,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </div>
                   <div class="add-to-box">
                     <div class="add-to-cart">
-                      <button id="addToCart" class="button btn-cart" title="Add to Cart" type="button"><span><i class="icon-basket"></i> Add to Cart</span></button> 
+                      <button id="orderButton" class="button btn-cart"  type="button"><span><i class="icon-basket"></i>定制</span></button> 
                     </div>
                     <div class="email-addto-box">
                       <ul class="add-to-links">
@@ -678,7 +684,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/jquery.flexslider.js"></script>
 <script type="text/javascript" src="js/cloud-zoom.js"></script>
-<script type="text/javascript" src="js/frontside/sale/addToCart.js"></script>
+<script type="text/javascript" src="js/frontside/order/order.js"></script>
 <script>
 			new UISearch( document.getElementById( 'form-search' ) );
 		</script>

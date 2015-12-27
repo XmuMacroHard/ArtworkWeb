@@ -25,3 +25,24 @@
     background: -webkit-linear-gradient(90deg, #D4DEDF, #DCDCDE);
     
 }
+
+.box{
+	margin-top:10px;
+	margin-bottom:10px;
+}
+
+.payinfo{
+	border:1px solid #000;
+	padding: 10px;
+}
+
+.payAmount{
+	padding-right:1%;
+	padding-left:15%;
+}
+
+.amount{
+	padding-right:5px;
+	padding-left:5px;
+	font-size:20px;
+}

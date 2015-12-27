@@ -301,7 +301,11 @@ public class UserService extends BasicService implements IUserService
 	 * @author asus1
 	 */
 	@Override
-	public List<ShippingAddress> ShowAllAddressList(long userId) {
+	public List<ShippingAddress> ShowAllAddressList() {
+		
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		long userId = user.getId();
+		
 		List<ShippingAddress> addressList = new ArrayList<ShippingAddress>();
 		try {
 			addressList = addressDao.findAllByUserId(userId);
@@ -319,7 +323,13 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public void AddNewAddress(ShippingAddress address) {
 		try {
+			User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+			address.setUser(user);
 			addressDao.insert(address);
+			
+			List<ShippingAddress> addressList = ShowAllAddressList();
+			setAttributeByRequest("addressList", addressList);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -66,13 +66,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                 <thead>
                   <tr class="first last">
-                    <th rowspan="1">&nbsp;</th>
+                    <th rowspan="1">艺术品图</th>
                     <th rowspan="1"><span class="nobr">艺术品名</span></th>
-                    <th rowspan="1"></th>
                     <th colspan="1" class="a-center"><span class="nobr">价格</span></th>
-                    <th class="a-center" rowspan="1">Qty</th>
-                    <th colspan="1" class="a-center">Subtotal</th>
-                    <th class="a-center" rowspan="1">&nbsp;</th>
                   </tr>
                 </thead>
                 <tfoot>
@@ -101,12 +97,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                     	</c:forEach> 
                     	</a> 
                     </td>
+                    
                     <td><h2 class="product-name"> <a href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a> </h2></td>
-                    <td class="a-center"><a title="Edit item parameters" class="edit-bnt" href="#configure/id/15945/"></a></td>
-                    <td class="a-right"><span class="cart-price"> <span class="price"><c:out value="${commodity.price}"/></span> </span></td>
-                    <td class="a-center movewishlist"><input maxlength="12" class="input-text qty" title="Qty" size="4" value="1" name="cart[15945][qty]"></td>
-                    <td class="a-right movewishlist"><span class="cart-price"> <span class="price"><c:out value="${commodity.price}"/></span> </span></td>
-                    <td class="a-center last"><a class="button remove-item" title="Remove item" href="#"><span><span>Remove item</span></span></a></td>
+                    <td class="a-right"><span class="cart-price"> <span class="price"><c:out value="${commodity.price}"/></span> </span></td>                    
                   </tr>
                   <!--hidden input  -->
                   <input  type="hidden" name="commodityid" value="${commodity.id}"/>
