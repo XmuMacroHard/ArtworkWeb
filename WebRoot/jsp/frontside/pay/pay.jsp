@@ -4,9 +4,10 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<!DOCTYPE html>
-<html lang="en">
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!DOCTYPE>
+<html>
 <head>
 <base href="<%=basePath%>">
 <meta charset="utf-8">
@@ -26,91 +27,39 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
 <!-- CSS Style -->
-
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.theme.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
-<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/my_frontside.css" type="text/css">
 
-<!-- Google Fonts -->
-<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,700,800,400,600' rel='stylesheet' type='text/css'>
-</head>
 <body>
 <div class="page">
-  <c:import url="../common/header.jsp"/>
-
-  <!-- main-container -->
-  <section class="main-container col1-layout">
-    <div class="main container">
-      <div class="col-main">
-     <div class="multiple_add">
-
-        <div class="multiple_addresses">
-          <form method="post" action="http://demo.magikthemes.com/index.php/eclipseblue/checkout/multishipping/addressesPost/" id="checkout_multishipping_form">
-            <div class="page-title_multi">
-              <h2>地址管理</h2>
-            </div>
-            <!--page-title_multi-->
-            <div class="title-buttons">
-              <button class="btn btn-default" onClick="window.location='jsp/frontside/address/address_new.jsp'" title="新增地址" type="button">
-              	<span class="glyphicon glyphicon-plus" aria-hidden="true"></span><span>新增地址</span>
-              </button>
-            </div>
-            <!--title-buttons-->
-            <div class="addresses">
-              <div class="table-responsive">
-                <fieldset class="multiple-checkout">
-                  <input type="hidden" id="can_continue_flag" value="0" name="continue">
-                  <input type="hidden" id="add_new_address_flag" value="0" name="new_address">
-                  
-                  <table id="multiship-addresses-table" class="data-table">
-                    
-                    <thead>
-                      <tr class="first last">
-                        <th>地址</th>
-                        <th class="a-left">收货人</th>
-                        <th>联系电话</th>
-                        <th>删除</th>
-                      </tr>
-                    </thead>
-                    <tfoot>
-                      <tr class="first last">
-                        <td class="a-right last" ><button onClick="$('can_continue_flag').value=0" class="button btn-update" type="submit"><span>Update Qty &amp; Addresses</span></button></td>
-                      </tr>
-                    </tfoot>
-                    <tbody>
-                    
-                    <s:iterator id="address" value="#request.addressList">
-                      <tr class="first odd">
-                        <td>
-                        	<h4 class="product-name"><s:property value="#address.province"/><s:property value="#address.city"/><s:property value="#address.region"/></h4>
-                        	<h4 class="product-name"><s:property value="#address.detailedAdress"/></h4>
-                        </td>
-                        <td><s:property value="#address.consignee"/></td>
-                        <td><s:property value="#address.phone"/></td>
-                        <td class="a-center last"><a href='DeleteAddress.action?address.id=<s:property value="#address.id"/>' title="删除" class="btn-remove btn-remove2"><span>删除</span></a></td>
-                      </tr>
-                    </s:iterator>
-                      
-                    </tbody>
-                  </table>
-                  <div class="buttons-set"> <a href="http://demo.magikthemes.com/index.php/eclipseblue/checkout/cart/" class="back-link"><small>« </small>Back to Shopping Cart</a>
-                    <button onClick="$('can_continue_flag').value=1" class="button btn-continue" title="Continue to Shipping Information" type="submit"><span>Continue to Shipping Information</span></button>
-                  </div>
-                </fieldset>
-              </div>
-              <!--multiple-checkout--> 
-            </div>
-          </form>
-          <!--addresses--> 
+<c:import url="../common/header.jsp"/>
+<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+  
+<section class="main-container col1-layout">
+  <div class="main container">
+    <div class="col-main">
+      <div class="cart">
+      
+         <div class="page-title">
           
+         <h2>安全支付</h2>
         </div>
-      </div></div>
+        <div class="table-responsive">
+			<div class="box payinfo"><span>账号余额<c:out value="${sessionScope.user.balance}"/></span><span class="payAmount">支付<span class="amount"><c:out value="${totalprice}"/></span>元</span></div>
+			<div class="box">支付密码</div>
+			<div class="box"><input class="form-control"/></div>
+			<div class="box"><button type="button" class="btn btn-info">确认支付</button></div>
+			
+        </div>
+    
+      </div>
     </div>
-  </section>
-  <!--End main-container --> 
-
+  </div>
+</section>
 
 </div>
 <div class="help_slider">
@@ -200,7 +149,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="textright">
               <input type="text" name="hideit" value="" style="display:none !important;">
               <button type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
-              <img src="images/mgkloading1.gif" id="loader" style="display:none;" alt=""> </div>
+              <img src="images/mgkloading1.gif" alt="loader" id="loader" style="display:none;"> </div>
             <!--textright-->
           </div>
           <!--padding-->
@@ -218,7 +167,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
-<script type="text/javascript" src="js/owl.carousel.min.js"></script> 
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/frontside/pay/pay.js"></script> 
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {
@@ -232,8 +182,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </script> 
 <script>
 			new UISearch( document.getElementById( 'form-search' ) );
-</script>
-<!-- Ajax Script -->
-    <script type="text/javascript" src="js/ajax.admin.js"></script>
+		</script>
 </body>
 </html>

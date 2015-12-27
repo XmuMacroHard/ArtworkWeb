@@ -22,7 +22,7 @@ public interface IUserService {
 	public List<Commodity> showMyCommodity();
 	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);	
 	public ShippingAddress SelectAddress(long id);
-	public List<ShippingAddress> ShowAllAddressList(long userId);
+	public List<ShippingAddress> ShowAllAddressList();
 	public void AddNewAddress(ShippingAddress address);
 	public void DeleteAddress(long id);
 	public JSONArray getBriefArtistBySort(String identification);

@@ -61,7 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="dropdown block-company-wrapper hidden-xs"> <a role="button" data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"> 个人中心 <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/profile.jsp"> 个人信息 </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> Customer Service </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="ShowAllAddressList">地址管理</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> Privacy Policy </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="sitemap.html">Site Map </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>

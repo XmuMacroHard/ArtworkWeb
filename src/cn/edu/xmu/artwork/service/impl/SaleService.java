@@ -149,8 +149,9 @@ public class SaleService extends BasicService implements ISaleService
 		purchaseOrder.setShippingAddress(shippingAddress);
 		
 		float totalprice=0;
-		for(Long id:commodityid)
+		for(Long id : commodityid)
 		{
+			System.out.println(id);
 			Commodity commodity=commodityDao.getCommodityById(id);
 			purchaseOrder.getCommodity().add(commodity);
 			commodity.setPurchaseOrder_id(purchaseOrder);
@@ -158,6 +159,8 @@ public class SaleService extends BasicService implements ISaleService
 		}
 		purchaseOrder.setTotalprice(totalprice);
 		purchaseOrderDao.savePurchaseOrder(purchaseOrder);
+		
+		setAttributeByRequest("totalprice", totalprice);
 	}
 	
 	public String getordernum(User user)
