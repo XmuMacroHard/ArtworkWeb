@@ -14,4 +14,6 @@ public interface ICustomizeService {
 	public List<CustomizationOrder> getCustomizationsByUser(long id);
 	public List<CustomizationOrder> getCustomizationsByArtist(long id);
 	public boolean accetpCustomization(long id);
+	public boolean rejuectCustomization(long id);
+	public boolean changeCustomizationArtworkToCommodity(long id);
 }

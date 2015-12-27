@@ -41,6 +41,10 @@ import javax.persistence.Table;
 		@NamedQuery(
 					name="Commodity.getRecommendedCommodities",
 					query="from Commodity"
+				),
+		@NamedQuery(
+					name="Commodity.getByOrderId",
+					query="from Commodity c where purchaseOrder_Id = :id"
 				)
 			
 })

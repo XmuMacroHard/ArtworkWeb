@@ -86,7 +86,28 @@ public class CustomizationAction extends ActionSupport{
 		else
 			return ERROR;
 	}
-
+	
+	@Action(value="rejectCustomizationAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	public String rejectCustomization(){
+		int id = 3; // get from session;
+		boolean result = customizeService.rejuectCustomization(id);
+		if(result)
+			return SUCCESS;
+		else
+			return ERROR;
+	}
+	
+	//转换定制品到普通商品
+	@Action(value="changeCustomizationArtworkToCommodityAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	public String changeCustomizationArtworkToCommodity(){
+		int id = 2; // get from session;
+		boolean result = customizeService.changeCustomizationArtworkToCommodity(id);
+		if(result)
+			return SUCCESS;
+		else
+			return ERROR;
+	}
+	
 	private void setAttributeByRequest(String key, Object value)
 	{
 		ServletActionContext.getRequest().setAttribute(key, value);

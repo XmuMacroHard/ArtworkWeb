@@ -118,7 +118,7 @@ public class SaleAction extends ActionSupport
 	public String payPurchaseOrder()
 	{
 		long i = 2;
-		saleService.payPurchaseOrder(1);
+		saleService.payPurchaseOrder(i);
 		//System.out.println(" pid : " + pid);
 		return SUCCESS;
 	}

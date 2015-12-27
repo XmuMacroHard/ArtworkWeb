@@ -232,16 +232,25 @@ public class SaleService extends BasicService implements ISaleService
 			PurchaseOrder purchaseOrder = purchaseOrderDao.findById(id);
 			User user = purchaseOrder.getUser();
 			List<Payment> payments = paymentDao.getUnPaidPaymentsByArtistId(purchaseOrder.getId());
+			
 			for(Payment p : payments)
 			{
 				System.out.println("id: " + p.getId() + " Date: " + p.getDate());
 			}
+			
 			Payment payment = payments.get(0);
 			user.setBalance(user.getBalance() - payment.getMoney());
 			payment.setState(1);
 			purchaseOrder.setLeftprice(purchaseOrder.getLeftprice() - payment.getMoney());
+			
+			//订单支付完成
 			if(purchaseOrder.getLeftprice() == 0)
+			{
 				purchaseOrder.setState("1");
+				List<Commodity> commodities = commodityDao.getCommodityByOrderId(purchaseOrder.getId());
+				for(Commodity commodity:commodities)
+					commodity.setIsBought(true);
+			}
 			return true; 
 		}
 		catch(Exception e)
@@ -250,6 +259,7 @@ public class SaleService extends BasicService implements ISaleService
 			return false;
 		}
 	}
+	
 
 	@Override
 	public boolean payToArtistByPurchaseOrder(long id) {

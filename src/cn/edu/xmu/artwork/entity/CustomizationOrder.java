@@ -19,6 +19,8 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
+import cn.edu.xmu.artwork.constants.IStrings;
+
 
 @Entity
 @DiscriminatorValue("customization_order")
@@ -44,6 +46,7 @@ public class CustomizationOrder extends PurchaseOrder implements java.io.Seriali
 	private String acceptState;
 	//private long id;
 	public CustomizationOrder(){
+		acceptState = IStrings.Customization_State_Uncheck;
 	}
 
 	public CustomizationOrder(Artist artist) {
