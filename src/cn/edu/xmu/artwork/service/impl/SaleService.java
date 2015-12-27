@@ -148,7 +148,6 @@ public class SaleService extends BasicService implements ISaleService
 		purchaseOrder.setUser(user);
 		purchaseOrder.setOrderid(getordernum(user));
 		purchaseOrder.setState("0");
-		purchaseOrder.setType("sale");
 		purchaseOrder.setDate(new Date());
 		purchaseOrder.setShippingAddress(shippingAddress);
 		
@@ -178,22 +177,7 @@ public class SaleService extends BasicService implements ISaleService
 		return purchaseOrderDao.findById(id);
 	}
 	
-	public boolean payment(long id)
-	{
-		PurchaseOrder purchaseOrder=purchaseOrderDao.findById(id);
-		User user = userDao.findById(1L);
-		if(user.getBalance()<purchaseOrder.getTotalprice())
-			return false;
-		else
-		{
-			user.setBalance(user.getBalance()-purchaseOrder.getTotalprice());
-			userDao.update(user);
-			
-			purchaseOrder.setState("1");
-			purchaseOrderDao.update(purchaseOrder);
-			return true;
-		}
-	}
+
 
 	/**
 	 * 用户发起一个订单

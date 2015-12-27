@@ -60,7 +60,6 @@ public class CustomizeService implements ICustomizeService{
 		
 		customizationOrder.setOrderid("1234");
 		customizationOrder.setState("0");
-		customizationOrder.setType("customize");
 		customizationOrder.setDate(new Date());
 		
 		customizationDao.save(customizationOrder);

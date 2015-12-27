@@ -46,7 +46,6 @@ public class PurchaseOrder implements java.io.Serializable {
 	// Fields
 	private Long id;
 	private String orderid;
-	private String type;
 	private String state;
 
 	private User user;
@@ -62,13 +61,12 @@ public class PurchaseOrder implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PurchaseOrder(Long id, String orderid, String type, String state,
+	public PurchaseOrder(Long id, String orderid, String state,
 			User user, Date date,
 			ShippingAddress shippingAddress, Set<Commodity> commodity) {
 		super();
 		this.id = id;
 		this.orderid = orderid;
-		this.type = type;
 		this.state = state;
 		this.user = user;
 		this.date = date;
@@ -98,14 +96,6 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.orderid = orderid;
 	}
 
-	@Column(name = "type", nullable = false, length = 9)
-	public String getType() {
-		return this.type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
 
 	@Column(name = "state", nullable = false, length = 10)
 	public String getState() {
@@ -178,4 +168,6 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setPayments(Set<Payment> payments) {
 		this.payments = payments;
 	}
+	
+	
 }
