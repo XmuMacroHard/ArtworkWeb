@@ -7,4 +7,7 @@ public interface IStrings
 
 	String SESSION_USER = "user";
 	String TOTAL_PAGE = "total_page";
+	String Customization_State_Uncheck = "uncheck";
+	String Customization_State_Accept = "accept";
+	String Customization_State_Reject = "reject";
 }

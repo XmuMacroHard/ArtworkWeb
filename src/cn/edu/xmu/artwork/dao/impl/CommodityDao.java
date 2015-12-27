@@ -53,4 +53,19 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 	{
 		getSession().save(commodity);
 	}
+
+	
+	@Override
+	public List<Commodity> getCommodityByOrderId(long id) {
+		List<Commodity> commodities = null;
+		try {
+			Query query = getSession().getNamedQuery("Commodity.getByOrderId");
+			query.setParameter("id", id);
+			commodities = query.list();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		// TODO Auto-generated method stub
+		return commodities;
+	}
 }

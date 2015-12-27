@@ -11,10 +11,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.dao.IArtistDao;
+import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
+import cn.edu.xmu.artwork.dao.IUserDao;
+import cn.edu.xmu.artwork.dao.impl.HTestDao;
+import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
+import cn.edu.xmu.artwork.entity.Htest;
+import cn.edu.xmu.artwork.entity.Payment;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 
@@ -23,21 +32,38 @@ import cn.edu.xmu.artwork.service.ICustomizeService;
 public class CustomizeService implements ICustomizeService{
 	@Autowired
 	private ICustomizationDao customizationDao;
+	@Autowired
+	private IUserDao userDao;
+	@Autowired
+	private IArtistDao artistDao;
+	@Autowired
+	private ICommodityDao commodityDao;
 	
 	@Override
-	public void addCustomization(CustomizationOrder customization,User user,Commodity commodity) {
-		commodity.setCategory("customization");//对商品进行处理
-		commodity.setIsBought(false);
-		commodity.setPurchaseOrder_id(customization);
+	public void addCustomization(long user_id, long artist_id ,Commodity commodity) {
+
+		User user = userDao.findById(user_id);
+		Artist artist = artistDao.findById(artist_id);
 		
-		customization.setTotalprice(commodity.getPrice());
-		customization.setUser(user);
-		customization.getCommodity().add(commodity);
-		customization.setOrderid(getordernum(user));	
-		customization.setState("0");
-		customization.setType("customize");
-		customization.setDate(new Date());
-		customizationDao.save(customization);
+		CustomizationOrder customizationOrder = new CustomizationOrder();
+		
+		commodity.setCategory("customization");//设置商品为定制品
+		commodity.setPurchaseOrder(customizationOrder);
+		
+		customizationOrder.setTotalprice(commodity.getPrice());
+		customizationOrder.setLeftprice(commodity.getPrice());
+		customizationOrder.setUser(user);
+		customizationOrder.setArtist(artist);
+		customizationOrder.getCommodity().add(commodity);
+		
+		//customization.setOrderid(getordernum(user));	
+		
+		customizationOrder.setOrderid("1234");
+		customizationOrder.setState("0");
+		customizationOrder.setType("customize");
+		customizationOrder.setDate(new Date());
+		
+		customizationDao.save(customizationOrder);
 	}
 
 	@Override
@@ -52,22 +78,13 @@ public class CustomizeService implements ICustomizeService{
 		return customizationDao.getCustomizationsByUser(id);
 	}
 
+	
 	@Override
 	public List<CustomizationOrder> getCustomizationsByArtist(long id) {
 		return customizationDao.getCustomizationsByArtist(id);
 	}
 	
-	@Override
-	public boolean accetpCustomization(long id) {
-			CustomizationOrder customization = customizationDao.findInfoById(id);
-			if(null == customization)
-				return false;
-			else
-			{
-				customization.setState("accept");
-				return true;	
-			}
-	}
+
 
 	
 	public String getordernum(User user)
@@ -77,5 +94,51 @@ public class CustomizeService implements ICustomizeService{
 		Random random=new Random();
 		number=number+String.format("%04d",random.nextInt(10000));
 		return number;
+	}
+	
+	@Override
+	public boolean accetpCustomization(long id) {
+		try {
+			CustomizationOrder customization = customizationDao.findById(id);
+			customization.setAcceptState(IStrings.Customization_State_Accept);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+	@Override
+	public boolean rejuectCustomization(long id) {
+		try {
+			CustomizationOrder customization = customizationDao.findById(id);
+			customization.setAcceptState(IStrings.Customization_State_Reject);
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public boolean changeCustomizationArtworkToCommodity(long id) {
+		try {
+			Commodity commodity = commodityDao.getCommodityByOrderId(id).get(0);
+			commodity.setCategory("common");
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+
+	@Override
+	public void setPaymentOfCustomization(long id, List<Payment> payments) {
+		CustomizationOrder customizationOrder  = customizationDao.findById(id);	
+		for(Payment payment: payments)
+			{
+				payment.setPurchaseOrder(customizationOrder);
+				customizationOrder.getPayments().add(payment);
+			}
 	}
 }

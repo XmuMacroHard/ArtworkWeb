@@ -10,6 +10,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
+import org.apache.catalina.connector.Response;
 import org.apache.struts2.json.JSONUtil;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +23,13 @@ import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IAddressDao;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
+import cn.edu.xmu.artwork.dao.IPaymentDao;
 import cn.edu.xmu.artwork.dao.IPurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.ShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.ShoppingCart;
@@ -49,6 +52,9 @@ public class SaleService extends BasicService implements ISaleService
 	IPurchaseOrderDao purchaseOrderDao;
 	
 	@Autowired
+	IPaymentDao paymentDao;
+	
+	@Autowired
 	IAddressDao addressDao;
 	
 	@Autowired
@@ -61,14 +67,11 @@ public class SaleService extends BasicService implements ISaleService
 	 * 按照商品类型获取所有商品
 	 */
 	@Override
-	public JSONArray getCommodityListByType(String commoType,int page)
+	public JSONArray getCommodityListByType(String commoType)
 	{
 		List<Commodity> commodities = commodityDao.getCommodityListByType(commoType);
-		int totalpage=(int) Math.ceil((double)commodities.size()/9);
-		setSessionInBrower(IStrings.TOTAL_PAGE,totalpage);
+		System.out.println(commodities.size());
 		
-		commodities=commodities.subList((page-1)*9, page*9<commodities.size()?page*9:commodities.size());
-		page=totalpage;
 		for(Commodity commodity : commodities)
 		{
 			initializeObject(commodity.getCommodityPices());
@@ -76,6 +79,7 @@ public class SaleService extends BasicService implements ISaleService
 		String[] excludes = {"purchaseOrder_id"};
 
 		return jsonUtils.List2JsonArray(commodities, excludes);
+		
 	}
 	
 	@Override
@@ -154,7 +158,7 @@ public class SaleService extends BasicService implements ISaleService
 			System.out.println(id);
 			Commodity commodity=commodityDao.getCommodityById(id);
 			purchaseOrder.getCommodity().add(commodity);
-			commodity.setPurchaseOrder_id(purchaseOrder);
+			commodity.setPurchaseOrder(purchaseOrder);
 			totalprice+=commodity.getPrice();
 		}
 		purchaseOrder.setTotalprice(totalprice);
@@ -174,12 +178,12 @@ public class SaleService extends BasicService implements ISaleService
 	
 	public PurchaseOrder getPurchaseOrderByid(long id)
 	{
-		return purchaseOrderDao.getPurchaseOrderByid(id);
+		return purchaseOrderDao.findById(id);
 	}
 	
 	public boolean payment(long id)
 	{
-		PurchaseOrder purchaseOrder=purchaseOrderDao.getPurchaseOrderByid(id);
+		PurchaseOrder purchaseOrder=purchaseOrderDao.findById(id);
 		User user = userDao.findById(1L);
 		if(user.getBalance()<purchaseOrder.getTotalprice())
 			return false;
@@ -223,4 +227,47 @@ public class SaleService extends BasicService implements ISaleService
 			e.printStackTrace();
 		} 
 	}
+	
+
+	@Override
+	public boolean payPurchaseOrder(long id) {
+		try{
+			PurchaseOrder purchaseOrder = purchaseOrderDao.findById(id);
+			User user = purchaseOrder.getUser();
+			List<Payment> payments = paymentDao.getUnPaidPaymentsByArtistId(purchaseOrder.getId());
+			
+			for(Payment p : payments)
+			{
+				System.out.println("id: " + p.getId() + " Date: " + p.getDate());
+			}
+			
+			Payment payment = payments.get(0);
+			user.setBalance(user.getBalance() - payment.getMoney());
+			payment.setState(1);
+			purchaseOrder.setLeftprice(purchaseOrder.getLeftprice() - payment.getMoney());
+			
+			//订单支付完成
+			if(purchaseOrder.getLeftprice() == 0)
+			{
+				purchaseOrder.setState("1");
+				List<Commodity> commodities = commodityDao.getCommodityByOrderId(purchaseOrder.getId());
+				for(Commodity commodity:commodities)
+					commodity.setIsBought(true);
+			}
+			return true; 
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
+		}
+	}
+	
+
+	@Override
+	public boolean payToArtistByPurchaseOrder(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

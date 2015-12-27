@@ -8,6 +8,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,19 +17,19 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
-
 import cn.edu.xmu.artwork.dao.IAddressDao;
-
 import cn.edu.xmu.artwork.constants.ITableConstants;
-
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.CommodityDao;
 import cn.edu.xmu.artwork.dao.impl.ArtistDao;
+import cn.edu.xmu.artwork.dao.impl.PaymentDao;
 import cn.edu.xmu.artwork.dao.impl.PurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.Information;
+import cn.edu.xmu.artwork.entity.Payment;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -37,6 +38,7 @@ import cn.edu.xmu.artwork.utils.IMD5Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -52,6 +54,9 @@ public class UserService extends BasicService implements IUserService
 	
 	@Autowired
 	PurchaseOrderDao purchaseOrderDao;
+	
+	@Autowired
+	private PaymentDao paymentDao;
 	
 	@Autowired
 	private ArtistDao artistDao;
@@ -79,13 +84,26 @@ public class UserService extends BasicService implements IUserService
 	}
 	
 	@Override
-	public void register(User user) throws Exception{
-		System.out.println("in serverice register");
+	public String register(User user){
 		MD5encypt(user);
 		user.setBalance((float) 0);
 		user.setIsBanned("0");
-		userDao.insert(user);
-		setSessionInBrower(IStrings.SESSION_USER, user);
+		
+		JSONObject resultJson = new JSONObject();
+		if(userDao.findByEmail(user.getEmail()))
+		{
+			userDao.insert(user);
+			setSessionInBrower(IStrings.SESSION_USER, user);
+			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+			resultJson.put(IResultCode.MESSAGE, IResultCode.REGISTER_SUCCESS);
+		}
+		else
+		{
+			resultJson.put(IResultCode.RESULT, IResultCode.ERROR);
+			resultJson.put(IResultCode.MESSAGE, IResultCode.REGISTER_ERROR);
+		}
+
+		return resultJson.toString();
 	}
 
 	@Override
@@ -111,6 +129,54 @@ public class UserService extends BasicService implements IUserService
 			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_USER);
 			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);			
 		}
+		return resultJson.toString();
+	}
+	
+	/**
+	 * 用户修改密码
+	 */
+	@Override
+	public String alterpassword(User user,String newpassword)
+	{
+		JSONObject resultJson = new JSONObject();
+		User user2=(User)getSessionInBrower(IClientConstants.SESSION_USER);
+		MD5encypt(user);
+		if(user.getPassword().equals(user2.getPassword()))
+		{
+			user2.setPassword(newpassword);
+			MD5encypt(user2);
+			userDao.update(user2);
+			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+			resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_SUCCESS);
+		}
+		else
+		{
+			resultJson.put(IResultCode.RESULT, IResultCode.ERROR);
+			resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_ERROR);
+		}
+		return resultJson.toString();
+	}
+	
+	/**
+	 * 修改个人信息
+	 */
+	public String alterinfo(User user,Artist artist)
+	{
+		String rank=(String)getSessionInBrower(IClientConstants.SESSION_KEY_RANK);
+		JSONObject resultJson = new JSONObject();
+		if(rank.equals("user")){
+			User user2=(User)getSessionInBrower(IClientConstants.SESSION_USER);
+			user2.setPhone(user.getPhone());
+			userDao.update(user2);
+		}else{
+			Artist artist2 = (Artist)getSessionInBrower(IClientConstants.SESSION_USER);
+			artist2.setPhone(user.getPhone());
+			artist2.setIntroduction(artist.getIntroduction());
+			artistDao.update(artist2);
+		}
+		System.out.println("1");
+		resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+		resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_SUCCESS);
 		return resultJson.toString();
 	}
 	
@@ -290,4 +356,8 @@ public class UserService extends BasicService implements IUserService
 		user.setBalance(user.getBalance()-balance);
 		userDao.update(user);
 	}
+
+
+
+	
 }

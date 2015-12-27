@@ -20,7 +20,6 @@ import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.ShoppingCart;
-
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -55,7 +54,7 @@ public class SaleAction extends ActionSupport
 	private List<File> pictures;
 	private List<String> picturesContentType;
 	private List<String> picturesFileName;
-	
+	private long pid;
 	private int nowpage;
 
 	@Autowired
@@ -72,7 +71,7 @@ public class SaleAction extends ActionSupport
 	public String showCommListByType()
 	{
 		System.out.println(commodity.getType());
-		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType(),nowpage);
+		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType());
 		setResultJsonArray(commoditiesJsonArray);
 		System.out.println(commoditiesJsonArray);
 		return IResultCode.SUCCESS;
@@ -115,6 +114,15 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	@Action(value="payPurchaseOrderAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	public String payPurchaseOrder()
+	{
+		long i = 2;
+		saleService.payPurchaseOrder(i);
+		//System.out.println(" pid : " + pid);
+		return SUCCESS;
+	}
+	
 	/*
 	 *show the list of shoppingcart 
 	 * */
@@ -133,6 +141,7 @@ public class SaleAction extends ActionSupport
 	public String SubmitsaleOrder()
 	{
 		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");		
+
 		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
 		
 		return SUCCESS;

@@ -67,7 +67,7 @@ Purchase: http://wrapbootstrap.com
 	
     <div class="login-container">
         <div class="loginbox bg-white">
-        	<form action=acceptCustomizationAction>
+        	<form action=payPurchaseOrderAction>
             <div class="loginbox-title">登录</div>
             <div class="loginbox-social">
                 <div class="social-title ">使用第三方登录</div>
@@ -89,7 +89,7 @@ Purchase: http://wrapbootstrap.com
             </div>
              
            <div class="loginbox-textbox">
-                <s:textfield name="customization.commodity。type" cssClass="form-control" placeholder="艺术品分类" />
+                <s:textfield name="orderid" cssClass="form-control" placeholder="艺术品分类" />
             </div>
             <div class="loginbox-textbox">
                 <s:password name="customization.commodity。introduction" cssClass="form-control" placeholder="定制描述" />

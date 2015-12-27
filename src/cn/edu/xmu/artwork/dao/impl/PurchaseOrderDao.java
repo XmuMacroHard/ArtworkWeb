@@ -1,5 +1,6 @@
 package cn.edu.xmu.artwork.dao.impl;
 
+import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import cn.edu.xmu.artwork.dao.IPurchaseOrderDao;
@@ -13,19 +14,22 @@ public class PurchaseOrderDao extends GenericDao implements IPurchaseOrderDao {
 		getSession().save(purchaseOrder);
 	}
 	
-	public PurchaseOrder getPurchaseOrderByid(long id)
-	{
-		try {
-			PurchaseOrder instance = (PurchaseOrder) getSession().get(
-					"cn.edu.xmu.artwork.entity.PurchaseOrder", id);
-			return instance;
-		} catch (RuntimeException re) {
-			throw re;
-		}
-	}
-	
 	public void update(PurchaseOrder purchaseOrder)
 	{
 		getSession().update(purchaseOrder);
+	}
+
+	@Override
+	public PurchaseOrder findById(long id) {
+		PurchaseOrder result = null;
+		try {
+			Query query = getSession().getNamedQuery("PurchaseOrder.getById");
+			query.setParameter("id", id);
+			result = (PurchaseOrder) query.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		}
+		return result;
 	}
 }
