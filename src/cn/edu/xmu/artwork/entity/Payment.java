@@ -50,6 +50,23 @@ public class Payment {
 	private int state;      				//付款状态  0未付款 1 已付款
 	private Date date;      				//付款时间
 	
+	
+	
+	public Payment() {
+		state = 0;
+	}
+	
+	public Payment(Long id, Long user_id, Long artist_id,
+			PurchaseOrder purchaseOrder, Float money, int state, Date date) {
+		super();
+		this.id = id;
+		this.user_id = user_id;
+		this.artist_id = artist_id;
+		this.purchaseOrder = purchaseOrder;
+		this.money = money;
+		this.state = state;
+		this.date = date;
+	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -61,7 +78,7 @@ public class Payment {
 	}
 	
 
-	@Column(name = "user_id", nullable= false)
+	@Column(name = "user_id", nullable= true)
 	public Long getUser_id() {
 		return user_id;
 	}
@@ -69,7 +86,7 @@ public class Payment {
 		this.user_id = user_id;
 	}
 	
-	@Column(name = "artist_id", nullable= false)
+	@Column(name = "artist_id", nullable= true)
 	public Long getArtist_id() {
 		return artist_id;
 	}

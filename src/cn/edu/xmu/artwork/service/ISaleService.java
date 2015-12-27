@@ -5,6 +5,7 @@ import java.util.List;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.ShoppingCart;
@@ -24,7 +25,6 @@ public interface ISaleService {
 	public boolean payment(long id);
 	public List<Commodity> getRecommendedCommodity();
 	public void placeOrder(List<Long> commodityids);
-	
 	//按订单付款
 	public boolean payPurchaseOrder(long id);
 	//按订单给款艺术家

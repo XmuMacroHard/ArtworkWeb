@@ -22,6 +22,8 @@ import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
 import cn.edu.xmu.artwork.entity.Htest;
+import cn.edu.xmu.artwork.entity.Payment;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 
@@ -42,10 +44,10 @@ public class CustomizeService implements ICustomizeService{
 
 		User user = userDao.findById(user_id);
 		Artist artist = artistDao.findById(artist_id);
+		
 		CustomizationOrder customizationOrder = new CustomizationOrder();
 		
-		commodity.setCategory("customization");//对商品进行处理
-		commodity.setIsBought(false);
+		commodity.setCategory("customization");//设置商品为定制品
 		commodity.setPurchaseOrder(customizationOrder);
 		
 		customizationOrder.setTotalprice(commodity.getPrice());
@@ -53,7 +55,9 @@ public class CustomizeService implements ICustomizeService{
 		customizationOrder.setUser(user);
 		customizationOrder.setArtist(artist);
 		customizationOrder.getCommodity().add(commodity);
+		
 		//customization.setOrderid(getordernum(user));	
+		
 		customizationOrder.setOrderid("1234");
 		customizationOrder.setState("0");
 		customizationOrder.setType("customize");
@@ -95,7 +99,7 @@ public class CustomizeService implements ICustomizeService{
 	@Override
 	public boolean accetpCustomization(long id) {
 		try {
-			CustomizationOrder customization = customizationDao.findInfoById(id);
+			CustomizationOrder customization = customizationDao.findById(id);
 			customization.setAcceptState(IStrings.Customization_State_Accept);
 			return true;
 		} catch (Exception e) {
@@ -107,7 +111,7 @@ public class CustomizeService implements ICustomizeService{
 	@Override
 	public boolean rejuectCustomization(long id) {
 		try {
-			CustomizationOrder customization = customizationDao.findInfoById(id);
+			CustomizationOrder customization = customizationDao.findById(id);
 			customization.setAcceptState(IStrings.Customization_State_Reject);
 			return true;
 		} catch (Exception e) {
@@ -128,4 +132,13 @@ public class CustomizeService implements ICustomizeService{
 		}
 	}
 
+	@Override
+	public void setPaymentOfCustomization(long id, List<Payment> payments) {
+		CustomizationOrder customizationOrder  = customizationDao.findById(id);	
+		for(Payment payment: payments)
+			{
+				payment.setPurchaseOrder(customizationOrder);
+				customizationOrder.getPayments().add(payment);
+			}
+	}
 }
