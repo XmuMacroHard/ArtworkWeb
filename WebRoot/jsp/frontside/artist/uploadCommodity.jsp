@@ -59,10 +59,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <!--comments-wrapper-->                  
                   <div class="comments-form-wrapper clearfix">
                     <h3>Leave A reply</h3>
-                    <form class="comment-form" id="postComment" action="uploadCommodity" enctype="multipart/form-data" method="POST">
+                    <form class="comment-form" id="postComment" action="uploadCommodity" enctype="multipart/form-data" method="POST" onsubmit="return checkcommoditysubmit()">
                       <div class="field">
                         <label>商品名<em class="required">*</em></label>
-                        <input style="width:60%" type="text" class="input-text" title="Name" value="" id="user" name="commodity.name"/>
+                        <input style="width:60%" type="text" class="input-text" title="Name" value="" id="user" name="commodity.name" onblur="checkcommodityname()"/>
+                        <span class="text-danger" id="commoditynameTip"></span>
                       </div>
                       <div class="field">
                         <label>商品类型<em class="required">*</em></label>
@@ -75,16 +76,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       </div>
 					  <div class="field">
                         <label>商品价格<em class="required">*</em></label>
-                        <input style="width:60%" type="text" class="input-text validate-email" title="Email" value="" name="commodity.price">
+                        <input style="width:60%" type="text" class="input-text validate-email" title="Email" value="" name="commodity.price" onblur="checkcommodityprice()">
+                      	<span class="text-danger" id="commoditypriceTip"></span>
                       </div >
   						<div class="field" >
                         <label>商品图片<em class="required">*</em></label>
                         <s:file style="width:60%" name="pictures" cssClass="input-text"/>
-                      </div> 
+                        <span class="text-danger" id="commoditypictureTip"></span>
+                      </div>
                       <div class="clear"></div>
                       <div class="field aw-blog-comment-area" > 
                         <label>商品描述<em class="required">*</em></label>
-                        <textarea style="width:90%" rows="5" cols="5" class="input-text" title="Comment" id="comment1" name="commodity.introduction"></textarea>
+                        <textarea style="width:90%" rows="5" cols="5" class="input-text" title="Comment" id="comment1" name="commodity.introduction" onblur="checkcommodityintroduction()"></textarea>
+                      	<span class="text-danger" id="commodityintroductionTip"></span>
                       </div> 
                       <div style="width:96%" class="button-set"> 
                         <button id="uploadCommodity" type="submit" class="bnt-comment"><span><span>商品上传</span></span></button>

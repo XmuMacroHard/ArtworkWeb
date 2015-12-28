@@ -76,8 +76,8 @@ public class SaleService extends BasicService implements ISaleService
 		{
 			initializeObject(commodity.getCommodityPices());
 		}
-		String[] excludes = {"purchaseOrder_id"};
-
+		String[] excludes = {"purchaseOrder"};
+		
 		return jsonUtils.List2JsonArray(commodities, excludes);
 		
 	}
@@ -106,6 +106,7 @@ public class SaleService extends BasicService implements ISaleService
 		commodity.addPictures(picPaths);
 		commodity.setAuthorId((long)1);
 		commodity.setIsBought(false);
+		commodity.setCategory("sale");
 		commodityDao.saveCommodity(commodity);
 	}
 	

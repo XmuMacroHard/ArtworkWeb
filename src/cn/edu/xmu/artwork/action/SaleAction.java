@@ -92,7 +92,7 @@ public class SaleAction extends ActionSupport
 	/*
 	 * upload the information of the commodity
 	 * */
-	@Action(value="uploadCommodity", results={@Result(name="success", location="/jsp/success.jsp")})
+	@Action(value="uploadCommodity", results={@Result(name="success", location="/jsp/frontside/artist/artistCommodity.jsp")})
 	public String uploadCommodity()
 	{
 		System.out.println("commodity.name" + commodity.getName());
