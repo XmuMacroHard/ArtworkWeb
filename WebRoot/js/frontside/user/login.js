@@ -30,3 +30,37 @@ function login()
 $(document).ready(function(){
 	$("#loginButton").bind("click",login);
 });
+
+function checkUser(){
+	var email = document.getElementsByName('user.email')[0].value;
+	var button = document.getElementById('loginButton');
+	if(email==""||email==null)
+	{
+		document.getElementById('userTip').innerHTML = "账号不能为空！";
+		button.disabled=true;
+		return;
+	}
+	else
+	{
+		var temp=document.getElementById("userTip");
+		temp.innerHTML = "";
+		button.disabled=false;
+	}
+}
+
+function checkPassword(){
+	var password = document.getElementsByName('user.password')[0].value;
+	var button = document.getElementById('loginButton');
+	if(!password)
+	{
+		var temp=document.getElementById("passwordTip");
+		temp.innerHTML = "密码不能为空!";
+		button.disabled=true;
+	}
+	else
+	{
+		var temp=document.getElementById("passwordTip");
+		temp.innerHTML = "";
+		button.disabled=false;
+	}
+}

@@ -23,38 +23,50 @@ import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 /**
  * PurchaseOrder entity. @author MyEclipse Persistence Tools
  */
 @Entity
 @Table(name = "purchase_order", catalog = "artworkdb")
+@Inheritance(strategy=InheritanceType.SINGLE_TABLE)
+@DiscriminatorColumn(name="order_type")
+@DiscriminatorValue("purchase_order")
+@NamedQueries({
+	@NamedQuery(
+			name = "PurchaseOrder.getById",
+			query = "from PurchaseOrder p where p.id = :id"
+			),
+}
+)
 public class PurchaseOrder implements java.io.Serializable {
 
 	// Fields
 	private Long id;
 	private String orderid;
-	private String type;
 	private String state;
 
 	private User user;
 	private Date date;
 	private ShippingAddress shippingAddress;
-	private Float totalprice;
+	private Float totalprice;				//应付款
+	private Float leftprice;       			//未付款
 	private Set<Commodity> commodity=new HashSet<Commodity>(0);
-	
+	private Set<Payment> payments = new HashSet<Payment>(0);
 	// Constructors
 	/** default constructor */
 	public PurchaseOrder() {
 	}
 
 	/** full constructor */
-	public PurchaseOrder(Long id, String orderid, String type, String state,
+	public PurchaseOrder(Long id, String orderid, String state,
 			User user, Date date,
 			ShippingAddress shippingAddress, Set<Commodity> commodity) {
 		super();
 		this.id = id;
 		this.orderid = orderid;
-		this.type = type;
 		this.state = state;
 		this.user = user;
 		this.date = date;
@@ -84,15 +96,6 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.orderid = orderid;
 	}
 
-	@Column(name = "type", nullable = false, length = 9)
-	public String getType() {
-		return this.type;
-	}
-
-	public void setType(String type) {
-		this.type = type;
-	}
-
 	@Column(name = "state", nullable = false, length = 10)
 	public String getState() {
 		return this.state;
@@ -120,7 +123,8 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.date = date;
 	}
 	
-	@Column(name = "address")
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "address_id")
 	public ShippingAddress getShippingAddress() {
 		return shippingAddress;
 	}
@@ -137,7 +141,16 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.totalprice = totalprice;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder_id")
+	@Column(name = "leftprice", nullable = true, precision = 15)
+	public Float getLeftprice() {
+		return leftprice;
+	}
+
+	public void setLeftprice(Float leftprice) {
+		this.leftprice = leftprice;
+	}
+	
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder")
 	public Set<Commodity> getCommodity() {
 		return commodity;
 	}
@@ -145,5 +158,15 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setCommodity(Set<Commodity> commodity) {
 		this.commodity = commodity;
 	}
+
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "purchaseOrder")
+	public Set<Payment> getPayments() {
+		return payments;
+	}
+
+	public void setPayments(Set<Payment> payments) {
+		this.payments = payments;
+	}
+	
 	
 }

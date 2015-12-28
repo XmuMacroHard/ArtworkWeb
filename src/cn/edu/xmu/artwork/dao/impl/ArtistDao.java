@@ -5,11 +5,28 @@ import java.util.List;
 import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
+import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IArtistDao;
 import cn.edu.xmu.artwork.entity.Artist;
+import cn.edu.xmu.artwork.entity.User;
 
 @Repository
 public class ArtistDao extends UserDao implements IArtistDao{
+	
+	@Override
+	public Artist findById(long id)
+	{
+		Artist  user = null;
+		try {
+			Query query = getSession().getNamedQuery("User.getById");
+			query.setParameter("id", id);
+			user = (Artist) query.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
 	public List<Artist> getArtistList()//获得所有艺术家列表
 	{
 		List<Artist> list=null;
@@ -86,6 +103,21 @@ public class ArtistDao extends UserDao implements IArtistDao{
 	}
 	
 	/**
+	 * 获取推荐的艺术家
+	 * @param num 艺术家个数
+	 * @return 艺术家列表
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Artist> getRecommendedArtists(int num)
+	{
+		Query query = getSession().getNamedQuery("Artist.getRecommendedArtists");
+		query.setMaxResults(num);
+		query.setParameter("isBanned", ITableConstants.USER_IS_BANNED_FALSE);
+		query.setParameter("isApproved", ITableConstants.USER_IS_APPROVED_APPROVE);
+		return (List<Artist>)query.list();
+	}
+	/*
 	 * 更新艺术家审核状态
 	 * @author asus1
 	 * @param id

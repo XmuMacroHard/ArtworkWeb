@@ -60,10 +60,10 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 
 
 	@Override
-	public CustomizationOrder findInfoById(long id) {
+	public CustomizationOrder findById(long id) {
 		CustomizationOrder customization = null;
 		try {
-			Query query = getSession().getNamedQuery("Customization.getById");
+			Query query = getSession().getNamedQuery("CustomizationOrder.getById");
 			query.setParameter("cus_id", id);
 			customization = (CustomizationOrder) query.uniqueResult();
 		} catch (Exception e) {

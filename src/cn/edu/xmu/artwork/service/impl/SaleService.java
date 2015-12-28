@@ -1,6 +1,7 @@
 package cn.edu.xmu.artwork.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Random;
@@ -9,20 +10,26 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
 
+import org.apache.catalina.connector.Response;
 import org.apache.struts2.json.JSONUtil;
 import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.constants.ITableConstants;
+import cn.edu.xmu.artwork.dao.IAddressDao;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
+import cn.edu.xmu.artwork.dao.IPaymentDao;
 import cn.edu.xmu.artwork.dao.IPurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.IShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.ShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.ShoppingCart;
@@ -45,28 +52,44 @@ public class SaleService extends BasicService implements ISaleService
 	IPurchaseOrderDao purchaseOrderDao;
 	
 	@Autowired
+	IPaymentDao paymentDao;
+	
+	@Autowired
+	IAddressDao addressDao;
+	
+	@Autowired
 	IJsonUtils jsonUtils;
 	
 	@Autowired
 	private UserDao userDao;
-/*	public List<Commodity> getCommodityListByType(String commoType)
-	{
-		return commodityDao.getCommodityListByType(commoType);
-	}*/
 	
 	/**
 	 * 按照商品类型获取所有商品
 	 */
+	@Override
 	public JSONArray getCommodityListByType(String commoType)
 	{
 		List<Commodity> commodities = commodityDao.getCommodityListByType(commoType);
-
+		System.out.println(commodities.size());
+		
 		for(Commodity commodity : commodities)
 		{
 			initializeObject(commodity.getCommodityPices());
-		}		
+		}
+		String[] excludes = {"purchaseOrder"};
+		return jsonUtils.List2JsonArray(commodities, excludes);
 		
-		return jsonUtils.List2JsonArray(commodities);
+	}
+	
+	@Override
+	public List<Commodity> getRecommendedCommodity()
+	{
+		List<Commodity> commodities = commodityDao.getRecommendedCommodities(ITableConstants.RECOMMENDED_COMMODITY_NUM);
+		for(Commodity commodity : commodities)
+		{
+			initializeObject(commodity.getCommodityPices());
+		}	
+		return commodities;
 	}
 	
 	public Commodity getCommodityById(long commodityId)
@@ -82,6 +105,7 @@ public class SaleService extends BasicService implements ISaleService
 		commodity.addPictures(picPaths);
 		commodity.setAuthorId((long)1);
 		commodity.setIsBought(false);
+		commodity.setCategory("sale");
 		commodityDao.saveCommodity(commodity);
 	}
 	
@@ -122,22 +146,25 @@ public class SaleService extends BasicService implements ISaleService
 	{
 		PurchaseOrder purchaseOrder=new PurchaseOrder();
 		purchaseOrder.setUser(user);
-		purchaseOrder.setOrderid(getordernum(user));	
+		purchaseOrder.setOrderid(getordernum(user));
 		purchaseOrder.setState("0");
-		purchaseOrder.setType("sale");
 		purchaseOrder.setDate(new Date());
 		purchaseOrder.setShippingAddress(shippingAddress);
 		
 		float totalprice=0;
-		for(Long id:commodityid)
+		for(Long id : commodityid)
 		{
+			System.out.println(id);
 			Commodity commodity=commodityDao.getCommodityById(id);
 			purchaseOrder.getCommodity().add(commodity);
-			commodity.setPurchaseOrder_id(purchaseOrder);
+			commodity.setPurchaseOrder(purchaseOrder);
 			totalprice+=commodity.getPrice();
 		}
 		purchaseOrder.setTotalprice(totalprice);
 		purchaseOrderDao.savePurchaseOrder(purchaseOrder);
+		
+		setAttributeByRequest("totalprice", totalprice);
+		setAttributeByRequest("purchaseOrderId", purchaseOrder.getId());
 	}
 	
 	public String getordernum(User user)
@@ -151,23 +178,81 @@ public class SaleService extends BasicService implements ISaleService
 	
 	public PurchaseOrder getPurchaseOrderByid(long id)
 	{
-		return purchaseOrderDao.getPurchaseOrderByid(id);
+		return purchaseOrderDao.findById(id);
 	}
 	
-	public boolean payment(long id)
+
+
+	/**
+	 * 用户发起一个订单
+	 * @param commodityids 所有订单商品的id
+	 */
+	public void placeOrder(List<Long> commodityids)
 	{
-		PurchaseOrder purchaseOrder=purchaseOrderDao.getPurchaseOrderByid(id);
-		User user = userDao.findById(1L);
-		if(user.getBalance()<purchaseOrder.getTotalprice())
-			return false;
-		else
-		{
-			user.setBalance(user.getBalance()-purchaseOrder.getTotalprice());
-			userDao.update(user);
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		long userid = user.getId();
+		
+		try {
 			
-			purchaseOrder.setState("1");
-			purchaseOrderDao.update(purchaseOrder);
-			return true;
+		List<ShippingAddress> shippingAddresses = addressDao.findAllByUserId(userid);
+		List<Commodity> commodities = new ArrayList<Commodity>();
+		
+		for(Long id : commodityids)
+		{
+			Commodity commodity = commodityDao.getCommodityById(id);
+			initializeObject(commodity.getCommodityPices());
+			commodities.add(commodity);
+		}
+		
+		setAttributeByRequest("addressList", shippingAddresses);
+		setAttributeByRequest("commodityList", commodities);
+		
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
+	}
+	
+
+	@Override
+	public boolean payPurchaseOrder(long id) {
+		try{
+			PurchaseOrder purchaseOrder = purchaseOrderDao.findById(id);
+			User user = purchaseOrder.getUser();
+			List<Payment> payments = paymentDao.getUnPaidPaymentsByArtistId(purchaseOrder.getId());
+			
+			for(Payment p : payments)
+			{
+				System.out.println("id: " + p.getId() + " Date: " + p.getDate());
+			}
+			
+			Payment payment = payments.get(0);
+			user.setBalance(user.getBalance() - payment.getMoney());
+			payment.setState(1);
+			purchaseOrder.setLeftprice(purchaseOrder.getLeftprice() - payment.getMoney());
+			
+			//订单支付完成
+			if(purchaseOrder.getLeftprice() == 0)
+			{
+				purchaseOrder.setState("1");
+				List<Commodity> commodities = commodityDao.getCommodityByOrderId(purchaseOrder.getId());
+				for(Commodity commodity:commodities)
+					commodity.setIsBought(true);
+			}
+			return true; 
+		}
+		catch(Exception e)
+		{
+			e.printStackTrace();
+			return false;
 		}
 	}
+	
+
+	@Override
+	public boolean payToArtistByPurchaseOrder(long id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
 }

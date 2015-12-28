@@ -24,7 +24,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  <!-- Header -->
   <header class="header">
     <div class="container">
       <div class="row">
@@ -43,48 +42,38 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="welcome-msg hidden-xs">您好,<c:out value="${sessionScope.user.email}"/></div>
            	</c:otherwise>         
             </c:choose>
-            <!-- Header Language -->
-            <div class="dropdown block-language-wrapper"> <a role="button" data-toggle="dropdown" data-target="#" class="block-language dropdown-toggle" href="#"> <img src="images/english.png" alt="language"> English <span class="caret"></span> </a>
-              <ul class="dropdown-menu" role="menu">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><img src="images/english.png" alt="language"> English </a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><img src="images/francais.png" alt="language"> French </a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"><img src="images/german.png" alt="language"> German </a></li>
-              </ul>
-            </div>
-            <!-- End Header Language -->
             <!-- Header Top Links -->
             <div class="toplinks">
               <div class="links">
-                <div class="wishlist"><a title="My Wishlist" href="wishlist.html"><span class="hidden-xs">Wishlist</span></a></div>
-                <div class="demo"><a href="blog.html" title="Blog"><span class="hidden-xs">Blog</span></a></div>
                 <!-- Header Company -->
-                <div class="dropdown block-company-wrapper hidden-xs"> <a role="button" data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"> 个人中心 <span class="caret"></span></a>
+                <div class="dropdown block-company-wrapper"> <a role="button" data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"> 个人中心 <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/profile.jsp"> 个人信息 </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> Customer Service </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> Privacy Policy </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="sitemap.html">Site Map </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="ShowAllAddressList">地址管理</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">我的订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="viewCart">我的购物车</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/artist_certification.jsp">艺术家认证 </a></li>
                   </ul>
                 </div>
                 <!-- End Header Company -->
-                <div class="dropdown block-company-wrapper hidden-xs"> <a role="button" data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"> 艺术家中心 <span class="caret"></span></a>
+                <div class="dropdown block-company-wrapper"> <a role="button" data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"> 艺术家中心 <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/artist/uploadCommodity.jsp">上传商品 </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="showMyCommodity"> 我的商品 </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> Privacy Policy </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="sitemap.html">Site Map </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">我的订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="sitemap.html"></a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Advanced Search </a></li>
                   </ul>
                 </div>
+                
                 <c:choose>
           			<c:when test="${sessionScope.user == null}">
-            			<div class="login"><a href="jsp/frontside/user/login.jsp"><span class="hidden-xs">请登录</span></a></div>
+            			<div class="login"><a href="jsp/frontside/user/login.jsp"><span class="">请登录</span></a></div>
             		</c:when>
           			<c:otherwise>
-           				 <div class="login"><a href="logoutAction"><span class="hidden-xs">登出</span></a></div>
+           				 <div class="login"><a href="logoutAction"><span class="">登出</span></a></div>
            			</c:otherwise>         
             	</c:choose>
                 
@@ -92,28 +81,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
             <!-- End Header Top Links -->
           </div>
-          <div class="cart_cur_block">
-            <!-- Header Currency -->
-            <div class="dropdown block-currency-wrapper"> <a role="button" data-toggle="dropdown" data-target="#" class="block-currency dropdown-toggle" href="#"> USD <span class="caret"></span></a>
-              <ul class="dropdown-menu" role="menu">
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> $ - Dollar </a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> £ - Pound </a></li>
-                <li role="presentation"><a role="menuitem" tabindex="-1" href="#"> € - Euro </a></li>
-              </ul>
-            </div>
-            <!-- End Header Currency -->
-            <!-- Top Cart -->
-            <div class="top-cart-contain">
-              <div class="mini-cart">
-                <div class="basket dropdown-toggle"> <a href="viewCart"><span class="hidden-xs">我的购物车</span></a></div>
-                </div>
-              </div>
-            </div>
-            <!-- End Top Cart -->
-          </div>
+
         </div>
       </div>
-    </div>
+   
   </header>
   <!-- end header -->
   <!-- Navbar -->
@@ -128,61 +99,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="toggle"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></div>
                 <h2>Menu</h2>
               </div>
-              <ul style="display:none;" class="submenu">
+              <ul style="display:none" class="submenu">
                 <li>
-                  <ul class="topnav"><li class="level0 nav-6 level-top first parent"> <a class="level-top" href="showInfoOnHomePage"> <span>主页</span> </a>
+                  <ul class="topnav">
+                  <li class="level0 nav-6 level-top first parent"> <a class="level-top" href="showInfoOnHomePage"> <span>主页</span> </a>
                     </li>
                     <li class="level0 nav-1 level-top first parent"> <a href="jsp/frontside/sale/home_sale.jsp" class="level-top"> <span>商城</span> </a>
-                      <ul class="level0">
-                        <li class="level1 nav-1-1 first parent"> <a href="grid.html"> <span>Stylish Bag</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-1-1-1 first"> <a href="grid.html"> <span>Clutch Handbags</span> </a> </li>
-                            <li class="level2 nav-1-1-2"> <a href="grid.html"> <span>Diaper Bags</span> </a> </li>
-                            <li class="level2 nav-1-1-3"> <a href="grid.html"> <span>Bags</span> </a> </li>
-                            <li class="level2 nav-1-1-4 last"> <a href="grid.html"> <span>Hobo Handbags</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-1-2 parent"> <a href="grid.html"> <span>Material Bag</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-1-2-5 first"> <a href="grid.html"> <span>Beaded Handbags</span> </a> </li>
-                            <li class="level2 nav-1-2-6"> <a href="grid.html"> <span>Fabric Handbags</span> </a> </li>
-                            <li class="level2 nav-1-2-7"> <a href="grid.html"> <span>Handbags</span> </a> </li>
-                            <li class="level2 nav-1-2-8 last"> <a href="grid.html"> <span>Leather Handbags</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-1-3 parent"> <a href="grid.html"> <span>Shoes</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-1-3-9 first"> <a href="grid.html"> <span>Flat Shoes</span> </a> </li>
-                            <li class="level2 nav-1-3-10"> <a href="grid.html"> <span>Flat Sandals</span> </a> </li>
-                            <li class="level2 nav-1-3-11"> <a href="grid.html"> <span>Boots</span> </a> </li>
-                            <li class="level2 nav-1-3-12 last"> <a href="grid.html"> <span>Heels</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-1-4 parent"> <a href="grid.html"> <span>Jwellery</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-1-4-13 first"> <a href="grid.html"> <span>Bracelets</span> </a> </li>
-                            <li class="level2 nav-1-4-14"> <a href="grid.html"> <span>Necklaces &amp; Pendants</span> </a> </li>
-                            <li class="level2 nav-1-4-15"> <a href="grid.html"> <span>Pendants</span> </a> </li>
-                            <li class="level2 nav-1-4-16 last"> <a href="grid.html"> <span>Pins &amp; Brooches</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-1-5 parent"> <a href="grid.html"> <span>Dresses</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-1-5-17 first"> <a href="grid.html"> <span>Casual Dresses</span> </a> </li>
-                            <li class="level2 nav-1-5-18"> <a href="grid.html"> <span>Evening</span> </a> </li>
-                            <li class="level2 nav-1-5-19"> <a href="grid.html"> <span>Designer</span> </a> </li>
-                            <li class="level2 nav-1-5-20 last"> <a href="grid.html"> <span>Party</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-1-6 last parent"> <a href="grid.html"> <span>Swimwear</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-1-6-21 first"> <a href="grid.html"> <span>Swimsuits</span> </a> </li>
-                            <li class="level2 nav-1-6-22"> <a href="grid.html"> <span>Beach Clothing</span> </a> </li>
-                            <li class="level2 nav-1-6-23"> <a href="grid.html"> <span>Clothing</span> </a> </li>
-                            <li class="level2 nav-1-6-24 last"> <a href="grid.html"> <span>Bikinis</span> </a> </li>
-                          </ul>
-                        </li>
-                      </ul>
                     </li>
                     <li class="level0 nav-2 level-top parent"> <a href="jsp/frontside/order/home_order.jsp" class="level-top"> <span>定制</span> </a>
                       <ul class="level0">

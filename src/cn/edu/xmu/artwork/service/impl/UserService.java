@@ -8,6 +8,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.jasper.tagplugins.jstl.core.If;
 import org.apache.struts2.ServletActionContext;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,7 @@ import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.CommodityDao;
 import cn.edu.xmu.artwork.dao.impl.ArtistDao;
+import cn.edu.xmu.artwork.dao.impl.PaymentDao;
 import cn.edu.xmu.artwork.dao.impl.PurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Admin;
@@ -28,6 +30,8 @@ import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.Editor;
 import cn.edu.xmu.artwork.entity.Information;
+import cn.edu.xmu.artwork.entity.Payment;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -36,6 +40,7 @@ import cn.edu.xmu.artwork.utils.IMD5Util;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import com.opensymphony.xwork2.ActionContext;
 
@@ -51,6 +56,9 @@ public class UserService extends BasicService implements IUserService
 	
 	@Autowired
 	PurchaseOrderDao purchaseOrderDao;
+	
+	@Autowired
+	private PaymentDao paymentDao;
 	
 	@Autowired
 	private ArtistDao artistDao;
@@ -78,13 +86,26 @@ public class UserService extends BasicService implements IUserService
 	}
 	
 	@Override
-	public void register(User user) throws Exception{
-		System.out.println("in serverice register");
+	public String register(User user){
 		MD5encypt(user);
 		user.setBalance((float) 0);
 		user.setIsBanned("0");
-		userDao.insert(user);
-		setSessionInBrower(IStrings.SESSION_USER, user);
+		
+		JSONObject resultJson = new JSONObject();
+		if(userDao.findByEmail(user.getEmail()))
+		{
+			userDao.insert(user);
+			setSessionInBrower(IStrings.SESSION_USER, user);
+			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+			resultJson.put(IResultCode.MESSAGE, IResultCode.REGISTER_SUCCESS);
+		}
+		else
+		{
+			resultJson.put(IResultCode.RESULT, IResultCode.ERROR);
+			resultJson.put(IResultCode.MESSAGE, IResultCode.REGISTER_ERROR);
+		}
+
+		return resultJson.toString();
 	}
 
 	@Override
@@ -127,6 +148,54 @@ public class UserService extends BasicService implements IUserService
 	}
 	
 	/**
+	 * 用户修改密码
+	 */
+	@Override
+	public String alterpassword(User user,String newpassword)
+	{
+		JSONObject resultJson = new JSONObject();
+		User user2=(User)getSessionInBrower(IClientConstants.SESSION_USER);
+		MD5encypt(user);
+		if(user.getPassword().equals(user2.getPassword()))
+		{
+			user2.setPassword(newpassword);
+			MD5encypt(user2);
+			userDao.update(user2);
+			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+			resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_SUCCESS);
+		}
+		else
+		{
+			resultJson.put(IResultCode.RESULT, IResultCode.ERROR);
+			resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_ERROR);
+		}
+		return resultJson.toString();
+	}
+	
+	/**
+	 * 修改个人信息
+	 */
+	public String alterinfo(User user,Artist artist)
+	{
+		String rank=(String)getSessionInBrower(IClientConstants.SESSION_KEY_RANK);
+		JSONObject resultJson = new JSONObject();
+		if(rank.equals("user")){
+			User user2=(User)getSessionInBrower(IClientConstants.SESSION_USER);
+			user2.setPhone(user.getPhone());
+			userDao.update(user2);
+		}else{
+			Artist artist2 = (Artist)getSessionInBrower(IClientConstants.SESSION_USER);
+			artist2.setPhone(user.getPhone());
+			artist2.setIntroduction(artist.getIntroduction());
+			artistDao.update(artist2);
+		}
+		System.out.println("1");
+		resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+		resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_SUCCESS);
+		return resultJson.toString();
+	}
+	
+	/**
 	 * 用户登出
 	 * 
 	 */
@@ -140,6 +209,16 @@ public class UserService extends BasicService implements IUserService
 	public List<Artist> getArtistList()
 	{
 		return artistDao.getArtistList();
+	}
+	
+	/**
+	 * 获取推荐展示的艺术家，暂时按最新注册的艺术家
+	 */
+	@Override
+	public List<Artist> getRecommendedArtists()
+	{
+		
+		return artistDao.getRecommendedArtists(ITableConstants.RECOMMENDED_ARTIST_NUM);
 	}
 	
 	@Override
@@ -237,7 +316,11 @@ public class UserService extends BasicService implements IUserService
 	 * @author asus1
 	 */
 	@Override
-	public List<ShippingAddress> ShowAllAddressList(long userId) {
+	public List<ShippingAddress> ShowAllAddressList() {
+		
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		long userId = user.getId();
+		
 		List<ShippingAddress> addressList = new ArrayList<ShippingAddress>();
 		try {
 			addressList = addressDao.findAllByUserId(userId);
@@ -255,7 +338,13 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public void AddNewAddress(ShippingAddress address) {
 		try {
+			User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+			address.setUser(user);
 			addressDao.insert(address);
+			
+			List<ShippingAddress> addressList = ShowAllAddressList();
+			setAttributeByRequest("addressList", addressList);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -282,4 +371,8 @@ public class UserService extends BasicService implements IUserService
 		user.setBalance(user.getBalance()-balance);
 		userDao.update(user);
 	}
+
+
+
+	
 }

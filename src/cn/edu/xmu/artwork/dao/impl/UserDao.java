@@ -57,10 +57,29 @@ public class UserDao extends GenericDao implements IUserDao
 	
 	public User findById(long id)
 	{
+		System.out.println("search id "+ id);
+		User  user = null;
 		try {
-			User instance = (User) getSession().get(
-					"cn.edu.xmu.artwork.entity.User", id);
-			return instance;
+			Query query = getSession().getNamedQuery("User.getById");
+			query.setParameter("id", id);
+			user = (User) query.uniqueResult();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return user;
+	}
+	
+	/**
+	 * 
+	 */
+	public boolean findByEmail(String email)
+	{
+		try {
+			Query query = getSession().getNamedQuery("getUsersbyEmail").setParameter("email", email);
+			if(query.list().size()==0)
+				return true;
+			else
+				return false;
 		} catch (RuntimeException re) {
 			throw re;
 		}
@@ -112,6 +131,7 @@ public class UserDao extends GenericDao implements IUserDao
 		}
 		return list;
 	}
+	
 	
 	public Artist getArtist(long id)//获得一个艺术家资料
 	{

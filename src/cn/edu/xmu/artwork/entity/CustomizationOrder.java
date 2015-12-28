@@ -6,6 +6,7 @@ import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorValue;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -18,9 +19,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 
+import cn.edu.xmu.artwork.constants.IStrings;
+
 
 @Entity
-@Table(name="customizationorder", catalog="artworkdb")
+@DiscriminatorValue("customization_order")
 @NamedQueries({
 	@NamedQuery(
 			name = "CustomizationOrder.getByUser",
@@ -40,8 +43,10 @@ import org.hibernate.annotations.NamedQuery;
 public class CustomizationOrder extends PurchaseOrder implements java.io.Serializable{
 
 	private Artist artist;
+	private String acceptState;
 	//private long id;
 	public CustomizationOrder(){
+		acceptState = IStrings.Customization_State_Uncheck;
 	}
 
 	public CustomizationOrder(Artist artist) {
@@ -49,6 +54,16 @@ public class CustomizationOrder extends PurchaseOrder implements java.io.Seriali
 		this.artist = artist;
 	}
 
+
+	@Column(name="acceptState", length = 20)
+	public String getAcceptState() {
+		return acceptState;
+	}
+
+	public void setAcceptState(String acceptState) {
+		this.acceptState = acceptState;
+	}
+	
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "artist_id", nullable = false)

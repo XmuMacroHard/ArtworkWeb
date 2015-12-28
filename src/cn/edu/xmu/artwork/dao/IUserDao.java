@@ -12,6 +12,7 @@ public interface IUserDao {
 	public List findAll();
 	public List findAllNormal();
 	public User findById(long id);
+	public boolean findByEmail(String email);
 	public void update(User user);
 	
 	/**

@@ -12,7 +12,7 @@ import cn.edu.xmu.artwork.entity.User;
 
 public interface IUserService {
 	public void addUser(User user);
-	public void register(User user) throws Exception;
+	public String register(User user);
 	public String login(User user);
 	public void logout();
 	public List<Artist> getArtistList();
@@ -20,14 +20,14 @@ public interface IUserService {
 	public List<Artist> getArtistBySort(String identification);
 	public List<Artist> getArtistByName(String name);
 	public List<Commodity> showMyCommodity();
-	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);
-	
+	public void submitArtist(Artist artist,List<File> pic,List<String> picFileName);	
 	public ShippingAddress SelectAddress(long id);
-	public List<ShippingAddress> ShowAllAddressList(long userId);
+	public List<ShippingAddress> ShowAllAddressList();
 	public void AddNewAddress(ShippingAddress address);
 	public void DeleteAddress(long id);
-
 	public JSONArray getBriefArtistBySort(String identification);
 	public void recharge(float balance);
-
+	public List<Artist> getRecommendedArtists();
+	public String alterpassword(User user,String newpassword);
+	public String alterinfo(User user,Artist artist);
 }

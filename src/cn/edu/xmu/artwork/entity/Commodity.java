@@ -45,8 +45,15 @@ import javax.persistence.Table;
 		@NamedQuery(
 					name = "Commodity.getAll",
 					query = "from Commodity"
-		)
-			
+		),
+		@NamedQuery(
+					name="Commodity.getRecommendedCommodities",
+					query="from Commodity"
+				),
+		@NamedQuery(
+					name="Commodity.getByOrderId",
+					query="from Commodity c where purchaseOrder_Id = :id"
+				)
 })
 public class Commodity implements java.io.Serializable {
 
@@ -60,7 +67,7 @@ public class Commodity implements java.io.Serializable {
 	private String type;									//商品所属种类,如书法等
 	private Boolean isBought;
 	private String category;
-	private PurchaseOrder purchaseOrder_id;
+	private PurchaseOrder purchaseOrder;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
 	private String status; //商品状态
 	// Constructors
@@ -82,7 +89,7 @@ public class Commodity implements java.io.Serializable {
 		this.type = type;
 		this.isBought = isBought;
 		this.category = category;
-		this.purchaseOrder_id= purchaseOrder_id;
+		this.purchaseOrder= purchaseOrder_id;
 		this.commodityPices = commodityPices;
 		this.status = status;
 	}
@@ -184,13 +191,13 @@ public class Commodity implements java.io.Serializable {
 	}
 
 	@ManyToOne(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="purchaseOrder_Id")
-	public PurchaseOrder getPurchaseOrder_id() {
-		return purchaseOrder_id;
+	@JoinColumn(name="purchaseOrder_Id", nullable = true)
+	public PurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
 	}
 
-	public void setPurchaseOrder_id(PurchaseOrder purchaseOrder_id) {
-		this.purchaseOrder_id = purchaseOrder_id;
+	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
 	}
 
 	@Column(name = "status", nullable = false, length = 20)

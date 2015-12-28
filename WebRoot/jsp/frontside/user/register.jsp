@@ -42,7 +42,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	
     <div class="register-container animated fadeInDown">
         <div class="registerbox bg-white">
-        <form action="registerAction" onsubmit="return CheckregisterSubmit()">
             <div class="registerbox-title">注册</div>
 
             <div class="registerbox-caption ">请如实填写用户信息</div>
@@ -81,9 +80,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <s:textfield name="user.nickname" cssClass="form-control" placeholder="昵称" />
             </div>
             <div class="registerbox-submit">
-                <s:submit id="submitbutton" cssClass="btn btn-primary pull-right" value="提交"/>
+                <s:submit id="submitbutton" cssClass="btn btn-primary pull-right" value="提交" onclick="CheckregisterSubmit()"/>
             </div>
-            </form>
+             <div class="registerbox-caption">
+                <a href="jsp/frontside/user/login.jsp">返回登陆</a>
+				<a href="/ArtworkWeb/showInfoOnHomePage">回到首页</a>            
+            </div>
         </div>
     </div>
 	
@@ -248,6 +250,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         ga('send', 'pageview');
 
     </script>
+    <script src="js/frontside/user/register.js" ></script>
 </body>
 <!--Body Ends-->
 </html>

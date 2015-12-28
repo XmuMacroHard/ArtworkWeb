@@ -36,7 +36,10 @@ import org.hibernate.annotations.NamedQuery;
 			name = "getUserByEmailPassword",
 			query = "from User c where c.email = :email and c.password = :password"
 		),
-
+		@NamedQuery(
+			name = "User.getById",
+			query = "from User c where c.id = :id"
+				),
 		@NamedQuery(
 			name = "getALLUsers",
 			query = "from User"
@@ -44,7 +47,11 @@ import org.hibernate.annotations.NamedQuery;
 		@NamedQuery(
 				name = "User.updateStatus",
 				query = "update User user set user.isBanned = :isBanned where user.id = :id"
-		)
+		),
+		@NamedQuery(
+				name = "getUsersbyEmail",
+				query = "from User where email = :email"
+			)
 })
 public class User implements java.io.Serializable {
 

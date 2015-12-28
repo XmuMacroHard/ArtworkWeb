@@ -3,10 +3,10 @@
  */
 
 $(document).ready(function(){
-	onload();
+	onload(1);
 });
 
-function onload()
+function onload(nowpage)
 {
 	$.ajax({
 		type:"post",
@@ -15,20 +15,55 @@ function onload()
 		dataType:"json",
 		success:function(data){
 			var server_path = "http://localhost:8080/ArtworkWeb";
+			var pages = "";
 			var	commodities = "";
+			
+			var pagesize=9;
+			var totalcount=data.length;
+			var totalpage=Math.ceil(totalcount/pagesize);
+			
+			var $pageList = $("#page_list");
+			$pageList.empty();
+			if(nowpage!=1){
+				pages+="<li><a href=\"javascript:onload(1);\">&lt;&lt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+
+				");\">&lt;</a></li>";
+			}
+			for(var i=nowpage-2;i<=nowpage+2;i++){
+				if(i==nowpage){
+					pages+="<li class=\"active\"><a href=\"javascript:onload(" +i+
+						");\">"+i+"</a></li>";
+					}
+				else{
+					if(i>0&&i<=totalpage){
+						pages+="<li><a href=\"javascript:onload(" +i+
+						");\">"+i+"</a></li>";
+					}
+				}
+			}
+			if(nowpage!=totalpage){
+				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+
+				");\">&gt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(" +totalpage+
+				");\">&gt;&gt;</a></li>"
+			}
+			$pageList.append(pages);
+			
 			var $commodityList = $("#commodity_list");
-			$.each(data, function(index, item){
+			$commodityList.empty();
+			var start=pagesize*(nowpage-1);
+			for(var i=start;i<=start+pagesize-1&&i<=totalcount-1;i++){
+				var item=data[i];
 				commodities +="<li class='item col-lg-4 col-md-3 col-sm-4 col-xs-12'>" +
                   				"<div class='item-inner'>"+
                   				"<div class='product-block'>" +
-                  				"<div class='product-image'> <a href='product_detail.html'>" +
+                  				"<div class='product-image'> <a href='getDetailedCommodity?commodity.id=" + item.id + "'>" +
                   				"<figure class='product-display'>" +
                             "<div class='sale-label sale-top-left'>Sale</div>";
 				if(item.commodityPices.length > 0)
 				{
                     commodities += "<img src='" + server_path + item.commodityPices[0].url +"' class='lazyOwl product-mainpic' alt='Sample Product' style='display: block;'> <img class='product-secondpic' alt=' Sample Product' src='" + server_path + item.commodityPices[0].url + "'> </figure>" ;
 				}
-				
 				commodities +=" </a> </div>" +
                         "<div class='product-meta'>"+
                           "<div class='product-action'> <a class='addcart' href='shopping_cart.html'> <i class='icon-shopping-cart'>&nbsp;</i> Add to cart </a>" +                 
@@ -57,7 +92,7 @@ function onload()
                   "</div>" +
                 "</li>"; 								
 			
-			});
+			};
 			$commodityList.append(commodities);
 		}
 		

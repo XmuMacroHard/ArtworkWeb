@@ -19,8 +19,8 @@ import org.springframework.context.annotation.Scope;
 import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShoppingCart;
-
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -40,20 +40,24 @@ public class SaleAction extends ActionSupport
 
 	private Commodity commodity = new Commodity();
 	private User user = new User();
+	private PurchaseOrder purchaseOrder;
 	
 	//use to store commodity and address in order
-	private List<Long> commodityid=new ArrayList<Long>();
+	private List<Long> commodityid = new ArrayList<Long>();
 	private ShippingAddress shippingAddress;
 	
 	//used to store the json result
 	private String result;
 	private JSONArray resultJsonArray;
 	private JSONObject resultJsonObject;
+	
 
 	//used to deal with uploading the pictures
 	private List<File> pictures;
 	private List<String> picturesContentType;
 	private List<String> picturesFileName;
+	private long pid;
+	private int nowpage;
 
 	@Autowired
 	private ISaleService saleService;
@@ -90,7 +94,7 @@ public class SaleAction extends ActionSupport
 	/*
 	 * upload the information of the commodity
 	 * */
-	@Action(value="uploadCommodity", results={@Result(name="success", location="/jsp/success.jsp")})
+	@Action(value="uploadCommodity", results={@Result(name="success", location="/jsp/frontside/artist/artistCommodity.jsp")})
 	public String uploadCommodity()
 	{
 		System.out.println("commodity.name" + commodity.getName());
@@ -112,13 +116,21 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	@Action(value="payPurchaseOrderAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	public String payPurchaseOrder()
+	{
+		saleService.payPurchaseOrder(purchaseOrder.getId());
+		//System.out.println(" pid : " + pid);
+		return SUCCESS;
+	}
+	
 	/*
 	 *show the list of shoppingcart 
 	 * */
 	@Action(value="viewCart", results={@Result(name="success", location="/jsp/frontside/user/shoppingCart.jsp")})
 	public String viewCart()
 	{
-		List<ShoppingCart> list = saleService.getShoppingCart();	
+		List<ShoppingCart> list = saleService.getShoppingCart();
 		setAttributeByRequest(IClientConstants.REQUEST_SHOPPING_CART, list);
 		return IResultCode.SUCCESS;
 	}
@@ -126,20 +138,27 @@ public class SaleAction extends ActionSupport
 	/*
 	 *submit sale order 
 	 **/
-	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/test/shengtest.jsp", type="redirect")})
+	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/frontside/pay/pay.jsp")})
 	public String SubmitsaleOrder()
 	{
-		//user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		user.setId(1L);
-		
-		commodityid.add(3L);//实际是从界面接收的
-		commodityid.add(4L);
-		
+		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");		
+
 		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
 		
 		return SUCCESS;
 	}
 	
+	/*
+	 * 用户发起订单
+	 **/
+	@Action(value="placeOrder", results={@Result(name="success", location="/jsp/frontside/pay/place_order.jsp")})
+	public String placeOrder()
+	{
+		System.out.println(commodityid.size());
+		saleService.placeOrder(commodityid);
+		
+		return SUCCESS;
+	}
 	
 	/**
 	 * 
@@ -222,5 +241,32 @@ public class SaleAction extends ActionSupport
 	public void setCommodityid(List<Long> commodityid) {
 		this.commodityid = commodityid;
 	}
+
+	public ShippingAddress getShippingAddress() {
+		return shippingAddress;
+	}
+
+	public void setShippingAddress(ShippingAddress shippingAddress) {
+		this.shippingAddress = shippingAddress;
+	}
+	
+
+	public int getNowpage() {
+		return nowpage;
+	}
+
+	public void setNowpage(int nowpage) {
+		this.nowpage = nowpage;
+	}
+
+	public PurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
+	}
+
+	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
+	}
+	
+	
 	
 }

@@ -6,6 +6,7 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 
+
 import com.opensymphony.xwork2.ActionContext;
 
 public class BasicService {
@@ -54,5 +55,14 @@ public class BasicService {
 	protected void removeSessionInBrower(String key)
 	{
 		ActionContext.getContext().getSession().remove(key);
+	}
+	/**
+	 * 设置key-value到request中
+	 * @param key
+	 * @param value
+	 */
+	protected void setAttributeByRequest(String key, Object value)
+	{
+		ServletActionContext.getRequest().setAttribute(key, value);
 	}
 }

@@ -159,7 +159,4 @@ public class InformationService extends BasicService implements IInformationServ
 		this.userDao = userDao;
 	}
 
-
-		
-	
 }

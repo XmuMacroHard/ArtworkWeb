@@ -2,6 +2,8 @@ package cn.edu.xmu.artwork.dao;
 
 import java.util.List;
 
+import org.omg.CORBA.PUBLIC_MEMBER;
+
 import cn.edu.xmu.artwork.entity.Commodity;
 
 
@@ -14,4 +16,7 @@ public interface ICommodityDao
 	
 	public List<Commodity> getCommodityList();
 	public void updateStatus(long id, String status);
+
+	public List<Commodity> getRecommendedCommodities(int num);
+	public List<Commodity> getCommodityByOrderId(long id);
 }

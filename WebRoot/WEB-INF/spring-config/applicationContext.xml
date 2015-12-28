@@ -20,9 +20,12 @@
 	<bean id="user" class="cn.edu.xmu.artwork.entity.User"></bean>
 	<bean id="information" class="cn.edu.xmu.artwork.entity.Information"></bean>
 
-	<bean id="CustomizationOrder" class="cn.edu.xmu.artwork.entity.CustomizationOrder"></bean>
-	<bean id="purchaseorder" class="cn.edu.xmu.artwork.entity.PurchaseOrder"></bean>
+	<bean id="customizationOrder" class="cn.edu.xmu.artwork.entity.CustomizationOrder"></bean>
+	<bean id="purchaseOrder" class="cn.edu.xmu.artwork.entity.PurchaseOrder"></bean>
 	<bean id="commodity" class="cn.edu.xmu.artwork.entity.Commodity"></bean>
+	<bean id="test" class="cn.edu.xmu.artwork.entity.Test"></bean>
+	<bean id="htest" class="cn.edu.xmu.artwork.entity.Htest"></bean>
+	<bean id="payment" class="cn.edu.xmu.artwork.entity.Payment"></bean>
 	
 	<!-- all daos -->
 	<bean id="userDao" class="cn.edu.xmu.artwork.dao.impl.UserDao" ></bean>		

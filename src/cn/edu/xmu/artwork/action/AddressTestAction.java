@@ -59,12 +59,7 @@ public class AddressTestAction extends ActionSupport {
 			)
 	public String ShowAllAddressList()
 	{
-		//userService.ShowAllAddressList(user.getId());
-		List<ShippingAddress> addressList = userService.ShowAllAddressList((long)1);
-        for(ShippingAddress sa : addressList)
-        {
-        	System.out.println(sa.getCity());
-        }
+		List<ShippingAddress> addressList = userService.ShowAllAddressList();
 		
 		ServletActionContext.getRequest().setAttribute("addressList", addressList);
 		
@@ -103,16 +98,14 @@ public class AddressTestAction extends ActionSupport {
 			)
 	public String AddNewAddress()
 	{
-		User user = new User();
-		user.setId((long)3);
+/*		User user = new User();
+		user.setId((long)1);
 		user.setEmail("adfa@qe.com");
 		user.setNickname("看见了");
 		user.setBalance(10000f);
 		user.setIsBanned("0");
 		user.setPassword("123");
-		user.setPhone("6876876");
-		
-		address.setUser(user);
+		user.setPhone("6876876");*/		
 		
 		userService.AddNewAddress(address);
 		
@@ -133,6 +126,8 @@ public class AddressTestAction extends ActionSupport {
 	public String DeleteAddress()
 	{
 		userService.DeleteAddress(address.getId());
+		List<ShippingAddress> addressList = userService.ShowAllAddressList();		
+		ServletActionContext.getRequest().setAttribute("addressList", addressList);
 		
 		return "success";
 	}

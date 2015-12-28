@@ -4,6 +4,7 @@
 
 $(document).ready(function(){
 	$("#addToCart").bind("click", addToCart);
+	$("#buyNow").bind("click", buyNow);
 });
 
 function addToCart()
@@ -31,4 +32,10 @@ function addToCart()
 			
 	});
 	
+}
+
+function buyNow()
+{
+	var commodityid = $("#hidden_commodity_id").text();
+	window.location.href="placeOrder?commodityid=" + commodityid;
 }
