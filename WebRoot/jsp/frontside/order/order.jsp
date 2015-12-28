@@ -33,6 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.theme.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="css/my_frontside.css" type="text/css">
 
 <!-- Google Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
@@ -64,16 +65,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <h2>上传定制</h2>
           </div>
           <div>
-			  <form class="form-horizontal" action="CustomizationSubmitAction" method="POST" enctype="multipart/form-data">
+			  <form class="form-horizontal" action="CustomizationSubmitAction" method="POST" enctype="multipart/form-data">								
 				<div class="form-group">
 					<div class="form-group">
   				  	<label class="col-sm-2 control-label" >艺术家</label>
   				  	<div class="col-sm-10" style="width:80%">
-  				  		  <input id="artistrm" class="form-control" placeholder="${artistrm}"  readonly/>
-  				  		  <input id="artistid" class="form-control" type="hidden"/>
+  				  		  <input id="artistrm" class="form-control"  placeholder="${artist.realName}"  readonly/>
+  				  		  <input id="artistid" class="form-control" name="artist.id" value="${artist.id}" type="hidden"/>
   				  	</div>			
   				  	</div>
-				
+  				  	
+  				  	<div>
+  				  	<label class="col-sm-2 control-label" >地址选择</label>
+  				  	<div id="address" class="row">
+        	 			<c:forEach items="${addressList}" var="address">  
+        					<div id="${address.id}"  class="col-md-1  wrap"><div><c:out value="${address.province}${address.city}${address.region}"/>(<c:out value="${address.consignee}"/>)</div><hr/><div><c:out value="${address.detailedAdress}"/></div></div>
+        	 			</c:forEach>        
+						<!--hidden input  -->
+                      	<input id="addressid" type="hidden" name="shippingAddress.id" value=""/>
+                      	<!--end hidden input  -->
+        			</div>
+					</div>
 					<div class="form-group">
   				  	<label class="col-sm-2 control-label" >定制标题</label>
   				  	<div class="col-sm-10" style="width:80%">
@@ -89,19 +101,19 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					<div class="form-group">
   				  	<label class="col-sm-2 control-label" >定制价格</label>
   				  	<div class="col-sm-10" style="width:80%">
-  				  		 <input class="form-control" name="artist.phone" placeholder="${commodity.price}" />
+  				  		 <input class="form-control" name="commodity.price" " />
   				  	</div>
   				  	</div>
   				    <div class="form-group">
   				  	<label class="col-sm-2 control-label" >详细说明</label>
   				  	<div class="col-sm-10" style="width:80%">
-  				  		 <textarea class="form-control" name="artist.introduction" rows="5" placeholder="${sessionScope.user.introduction}" ></textarea>
+  				  		 <textarea class="form-control" name="commodity.introduction" rows="5" ></textarea>
   				  	</div>
   				  	</div>
   					</div>
   					<label class="col-sm-2 control-label" ></label>  					
   					<div class="form-group">
-  						<button class="btn btn-info" type="submit">发起定制</button>
+  						<button id="submitOrderBtn" class="btn btn-info" type="submit">发起定制</button>
   					</div>
    				</form>
    		  </div>
@@ -132,7 +144,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
  
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/frontside/order/submitorder.js"></script>
+<script type="text/javascript" src="js/frontside/pay/pay.js"></script> 
 <script>
 			new UISearch( document.getElementById( 'form-search' ) );
 		</script>

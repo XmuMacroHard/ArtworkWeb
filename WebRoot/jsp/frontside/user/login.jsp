@@ -88,7 +88,7 @@ Purchase: http://wrapbootstrap.com
                 <span class="text-danger" id="passwordTip"></span>
             </div>
             <div class="loginbox-forgot">
-                <a href="">忘记密码?</a><br>
+                <a href="showInfoOnHomePage">回到首页</a>
 				<a href="jsp/frontside/user/register.jsp">快速注册</a>            
             </div>
             <div class="loginbox-submit">

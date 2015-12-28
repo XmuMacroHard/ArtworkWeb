@@ -6,8 +6,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE>
-<html>
+<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <base href="<%=basePath%>">
 <meta charset="utf-8">
@@ -28,41 +30,83 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- CSS Style -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/revslider.css" type="text/css">
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.theme.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
 <link rel="stylesheet" href="css/my_frontside.css" type="text/css">
 
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,700,800,400,600' rel='stylesheet' type='text/css'>
+</head>
 <body>
 <div class="page">
-<c:import url="../common/header.jsp"/>
-<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+  <c:import url="../common/header.jsp"/>
   
-<section class="main-container col1-layout">
-  <div class="main container">
-    <div class="col-main">
-      <div class="cart">
-      
-         <div class="page-title">
-          
-         <h2>安全支付</h2>
-        </div>
-        <div class="table-responsive">
-			<div class="box payinfo"><span>账号余额<c:out value="${sessionScope.user.balance}"/></span><span class="payAmount">支付<span class="amount"><c:out value="${totalprice}"/></span>元</span></div>
-			<div class="box">支付密码</div>
-			<div class="box"><input class="form-control" type="password"/></div>
-			<!-- hidden -->
-			<input id="purchaseOrderId" value="${purchaseOrderId}" type="hidden"/>
-			<!--end hidden -->
-			<div class="box"><button id="payButton" type="button" class="btn btn-info">确认支付</button></div>			
-        </div>
-    
+  <!-- breadcrumbs -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="row">
+        <ul>
+
+        </ul>
       </div>
     </div>
   </div>
-</section>
-
+  <!-- End breadcrumbs --> 
+  <!-- Two columns content -->
+  <div class="main-container col2-left-layout">
+    <div class="main container">
+      <div class="row">
+        <section class="col-sm-9 col-sm-push-3">
+        <div class="col-main">
+         <div class="category-title">
+            <h1>商品订单</h1>
+          </div> 
+			<div class="dropdown">			
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			    订单类型
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+			    <li><a href="#">已完成的订单</a></li>
+			    <li><a href="#">待处理的商品订单</a></li>
+			    <li><a href="#">待处理的定制订单</a></li>
+			    <li><a href="#">待处理的拍卖订单</a></li>
+			  </ul>
+			</div>
+          
+          <div class="category-products">
+			<!-- 订单 -->
+			<div id="address" class="row">
+        	 <c:forEach items="" var="address">  
+        		<div id="${address.id}"  class="col-md-1  wrap">
+        		<div><c:out value="${address.province}${address.city}${address.region}"/>(<c:out value="${address.consignee}"/>)</div><hr/>
+        			<div><c:out value="${address.detailedAdress}"/></div>
+        			<div><button id="empty_cart_button" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>提交订单</span></span></button></div>
+        		</div>
+        	 </c:forEach>    
+				<div id="${address.id}"  class="col-md-1  wrap">
+        		<div>订单号</div><hr/>
+        			<div>商品名</div>
+        			<div>
+        				<button id="" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>发货</span></span></button>
+        				<button id="" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>详情</span></span></button>
+        				<button id="empty_cart_button" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>取消订单</span></span></button>
+        				
+        			</div>
+        		</div>    
+        		</div>
+        	<!--  -->
+          </div>
+		  </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <!-- End Two columns content --> 
+  
 </div>
 <div class="help_slider">
   <div class="text alignleft">Need Help?</div>
@@ -123,7 +167,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="slider-email active">
       <div id="messages_product_view"></div>
       <div id="formSuccess" style="display:none;">Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.</div>
-      <form action="#" id="contactForm1" method="post">
+      <form id="contactForm1" method="post">
         <div class="column sixty">
           <h2>TALK TO US</h2>
           <ul>
@@ -140,8 +184,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
             </li>
           </ul>
-
-            <p class="required">* Required Fields</p>
+		  <p class="required">* Required Fields</p>
         </div>
         <!--column sixty-->
         <div class="column fourty last">
@@ -164,13 +207,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <!--right-side-content hidden1-->
 </div>
 
+
 <!-- JavaScript --> 
 <script type="text/javascript" src="js/jquery.min.js"></script> 
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/frontside/pay/pay.js"></script> 
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

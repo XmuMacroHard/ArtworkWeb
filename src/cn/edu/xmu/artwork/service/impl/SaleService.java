@@ -76,7 +76,7 @@ public class SaleService extends BasicService implements ISaleService
 		{
 			initializeObject(commodity.getCommodityPices());
 		}
-		String[] excludes = {"purchaseOrder_id"};
+		String[] excludes = {"purchaseOrder"};
 
 		return jsonUtils.List2JsonArray(commodities, excludes);
 		
@@ -148,7 +148,6 @@ public class SaleService extends BasicService implements ISaleService
 		purchaseOrder.setUser(user);
 		purchaseOrder.setOrderid(getordernum(user));
 		purchaseOrder.setState("0");
-		purchaseOrder.setType("sale");
 		purchaseOrder.setDate(new Date());
 		purchaseOrder.setShippingAddress(shippingAddress);
 		
@@ -165,6 +164,7 @@ public class SaleService extends BasicService implements ISaleService
 		purchaseOrderDao.savePurchaseOrder(purchaseOrder);
 		
 		setAttributeByRequest("totalprice", totalprice);
+		setAttributeByRequest("purchaseOrderId", purchaseOrder.getId());
 	}
 	
 	public String getordernum(User user)

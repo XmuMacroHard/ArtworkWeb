@@ -7,6 +7,8 @@ $(document).ready(function(){
 		$(this).click(chooseAddress);
 	});
 	
+	$("#payButton").bind("click", pay);
+	
 });
 
 function chooseAddress()
@@ -16,4 +18,10 @@ function chooseAddress()
 	
 	var addressid = $(this).attr("id");
 	$("#addressid").val(addressid);
+}
+
+function pay()
+{
+	var purchaseOrderId = $("#purchaseOrderId").val();
+	window.location.href = "SubmitsaleOrder?purchaseOrder.id=" + purchaseOrderId;
 }
