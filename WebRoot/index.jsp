@@ -46,7 +46,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <div class="page">
   <%-- <c:import url="/jsp/support/constant.jsp"/> --%>
-  <c:import url="/jsp/frontside/common/header.jsp"/>
+  <c:import url="/jsp/frontside/common/header.jsp"/> 
+   
   <!-- Slider -->
   <div class="slider-section">
     <div class="container">

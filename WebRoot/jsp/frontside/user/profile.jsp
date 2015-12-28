@@ -42,18 +42,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <c:import url="../common/header.jsp"/>
   <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
   
-  <!-- breadcrumbs -->
-  
-  <div class="breadcrumbs">
-    <div class="container">
-      <div class="row">
-        <ul>
-          <li class="home"> <a title="Go to Home Page" href="http://www.magikcommerce.com/">Home</a><span>&mdash;›</span></li>
-          <li class="category13"><strong>Information</strong></li>
-        </ul>
-      </div>
-    </div>
-  </div>
   <!-- main-container -->
   <div class="main-container col2-right-layout">
     <div class="main container">
@@ -61,8 +49,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <section class="col-main col-sm-9 wow">          
           <div class="static-contain">
 		  <div class="page-title new_page_title">
-            <h2>个人信息</h2>
-            <input id="user_choose" class="btn btn-default" style="margin-left:88%" type="button" value="修改密码" onclick="choose()">
+            <h2>个人信息  
+            </h2>
+           <!-- <input id="user_choose" class="btn btn-default" style="margin-left:60%" type="button" value="修改密码" onclick="choose()"> -->
+           <s:submit id="user_choose" cssClass="btn btn-primary pull-right" value="修改密码" onclick="choose()"/>
           </div>
           <div>
           <div  id="user_information" class="form-horizontal">
@@ -113,7 +103,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				  	</div>
   				  	</div>
   				  </c:if>
-  				 <s:submit id="modifyButton" cssClass="btn btn-primary pull-right" value="修改" onclick="Checkmodifyinfo()"/>
+  				 <s:submit id="modifyButton" cssClass="btn btn-primary pull-right" value="修改信息" onclick="Checkmodifyinfo()"/>
    		  </div>
    		  </div>
    		  

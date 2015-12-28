@@ -11,7 +11,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.constants.ITableConstants;
+import cn.edu.xmu.artwork.dao.IAddressDao;
 import cn.edu.xmu.artwork.dao.IArtistDao;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
@@ -24,12 +27,13 @@ import cn.edu.xmu.artwork.entity.CustomizationOrder;
 import cn.edu.xmu.artwork.entity.Htest;
 import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
+import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 
 @Transactional
 @Service
-public class CustomizeService implements ICustomizeService{
+public class CustomizeService extends BasicService implements ICustomizeService{
 	@Autowired
 	private ICustomizationDao customizationDao;
 	@Autowired
@@ -38,12 +42,15 @@ public class CustomizeService implements ICustomizeService{
 	private IArtistDao artistDao;
 	@Autowired
 	private ICommodityDao commodityDao;
+	@Autowired
+	private IAddressDao addressDao;
 	
 	@Override
-	public void addCustomization(long user_id, long artist_id ,Commodity commodity) {
 
-	//	User user = userDao.findById(user_id);
-	//	Artist artist = artistDao.findById(artist_id);
+	public void addCustomization(long artist_id, ShippingAddress address ,Commodity commodity) 
+	{
+		long user_id = 1;
+		
 		User user = new User();
 		user.setId(user_id);
 		Artist artist = new Artist();
@@ -53,6 +60,7 @@ public class CustomizeService implements ICustomizeService{
 		
 		commodity.setCategory("customization");//设置商品为定制品
 		commodity.setPurchaseOrder(customizationOrder);
+		commodity.setAuthorId(artist_id);
 		
 		customizationOrder.setTotalprice(commodity.getPrice());
 		customizationOrder.setLeftprice(commodity.getPrice());
@@ -61,7 +69,9 @@ public class CustomizeService implements ICustomizeService{
 		customizationOrder.getCommodity().add(commodity);
 		
 		//customization.setOrderid(getordernum(user));	
-		
+		//这里需要修改！！！！！
+		//！！！！
+		//！！！！！
 		customizationOrder.setOrderid("1234");
 		customizationOrder.setState("0");
 		customizationOrder.setDate(new Date());
@@ -87,7 +97,27 @@ public class CustomizeService implements ICustomizeService{
 		return customizationDao.getCustomizationsByArtist(id);
 	}
 	
-
+	/**
+	 * 发起一个定制
+	 * @param artist
+	 * @param user
+	 * @param address
+	 */
+	public void placeCustomization(Artist artist)
+	{		
+		try {
+			User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+			List<ShippingAddress> shippingAddresses = addressDao.findAllByUserId(user.getId());
+			
+						
+			setAttributeByRequest("addressList", shippingAddresses);
+			setAttributeByRequest("artist", artist);
+			
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+		
+	}
 
 	
 	public String getordernum(User user)

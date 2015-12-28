@@ -36,7 +36,7 @@ import org.hibernate.annotations.NamedQuery;
 }
 )
 
-public class Payment {
+public class Payment implements java.io.Serializable {
 	private Long id;
 	private PurchaseOrder purchaseOrder;    //付款订单
 	private Float money;	 				//付款额度

@@ -26,6 +26,10 @@
 	<bean id="test" class="cn.edu.xmu.artwork.entity.Test"></bean>
 	<bean id="htest" class="cn.edu.xmu.artwork.entity.Htest"></bean>
 	<bean id="payment" class="cn.edu.xmu.artwork.entity.Payment"></bean>
+	<bean id="auction" class="cn.edu.xmu.artwork.entity.Auction"></bean>
+	<bean id="auctionDate" class="cn.edu.xmu.artwork.entity.AuctionDate"></bean>
+	<bean id="auctionOrder" class="cn.edu.xmu.artwork.entity.AuctionOrder"></bean>
+	<bean id="bid" class="cn.edu.xmu.artwork.entity.Bid"></bean>
 	
 	<!-- all daos -->
 	<bean id="userDao" class="cn.edu.xmu.artwork.dao.impl.UserDao" ></bean>		

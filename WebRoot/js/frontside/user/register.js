@@ -147,7 +147,7 @@ function CheckregisterSubmit()
 							else if(d.result == "success")
 							{
 								alert(d.message);
-								window.location.href="/ArtworkWeb/jsp/frontside/user/login.jsp";
+								window.location.href="/ArtworkWeb/showInfoOnHomePage";
 							}
 						}			
 					});

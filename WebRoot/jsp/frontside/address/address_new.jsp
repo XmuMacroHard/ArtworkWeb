@@ -45,7 +45,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="main container">
       <div class="row">
         <section class="col-main col-sm-9">
-        <form action="AddNewAddress" method="POST">
+        <form action="AddNewAddress" method="POST" onsubmit="return checkaddresssubmit()">
         <div class="checkout-page">
           <div class="page-title new_page_title">
             <h1>新建地址</h1>
@@ -59,20 +59,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     				
     				<script class="resources library" src="js/frontside/address/area.js" type="text/javascript"></script>
     				<script type="text/javascript">_init_area();</script>
+    				
+    				<span class="text-danger" id="addressprovinceTip"></span>
     			</div>
     			<div id="show"></div>
 		  </div>
 		  <div class="info">
 		  		<h4>街道</h4>
-		  		<div><s:textfield cssClass="form-control" name="address.detailedAdress"/></div>
+		  		<div><s:textfield cssClass="form-control" name="address.detailedAdress" onblur="checkaddressdetaile()"/>
+		  		<span class="text-danger" id="addressdetaileTip"></span></div>
 		  </div>
 		  <div class="info">
 		  		<h4>收货人</h4>
-		  		<div><s:textfield cssClass="form-control" name="address.consignee"/></div>
+		  		<div><s:textfield cssClass="form-control" name="address.consignee" onblur="checkaddressconsignee()"/></div>
+		  		<span class="text-danger" id="addressconsigneeTip"></span>
 		  </div>
 		  <div class="info">
 		  		<h4>联系电话</h4>
-		  		<div><s:textfield cssClass="form-control" name="address.phone"/></div>
+		  		<div><s:textfield cssClass="form-control" name="address.phone" onblur="checkaddressphone()"/></div>
+		  		<span class="text-danger" id="addressphoneTip"></span>
 		  </div>
 		  <br><br><br>
 		  <div>
@@ -344,8 +349,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/jquery.min.js"></script> 
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/common.js"></script> 
-<script type="text/javascript" src="js/slider.js"></script> 
+<script type="text/javascript" src="js/slider.js"></script>
 <script type="text/javascript" src="js/owl.carousel.min.js"></script> 
+<script type="text/javascript" src="js/frontside/address/addresscheck.js"></script> 
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

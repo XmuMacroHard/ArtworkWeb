@@ -96,7 +96,6 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.orderid = orderid;
 	}
 
-
 	@Column(name = "state", nullable = false, length = 10)
 	public String getState() {
 		return this.state;

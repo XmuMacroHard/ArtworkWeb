@@ -26,7 +26,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div>
     
     <input type="submit" value="open websocket" onclick="start()" />
-    <input id="receiver" type="text"/>
+    
+    <div>name:<input id="receiver" type="text"/></div>
     <div id="message" style="height: 250px;width: 280px;border: 1px solid; overflow: auto;"></div>
     <input id="inputMsg" type="text" />
 	<input type="submit" value="send" onclick="sendMsg()"/>

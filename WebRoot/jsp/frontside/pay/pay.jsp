@@ -51,9 +51,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div class="table-responsive">
 			<div class="box payinfo"><span>账号余额<c:out value="${sessionScope.user.balance}"/></span><span class="payAmount">支付<span class="amount"><c:out value="${totalprice}"/></span>元</span></div>
 			<div class="box">支付密码</div>
-			<div class="box"><input class="form-control"/></div>
-			<div class="box"><button type="button" class="btn btn-info">确认支付</button></div>
-			
+			<div class="box"><input class="form-control" type="password"/></div>
+			<!-- hidden -->
+			<input id="purchaseOrderId" value="${purchaseOrderId}" type="hidden"/>
+			<!--end hidden -->
+			<div class="box"><button id="payButton" type="button" class="btn btn-info">确认支付</button></div>			
         </div>
     
       </div>
