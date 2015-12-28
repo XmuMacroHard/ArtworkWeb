@@ -60,11 +60,6 @@ Purchase: http://wrapbootstrap.com
 	
     <div class="login-container">
         <div class="loginbox bg-white">
-<<<<<<< HEAD:WebRoot/jsp/login.jsp
-        	
-=======
-        	<!-- <form action="loginAction"> -->
->>>>>>> e7b17987db58c98cf21917e069d0ad84c7606ea2:WebRoot/jsp/frontside/user/login.jsp
             <div class="loginbox-title">登录</div>
             <div class="loginbox-social">
                 <div class="social-title ">使用第三方登录</div>
@@ -84,24 +79,9 @@ Purchase: http://wrapbootstrap.com
                 <div class="or-line"></div>
                 <div class="or">OR</div>
             </div>
-            <form action="loginAction" method="post" id="registrationForm" class="form-horizontal"
-                                                  data-bv-message="This value is not valid"
-                                                  data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
-                                                  data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
-                                                  data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
             <div class="loginbox-textbox">
-<<<<<<< HEAD
-<<<<<<< HEAD:WebRoot/jsp/login.jsp
-                <input type="text" name="user.email" class="form-control" placeholder="账户" 
-                data-bv-notempty="true"
-                data-bv-notempty-message="The first name is required and cannot be empty"/>
-=======
-                <s:textfield id="email" name="user.email" cssClass="form-control" placeholder="账户" />
->>>>>>> e7b17987db58c98cf21917e069d0ad84c7606ea2:WebRoot/jsp/frontside/user/login.jsp
-=======
                 <s:textfield id="email" name="user.email" cssClass="form-control" placeholder="账户" onblur="checkUser()"/>
                 <span class="text-danger" id="userTip"></span>
->>>>>>> 993095b812adee6c6f357c42f5e3467d0eba67d4
             </div>
             <div class="loginbox-textbox">
                 <s:password id="password" name="user.password" cssClass="form-control" placeholder="密码" onblur="checkPassword()"/>
@@ -113,7 +93,6 @@ Purchase: http://wrapbootstrap.com
             <div class="loginbox-submit">
                 <s:submit id="loginButton" cssClass="btn btn-primary pull-right" value="登录"/>
             </div>
-            <!-- </form> -->
         </div>
     </div>
 
@@ -137,21 +116,7 @@ Purchase: http://wrapbootstrap.com
         ga('send', 'pageview');
 
     </script>
-<<<<<<< HEAD:WebRoot/jsp/login.jsp
-    
-    <!--Page Related Scripts-->
-    <script src="assets/js/validation/bootstrapValidator.js"></script>
-
-    <script>
-        $(document).ready(function () {
-
-            $("#registrationForm").bootstrapValidator();
-
-        });
-    </script>
-=======
     <script src="js/frontside/user/login.js" ></script>
->>>>>>> e7b17987db58c98cf21917e069d0ad84c7606ea2:WebRoot/jsp/frontside/user/login.jsp
 </body>
 <!--Body Ends-->
 </html>

@@ -40,6 +40,10 @@ import org.hibernate.annotations.NamedQuery;
 		@NamedQuery(
 			name = "getALLUsers",
 			query = "from User"
+		),
+		@NamedQuery(
+				name = "User.updateStatus",
+				query = "update User user set user.isBanned = :isBanned where user.id = :id"
 		)
 })
 public class User implements java.io.Serializable {
@@ -97,7 +101,7 @@ public class User implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@Column(name = "email", nullable = false, length = 20, unique = true)
+	@Column(name = "email", nullable = false, length = 50, unique = true)
 	public String getEmail() {
 		return this.email;
 	}

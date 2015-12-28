@@ -37,7 +37,15 @@ import javax.persistence.Table;
 		@NamedQuery(
 					name = "Commodity.getByAuthorId",
 					query = "from Commodity c where c.authorId = :authorid"
-				)
+			),
+		@NamedQuery(
+					name = "Commodity.updateStatus",
+					query = "update Commodity item set item.status = :status where item.id = :id"
+		),
+		@NamedQuery(
+					name = "Commodity.getAll",
+					query = "from Commodity"
+		)
 			
 })
 public class Commodity implements java.io.Serializable {
@@ -54,6 +62,7 @@ public class Commodity implements java.io.Serializable {
 	private String category;
 	private PurchaseOrder purchaseOrder_id;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
+	private String status; //商品状态
 	// Constructors
 
 	/** default constructor */
@@ -63,7 +72,7 @@ public class Commodity implements java.io.Serializable {
 	/** full constructor */
 	public Commodity(Long id, String name, String introduction, Float price,
 			Long authorId, String type, Boolean isBought, String category,
-			PurchaseOrder purchaseOrder_id, Set<CommodityPics> commodityPices) {
+			PurchaseOrder purchaseOrder_id, Set<CommodityPics> commodityPices, String status) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -75,6 +84,7 @@ public class Commodity implements java.io.Serializable {
 		this.category = category;
 		this.purchaseOrder_id= purchaseOrder_id;
 		this.commodityPices = commodityPices;
+		this.status = status;
 	}
 	
 	public void addPictures(List<String> picPaths)
@@ -181,6 +191,15 @@ public class Commodity implements java.io.Serializable {
 
 	public void setPurchaseOrder_id(PurchaseOrder purchaseOrder_id) {
 		this.purchaseOrder_id = purchaseOrder_id;
+	}
+
+	@Column(name = "status", nullable = false, length = 20)
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

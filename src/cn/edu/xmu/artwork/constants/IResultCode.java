@@ -2,6 +2,8 @@ package cn.edu.xmu.artwork.constants;
 
 public interface IResultCode 
 {
+	String ADMIN = "admin";
+	String EDITOR = "editor";
 	String SUCCESS = "success";
 	String ArtistSuccess = "artistsuccess";
 	String AdmistratorSuccess = "admistratorsuccess";

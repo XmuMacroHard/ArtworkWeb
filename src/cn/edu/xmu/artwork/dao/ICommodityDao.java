@@ -11,4 +11,7 @@ public interface ICommodityDao
 	public Commodity getCommodityById(long id);
 	public void saveCommodity(Commodity commodity);
 	public List<Commodity> getAllByAuthorId(long authorid);
+	
+	public List<Commodity> getCommodityList();
+	public void updateStatus(long id, String status);
 }
