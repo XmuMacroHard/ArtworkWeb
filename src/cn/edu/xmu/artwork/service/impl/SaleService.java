@@ -150,7 +150,7 @@ public class SaleService extends BasicService implements ISaleService
 		purchaseOrder.setOrderid(getordernum(user));
 		purchaseOrder.setState("0");
 		purchaseOrder.setDate(new Date());
-		purchaseOrder.setShippingAddress(shippingAddress);
+		//purchaseOrder.setShippingAddress(shippingAddress);
 		
 		float totalprice=0;
 		for(Long id : commodityid)

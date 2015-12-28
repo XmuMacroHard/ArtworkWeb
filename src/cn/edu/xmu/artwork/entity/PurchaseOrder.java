@@ -50,7 +50,7 @@ public class PurchaseOrder implements java.io.Serializable {
 
 	private User user;
 	private Date date;
-	private ShippingAddress shippingAddress;
+	private String address;
 	private Float totalprice;				//应付款
 	private Float leftprice;       			//未付款
 	private Set<Commodity> commodity=new HashSet<Commodity>(0);
@@ -61,17 +61,20 @@ public class PurchaseOrder implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PurchaseOrder(Long id, String orderid, String state,
-			User user, Date date,
-			ShippingAddress shippingAddress, Set<Commodity> commodity) {
+	public PurchaseOrder(Long id, String orderid, String state, User user,
+			Date date, String address, Float totalprice, Float leftprice,
+			Set<Commodity> commodity, Set<Payment> payments) {
 		super();
 		this.id = id;
 		this.orderid = orderid;
 		this.state = state;
 		this.user = user;
 		this.date = date;
-		this.shippingAddress = shippingAddress;
+		this.address = address;
+		this.totalprice = totalprice;
+		this.leftprice = leftprice;
 		this.commodity = commodity;
+		this.payments = payments;
 	}
 
 	
@@ -124,15 +127,15 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.date = date;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "address_id")
-	public ShippingAddress getShippingAddress() {
-		return shippingAddress;
+	@Column(name = "address", nullable = true, precision = 200)
+	public String getAddress() {
+		return address;
 	}
-	public void setShippingAddress(ShippingAddress shippingAddress) {
-		this.shippingAddress = shippingAddress;
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	
+
 	@Column(name = "totalprice", nullable = true, precision = 15)
 	public Float getTotalprice() {
 		return totalprice;
