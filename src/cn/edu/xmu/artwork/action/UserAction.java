@@ -193,20 +193,7 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	/**
-	 * 付款
-	 * @author sheng
-	 */
-	@Action(value="userpayment", results={@Result(name="success", location="/jsp/test/shengtest.jsp")
-										,@Result(name="fail", location="/jsp/test/shengrecharge.jsp")})
-	public  String userpayment()
-	{
-		orderid=17L;
-		if(SaleService.payment(orderid))
-			return SUCCESS;
-		else
-			return "fail";
-	}
+
 	
 	private void setAttributeByRequest(String key, Object value)
 	{

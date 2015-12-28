@@ -65,11 +65,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div>
           	<c:choose>
           	<c:when test = "${sessionScope.rank == 'user'}">
-			  <form class="form-horizontal" action="submitArtist" method="POST" enctype="multipart/form-data">
+			  <form class="form-horizontal" action="submitArtist" method="POST" enctype="multipart/form-data" onsubmit="return checkartistsubmit()">
   				  <div class="form-group">
   				  	<label class="col-sm-2 control-label" >真实姓名</label>
   				  	<div class="col-sm-10" >
-  				  		<input class="form-control" name="artist.realName"/>
+  				  		<input class="form-control" name="artist.realName" onblur="checkartistname()"/>
+  				  		<span class="text-danger" id="artistnameTip"></span>
   				  	</div>
   				  </div>
 				  <div class="form-group">
@@ -87,8 +88,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	     				<s:checkbox name="artist.identification" label="手工品" fieldValue="handicraft"/>
      				</div>
      			  </div>
-     			 <div class="form-group"><label class="col-sm-2 control-label">头像</label><s:file name="pic"/></div>   					
-   				 <div class="form-group"><label class="col-sm-2 control-label">资料</label><s:file name="pic"/></div>   					
+     			 <div class="form-group"><label class="col-sm-2 control-label">头像</label><s:file name="pic"/>
+     			 <span class="text-danger" id="artistproTip"></span></div>   					
+   				 <div class="form-group"><label class="col-sm-2 control-label">资料</label><s:file name="pic"/>
+   				 <span class="text-danger" id="artistfileTip"></span></div>   					
    				 <div class="form-group"><label class="col-sm-2 control-label"></label><button class="btn btn-info" type="submit">认证</button></div>
    				</form>
    			</c:when>

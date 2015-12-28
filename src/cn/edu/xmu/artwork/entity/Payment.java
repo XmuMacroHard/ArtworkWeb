@@ -25,10 +25,6 @@ import org.hibernate.annotations.NamedQuery;
 					query = "from Payment p where p.id = :id"
 					),
 			@NamedQuery(
-					name = "Payment.getByUserId",
-					query = "from Payment p where p.user_id = :user_id"
-					),
-			@NamedQuery(
 					name = "Payment.getAllByOrderId",
 					query = "from Payment p where purchaseOrder_id = :id"
 					),
@@ -37,14 +33,10 @@ import org.hibernate.annotations.NamedQuery;
 					query = "from Payment p where purchaseOrder_id = :id and state = 0 "
 							+ "order by date"
 					)
-			
-					
 }
 )
 public class Payment {
 	private Long id;
-	private Long user_id;					//付款人
-	private Long artist_id; 				//收款人
 	private PurchaseOrder purchaseOrder;    //付款订单
 	private Float money;	 				//付款额度
 	private int state;      				//付款状态  0未付款 1 已付款
@@ -56,17 +48,18 @@ public class Payment {
 		state = 0;
 	}
 	
-	public Payment(Long id, Long user_id, Long artist_id,
-			PurchaseOrder purchaseOrder, Float money, int state, Date date) {
+
+	public Payment(Long id, PurchaseOrder purchaseOrder, Float money,
+			int state, Date date) {
 		super();
 		this.id = id;
-		this.user_id = user_id;
-		this.artist_id = artist_id;
 		this.purchaseOrder = purchaseOrder;
 		this.money = money;
 		this.state = state;
 		this.date = date;
 	}
+
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -77,22 +70,6 @@ public class Payment {
 		this.id = id;
 	}
 	
-
-	@Column(name = "user_id", nullable= true)
-	public Long getUser_id() {
-		return user_id;
-	}
-	public void setUser_id(Long user_id) {
-		this.user_id = user_id;
-	}
-	
-	@Column(name = "artist_id", nullable= true)
-	public Long getArtist_id() {
-		return artist_id;
-	}
-	public void setArtist_id(Long artist_id) {
-		this.artist_id = artist_id;
-	}
 	
 	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@JoinColumn(name = "purchaseOrder_id", nullable= false)

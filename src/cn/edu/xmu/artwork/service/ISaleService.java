@@ -22,7 +22,6 @@ public interface ISaleService {
 	public JSONObject addToCart(Commodity commodity, User buyer);
 	public void SubmitsaleOrder(User user,List<Long> commodityid,ShippingAddress shippingAddress);
 	public PurchaseOrder getPurchaseOrderByid(long id);
-	public boolean payment(long id);
 	public List<Commodity> getRecommendedCommodity();
 	public void placeOrder(List<Long> commodityids);
 	//按订单付款

@@ -77,7 +77,6 @@ public class SaleService extends BasicService implements ISaleService
 			initializeObject(commodity.getCommodityPices());
 		}
 		String[] excludes = {"purchaseOrder"};
-
 		return jsonUtils.List2JsonArray(commodities, excludes);
 		
 	}
@@ -106,6 +105,7 @@ public class SaleService extends BasicService implements ISaleService
 		commodity.addPictures(picPaths);
 		commodity.setAuthorId((long)1);
 		commodity.setIsBought(false);
+		commodity.setCategory("sale");
 		commodityDao.saveCommodity(commodity);
 	}
 	
@@ -181,22 +181,7 @@ public class SaleService extends BasicService implements ISaleService
 		return purchaseOrderDao.findById(id);
 	}
 	
-	public boolean payment(long id)
-	{
-		PurchaseOrder purchaseOrder=purchaseOrderDao.findById(id);
-		User user = userDao.findById(1L);
-		if(user.getBalance()<purchaseOrder.getTotalprice())
-			return false;
-		else
-		{
-			user.setBalance(user.getBalance()-purchaseOrder.getTotalprice());
-			userDao.update(user);
-			
-			purchaseOrder.setState("1");
-			purchaseOrderDao.update(purchaseOrder);
-			return true;
-		}
-	}
+
 
 	/**
 	 * 用户发起一个订单

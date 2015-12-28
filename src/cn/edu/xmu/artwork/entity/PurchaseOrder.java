@@ -167,4 +167,6 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setPayments(Set<Payment> payments) {
 		this.payments = payments;
 	}
+	
+	
 }
