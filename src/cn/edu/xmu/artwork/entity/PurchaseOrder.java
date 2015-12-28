@@ -46,7 +46,7 @@ public class PurchaseOrder implements java.io.Serializable {
 	// Fields
 	private Long id;
 	private String orderid;
-	private String state;
+	private String state;					//付款状态  0未付款 1 已付款
 
 	private User user;
 	private Date date;

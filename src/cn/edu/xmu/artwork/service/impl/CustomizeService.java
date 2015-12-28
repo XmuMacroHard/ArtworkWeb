@@ -42,8 +42,12 @@ public class CustomizeService implements ICustomizeService{
 	@Override
 	public void addCustomization(long user_id, long artist_id ,Commodity commodity) {
 
-		User user = userDao.findById(user_id);
-		Artist artist = artistDao.findById(artist_id);
+	//	User user = userDao.findById(user_id);
+	//	Artist artist = artistDao.findById(artist_id);
+		User user = new User();
+		user.setId(user_id);
+		Artist artist = new Artist();
+		artist.setId(artist_id);
 		
 		CustomizationOrder customizationOrder = new CustomizationOrder();
 		

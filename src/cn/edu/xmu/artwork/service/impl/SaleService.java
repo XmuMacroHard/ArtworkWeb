@@ -166,6 +166,7 @@ public class SaleService extends BasicService implements ISaleService
 		setAttributeByRequest("totalprice", totalprice);
 	}
 	
+	
 	public String getordernum(User user)
 	{
 		SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");//设置日期格式

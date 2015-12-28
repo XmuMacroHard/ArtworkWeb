@@ -66,6 +66,7 @@ public class Commodity implements java.io.Serializable {
 
 	/** default constructor */
 	public Commodity() {
+		isBought = false;
 	}
 	
 	/** full constructor */

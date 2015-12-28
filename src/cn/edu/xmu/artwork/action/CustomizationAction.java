@@ -64,7 +64,7 @@ public class CustomizationAction extends ActionSupport{
 	}
 	
 	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
-	public String setCustomizationPaymentAction()
+	public String setCustomizationPayment()
 	{
 		long id = 2;
 		List<Payment> payments = new ArrayList<Payment>();

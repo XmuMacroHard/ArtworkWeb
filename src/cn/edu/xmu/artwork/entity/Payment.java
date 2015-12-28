@@ -35,11 +35,12 @@ import org.hibernate.annotations.NamedQuery;
 					)
 }
 )
+
 public class Payment {
 	private Long id;
 	private PurchaseOrder purchaseOrder;    //付款订单
 	private Float money;	 				//付款额度
-	private int state;      				//付款状态  0未付款 1 已付款
+	private int state;      				//付款状态  0未付款 1 已付款 
 	private Date date;      				//付款时间
 	
 	
