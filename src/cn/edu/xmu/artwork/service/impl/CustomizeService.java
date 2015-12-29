@@ -7,6 +7,11 @@ import java.util.List;
 import java.util.Random;
 import java.util.Set;
 
+import javax.websocket.Session;
+
+import net.sf.json.JSONArray;
+
+import org.apache.struts2.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +35,7 @@ import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
+import cn.edu.xmu.artwork.utils.impl.JsonUtils;
 
 @Transactional
 @Service
@@ -44,6 +50,9 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 	private ICommodityDao commodityDao;
 	@Autowired
 	private IAddressDao addressDao;
+	
+	@Autowired
+	private JsonUtils jsonUtils;
 	
 	@Override
 
@@ -91,11 +100,6 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 		return customizationDao.getCustomizationsByUser(id);
 	}
 
-	
-	@Override
-	public List<CustomizationOrder> getCustomizationsByArtist(long id) {
-		return customizationDao.getCustomizationsByArtist(id);
-	}
 	
 	/**
 	 * 发起一个定制
@@ -173,5 +177,26 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 				payment.setPurchaseOrder(customizationOrder);
 				customizationOrder.getPayments().add(payment);
 			}
+	}
+	
+	/**
+	 * 根据当前identification（艺术家或用户或管理员） 和 需要的订单状态获取订单
+	 * @param identification
+	 * @param state
+	 * @return
+	 */
+	@Override
+	public JSONArray getAllOrderByState(String identification,String state) 
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		System.out.println(user.getId());
+		System.out.println(state);
+		System.out.println(identification);
+		List<CustomizationOrder> orders = customizationDao.getCusOrderByState(identification, user.getId(), state);	
+				
+		String[] excludes = {ITableConstants.PURCHASE_ORDER_COMMODITY, ITableConstants.PURCHASE_ORDER_PAYMENTS, ITableConstants.PURCHASE_ORDER_SHIPPING_ADDRESS, ITableConstants.PURCHASE_ORDER_ARTIST, ITableConstants.PURCHASE_ORDER_USER};
+		System.out.println(jsonUtils.List2JsonArray(orders, excludes));
+		
+		return jsonUtils.List2JsonArray(orders, excludes);
 	}
 }

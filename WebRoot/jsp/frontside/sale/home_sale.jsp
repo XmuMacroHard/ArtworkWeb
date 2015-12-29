@@ -88,31 +88,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           </div>
           <div class="category-products">
             <div class="toolbar">
-              <div class="sorter">
-                <div class="view-mode"> <span title="Grid" class="button button-active button-grid">Grid</span><a href="list.html" title="List" class="button button-list">List</a> </div>
-              </div>
-              <div id="sort-by">
-                <label class="left">Sort By:</label>
-                <select title="Country" style="width:60%" class="validate-select" id="country" name="commodity.type">
-                          <option value="calligraphy" selected>书法</option>
-                          <option value="painting">绘画</option>
-                          <option value="sculpture">雕刻</option>
-                          <option value="handicraft">手工品</option>
-                        </select>
-               </div>
+              <div>
+               	<div class="btn-group">
+			  		<button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			    		按类别<span class="caret"></span>
+			  		</button>
+			 		<ul class="dropdown-menu">
+                      <li><a href="javascript:onload(1,'calligraphy')">书法</a></li>
+                      <li><a href="javascript:onload(1,'painting')">绘画</a></li>
+                      <li><a href="javascript:onload(1,'sculpture')">雕刻</a></li>
+                      <li><a href="javascript:onload(1,'handicraft')">手工品</a></li>
+                    </ul>
+
+                  </div>
+                 </div>
               <div class="pager">
-                <div id="limiter">
-                  <label>View: </label>
-                  <ul>
-                    <li><a href="#">15<span class="right-arrow"></span></a>
-                      <ul>
-                        <li><a href="#">20</a></li>
-                        <li><a href="#">30</a></li>
-                        <li><a href="#">35</a></li>
-                      </ul>
-                    </li>
-                  </ul>
-                </div>
                 <div class="pages">
                   <label>Page:</label>
                   <ul class="pagination" id="page_list">

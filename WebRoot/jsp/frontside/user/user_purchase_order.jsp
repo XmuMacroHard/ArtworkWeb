@@ -61,17 +61,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <section class="col-sm-9 col-sm-push-3">
         <div class="col-main">
-        
-         	<div class="dropdown">			
+         			<div class="dropdown">			
 			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 			    订单类型
 			    <span class="caret"></span>
 			  </button>
 			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '0');return false;">待付款</a></li>
-			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '1');return false;">待发货</a></li>
-			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '2');return false;">待收货</a></li>
-			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '3');return false;">已完成</a></li>
+			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '0');return false;">待付款</a></li>
+			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '1');return false;">待发货</a></li>
+			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '2');return false;">待收货</a></li>
+			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '3');return false;">已完成</a></li>
 			  </ul>
 			</div> 
         
@@ -202,7 +201,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/frontside/artist/my_purchase_order.js"></script>
+<script type="text/javascript" src="js/frontside/user/user_purchase_order.js"></script>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

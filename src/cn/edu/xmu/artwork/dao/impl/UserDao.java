@@ -19,6 +19,8 @@ import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Admin;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
+
 import cn.edu.xmu.artwork.entity.Editor;
 import cn.edu.xmu.artwork.entity.User;
 
@@ -171,6 +173,7 @@ public class UserDao extends GenericDao implements IUserDao
 		}
 		return list;
 	}
+	
 	
 	/**
 	 * 艺术家认证资料提交

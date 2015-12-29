@@ -37,12 +37,14 @@ public class UserAction extends ActionSupport
 	public List<String> picContentType;
 	private User user;
 	private Artist artist;
+	private PurchaseOrder purchaseOrder;
 	private String newpassword;
 	
 	@Autowired
 	private IUserService userService;
 	@Autowired
 	private ISaleService SaleService;
+	
 	
 	private String result;
 	
@@ -182,11 +184,23 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	
+	/**
+	 * 获取已完成的所有订单
+	 */
+	@Action(value="getArtistFinishedOrder",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getFinishedOrder()
+	{
+		
+		resultJsonArray = userService.getArtistFinishedOrder(purchaseOrder.getState());
+		return SUCCESS;
+	}
+	
 	/**
 	 * 充值
 	 * @author sheng
 	 */
-	@Action(value="Userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	@Action(value="Userrecharge", results={@Result(name="success", type="chain",location="showInfoOnHomePage")})
 	public  String Userrecharge()
 	{
 		userService.recharge(user.getBalance());
@@ -287,6 +301,14 @@ public class UserAction extends ActionSupport
 
 	public void setNewpassword(String newpassword) {
 		this.newpassword = newpassword;
+	}
+
+	public PurchaseOrder getPurchaseOrder() {
+		return purchaseOrder;
+	}
+
+	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
+		this.purchaseOrder = purchaseOrder;
 	}
 	
 	

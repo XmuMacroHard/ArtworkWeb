@@ -3,15 +3,15 @@
  */
 
 $(document).ready(function(){
-	onload(1);
+	onload(1,'calligraphy');
 });
 
-function onload(nowpage)
+function onload(nowpage,type)
 {
 	$.ajax({
 		type:'post',
 		url:'getBriefArtistBySort',
-		data:{'artist.identification':'calligraphy'},
+		data:{'artist.identification':type},
 		dataType:'json',
 		success:function(data){
 			var server_path = 'http://localhost:8080/ArtworkWeb';
@@ -21,31 +21,31 @@ function onload(nowpage)
 			var $pageList = $('#page-list');
 			
 			$pageList.empty();
-			var pagesize=9;
+			var pagesize=5;
 			var totalcount=data.length;
 			var totalpage=Math.ceil(totalcount/pagesize);
 			$pageList.empty();
 			if(nowpage!=1){
-				pages+="<li><a href=\"javascript:onload(1);\">&lt;&lt;</a></li>";
-				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+
+				pages+="<li><a href=\"javascript:onload(1,\'"+type+"\');\">&lt;&lt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+",\'"+type+"\'"+
 				");\">&lt;</a></li>";
 			}
 			for(var i=nowpage-2;i<=nowpage+2;i++){
 				if(i==nowpage){
-					pages+="<li class=\"active\"><a href=\"javascript:onload(" +i+
+					pages+="<li class=\"active\"><a href=\"javascript:onload(" +i+",\'"+type+"\'"+
 						");\">"+i+"</a></li>";
 					}
 				else{
 					if(i>0&&i<=totalpage){
-						pages+="<li><a href=\"javascript:onload(" +i+
+						pages+="<li><a href=\"javascript:onload(" +i+",\'"+type+"\'"+
 						");\">"+i+"</a></li>";
 					}
 				}
 			}
 			if(nowpage!=totalpage){
-				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+
+				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+",\'"+type+"\'"+
 				");\">&gt;</a></li>";
-				pages+="<li><a href=\"javascript:onload(" +totalpage+
+				pages+="<li><a href=\"javascript:onload(" +totalpage+",\'"+type+"\'"+
 				");\">&gt;&gt;</a></li>"
 			}
 			$pageList.append(pages);

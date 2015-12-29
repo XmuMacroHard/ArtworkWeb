@@ -40,7 +40,7 @@ function checkcomfirmorder(){
 function checkispay(){
 	var count = document.getElementsByName("usercount")[0].value;
 	var totalprice = document.getElementsByName("totalprice")[0].value;
-	if(count<totalprice){
+	if(parseFloat(count)<parseFloat(totalprice)){
 		alert("请先充值");
 		window.location.href="/ArtworkWeb/jsp/frontside/pay/recharge.jsp";
 		return false;
