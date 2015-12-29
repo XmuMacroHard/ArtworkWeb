@@ -8,6 +8,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -26,7 +27,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Scope("prototype")
-@ParentPackage("json-default")
+@ParentPackage("custom-default")
 @Namespace(value="/")
 public class UserAction extends ActionSupport 
 {
@@ -54,11 +55,8 @@ public class UserAction extends ActionSupport
 	private long orderid = 1;
 
 
-	@Action(
-			value="loginAction", 
-			results={
-					@Result(name="success", type="json", params={"root", "result"})
-					}
+	@Action(value="loginAction", 
+			results={@Result(name="success", type="json", params={"root", "result"})}
 			)
 	public String login()
 	{
@@ -86,9 +84,8 @@ public class UserAction extends ActionSupport
 	 */
 	@Action(
 			value="alterpasswordAction", 
-			results={
-					@Result(name="success", type="json", params={"root", "result"})
-					}
+			results={@Result(name="success", type="json", params={"root", "result"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")}
 			)
 	public String alterpassword()
 	{
@@ -102,9 +99,8 @@ public class UserAction extends ActionSupport
 	 */
 	@Action(
 			value="alterinfoAction", 
-			results={
-					@Result(name="success", type="json", params={"root", "result"})
-					}
+			results={@Result(name="success", type="json", params={"root", "result"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")}
 			)
 	public String alterinfo()
 	{
@@ -144,6 +140,9 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/*
+	 * 根据艺术家分类获取简要的艺术家信息列表
+	 * */
 	@Action(value="getBriefArtistBySort", results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
 	public String getBriefArtistBySort()
 	{
@@ -155,6 +154,10 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 通过艺术家姓名获取艺术家
+	 * @return
+	 */
 	@Action(value="getArtistByName", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
 	public String getArtistByName()
 	{
@@ -164,7 +167,12 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="submitArtist", results={@Result(name="success", location="/jsp/frontside/user/profile.jsp")})
+	/**
+	 * 艺术家认证
+	 * @return
+	 */
+	@Action(value="submitArtist", results={@Result(name="success", location="/jsp/frontside/user/profile.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String submitArtist()
 	{
 		userService.submitArtist(artist,pic,picFileName);
@@ -172,11 +180,12 @@ public class UserAction extends ActionSupport
 	}
 	
 	/**
-	 * 显示艺术家发布的作品
+	 * 显示艺术家自己发布的作品
 	 * @author cz
 	 * @return
 	 */
-	@Action(value="showMyCommodity", results={@Result(name="success", location="/jsp/frontside/artist/artistCommodity.jsp")})
+	@Action(value="showMyCommodity", results={@Result(name="success", location="/jsp/frontside/artist/artistCommodity.jsp")}, 
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public  String showMyCommodity()
 	{
 		List<Commodity> myCommodities = userService.showMyCommodity();
@@ -190,17 +199,17 @@ public class UserAction extends ActionSupport
 	 */
 	@Action(value="getArtistFinishedOrder",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
 	public String getFinishedOrder()
-	{
-		
+	{		
 		resultJsonArray = userService.getArtistFinishedOrder(purchaseOrder.getState());
 		return SUCCESS;
 	}
 	
 	/**
-	 * 充值
+	 * 用户充值
 	 * @author sheng
 	 */
-	@Action(value="Userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	@Action(value="Userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public  String Userrecharge()
 	{
 		userService.recharge(user.getBalance());

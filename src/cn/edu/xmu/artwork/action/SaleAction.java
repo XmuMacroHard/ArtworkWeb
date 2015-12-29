@@ -11,6 +11,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -30,7 +31,7 @@ import cn.edu.xmu.artwork.service.ISaleService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Scope("prototype")
-@ParentPackage("json-default")
+@ParentPackage("custom-default")
 @Namespace(value="/")
 public class SaleAction extends ActionSupport 
 {
@@ -69,7 +70,7 @@ public class SaleAction extends ActionSupport
 	private IFileService fileService;
 	
 	/*
-	 * show all commodities by type
+	 * 根据商品类型获取商品列表
 	 * @return success
 	 * */
 	@Action(value="showCommodityList", results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
@@ -83,7 +84,7 @@ public class SaleAction extends ActionSupport
 	}
 	
 	/*
-	 * get the detailed information of the certain community
+	 * 获取商品的详细信息
 	 * */
 	@Action(value="getDetailedCommodity", results={@Result(name="success", location="/jsp/frontside/sale/detailCommodity.jsp")})
 	public String getDetailedComm()
@@ -96,9 +97,10 @@ public class SaleAction extends ActionSupport
 	
 	
 	/*
-	 * upload the information of the commodity
+	 * 艺术家上传商品
 	 * */
-	@Action(value="uploadCommodity", results={@Result(name="success",type="chain",location="showMyCommodity")})
+	@Action(value="uploadCommodity", results={@Result(name="success",type="chain",location="showMyCommodity")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String uploadCommodity()
 	{
 		System.out.println("commodity.name" + commodity.getName());
@@ -108,10 +110,11 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	/*
-	 * add the commodity to the shopping cart
+	/**
+	 * 添加商品到购物车
 	 * */
-	@Action(value="addToCart", results={@Result(name="success", type="json", params={"root", "resultJsonObject"})})
+	@Action(value="addToCart", results={@Result(name="success", type="json", params={"root", "resultJsonObject"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String AddToCart()
 	{
 		JSONObject resultJO = saleService.addToCart(commodity, user);
@@ -120,7 +123,12 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="deleteFromCart",results={@Result(name="success", type="chain" , location="viewCart")})
+	/**
+	 * 删除购物车中的商品
+	 * @return
+	 */
+	@Action(value="deleteFromCart",results={@Result(name="success", type="chain" , location="viewCart")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String deleteFromCart()
 	{
 		saleService.deleteFromCart(commodity);
@@ -128,7 +136,12 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="payPurchaseOrderListAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	/**
+	 * 订单支付
+	 * @return
+	 */
+	@Action(value="payPurchaseOrderListAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String payPurchaseOrderList()
 	{
 		for (Long id : purchaseOrderIdList) {
@@ -138,11 +151,15 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="payPurchaseOrderAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	/**
+	 * 订单支付
+	 * @return
+	 */
+	@Action(value="payPurchaseOrderAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String payPurchaseOrder()
 	{
 		saleService.payPurchaseOrder(purchaseOrder.getId());
-		//System.out.println(" pid : " + pid);
 		return SUCCESS;
 	}
 	
@@ -150,7 +167,8 @@ public class SaleAction extends ActionSupport
 	 * 用户确认收货
 	 * @return
 	 */
-	@Action(value="confirmCommodity", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	@Action(value="confirmCommodity", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String confirmCommodity()
 	{
 		saleService.confirmCommodity(purchaseOrder);
@@ -159,10 +177,11 @@ public class SaleAction extends ActionSupport
 	}
 	
 	
-	/*
-	 *show the list of shoppingcart 
+	/**
+	 *显示购物车列表 
 	 * */
-	@Action(value="viewCart", results={@Result(name="success", location="/jsp/frontside/user/shoppingCart.jsp")})
+	@Action(value="viewCart", results={@Result(name="success", location="/jsp/frontside/user/shoppingCart.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String viewCart()
 	{
 		List<ShoppingCart> list = saleService.getShoppingCart();
@@ -170,10 +189,11 @@ public class SaleAction extends ActionSupport
 		return IResultCode.SUCCESS;
 	}
 	
-	/*
-	 *submit sale order 
+	/**
+	 *提交买卖订单 
 	 **/
-	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/frontside/pay/pay.jsp")})
+	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/frontside/pay/pay.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String SubmitsaleOrder()
 	{	
 		saleService.SubmitsaleOrder(commodityid,shippingAddress);
@@ -181,10 +201,11 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	/*
+	/**
 	 * 用户发起订单
 	 **/
-	@Action(value="placeOrder", results={@Result(name="success", location="/jsp/frontside/pay/place_order.jsp")})
+	@Action(value="placeOrder", results={@Result(name="success", location="/jsp/frontside/pay/place_order.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String placeOrder()
 	{
 		System.out.println(commodityid.size());
@@ -197,7 +218,8 @@ public class SaleAction extends ActionSupport
 	/**
 	 * 根据前台需要，通过state来获取艺术家不同状态的买卖订单
 	 */
-	@Action(value="getArtistPurchaseOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	@Action(value="getArtistPurchaseOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getPurchaseOrderBySate()
 	{		
 		resultJsonArray = saleService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_ARTIST, purchaseOrder.getState());
@@ -208,7 +230,8 @@ public class SaleAction extends ActionSupport
 	 * 根据前台需要，通过state来获取普通用户不同状态的买卖订单
 	 * @return
 	 */
-	@Action(value="getUserPurchaseOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	@Action(value="getUserPurchaseOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getUserPurchaseOrderBySate()
 	{				
 		resultJsonArray = saleService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_USER, purchaseOrder.getState());
@@ -219,7 +242,8 @@ public class SaleAction extends ActionSupport
 	 * 根据订单id获取详细订单
 	 * @return
 	 */
-	@Action(value="getDetailPuchaseOrderToArtist", results={@Result(name="success", location="/jsp/frontside/artist/detail_purchase_order.jsp")})
+	@Action(value="getDetailPuchaseOrderToArtist", results={@Result(name="success", location="/jsp/frontside/artist/detail_purchase_order.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getDetailPuchaseOrderToArtist()
 	{		
 		saleService.getDetailPurchaseOrder(purchaseOrder);
@@ -231,7 +255,8 @@ public class SaleAction extends ActionSupport
 	 * 根据订单id获取详细订单
 	 * @return
 	 */
-	@Action(value="getDetailPuchaseOrderToUser", results={@Result(name="success", location="/jsp/frontside/user/detail_purchase_order.jsp")})
+	@Action(value="getDetailPuchaseOrderToUser", results={@Result(name="success", location="/jsp/frontside/user/detail_purchase_order.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getDetailPuchaseOrderToUser()
 	{		
 		saleService.getDetailPurchaseOrder(purchaseOrder);
@@ -242,7 +267,8 @@ public class SaleAction extends ActionSupport
 	/**
 	 * 艺术家发货
 	 */
-	@Action(value="dispatch", results={@Result(name="success", location="/jsp/frontside/artist/my_purchase_order.jsp")})
+	@Action(value="dispatch", results={@Result(name="success", location="/jsp/frontside/artist/my_purchase_order.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String dispatch()
 	{		
 		saleService.dispatch(purchaseOrder);		

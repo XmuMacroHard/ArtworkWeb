@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -22,7 +23,7 @@ import cn.edu.xmu.artwork.service.IUserService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Scope("prototype")
-@ParentPackage("json-default")
+@ParentPackage("custom-default")
 @Namespace("/")
 public class InformationAction extends ActionSupport 
 {
@@ -48,8 +49,11 @@ public class InformationAction extends ActionSupport
 	@Autowired
 	public ISaleService saleService;
 	 
-	
-	@Action(value="submitInfo", results={@Result(name="success", location="/jsp/success.jsp")})
+	/**
+	 * 提交咨询
+	 */
+	@Action(value="submitInfo", results={@Result(name="success", location="/jsp/success.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String submitInfo()
 	{	
 		informationService.submit(getInformation(),getDatePos(),pic, picFileName);
@@ -89,8 +93,13 @@ public class InformationAction extends ActionSupport
 		setAttributeByRequest("commodityList", commodities);
 		return SUCCESS;
 	}
-
-	@Action(value="getDetailInfo", results={@Result(name="success", location="/jsp/frontside/information/info_detail.jsp")})
+	
+	/**
+	 * 获取资讯详细信息
+	 * @return
+	 */
+	@Action(value="getDetailInfo", results={@Result(name="success", location="/jsp/frontside/information/info_detail.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getDetailInfo()
 	{		
 		long id =information.getId();

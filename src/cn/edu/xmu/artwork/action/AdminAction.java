@@ -26,9 +26,10 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author asus1
  *
  */
-@Scope("prototype")//支持多例  
-@ParentPackage("json-default")  //表示继承的父包  
-@Namespace(value="/") //表示当前Action所在命名空间
+@Scope("prototype")  
+@ParentPackage("custom-default")    
+@Namespace(value="/")
+@InterceptorRefs({@InterceptorRef("checkLoginStack")})
 public class AdminAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
