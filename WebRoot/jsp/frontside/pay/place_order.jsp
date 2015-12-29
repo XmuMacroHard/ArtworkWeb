@@ -51,15 +51,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <div id="address" class="row">
         	 <c:forEach items="${addressList}" var="address">  
         		<div id="${address.id}"  class="col-md-1  wrap"><div><c:out value="${address.province}${address.city}${address.region}"/>(<c:out value="${address.consignee}"/>)</div><hr/><div><c:out value="${address.detailedAdress}"/></div></div>
-        	 </c:forEach>        
+        	 </c:forEach>
         </div>
+        <span class="text-danger" id="addressTip"></span>
         <hr/>
          <div class="page-title">
           
          <h2>确认订单信息</h2>
         </div>
         <div class="table-responsive">
-          <form method="post" action="SubmitsaleOrder">
+          <form method="post" action="SubmitsaleOrder" onsubmit="return checkcomfirmorder()">
             <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key">
             <fieldset>
               <table class="data-table cart-table" id="shopping-cart-table">

@@ -20,6 +20,19 @@ public interface ITableConstants
 	
 	//property
 	
+	/*PurchaseOrder table*/
+	String PURCHASE_ORDER_SHIPPING_ADDRESS = "shippingAddress";
+	String PURCHASE_ORDER_COMMODITY = "commodity";
+	String PURCHASE_ORDER_PAYMENTS = "payments";
+	String PURCHASE_ORDER_STATUS_PAID = "0";
+	String PURCHASE_ORDER_STATUS_DILIVER = "1";
+	String PURCHASE_ORDER_STATUS_MAKE_SURE = "2";
+	String PURCHASE_ORDER_STATUS_FINISH = "3";
+	String PURCHASE_ORDER_STATUS_UN_ACCEPTED = "4";
+	
+	String PURCHASE_ORDER_ARTIST = "artist";
+	String PURCHASE_ORDER_USER = "user";
+	
 	/*user table*/
 	String USER_IS_APPROVED_APPROVE = "approve";
 	String USER_IS_APPROVED_NOT_APPROVE = "notapprove";
@@ -37,4 +50,7 @@ public interface ITableConstants
 	String ARTIST_SHOPPING_CART = "shoppingCarts";
 	String ARTIST_CUSTOMIZATION = "customizations";
 	
+	/*Commodity*/
+	String COMMODITY_IS_BAN = "0";
+	String COMMODITY_IS_NOBAN = "1";
 }

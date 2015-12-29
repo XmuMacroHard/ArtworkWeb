@@ -2,6 +2,7 @@ package cn.edu.xmu.artwork.action;
 
 
 import java.io.File;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,8 +40,9 @@ public class SaleAction extends ActionSupport
 	private static final long serialVersionUID = 1L;
 
 	private Commodity commodity = new Commodity();
-	private User user = new User();
+	private User user;
 	private PurchaseOrder purchaseOrder;
+	private List<Long> purchaseOrderIdList;
 	
 	//use to store commodity and address in order
 	private List<Long> commodityid = new ArrayList<Long>();
@@ -58,6 +60,7 @@ public class SaleAction extends ActionSupport
 	private List<String> picturesFileName;
 	private long pid;
 	private int nowpage;
+	private String detailToWho;										//决定订单详情跳转的界面
 
 	@Autowired
 	private ISaleService saleService;
@@ -91,10 +94,11 @@ public class SaleAction extends ActionSupport
 		return IResultCode.SUCCESS;
 	}
 	
+	
 	/*
 	 * upload the information of the commodity
 	 * */
-	@Action(value="uploadCommodity", results={@Result(name="success", location="/jsp/frontside/artist/artistCommodity.jsp")})
+	@Action(value="uploadCommodity", results={@Result(name="success",type="chain",location="showMyCommodity")})
 	public String uploadCommodity()
 	{
 		System.out.println("commodity.name" + commodity.getName());
@@ -116,6 +120,24 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	@Action(value="deleteFromCart",results={@Result(name="success", type="chain" , location="viewCart")})
+	public String deleteFromCart()
+	{
+		saleService.deleteFromCart(commodity);
+		
+		return SUCCESS;
+	}
+	
+	@Action(value="payPurchaseOrderListAction", results={@Result(name="success", location="/jsp/frontside/user/user_purchase_order.jsp")})
+	public String payPurchaseOrderList()
+	{
+		for (Long id : purchaseOrderIdList) {
+			saleService.payPurchaseOrder(id);
+		}
+		//System.out.println(" pid : " + pid);
+		return SUCCESS;
+	}
+	
 	@Action(value="payPurchaseOrderAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
 	public String payPurchaseOrder()
 	{
@@ -123,6 +145,19 @@ public class SaleAction extends ActionSupport
 		//System.out.println(" pid : " + pid);
 		return SUCCESS;
 	}
+	
+	/**
+	 * 用户确认收货
+	 * @return
+	 */
+	@Action(value="confirmCommodity", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	public String confirmCommodity()
+	{
+		saleService.confirmCommodity(purchaseOrder);
+		
+		return SUCCESS;
+	}
+	
 	
 	/*
 	 *show the list of shoppingcart 
@@ -140,10 +175,8 @@ public class SaleAction extends ActionSupport
 	 **/
 	@Action(value="SubmitsaleOrder", results={@Result(name="success", location="/jsp/frontside/pay/pay.jsp")})
 	public String SubmitsaleOrder()
-	{
-		user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");		
-
-		saleService.SubmitsaleOrder(user,commodityid,shippingAddress);
+	{	
+		saleService.SubmitsaleOrder(commodityid,shippingAddress);
 		
 		return SUCCESS;
 	}
@@ -159,6 +192,62 @@ public class SaleAction extends ActionSupport
 		
 		return SUCCESS;
 	}
+	
+	
+	/**
+	 * 根据前台需要，通过state来获取艺术家不同状态的买卖订单
+	 */
+	@Action(value="getArtistPurchaseOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getPurchaseOrderBySate()
+	{		
+		resultJsonArray = saleService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_ARTIST, purchaseOrder.getState());
+		return SUCCESS;
+	}	
+	
+	/**
+	 * 根据前台需要，通过state来获取普通用户不同状态的买卖订单
+	 * @return
+	 */
+	@Action(value="getUserPurchaseOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getUserPurchaseOrderBySate()
+	{				
+		resultJsonArray = saleService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_USER, purchaseOrder.getState());
+		return SUCCESS;
+	}
+	
+	/**
+	 * 根据订单id获取详细订单
+	 * @return
+	 */
+	@Action(value="getDetailPuchaseOrderToArtist", results={@Result(name="success", location="/jsp/frontside/artist/detail_purchase_order.jsp")})
+	public String getDetailPuchaseOrderToArtist()
+	{		
+		saleService.getDetailPurchaseOrder(purchaseOrder);
+		
+		return SUCCESS;
+	}	
+	
+	/**
+	 * 根据订单id获取详细订单
+	 * @return
+	 */
+	@Action(value="getDetailPuchaseOrderToUser", results={@Result(name="success", location="/jsp/frontside/user/detail_purchase_order.jsp")})
+	public String getDetailPuchaseOrderToUser()
+	{		
+		saleService.getDetailPurchaseOrder(purchaseOrder);
+		
+		return SUCCESS;
+	}	
+	
+	/**
+	 * 艺术家发货
+	 */
+	@Action(value="dispatch", results={@Result(name="success", location="/jsp/frontside/artist/my_purchase_order.jsp")})
+	public String dispatch()
+	{		
+		saleService.dispatch(purchaseOrder);		
+		return SUCCESS;
+	}	
 	
 	/**
 	 * 
@@ -250,15 +339,6 @@ public class SaleAction extends ActionSupport
 		this.shippingAddress = shippingAddress;
 	}
 	
-
-	public int getNowpage() {
-		return nowpage;
-	}
-
-	public void setNowpage(int nowpage) {
-		this.nowpage = nowpage;
-	}
-
 	public PurchaseOrder getPurchaseOrder() {
 		return purchaseOrder;
 	}
@@ -266,7 +346,23 @@ public class SaleAction extends ActionSupport
 	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
 		this.purchaseOrder = purchaseOrder;
 	}
+
+
+	public String getDetailToWho() {
+		return detailToWho;
+	}
+
+	public void setDetailToWho(String detailToWho) {
+		this.detailToWho = detailToWho;
+	}
 	
 	
+	public List<Long> getPurchaseOrderIdList() {
+		return purchaseOrderIdList;
+	}
+
+	public void setPurchaseOrderIdList(List<Long> purchaseOrderIdList) {
+		this.purchaseOrderIdList = purchaseOrderIdList;
+	}
 	
 }

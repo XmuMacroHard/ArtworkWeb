@@ -1,6 +1,6 @@
 package cn.edu.xmu.artwork.entity;
 
-import java.sql.Date;
+import java.util.Date;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -35,14 +35,13 @@ import org.hibernate.annotations.NamedQuery;
 					)
 }
 )
-public class Payment {
+
+public class Payment implements java.io.Serializable {
 	private Long id;
 	private PurchaseOrder purchaseOrder;    //付款订单
 	private Float money;	 				//付款额度
-	private int state;      				//付款状态  0未付款 1 已付款
+	private int state;      				//付款状态  0未付款 1 已付款 
 	private Date date;      				//付款时间
-	
-	
 	
 	public Payment() {
 		state = 0;

@@ -51,7 +51,4 @@ public class ChatServer
 	    System.out.println("Connection closed");
 	    UserPool.remove(session);
 	  }
-	  
-	  
-
 }

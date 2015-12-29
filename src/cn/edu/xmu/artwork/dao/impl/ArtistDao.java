@@ -11,15 +11,15 @@ import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.User;
 
 @Repository
-public class ArtistDao extends UserDao implements IArtistDao{
+public class ArtistDao extends GenericDao implements IArtistDao{
 	
 	@Override
 	public Artist findById(long id)
 	{
 		Artist  user = null;
 		try {
-			Query query = getSession().getNamedQuery("User.getById");
-			query.setParameter("id", id);
+			Query query = getSession().getNamedQuery("Artist.getById");
+			query.setParameter("Id", id);
 			user = (Artist) query.uniqueResult();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -128,5 +128,10 @@ public class ArtistDao extends UserDao implements IArtistDao{
 		String hql=String.format("update Artist artist set artist.isapprove = %s where artist.id = %d", status, id);
 		Query queryupdate= getSession().createQuery(hql);
 		int ret=queryupdate.executeUpdate();
+	}
+	
+	public void update(Artist artist)
+	{
+		getSession().update(artist);
 	}
 }

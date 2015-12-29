@@ -35,20 +35,22 @@
             websocket.onerror = function (evnt) {
             };
             websocket.onclose = function (evnt) {
-                $("#tou").html("connection fail!")
+                 $("#tou").html("connection fail!") 
+               
             }
             $('#send').bind('click', function() {
                 send();
             });
-            function send(){
-                if (websocket != null) {
+            function send(){    
+                  if (websocket != null) {
                     var message = document.getElementById('message').value;
                     websocket.send(message);
                 } else {
                     alert('Not connection');
-                }
-            }
-        });
+                }  
+            } 
+        }
+        );
     </script>
 
 </head>

@@ -1,3 +1,4 @@
+<%@page import="cn.edu.xmu.artwork.entity.User"%>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
@@ -24,13 +25,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </head>
   
   <body>
-  <s:property value="#faildetail"/><br/>
-    fail! <br/>
-<form method="post" action="addToCart">
-    <input id="hidden_user_id"  value="5" name="user.id"/>
-    <input id="hidden_commodity_id"  value="2" name="commodity.id"/>
-     
+  	  <%
+  	User user = new User();
+  	user.setId(5L);
+  	session.setAttribute("user", user);
+  	 %>
+	<form method="post" action="getArtistUnfinishedPurchaseOrder">     
     <!-- <button/> -->
+    <input name="purchaseOrder.state"/>
     <input type="submit"/> 
   </form>
   </body>

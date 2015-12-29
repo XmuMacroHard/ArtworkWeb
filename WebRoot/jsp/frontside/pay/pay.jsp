@@ -43,20 +43,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="main container">
     <div class="col-main">
       <div class="cart">
-      
-         <div class="page-title">
-          
+         <div class="page-title">        
          <h2>安全支付</h2>
         </div>
+        <form action="payPurchaseOrderListAction" method="post" onsubmit="return checkispay()">
         <div class="table-responsive">
-			<div class="box payinfo"><span>账号余额<c:out value="${sessionScope.user.balance}"/></span><span class="payAmount">支付<span class="amount"><c:out value="${totalprice}"/></span>元</span></div>
+			<div class="box payinfo"><span>账号余额:<c:out value="${sessionScope.user.balance}"/></span><span class="payAmount">支付<span class="amount"><c:out value="${totalprice}"/></span>元</span></div>
 			<div class="box">支付密码</div>
-			<div class="box"><input class="form-control" type="password"/></div>
+			<div class="box"><input class="form-control" type="password" name="user.password"/></div>
 			<!-- hidden -->
-			<input id="purchaseOrderId" value="${purchaseOrderId}" type="hidden"/>
+			 <c:forEach items="${purchaseOrderId}" var="OrderIdItem">
+             <input name="purchaseOrderIdList" value="${OrderIdItem}" type="hidden"/>
+	         </c:forEach>
+	         
+	         <input name="usercount" value="${sessionScope.user.balance}" type="hidden"/>
+	         <input name="totalprice" value="${totalprice}" type="hidden"/>
 			<!--end hidden -->
-			<div class="box"><button id="payButton" type="button" class="btn btn-info">确认支付</button></div>			
+			<div class="box"><button id="payButton" type="submit" class="btn btn-info">确认支付</button></div>			
         </div>
+    	</form>
     
       </div>
     </div>

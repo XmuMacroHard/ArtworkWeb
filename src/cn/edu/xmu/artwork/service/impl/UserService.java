@@ -18,6 +18,7 @@ import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.dao.IAddressDao;
+import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.dao.impl.CommodityDao;
@@ -28,7 +29,11 @@ import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Admin;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
+
+import cn.edu.xmu.artwork.entity.CustomizationOrder;
+
 import cn.edu.xmu.artwork.entity.Editor;
+
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
@@ -37,6 +42,7 @@ import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
 import cn.edu.xmu.artwork.service.IUserService;
 import cn.edu.xmu.artwork.utils.IMD5Util;
+import cn.edu.xmu.artwork.utils.impl.JsonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,6 +67,9 @@ public class UserService extends BasicService implements IUserService
 	private PaymentDao paymentDao;
 	
 	@Autowired
+	private ICustomizationDao customizationDao;
+	
+	@Autowired
 	private ArtistDao artistDao;
 	@Autowired
 	private IMD5Util md5Util;
@@ -69,6 +78,9 @@ public class UserService extends BasicService implements IUserService
 	
 	@Autowired
 	private IAddressDao addressDao;
+	
+	@Autowired
+	private JsonUtils jsonUtils;
 	
 	public void addUser(User user)
 	{
@@ -230,7 +242,8 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public List<Artist> getArtistBySort(String identification)
 	{
-		List<Artist> artists = artistDao.getArtistBySort(identification);			
+		List<Artist> artists = artistDao.getArtistBySort(identification);		
+		System.out.println(artists.size());
 		return artists;
 	}
 	/**
@@ -255,6 +268,21 @@ public class UserService extends BasicService implements IUserService
 		}
 		
 		return resultJsonArray;
+	}
+	
+	@Override
+	public JSONArray getArtistFinishedOrder(String state) 
+	{
+		
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		System.out.println(user.getId());
+		System.out.println(state);
+		List<PurchaseOrder> orders = purchaseOrderDao.getAllOrderByArtist(user.getId(), state);	
+		
+		String[] excludes = {ITableConstants.PURCHASE_ORDER_COMMODITY, ITableConstants.PURCHASE_ORDER_PAYMENTS, ITableConstants.PURCHASE_ORDER_SHIPPING_ADDRESS, ITableConstants.PURCHASE_ORDER_ARTIST, ITableConstants.PURCHASE_ORDER_USER};
+		System.out.println(jsonUtils.List2JsonArray(orders, excludes));
+		
+		return jsonUtils.List2JsonArray(orders, excludes);
 	}
 	
 	@Override
@@ -284,7 +312,8 @@ public class UserService extends BasicService implements IUserService
 	public List<Commodity> showMyCommodity()
 	{
 		//long id = getSessionInBrower("artwor_user");
-		List<Commodity> commodities = commodityDao.getAllByAuthorId((long)1);
+		Artist artist= (Artist)getSessionInBrower(IClientConstants.SESSION_USER);
+		List<Commodity> commodities = commodityDao.getAllByAuthorId(artist.getId());
 		for(Commodity commodity : commodities)
 		{
 			initializeObject(commodity.getCommodityPices());
@@ -367,9 +396,10 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public void recharge(float balance)
 	{
-		User user=userDao.findById(1L);
-		user.setBalance(user.getBalance()-balance);
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		user.setBalance(user.getBalance()+balance);
 		userDao.update(user);
+		setSessionInBrower(IStrings.SESSION_USER, user);
 	}
 
 
