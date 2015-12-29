@@ -61,44 +61,32 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <section class="col-sm-9 col-sm-push-3">
         <div class="col-main">
-         <div class="category-title">
-            <h1>商品订单</h1>
-          </div> 
-			<div class="dropdown">			
+        
+         	<div class="dropdown">			
 			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
 			    订单类型
 			    <span class="caret"></span>
 			  </button>
 			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-			    <li><a href="#">已完成的订单</a></li>
-			    <li><a href="#">待处理的商品订单</a></li>
-			    <li><a href="#">待处理的定制订单</a></li>
-			    <li><a href="#">待处理的拍卖订单</a></li>
+			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '0');return false;">待付款</a></li>
+			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '1');return false;">待发货</a></li>
+			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '2');return false;">待收货</a></li>
+			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '3');return false;">已完成</a></li>
 			  </ul>
-			</div>
+			</div> 
+        
+         <div class="category-title">
+         	<h2>商品订单</h2>
+            <h1 id = "orderTypeTitle">待付款</h1>
+            
+          </div> 
           
-          <div class="category-products">
+          <div id="orderList" class="category-products">
+          
 			<!-- 订单 -->
-			<div id="address" class="row">
-        	 <c:forEach items="" var="address">  
-        		<div id="${address.id}"  class="col-md-1  wrap">
-        		<div><c:out value="${address.province}${address.city}${address.region}"/>(<c:out value="${address.consignee}"/>)</div><hr/>
-        			<div><c:out value="${address.detailedAdress}"/></div>
-        			<div><button id="empty_cart_button" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>提交订单</span></span></button></div>
-        		</div>
-        	 </c:forEach>    
-				<div id="${address.id}"  class="col-md-1  wrap">
-        		<div>订单号</div><hr/>
-        			<div>商品名</div>
-        			<div>
-        				<button id="" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>发货</span></span></button>
-        				<button id="" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>详情</span></span></button>
-        				<button id="empty_cart_button" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>取消订单</span></span></button>
-        				
-        			</div>
-        		</div>    
-        		</div>
-        	<!--  -->
+			<!-- 订单 here -->
+        		
+        	<!--end 订单  -->
           </div>
 		  </div>
         </section>
@@ -112,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <div class="text alignleft">Need Help?</div>
   <div class="icons"> <a class="show_hide" id="questionbox-side-phonebutton" href="javascript:void(0)"><i class="icon-phones">&nbsp;</i></a> <a class="show_hide1" id="questionbox-side-emailbutton" href="javascript:void(0)"><i class="icon-email">&nbsp;</i></a> </div>
 </div>
-<div id="hideShow" class="right-side-content" style="display: none;">
+<div id="hideShow" class="right-side-content" style="display: none">
   <!--Contact Static Block -->
   <div class="slider-phone active">
     <h2 class="">Talk To Us</h2>
@@ -214,6 +202,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/frontside/artist/my_purchase_order.js"></script>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

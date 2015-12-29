@@ -11,7 +11,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <base href="<%=basePath%>">
     
     <title>My JSP 'header.jsp' starting page</title>
-    
 	<meta http-equiv="pragma" content="no-cache">
 	<meta http-equiv="cache-control" content="no-cache">
 	<meta http-equiv="expires" content="0">    
@@ -50,8 +49,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <ul class="dropdown-menu" role="menu">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/profile.jsp"> 个人信息 </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="ShowAllAddressList">地址管理</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">我的订单</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="viewCart">我的购物车</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_purchase_order.jsp">商品订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_customization_order.jsp">定制订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="">拍卖订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="viewCart">我的购物车</a></li>                    
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/artist_certification.jsp">艺术家认证 </a></li>
                   </ul>
@@ -61,9 +62,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <ul class="dropdown-menu" role="menu">
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/artist/uploadCommodity.jsp">上传商品 </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="showMyCommodity"> 我的商品 </a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">我的订单</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="sitemap.html"></a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/artist/my_purchase_order.jsp">商品订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/artist/my_customization_order.jsp">定制订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">拍卖订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Advanced Search </a></li>
                   </ul>
                 </div>

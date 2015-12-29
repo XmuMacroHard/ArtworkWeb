@@ -56,7 +56,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     };
  
     webSocket.onmessage = function(event) {
-      onMessage("onmessage");
+      onMessage(event);
     };
  
     function onMessage(event) {

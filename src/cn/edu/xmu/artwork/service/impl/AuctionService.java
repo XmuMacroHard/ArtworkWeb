@@ -51,6 +51,9 @@ public class AuctionService extends BasicService implements IAuctionService{
 
 	@Override
 	public void createAuction(Commodity commodity, Auction auction) {
+		Commodity c = commodityDao.getCommodityById(commodity.getId());
+		c.setCategory("auction");
+		
 		auction.setCommodity(commodity);
 		auction.setCurrentPrice(auction.getStartPrice());
 		auctionDao.save(auction);
@@ -112,11 +115,20 @@ public class AuctionService extends BasicService implements IAuctionService{
 		List<Auction> today_auctions = getAuctionsByDate(today.getTime());
 		today = dateUtils.getNextDay(today);
 		List<Auction> tomorrow_auctions = getAuctionsByDate(today.getTime());
+		//用今天的拍卖列表 - 明天的拍卖列表  得到今天结束的拍卖列表
 		for(Auction today_auction : today_auctions)
 		{
-			if(!tomorrow_auctions.contains(today_auction) && today_auction.getUser() != null)
+			if(!tomorrow_auctions.contains(today_auction))
 			{
-				createAuctionOrder(today_auction);
+				//拍卖的用户如果为空则为未完成的拍卖 需要对商品做处理
+				if(today_auction.getUser() != null)
+					createAuctionOrder(today_auction);
+				else
+				{
+					long commodity_id = today_auction.getCommodity().getId();
+					Commodity commodity = commodityDao.getCommodityById(commodity_id);
+					commodity.setPurchaseOrder(null);
+				}
 			}
 		}
 	}

@@ -92,17 +92,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="view-mode"> <span title="Grid" class="button button-active button-grid">Grid</span><a href="list.html" title="List" class="button button-list">List</a> </div>
               </div>
               <div id="sort-by">
-                <label class="left">Sort By: </label>
-                <ul>
-                  <li><a href="#">Position<span class="right-arrow"></span></a>
-                    <ul>
-                      <li><a href="#">Name</a></li>
-                      <li><a href="#">Price</a></li>
-                      <li><a href="#">Position</a></li>
-                    </ul>
-                  </li>
-                </ul>
-                <a class="button-asc left" href="#" title="Set Descending Direction"><span style="color:#999;font-size:11px;" class="glyphicon glyphicon-arrow-up"></span></a> </div>
+                <label class="left">Sort By:</label>
+                <select title="Country" style="width:60%" class="validate-select" id="country" name="commodity.type">
+                          <option value="calligraphy" selected>书法</option>
+                          <option value="painting">绘画</option>
+                          <option value="sculpture">雕刻</option>
+                          <option value="handicraft">手工品</option>
+                        </select>
+               </div>
               <div class="pager">
                 <div id="limiter">
                   <label>View: </label>

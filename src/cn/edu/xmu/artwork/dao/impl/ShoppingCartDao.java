@@ -17,10 +17,18 @@ public class ShoppingCartDao extends GenericDao implements IShoppingCartDao
 		getSession().save(shoppingCart);
 	}
 	
+	public void delete(long commodityid,long userid)
+	{
+		Query query = getSession().getNamedQuery("ShoppingCart.deleteById")
+			.setParameter("commodityid",commodityid)
+			.setParameter("userid", userid);
+		query.executeUpdate();
+	}
+	
 	@SuppressWarnings("unchecked")
 	public List<ShoppingCart> getAllByUserId(long userid)
 	{
-		Query query = getSession().getNamedQuery("ShoppingCart.getAllByUserId");
+		Query query = getSession().getNamedQuery("ShoppingCart.getAllByUserId").setParameter("userid", userid);
 		List<ShoppingCart> shoppingCart = (List<ShoppingCart>)query.list();
 		return shoppingCart;
 	}

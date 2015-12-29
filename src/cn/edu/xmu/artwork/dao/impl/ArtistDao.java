@@ -18,7 +18,7 @@ public class ArtistDao extends UserDao implements IArtistDao{
 	{
 		Artist  user = null;
 		try {
-			Query query = getSession().getNamedQuery("User.getById");
+			Query query = getSession().getNamedQuery("Artist.getById");
 			query.setParameter("id", id);
 			user = (Artist) query.uniqueResult();
 		} catch (Exception e) {

@@ -9,7 +9,7 @@ import cn.edu.xmu.artwork.entity.User;
 
 public interface ICustomizationDao {
 	public List<CustomizationOrder> getCustomizationsByUser(long id);
-	public List<CustomizationOrder> getCustomizationsByArtist(long id);
 	public CustomizationOrder findById(long id);
 	public void save(CustomizationOrder customization);
+	public List<CustomizationOrder> getCusOrderByState(String identification, long id, String state);
 }

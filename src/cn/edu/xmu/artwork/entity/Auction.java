@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.entity;
 import static javax.persistence.GenerationType.IDENTITY;
 
 import java.util.Date;
+import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -136,7 +137,6 @@ public class Auction implements java.io.Serializable {
 		this.user = user;
 	}
 	
-
 	@Column(name = "state", length=20)
 	public String getState() {
 		return state;

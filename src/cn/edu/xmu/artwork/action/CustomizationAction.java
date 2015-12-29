@@ -1,7 +1,11 @@
 package cn.edu.xmu.artwork.action;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -13,21 +17,20 @@ import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
-import cn.edu.xmu.artwork.entity.Htest;
 import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
-import cn.edu.xmu.artwork.entity.Test;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 import cn.edu.xmu.artwork.service.ISaleService;
 import cn.edu.xmu.artwork.service.IUserService;
 
 @Scope("prototype")
-@ParentPackage("struts-default")
+@ParentPackage("json-default")
 @Namespace(value="/")
 public class CustomizationAction extends ActionSupport{
 	private CustomizationOrder customization;
@@ -36,6 +39,12 @@ public class CustomizationAction extends ActionSupport{
 	private Commodity commodity;
 	private ShippingAddress address;
 	private PurchaseOrder purchaseOrder;
+	private JSONArray resultJsonArray;
+	private JSONObject resultJsonObject;
+	
+	private List<Float> moneys;
+	private List<Date> dates;
+	
 	@Autowired
 	private ICustomizeService customizeService;
 	@Autowired
@@ -61,18 +70,14 @@ public class CustomizationAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	/**
+	 * 艺术家设置订单的分期付款价格
+	 * @return
+	 */
+	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/frontside/artist/my_customization_order.jsp")})
 	public String setCustomizationPayment()
 	{
-		long id = 2;
-		List<Payment> payments = new ArrayList<Payment>();
-		Payment payment = new Payment();
-		payment.setMoney((float) 100);
-		Payment payment2 = new Payment();
-		payment2.setMoney((float) 100);
-		payments.add(payment);
-		payments.add(payment2);
-		customizeService.setPaymentOfCustomization(id, payments);
+		customizeService.setPaymentOfCustomization(purchaseOrder.getId(), moneys, dates);
 		return SUCCESS;
 	}
 	
@@ -84,11 +89,24 @@ public class CustomizationAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	@Action(value="getCustomizationsByArtistAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
-	public String getCustomizationsByArtist(){
-		int id = 1; // get from session;
-		List<CustomizationOrder> lists = customizeService.getCustomizationsByArtist(id);
-		setAttributeByRequest("informationList", lists);
+	/**
+	 * 根据前台需要，通过state来获取艺术家不同状态的买卖订单
+	 */
+	@Action(value="getArtistCusOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getPurchaseOrderBySate()
+	{		
+		resultJsonArray = customizeService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_ARTIST, purchaseOrder.getState());
+		return SUCCESS;
+	}	
+	
+	/**
+	 * 根据前台需要，通过state来获取普通用户不同状态的买卖订单
+	 * @return
+	 */
+	@Action(value="getUserCusOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getUserPurchaseOrderBySate()
+	{				
+		resultJsonArray = customizeService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_USER, purchaseOrder.getState());
 		return SUCCESS;
 	}
 
@@ -174,6 +192,38 @@ public class CustomizationAction extends ActionSupport{
 
 	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
 		this.purchaseOrder = purchaseOrder;
+	}
+
+	public JSONArray getResultJsonArray() {
+		return resultJsonArray;
+	}
+
+	public void setResultJsonArray(JSONArray resultJsonArray) {
+		this.resultJsonArray = resultJsonArray;
+	}
+
+	public JSONObject getResultJsonObject() {
+		return resultJsonObject;
+	}
+
+	public void setResultJsonObject(JSONObject resultJsonObject) {
+		this.resultJsonObject = resultJsonObject;
+	}
+
+	public List<Float> getMoneys() {
+		return moneys;
+	}
+
+	public void setMoneys(List<Float> moneys) {
+		this.moneys = moneys;
+	}
+
+	public List<Date> getDates() {
+		return dates;
+	}
+
+	public void setDates(List<Date> dates) {
+		this.dates = dates;
 	}
 	
 	

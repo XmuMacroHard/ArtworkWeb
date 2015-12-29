@@ -10,5 +10,6 @@ public interface IClientConstants
 	String SESSION_VALUE_RANK_ADMIN = "admin";
 	String SESSION_VALUE_RANK_EDITOR = "editor";
 	
+	
 	String REQUEST_SHOPPING_CART = "shoppingCart";
 }
