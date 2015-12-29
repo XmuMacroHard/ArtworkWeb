@@ -16,13 +16,26 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.apache.commons.validator.routines.DateValidator;
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
 
 @Entity
 @Table(name = "auction", catalog = "artworkdb")
+@NamedQueries({
+	@NamedQuery(
+			name = "Auction.findById",
+			query = "from Auction a where id = :id"
+			),
+	@NamedQuery(
+			name = "Auction.getByEndTime",
+			query = "from Auction a where endTime = :endTime"
+			)
+})
 public class Auction implements java.io.Serializable {
 	private Long id;
 	private Date startTime;
 	private Date endTime;
+	//private Set<AuctionDate> dates;
 	private Commodity commodity;
 	private Float startPrice;
 	private Float currentPrice;
@@ -51,9 +64,6 @@ public class Auction implements java.io.Serializable {
 		this.state = state;
 	}
 
-
-
-
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
@@ -64,7 +74,7 @@ public class Auction implements java.io.Serializable {
 		this.id = id;
 	}
 	
-	@Column(name = "startTime", length=20)
+	@Column(name = "startTime", length=20, nullable = false)
 	public Date getStartTime() {
 		return startTime;
 	}
@@ -72,7 +82,7 @@ public class Auction implements java.io.Serializable {
 		this.startTime = startTime;
 	}
 	
-	@Column(name = "endTime", length=20)
+	@Column(name = "endTime", length=20, nullable = false)
 	public Date getEndTime() {
 		return endTime;
 	}
@@ -81,7 +91,7 @@ public class Auction implements java.io.Serializable {
 	}
 	
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name ="commodity_id")
+	@JoinColumn(name ="commodity_id", nullable = false)
 	public Commodity getCommodity() {
 		return commodity;
 	}
@@ -89,7 +99,7 @@ public class Auction implements java.io.Serializable {
 		this.commodity = commodity;
 	}
 
-	@Column(name = "startPrice", length=20)
+	@Column(name = "startPrice", length=20, nullable = false)
 	public Float getStartPrice() {
 		return startPrice;
 	}
@@ -98,7 +108,7 @@ public class Auction implements java.io.Serializable {
 	}
 	
 
-	@Column(name = "currentPrice", length=20)
+	@Column(name = "currentPrice", length=20, nullable = false)
 	public Float getCurrentPrice() {
 		return currentPrice;
 	}
@@ -106,7 +116,7 @@ public class Auction implements java.io.Serializable {
 		this.currentPrice = currentPrice;
 	}
 
-	@Column(name = "limitPerBid", length=20)
+	@Column(name = "limitPerBid", length=20, nullable = false)
 	public Float getLimitPerBid() {
 		return limitPerBid;
 	}

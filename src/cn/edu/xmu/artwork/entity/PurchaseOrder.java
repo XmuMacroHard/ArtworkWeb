@@ -48,6 +48,7 @@ public class PurchaseOrder implements java.io.Serializable {
 	private String orderid;
 	private String state;					//付款状态  0未付款 1 已付款
 
+	private Artist artist;
 	private User user;
 	private Date date;
 	private ShippingAddress shippingAddress;
@@ -168,5 +169,13 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.payments = payments;
 	}
 	
-	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "artist_id", nullable = false)
+	public Artist getArtist() {
+		return artist;
+	}
+	public void setArtist(Artist artist) {
+		this.artist = artist;
+	}
 }

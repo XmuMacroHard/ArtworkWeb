@@ -15,8 +15,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 @Entity
 @Table(name = "bid", catalog = "artworkdb")
+@NamedQueries({
+	@NamedQuery(
+			name = "Bid.findById",
+			query = "from Bid where id = :id"
+			),
+	@NamedQuery(
+			name = "Bid.getBidsByAuctionId",
+			query = "from Bid where auction_id = :id"
+			)
+})
 public class Bid implements java.io.Serializable {
 	private long id;
 	private User user;
