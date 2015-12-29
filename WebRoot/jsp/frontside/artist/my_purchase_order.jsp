@@ -6,8 +6,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE>
-<html>
+<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <base href="<%=basePath%>">
 <meta charset="utf-8">
@@ -28,103 +30,83 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- CSS Style -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/revslider.css" type="text/css">
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.theme.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="css/style.css" type="text/css">
+<link rel="stylesheet" href="css/my_frontside.css" type="text/css">
 
+<!-- Google Fonts -->
+<link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,700,800,400,600' rel='stylesheet' type='text/css'>
+</head>
 <body>
 <div class="page">
-<c:import url="../common/header.jsp"/>
-<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+  <c:import url="../common/header.jsp"/>
   
-<section class="main-container col1-layout">
-  <div class="main container">
-    <div class="col-main">
-      <div class="cart">     
-      
-        <div class="page-title">
-          <h2>购物车</h2>
-        </div>
-        
-		 <form method="post" action="placeOrder" onsubmit="return checkplaceOrder()">
-        <div class="table-responsive">
-            <!-- <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key"/> -->
-             <!-- <fieldset>  -->
-              <table class="data-table cart-table" id="shopping-cart-table">
-                
-                <thead>
-                  <tr class="first last">
-                  	<th rowspan="1"><input  id="chooseallcard" type="checkbox" value="全选"/>全选</th>
-                    <th rowspan="1">艺术品图</th>
-                    <th rowspan="1"><span class="nobr">艺术品名</span></th>                    
-                    <th colspan="1" class="a-center"><span class="nobr">价格</span></th>
-                    <th class="a-center" rowspan="1">&nbsp;</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr class="first last">
-                    <td class="a-right last" colspan="50"><button onClick="{location.href='jsp/frontside/sale/home_sale.jsp'}" class="button btn-continue" title="Continue Shopping" type="button"><span><span>继续购物</span></span></button>
-                      <!-- <button class="button btn-update" title="Update Cart" value="update_qty" name="update_cart_action" type="submit"><span><span>刷新购物车</span></span></button></td> -->
-                      <!-- <button id="place_order_button" class="button btn-proceed-checkout" title="Proceed to Checkout" type="submit"><span>结算</span></button> -->
-                  </tr>
-                </tfoot>
-                <tbody>
-                <c:forEach items="${shoppingCart}" var="cartItem">
-                  <tr class="first odd">
-					          <td class="a-center"><input  name="commodityid" type="checkbox" value="${cartItem.commodity.id}"/></td>
-                    <td class="image">
-                     	<a class="product-image" title="Sample Product" href="product_detail.html">
-							         <c:set var="urlsNum" scope="page" value="1"/>  
-							         <c:forEach items="${cartItem.commodity.commodityPices}" var="pic">   		 	
-								          <c:if test = "${urlsNum == 1}">
-									         <img width="75" alt="Sample Product" src="${server_path}${pic.url}"> 
-									         <c:set var="urlsNum" scope="page" value="2"/>		
-								          </c:if>
-	                     	</c:forEach> 
-                    	</a> 
-                    </td>
-                    <td><h2 class="product-name"> <a href="getDetailedCommodity?commodity.id=${cartItem.commodity.id}"><c:out value="${cartItem.commodity.name}"/></a> </h2></td>
-                    <td class="a-right"><span class="cart-price"> <span id="${cartItem.commodity.id}" class="price"><c:out value="${cartItem.commodity.price}"/></span> </span></td>
-                    <td class="a-center last"><a class="button remove-item" title="Remove item" href="deleteFromCart.action?commodity.id=${cartItem.commodity.id}" onclick="return confirm('确定删除该商品？');">
-                    <span><span>Remove item</span></span></a></td>
-                  </tr>
-                </c:forEach>
-                </tbody>
-              </table>
-             <!-- </fieldset>  --> 
-        </div>
-        <!-- <button id="place_order_button" class="button btn-proceed-checkout" title="Proceed to Checkout" type="submit"><span>结算</span></button> -->
-        <!-- BEGIN CART COLLATERALS -->
-        <div class="cart-collaterals row">
-          <div class="totals col-sm-4">
-            <h3>总计</h3>
-            <div class="inner">
-              <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
-               
-                <tfoot>
-                  <tr>
-                    <td colspan="1" class="a-left" style=""><strong>合计</strong></td>
-                    <td class="a-right" style=""><strong><span id="total_price" class="price">0</span>&nbsp;(元)</strong></td>
-                  </tr>
-				        	<tr>
-                    <td colspan="1" class="a-left" style=""><strong>数量</strong></td>
-                    <td class="a-right" style=""><strong><span id="total_num" class="price">0</span>&nbsp;(件)</strong></td>
-                  </tr>
-                </tfoot>
-              </table>    
-            </div>
-            <!--inner-->           
-          </div>
-        </div>
-        <button id="place_order_button" class="button btn-proceed-checkout" title="Proceed to Checkout" type="submit"><span>结算</span></button>
-		</form> 
-       
+  <!-- breadcrumbs -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="row">
+        <ul>
+
+        </ul>
       </div>
     </div>
   </div>
-</section>
-
+  <!-- End breadcrumbs --> 
+  <!-- Two columns content -->
+  <div class="main-container col2-left-layout">
+    <div class="main container">
+      <div class="row">
+        <section class="col-sm-9 col-sm-push-3">
+        <div class="col-main">
+         <div class="category-title">
+            <h1>商品订单</h1>
+          </div> 
+			<div class="dropdown">			
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			    订单类型
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+			    <li><a href="#">已完成的订单</a></li>
+			    <li><a href="#">待处理的商品订单</a></li>
+			    <li><a href="#">待处理的定制订单</a></li>
+			    <li><a href="#">待处理的拍卖订单</a></li>
+			  </ul>
+			</div>
+          
+          <div class="category-products">
+			<!-- 订单 -->
+			<div id="address" class="row">
+        	 <c:forEach items="" var="address">  
+        		<div id="${address.id}"  class="col-md-1  wrap">
+        		<div><c:out value="${address.province}${address.city}${address.region}"/>(<c:out value="${address.consignee}"/>)</div><hr/>
+        			<div><c:out value="${address.detailedAdress}"/></div>
+        			<div><button id="empty_cart_button" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>提交订单</span></span></button></div>
+        		</div>
+        	 </c:forEach>    
+				<div id="${address.id}"  class="col-md-1  wrap">
+        		<div>订单号</div><hr/>
+        			<div>商品名</div>
+        			<div>
+        				<button id="" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>发货</span></span></button>
+        				<button id="" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>详情</span></span></button>
+        				<button id="empty_cart_button" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>取消订单</span></span></button>
+        				
+        			</div>
+        		</div>    
+        		</div>
+        	<!--  -->
+          </div>
+		  </div>
+        </section>
+      </div>
+    </div>
+  </div>
+  <!-- End Two columns content --> 
+  
 </div>
 <div class="help_slider">
   <div class="text alignleft">Need Help?</div>
@@ -185,7 +167,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="slider-email active">
       <div id="messages_product_view"></div>
       <div id="formSuccess" style="display:none;">Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.</div>
-      <form action="#" id="contactForm1" method="post">
+      <form id="contactForm1" method="post">
         <div class="column sixty">
           <h2>TALK TO US</h2>
           <ul>
@@ -202,8 +184,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
             </li>
           </ul>
-
-            <p class="required">* Required Fields</p>
+		  <p class="required">* Required Fields</p>
         </div>
         <!--column sixty-->
         <div class="column fourty last">
@@ -226,13 +207,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <!--right-side-content hidden1-->
 </div>
 
+
 <!-- JavaScript --> 
 <script type="text/javascript" src="js/jquery.min.js"></script> 
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
-<script type="text/javascript" src="js/owl.carousel.min.js"></script> 
-<script type="text/javascript" src="js/frontside/user/shopping_cart.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

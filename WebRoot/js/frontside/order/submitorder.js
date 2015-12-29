@@ -4,15 +4,20 @@
 
 $(document).ready(function(){
 	onload();
+	$("#submitOrderBtn").bind("click", submitOrder);
 });
+
+function submitOrder()
+{
+	window.location.href = "CustomizationSubmitAction";
+}
 
 
 function onload()
 {
 	var rm = $.urlParam('artistrm');
 	var id = $.urlParam('artistid');
-//	alert(rm);
-//	alert("h");
+
 	$("#artistrm").attr("placeholder", rm);
 	$("#artistid").attr("value", id);
 }

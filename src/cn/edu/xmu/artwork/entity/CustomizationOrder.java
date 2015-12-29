@@ -42,18 +42,16 @@ import cn.edu.xmu.artwork.constants.IStrings;
 
 public class CustomizationOrder extends PurchaseOrder implements java.io.Serializable{
 
-	private Artist artist;
 	private String acceptState;
 	//private long id;
 	public CustomizationOrder(){
 		acceptState = IStrings.Customization_State_Uncheck;
 	}
 
-	public CustomizationOrder(Artist artist) {
+	public CustomizationOrder(String acceptState) {
 		super();
-		this.artist = artist;
+		this.acceptState = acceptState;
 	}
-
 
 	@Column(name="acceptState", length = 20)
 	public String getAcceptState() {
@@ -63,16 +61,5 @@ public class CustomizationOrder extends PurchaseOrder implements java.io.Seriali
 	public void setAcceptState(String acceptState) {
 		this.acceptState = acceptState;
 	}
-	
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "artist_id", nullable = false)
-	public Artist getArtist() {
-		return artist;
-	}
-	public void setArtist(Artist artist) {
-		this.artist = artist;
-	}
-
 
 }

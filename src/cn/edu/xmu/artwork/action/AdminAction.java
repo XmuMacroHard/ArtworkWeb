@@ -90,6 +90,26 @@ public class AdminAction extends ActionSupport {
 	//@Autowired
 	private List<Information> infoList;
 
+	private Commodity item;
+	
+	private List<Commodity> itemList;
+	
+	public Commodity getItem() {
+		return item;
+	}
+
+	public void setItem(Commodity item) {
+		this.item = item;
+	}
+
+	public List<Commodity> getItemList() {
+		return itemList;
+	}
+
+	public void setItemList(List<Commodity> itemList) {
+		this.itemList = itemList;
+	}
+
 	@Autowired
 	private IAdminService adminService;
 	
@@ -209,10 +229,9 @@ public class AdminAction extends ActionSupport {
 		try {
 			JSONObject jsobj = new JSONObject();
 			
-			System.out.println(user.getEmail());
-			adminService.UserBanning(user.getEmail());
+			adminService.UserBanning(user.getId());
 			
-			jsobj.put("email", user.getEmail());
+			jsobj.put("id", user.getId());
 			jsobj.put("success", "banning success");
 			setResult(jsobj.toString());
 		} catch (Exception e) {
@@ -238,15 +257,37 @@ public class AdminAction extends ActionSupport {
 		try {
 			JSONObject jsobj = new JSONObject();
 			
-			System.out.println(user.getEmail());
-			adminService.UserRelieve(user.getEmail());
+			adminService.UserRelieve(user.getId());
 			
-			jsobj.put("email", user.getEmail());
+			jsobj.put("id", user.getId());
 			jsobj.put("success", "relieve success");
 			setResult(jsobj.toString());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return "success";
+	}
+	
+	/**
+	 * 查看用户详情
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "ShowUserDetails",
+			results = {
+					@Result(name="success", location="/jsp/backstage/user_detail.jsp")
+			}
+			)
+	public String ShowUserDetails()
+	{
+		try {
+			user = adminService.ShowUserDetails(user.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ServletActionContext.getRequest().setAttribute("normaluser", user);
 		
 		return "success";
 	}
@@ -329,6 +370,29 @@ public class AdminAction extends ActionSupport {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		return "success";
+	}
+	
+	/**
+	 * 查看资讯详情
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "ShowInfoDetails",
+			results = {
+					@Result(name="success", location="/jsp/backstage/info_detail.jsp")
+			}
+			)
+	public String ShowInfoDetails()
+	{
+		try {
+			information = adminService.ShowInfoDetails(information.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ServletActionContext.getRequest().setAttribute("information", information);
 		
 		return "success";
 	}
@@ -468,5 +532,107 @@ public class AdminAction extends ActionSupport {
 			)
 	public String downloadFile() throws Exception {
         return "success";
-    } 
+    }
+	
+	/**
+	 * 显示所有商品列表
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "ShowAllItemList",
+			results = {
+					@Result(name="success", location="/jsp/backstage/item_list.jsp")
+			}
+			)
+	public String ShowAllItemList()
+	{
+		try {
+			itemList = adminService.ShowAllItemList();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ServletActionContext.getRequest().setAttribute("itemList", itemList);
+		
+		return "success";
+	}
+	
+	/**
+	 * 商品下架
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "ItemBanning",
+			results = {
+					@Result(name="success", type="json", params={"root", "result"})
+			}
+			)
+	public String ItemBanning()
+	{
+		try {
+			JSONObject jsobj = new JSONObject();
+			
+			adminService.ItemBanning(item.getId());
+			
+			jsobj.put("id", item.getId());
+			jsobj.put("success", "banning success");
+			setResult(jsobj.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}
+	
+	/**
+	 * 商品上架
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "ItemRelieve",
+			results = {
+					@Result(name="success", type="json", params={"root", "result"})
+			}
+			)
+	public String ItemRelieve()
+	{
+		try {
+			JSONObject jsobj = new JSONObject();
+			
+			adminService.ItemRelieve(item.getId());
+			
+			jsobj.put("id", item.getId());
+			jsobj.put("success", "banning success");
+			setResult(jsobj.toString());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "success";
+	}
+	
+	/**
+	 * 查看商品详情
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "ShowItemDetails",
+			results = {
+					@Result(name="success", location="/jsp/backstage/item_detail.jsp")
+			}
+			)
+	public String ShowItemDetails()
+	{
+		try {
+			item = adminService.ShowItemDetails(item.getId());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		ServletActionContext.getRequest().setAttribute("item", item);
+		
+		return "success";
+	}
 }

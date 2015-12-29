@@ -3,10 +3,10 @@
  */
 
 $(document).ready(function(){
-	onload();
+	onload(1);
 });
 
-function onload()
+function onload(nowpage)
 {
 	$.ajax({
 		type:'post',
@@ -16,7 +16,41 @@ function onload()
 		success:function(data){
 			var server_path = 'http://localhost:8080/ArtworkWeb';
 			var	artist = '';
+			var pages='';
 			var $artists = $('#products-list');
+			var $pageList = $('#page-list');
+			
+			$pageList.empty();
+			var pagesize=9;
+			var totalcount=data.length;
+			var totalpage=Math.ceil(totalcount/pagesize);
+			$pageList.empty();
+			if(nowpage!=1){
+				pages+="<li><a href=\"javascript:onload(1);\">&lt;&lt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+
+				");\">&lt;</a></li>";
+			}
+			for(var i=nowpage-2;i<=nowpage+2;i++){
+				if(i==nowpage){
+					pages+="<li class=\"active\"><a href=\"javascript:onload(" +i+
+						");\">"+i+"</a></li>";
+					}
+				else{
+					if(i>0&&i<=totalpage){
+						pages+="<li><a href=\"javascript:onload(" +i+
+						");\">"+i+"</a></li>";
+					}
+				}
+			}
+			if(nowpage!=totalpage){
+				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+
+				");\">&gt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(" +totalpage+
+				");\">&gt;&gt;</a></li>"
+			}
+			$pageList.append(pages);
+			
+			$artists.empty();
 			$.each(data, function(index, item){
 				artist += "<li class='item odd'>" +
                 "<div class='product-image'> <a href='findArtist?user.id=" + item.id +"' title='HTC Rhyme Sense'> <img class='small-image' src='" + server_path +item.portrait + "' alt='product-image' width='230'> </a> </div>" +

@@ -1,5 +1,6 @@
 package cn.edu.xmu.artwork.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
@@ -15,8 +16,10 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.dao.IUserDao;
+import cn.edu.xmu.artwork.entity.Admin;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
+import cn.edu.xmu.artwork.entity.Editor;
 import cn.edu.xmu.artwork.entity.User;
 
 @Repository
@@ -83,20 +86,37 @@ public class UserDao extends GenericDao implements IUserDao
 	}
 	
 	/**
+	 * 获取所有普通用户
+	 * @author asus1
+	 */
+	@Override
+	public List findAllNormal() {
+		List userList = findAll();
+		List normalUserList = new ArrayList();
+		
+		for(int i = 0; i < userList.size(); i++)
+		{
+			Object object = userList.get(i);
+			if(object instanceof Artist) continue;
+			else if(object instanceof Admin) continue;
+			else if(object instanceof Editor) continue;
+			else
+				normalUserList.add(object);
+		}
+		
+		return normalUserList;
+	}
+	
+	/**
 	 * 更新用户状态
 	 * @author asus1
 	 * @param userEmail
 	 * @param state
 	 */
-	public void updateUserState(String userEmail, String state)
+	public void updateUserState(long userId, String status)
 	{
-		System.out.println("in userDao");
-
-		String hql=String.format("update User user set user.isBanned = %s where user.email = %s", state, userEmail);
-		Query queryupdate= getSession().createQuery(hql);
+		Query queryupdate= getSession().getNamedQuery("User.updateStatus").setParameter("isBanned", status).setParameter("id", userId);
 		int ret=queryupdate.executeUpdate();
-		
-		System.out.println("in userDao + " + state);
 	}
 
 	public List<Artist> getArtistList()//获得所有艺术家列表

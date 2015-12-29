@@ -37,7 +37,15 @@ import javax.persistence.Table;
 		@NamedQuery(
 					name = "Commodity.getByAuthorId",
 					query = "from Commodity c where c.authorId = :authorid"
-				),
+			),
+		@NamedQuery(
+					name = "Commodity.updateStatus",
+					query = "update Commodity item set item.status = :status where item.id = :id"
+		),
+		@NamedQuery(
+					name = "Commodity.getAll",
+					query = "from Commodity"
+		),
 		@NamedQuery(
 					name="Commodity.getRecommendedCommodities",
 					query="from Commodity"
@@ -46,7 +54,6 @@ import javax.persistence.Table;
 					name="Commodity.getByOrderId",
 					query="from Commodity c where purchaseOrder_Id = :id"
 				)
-			
 })
 public class Commodity implements java.io.Serializable {
 
@@ -62,6 +69,7 @@ public class Commodity implements java.io.Serializable {
 	private String category;
 	private PurchaseOrder purchaseOrder;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
+	private String status; //商品状态
 	// Constructors
 
 	/** default constructor */
@@ -71,7 +79,7 @@ public class Commodity implements java.io.Serializable {
 	/** full constructor */
 	public Commodity(Long id, String name, String introduction, Float price,
 			Long authorId, String type, Boolean isBought, String category,
-			PurchaseOrder purchaseOrder_id, Set<CommodityPics> commodityPices) {
+			PurchaseOrder purchaseOrder_id, Set<CommodityPics> commodityPices, String status) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -83,6 +91,7 @@ public class Commodity implements java.io.Serializable {
 		this.category = category;
 		this.purchaseOrder= purchaseOrder_id;
 		this.commodityPices = commodityPices;
+		this.status = status;
 	}
 	
 	public void addPictures(List<String> picPaths)
@@ -189,6 +198,15 @@ public class Commodity implements java.io.Serializable {
 
 	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
 		this.purchaseOrder = purchaseOrder;
+	}
+
+	@Column(name = "status", nullable = false, length = 20)
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}
 	
 }

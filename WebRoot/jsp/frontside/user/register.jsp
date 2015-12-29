@@ -83,9 +83,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <s:submit id="submitbutton" cssClass="btn btn-primary pull-right" value="提交" onclick="CheckregisterSubmit()"/>
             </div>
              <div class="registerbox-caption">
-             <br>
-                <a href="jsp/frontside/user/login.jsp">返回登陆</a><br>
-				<a href="/ArtworkWeb/showInfoOnHomePage">返回首页</a>            
+                <a href="jsp/frontside/user/login.jsp">返回登陆</a>
+				<a href="/ArtworkWeb/showInfoOnHomePage">回到首页</a>            
             </div>
         </div>
     </div>

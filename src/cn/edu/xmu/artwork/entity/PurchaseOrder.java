@@ -49,6 +49,7 @@ public class PurchaseOrder implements java.io.Serializable {
 	private String state;
 
 	private User user;
+	private Artist artist;
 	private Date date;
 	private String address;
 	private Float totalprice;				//应付款
@@ -62,13 +63,14 @@ public class PurchaseOrder implements java.io.Serializable {
 
 	/** full constructor */
 	public PurchaseOrder(Long id, String orderid, String state, User user,
-			Date date, String address, Float totalprice, Float leftprice,
-			Set<Commodity> commodity, Set<Payment> payments) {
+			Artist artist, Date date, String address, Float totalprice,
+			Float leftprice, Set<Commodity> commodity, Set<Payment> payments) {
 		super();
 		this.id = id;
 		this.orderid = orderid;
 		this.state = state;
 		this.user = user;
+		this.artist = artist;
 		this.date = date;
 		this.address = address;
 		this.totalprice = totalprice;
@@ -98,7 +100,6 @@ public class PurchaseOrder implements java.io.Serializable {
 	public void setOrderid(String orderid) {
 		this.orderid = orderid;
 	}
-
 
 	@Column(name = "state", nullable = false, length = 10)
 	public String getState() {
@@ -172,5 +173,12 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.payments = payments;
 	}
 	
-	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "artist_id", nullable = false)
+	public Artist getArtist() {
+		return artist;
+	}
+	public void setArtist(Artist artist) {
+		this.artist = artist;
+	}
 }

@@ -4,17 +4,22 @@
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE html>
+<!--
+BeyondAdmin - Responsive Admin Dashboard Template build with Twitter Bootstrap 3.2.0
+Version: 1.0.0
+Purchase: http://wrapbootstrap.com
+-->
 
 <html xmlns="http://www.w3.org/1999/xhtml">
 <!-- Head -->
 <head>
 	<base href="<%=basePath%>">
     <meta charset="utf-8" />
-    <title>Form Layouts</title>
+    <title>Data Tables</title>
 
-    <meta name="description" content="form layouts" />
+    <meta name="description" content="data tables" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="shortcut icon" href="assets/img/favicon.png" type="image/x-icon">
@@ -35,40 +40,18 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <link href="assets/css/animate.min.css" rel="stylesheet" />
     <link id="skin-link" href="" rel="stylesheet" type="text/css" />
 
+    <!--Page Related styles-->
+    <link href="assets/css/dataTables.bootstrap.css" rel="stylesheet" />
+
     <!--Skin Script: Place this script in head to load scripts for skins and rtl support-->
     <script src="assets/js/skins.min.js"></script>
-     
-
+    
+    <!-- Ajax Script -->
+    <script type="text/javascript" src="js/ajax.admin.js"></script>
 </head>
 <!-- /Head -->
 <!-- Body -->
 <body>
-<% 
-	HashMap<String, String> colums = new HashMap<String, String>();
-	colums.put("painting","绘画专栏");
-	colums.put("calligraphy","书法专栏");
-	colums.put("sculpture","雕刻专栏");
-	colums.put("contemporary","当代工艺");
-	request.setAttribute("colums",colums);
-	
-	HashMap<String, String> locations = new HashMap<String, String>();
-	locations.put("adv_location1","广告栏一");
-	request.setAttribute("locations",locations);
-	
-	HashMap<Integer, String> poses1 = new HashMap<Integer, String>();
-	poses1.put(1, "1");
-	poses1.put(2, "2");
-	poses1.put(3, "3");
-	poses1.put(4, "4");
-	request.setAttribute("poses1",poses1);
-	
-	HashMap<Integer, String> poses2 = new HashMap<Integer, String>();
-	poses2.put(1, "1");
-	poses2.put(2, "2");
-	poses2.put(3, "3");
-	request.setAttribute("poses2",poses2);
-	
-%>
     <!-- Loading Container -->
     <div class="loading-container">
         <div class="loading-progress">
@@ -341,28 +324,41 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="sidebar-header-wrapper">
                     <input type="text" class="searchinput" />
                     <i class="searchicon fa fa-search"></i>
-                    <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
+                    <div class="searchhelper"></div>
                 </div>
                 <!-- /Page Sidebar Header -->
                 <!-- Sidebar Menu -->
                 <ul class="nav sidebar-menu">
                     <!--Dashboard-->
-                    <li class="active open">
-                        <a href="/ArtworkWeb/jsp/backstage/admin_submitAdvertise.jsp">
+                    <li>
+                        <a href="ShowAllUserList.action">
                             <i class="menu-icon glyphicon glyphicon-home"></i>
-                            <span class="menu-text"> 广告上传 </span>
+                            <span class="menu-text"> 用户管理 </span>
                             
                         </a>
                     </li>
                     <!--Databoxes-->
                     <li>
-                        <a href="/ArtworkWeb/jsp/backstage/admin_submitInfo.jsp">
+                        <a href="ShowAllArtistList.action">
                             <i class="menu-icon glyphicon glyphicon-tasks"></i>
-                            <span class="menu-text"> 资讯上传 </span>
+                            <span class="menu-text"> 艺术家管理 </span>
                         </a>
                     </li>
-                </ul>
-                <!-- /Sidebar Menu -->
+                    <!--Widgets-->
+                    <li class="active open">
+                        <a href="ShowAllItemList.action">
+                            <i class="menu-icon fa fa-th"></i>
+                            <span class="menu-text"> 商品管理 </span>
+                        </a>
+                    </li> 
+                    <!--Widgets-->
+                    <li>
+                        <a href="ShowAllInfoList.action">
+                            <i class="menu-icon fa fa-th"></i>
+                            <span class="menu-text"> 资讯管理 </span>
+                        </a>
+                    </li>      
+               </ul>
             </div>
             <!-- /Page Sidebar -->
             <!-- Page Content -->
@@ -371,112 +367,69 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="page-body">
                     <div class="row">
                         <div class="col-lg-12 col-sm-12 col-xs-12">
-                            <div class="row">
-                                <div class="col-lg-12 col-sm-12 col-xs-12">
-                                    <h5 class="row-title before-magenta"><i class="fa fa-edit magenta"></i>编辑广告</h5>
-                                    <div class="row">
-                                        <div class="col-lg-12 col-sm-12 col-xs-12">
-                                            <div class="widget flat radius-bordered">
-                                                <div class="widget-header bg-danger">
-                                                    <span class="widget-caption"></span>
-                                                </div>
-                                                <div class="widget-body">
-                                                    <div id="registration-form">
-                                                    <%
-  														long i = 1;
-  														session.setAttribute("userid", i);
-   													%>
-                                                        <form action="submitInfo" method="POST" enctype="multipart/form-data">
-                                                            <div class="form-title">
-                                                                	资讯
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputEmail2">广告名</label>
-                                                                        <span class="input-icon icon-right">
-                                                                            <s:textfield cssClass="form-control" name="information.title"/>
-                                                                            <i class="fa fa-envelope palegreen"></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                 <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                       <!--  <label for="exampleInputEmail2">上传图片</label> -->
-                                                                        <span class="input-icon icon-right">
-                                                                            <s:file name="pic" cssClass="form-control" label="uploadfile"/>
-                                                                        </span>
-                                                                    </div>
-                                                                </div> 
-                                                            </div>
-                                                             <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputEmail2">开始时间</label>
-                                                                        <div class="input-group">
-                                                							<!-- <input type="date" class="form-control date-picker" id="id-date-picker-1" name="information.startTime"/> -->
-                                                							<input class="form-control" id="id-date-picker-1" type="date" data-date-format="yyyy-mm-dd" name="information.startTime"/>
-                                                							<span class="input-group-addon">
-                                                    							<i class="fa fa-calendar"></i>
-                                                							</span>
-                                                						</div>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputEmail2">结束时间</label>
-                                                                        <div class="input-group">
-                                                							<!-- <input type="date" class="form-control" id="id-date-picker-1" name="information.endTime"/> --> 
-                                                							<input class="form-control" id="id-date-picker-1" type="date" data-date-format="yyyy-mm-dd" name="information.endTime"/> 
-                                                							<span class="input-group-addon">
-                                                    							<i class="fa fa-calendar"></i>
-                                                							</span>
-                                                						</div>
-                                                                    </div>
-                                                                </div>
-                                                            </div> 
-                                                            <div class="row">
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputEmail2">版块位置</label>
-                                                                        <span class="input-icon icon-right">
-                                                                            <s:select  style="width:100%;" name="datePos.location" list="#request.locations" listKey="key" listValue="value"/>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputEmail2">板内序号</label>
-                                                                        <span class="input-icon icon-right">
-                                                                            <s:select  style="width:100%;" name="datePos.pos" list="#request.poses1" listKey="key" listValue="value"/>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-6">
-                                                                    <div class="form-group">
-                                                                        <label for="exampleInputName2">价格</label>
-                                                                        <span class="input-icon icon-right">
-                                                                            <s:textfield cssClass="form-control" name="information.expense"/>
-                                                                            <i class="fa fa-calendar blue"></i>
-                                                                        </span>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <button type="submit" class="btn btn-danger">提交</button>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                            <div class="widget flat radius-bordered">
+                                <div class="widget-header bordered-bottom bordered-themeprimary">
+                                    <i class="widget-icon fa fa-text-width"></i>
+                                    <span class="widget-caption">商品详情</span>
+                                    <div class="widget-buttons">
+                                        <a href="#" data-action="refresh">
+                                            <i class="fa fa-undo"></i>
+                                        </a>
+                                        <a href="#" data-toggle="config">
+                                            <i class="fa fa-cog"></i>
+                                        </a>
+                                        <a href="#" data-toggle="maximize">
+                                            <i class="fa fa-expand"></i>
+                                        </a>
+                                        <a href="#" data-toggle="collapse">
+                                            <i class="fa fa-minus"></i>
+                                        </a>
+                                        <a href="#" data-toggle="dispose">
+                                            <i class="fa fa-times"></i>
+                                        </a>
+                                    </div><!--Widget Buttons-->
+                                </div><!--Widget Header-->
+                                <div class="widget-body">
+                                    <div class="widget-main no-padding">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th width="30%">类型</th>
+                                                    <th>信息</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>
+                                                                                                                                                                        基本信息<br/>
+                                                        <img src="/images/german.png"/>
+                                                    </td>
+                                                    <td>
+                                                    	<h1> ${item.name}</h1>
+                                                        <p>类型： ${item.category}</p>
+                                                        <p>分类： ${item.type}</p>
+                                                        <p>价格： ${item.price}</p>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>商品简介</td>
+                                                    <td>
+                                                        <p>${item.introduction}</p>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div><!--Widget Main Container-->
+                                </div><!--Widget Body-->
+                            </div><!--Widget-->
+                            <a onClick="javascript:history.back(-1);" class="btn btn-info" style="float:right">返回</a>
                         </div>
                     </div>
                 </div>
                 <!-- /Page Body -->
             </div>
             <!-- /Page Content -->
+            
         </div>
         <!-- /Page Container -->
         <!-- Main Container -->
@@ -484,33 +437,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
 
     <!--Basic Scripts-->
-	<script src="assets/js/jquery-2.0.3.min.js"></script>
-    <script src="assets/js/bootstrap.min.js"></script> 
+    <script src="assets/js/jquery-2.0.3.min.js"></script>
+    <script src="assets/js/bootstrap.min.js"></script>
 
     <!--Beyond Scripts-->
     <script src="assets/js/beyond.min.js"></script>
 
     <!--Page Related Scripts-->
-    <!--Jquery Select2-->
-    <script src="assets/js/select2/select2.js"></script>
-    <!--Bootstrap Tags Input-->
-    <script src="assets/js/tagsinput/bootstrap-tagsinput.js"></script>
-
-    <!--Bootstrap Date Picker-->
-    <script src="assets/js/datetime/bootstrap-datepicker.js"></script>
-    
+    <script src="assets/js/datatable/jquery.dataTables.min.js"></script>
+    <script src="assets/js/datatable/ZeroClipboard.js"></script>
+    <script src="assets/js/datatable/dataTables.tableTools.min.js"></script>
+    <script src="assets/js/datatable/dataTables.bootstrap.min.js"></script>
+    <script src="assets/js/datatable/datatables-init.js"></script>
+    <script>
+        InitiateSimpleDataTable.init();
+        InitiateEditableDataTable.init();
+        InitiateExpandableDataTable.init();
+        InitiateSearchableDataTable.init();
+    </script>
     <!--Google Analytics::Demo Only-->
     <script>
-    	//--Jquery Select2--
-        $("#e1").select2();
-        $("#e2").select2({
-            placeholder: "Select a State",
-            allowClear: true
-        });
-
-        //--Bootstrap Date Picker--
-        $('.date-picker').datepicker();
-    
         (function (i, s, o, g, r, a, m) {
             i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
                 (i[r].q = i[r].q || []).push(arguments)
@@ -525,4 +471,3 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </body>
 <!--  /Body -->
 </html>
-

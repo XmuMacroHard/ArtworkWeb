@@ -25,8 +25,10 @@ import cn.edu.xmu.artwork.dao.impl.ArtistDao;
 import cn.edu.xmu.artwork.dao.impl.PaymentDao;
 import cn.edu.xmu.artwork.dao.impl.PurchaseOrderDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
+import cn.edu.xmu.artwork.entity.Admin;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.Editor;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
@@ -117,6 +119,18 @@ public class UserService extends BasicService implements IUserService
 			resultJson.put(IResultCode.RESULT, IResultCode.ERROR);
 			resultJson.put(IResultCode.MESSAGE, IResultCode.LOGIN_ERROR_MESSAGE);
 		}
+		else if(resultUser instanceof Admin)
+		{
+			setSessionInBrower(IStrings.SESSION_USER, resultUser);
+			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_ADMIN);
+			resultJson.put(IResultCode.RESULT, IResultCode.ADMIN);
+		}
+		else if(resultUser instanceof Editor)
+		{
+			setSessionInBrower(IStrings.SESSION_USER, resultUser);
+			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_EDITOR);
+			resultJson.put(IResultCode.RESULT, IResultCode.EDITOR);
+		}
 		else if(resultUser instanceof Artist)
 		{
 			setSessionInBrower(IStrings.SESSION_USER, resultUser);
@@ -129,6 +143,7 @@ public class UserService extends BasicService implements IUserService
 			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_USER);
 			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);			
 		}
+		
 		return resultJson.toString();
 	}
 	
@@ -269,7 +284,8 @@ public class UserService extends BasicService implements IUserService
 	public List<Commodity> showMyCommodity()
 	{
 		//long id = getSessionInBrower("artwor_user");
-		List<Commodity> commodities = commodityDao.getAllByAuthorId((long)1);
+		Artist artist= (Artist)getSessionInBrower(IClientConstants.SESSION_USER);
+		List<Commodity> commodities = commodityDao.getAllByAuthorId(artist.getId());
 		for(Commodity commodity : commodities)
 		{
 			initializeObject(commodity.getCommodityPices());
@@ -352,9 +368,10 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public void recharge(float balance)
 	{
-		User user=userDao.findById(1L);
-		user.setBalance(user.getBalance()-balance);
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		user.setBalance(user.getBalance()+balance);
 		userDao.update(user);
+		setSessionInBrower(IStrings.SESSION_USER, user);
 	}
 
 

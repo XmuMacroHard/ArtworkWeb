@@ -18,7 +18,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 		query = "from Artist"
 	),
 	@NamedQuery(
-			name = "Artist.getArtist",
+			name = "Artist.getById",
 			query = "from Artist where id = :Id"
 	),
 	@NamedQuery(

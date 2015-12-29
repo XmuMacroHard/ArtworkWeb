@@ -32,6 +32,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.theme.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
+<link rel="stylesheet" href="css/my_frontside.css" type="text/css">
 
 <body>
 <div class="page">
@@ -41,85 +42,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <section class="main-container col1-layout">
   <div class="main container">
     <div class="col-main">
-      <div class="cart">     
+      <div class="cart">
       
-        <div class="page-title">
-          <h2>购物车</h2>
+         <div class="page-title">
+          
+         <h2>充值</h2>
         </div>
-        
-		 <form method="post" action="placeOrder" onsubmit="return checkplaceOrder()">
         <div class="table-responsive">
-            <!-- <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key"/> -->
-             <!-- <fieldset>  -->
-              <table class="data-table cart-table" id="shopping-cart-table">
-                
-                <thead>
-                  <tr class="first last">
-                  	<th rowspan="1"><input  id="chooseallcard" type="checkbox" value="全选"/>全选</th>
-                    <th rowspan="1">艺术品图</th>
-                    <th rowspan="1"><span class="nobr">艺术品名</span></th>                    
-                    <th colspan="1" class="a-center"><span class="nobr">价格</span></th>
-                    <th class="a-center" rowspan="1">&nbsp;</th>
-                  </tr>
-                </thead>
-                <tfoot>
-                  <tr class="first last">
-                    <td class="a-right last" colspan="50"><button onClick="{location.href='jsp/frontside/sale/home_sale.jsp'}" class="button btn-continue" title="Continue Shopping" type="button"><span><span>继续购物</span></span></button>
-                      <!-- <button class="button btn-update" title="Update Cart" value="update_qty" name="update_cart_action" type="submit"><span><span>刷新购物车</span></span></button></td> -->
-                      <!-- <button id="place_order_button" class="button btn-proceed-checkout" title="Proceed to Checkout" type="submit"><span>结算</span></button> -->
-                  </tr>
-                </tfoot>
-                <tbody>
-                <c:forEach items="${shoppingCart}" var="cartItem">
-                  <tr class="first odd">
-					          <td class="a-center"><input  name="commodityid" type="checkbox" value="${cartItem.commodity.id}"/></td>
-                    <td class="image">
-                     	<a class="product-image" title="Sample Product" href="product_detail.html">
-							         <c:set var="urlsNum" scope="page" value="1"/>  
-							         <c:forEach items="${cartItem.commodity.commodityPices}" var="pic">   		 	
-								          <c:if test = "${urlsNum == 1}">
-									         <img width="75" alt="Sample Product" src="${server_path}${pic.url}"> 
-									         <c:set var="urlsNum" scope="page" value="2"/>		
-								          </c:if>
-	                     	</c:forEach> 
-                    	</a> 
-                    </td>
-                    <td><h2 class="product-name"> <a href="getDetailedCommodity?commodity.id=${cartItem.commodity.id}"><c:out value="${cartItem.commodity.name}"/></a> </h2></td>
-                    <td class="a-right"><span class="cart-price"> <span id="${cartItem.commodity.id}" class="price"><c:out value="${cartItem.commodity.price}"/></span> </span></td>
-                    <td class="a-center last"><a class="button remove-item" title="Remove item" href="deleteFromCart.action?commodity.id=${cartItem.commodity.id}" onclick="return confirm('确定删除该商品？');">
-                    <span><span>Remove item</span></span></a></td>
-                  </tr>
-                </c:forEach>
-                </tbody>
-              </table>
-             <!-- </fieldset>  --> 
+			<div class="box payinfo"><span>账号余额<c:out value="${sessionScope.user.balance}"/></span></div>
+			<form action="Userrecharge" method="post" onsubmit="return checkrecharge()">
+			<div class="box">充值金额</div>
+			<div class="box"><input class="form-control" name="user.balance" onblur="checkrecharge()"/></div>
+			<span class="text-danger" id="RechargeTip"></span>
+			<div class="box"><button id="rechargeButton" type="submit" class="btn btn-info">确认充值</button></div>	
+			</form>		
         </div>
-        <!-- <button id="place_order_button" class="button btn-proceed-checkout" title="Proceed to Checkout" type="submit"><span>结算</span></button> -->
-        <!-- BEGIN CART COLLATERALS -->
-        <div class="cart-collaterals row">
-          <div class="totals col-sm-4">
-            <h3>总计</h3>
-            <div class="inner">
-              <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
-               
-                <tfoot>
-                  <tr>
-                    <td colspan="1" class="a-left" style=""><strong>合计</strong></td>
-                    <td class="a-right" style=""><strong><span id="total_price" class="price">0</span>&nbsp;(元)</strong></td>
-                  </tr>
-				        	<tr>
-                    <td colspan="1" class="a-left" style=""><strong>数量</strong></td>
-                    <td class="a-right" style=""><strong><span id="total_num" class="price">0</span>&nbsp;(件)</strong></td>
-                  </tr>
-                </tfoot>
-              </table>    
-            </div>
-            <!--inner-->           
-          </div>
-        </div>
-        <button id="place_order_button" class="button btn-proceed-checkout" title="Proceed to Checkout" type="submit"><span>结算</span></button>
-		</form> 
-       
+    
       </div>
     </div>
   </div>
@@ -231,8 +169,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
-<script type="text/javascript" src="js/owl.carousel.min.js"></script> 
-<script type="text/javascript" src="js/frontside/user/shopping_cart.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/frontside/pay/pay.js"></script> 
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

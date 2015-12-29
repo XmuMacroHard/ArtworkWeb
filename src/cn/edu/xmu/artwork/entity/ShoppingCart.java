@@ -23,12 +23,16 @@ import javax.persistence.Table;
 @NamedQueries({
 		@NamedQuery(
 			name = "ShoppingCart.getAllByUserId",
-			query = "from ShoppingCart"
+			query = "from ShoppingCart where userid = :userid"
 		),
 		@NamedQuery(
 				name = "ShoppingCart.getByUseridCommodityid",
 				query = "select s from ShoppingCart s inner join s.user u inner join s.commodity c where u.id = :userid and c.id = :commodityid"
-			)
+		),
+		@NamedQuery(
+				name = "ShoppingCart.deleteById",
+				query = "delete from ShoppingCart where commodityid = :commodityid and userid = :userid"
+		)
 })
 public class ShoppingCart implements java.io.Serializable {
 
