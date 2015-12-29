@@ -28,4 +28,7 @@ public interface ISaleService {
 	public boolean payPurchaseOrder(long id);
 	//按订单给款艺术家
 	public boolean payToArtistByPurchaseOrder(long id);
+	public JSONArray getAllOrderByState(String identification,String state);
+	public void getDetailPurchaseOrder(PurchaseOrder purchaseOrder);
+	public void dispatch(PurchaseOrder purchaseOrder);
 }

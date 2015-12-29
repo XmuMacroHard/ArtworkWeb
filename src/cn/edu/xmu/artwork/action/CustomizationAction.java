@@ -5,6 +5,9 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -16,6 +19,7 @@ import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.dao.IArtistDao;
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
@@ -34,7 +38,7 @@ import cn.edu.xmu.artwork.service.ISaleService;
 import cn.edu.xmu.artwork.service.IUserService;
 
 @Scope("prototype")
-@ParentPackage("struts-default")
+@ParentPackage("json-default")
 @Namespace(value="/")
 public class CustomizationAction extends ActionSupport{
 	private CustomizationOrder customization;
@@ -43,6 +47,9 @@ public class CustomizationAction extends ActionSupport{
 	private Commodity commodity;
 	private ShippingAddress address;
 	private PurchaseOrder purchaseOrder;
+	private JSONArray resultJsonArray;
+	private JSONObject resultJsonObject;
+	
 	@Autowired
 	private ICustomizeService customizeService;
 	@Autowired
@@ -93,11 +100,24 @@ public class CustomizationAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	@Action(value="getCustomizationsByArtistAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
-	public String getCustomizationsByArtist(){
-		int id = 1; // get from session;
-		List<CustomizationOrder> lists = customizeService.getCustomizationsByArtist(id);
-		setAttributeByRequest("informationList", lists);
+	/**
+	 * 根据前台需要，通过state来获取艺术家不同状态的买卖订单
+	 */
+	@Action(value="getArtistCusOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getPurchaseOrderBySate()
+	{		
+		resultJsonArray = customizeService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_ARTIST, purchaseOrder.getState());
+		return SUCCESS;
+	}	
+	
+	/**
+	 * 根据前台需要，通过state来获取普通用户不同状态的买卖订单
+	 * @return
+	 */
+	@Action(value="getUserCusOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getUserPurchaseOrderBySate()
+	{				
+		resultJsonArray = customizeService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_USER, purchaseOrder.getState());
 		return SUCCESS;
 	}
 
@@ -183,6 +203,22 @@ public class CustomizationAction extends ActionSupport{
 
 	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
 		this.purchaseOrder = purchaseOrder;
+	}
+
+	public JSONArray getResultJsonArray() {
+		return resultJsonArray;
+	}
+
+	public void setResultJsonArray(JSONArray resultJsonArray) {
+		this.resultJsonArray = resultJsonArray;
+	}
+
+	public JSONObject getResultJsonObject() {
+		return resultJsonObject;
+	}
+
+	public void setResultJsonObject(JSONObject resultJsonObject) {
+		this.resultJsonObject = resultJsonObject;
 	}
 	
 	

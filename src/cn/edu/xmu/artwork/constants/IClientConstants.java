@@ -8,5 +8,6 @@ public interface IClientConstants
 	String SESSION_VALUE_RANK_USER = "user";
 	String SESSION_VALUE_RANK_ARTIST = "artist";
 	
+	
 	String REQUEST_SHOPPING_CART = "shoppingCart";
 }

@@ -1,5 +1,4 @@
 
-/*
 package cn.edu.xmu.artwork.websocket;
 
 import java.io.IOException;
@@ -28,26 +27,24 @@ public class ChatServer
 	    throws IOException, InterruptedException {
 	   
 	    System.out.println("Received: " + message);	   	    
-	    for(Long key : UserPool.getUserPool().keySet())
+	    for(String key : UserPool.getUserPool().keySet())
 	    {
 	    	UserPool.getSession(key).getBasicRemote().sendText(message);
 	    }	    
 	  }
 	   
 	  @OnOpen
-	  public void onOpen(Long id, Session session) {
+	  public void onOpen(Session session) {
 	    System.out.println("Client connected");
-	    UserPool.add(id, session);	    
+	    UserPool.add(session);	    
 	  }
 	 
 	  @OnClose
-	  public void onClose(Long id, Session session) {
+	  public void onClose(Session session) {
 	    System.out.println("Connection closed");
-	    UserPool.remove(id);
+	    UserPool.remove(session);
 	  }
 	  
 	  
 
 }
-
-*/

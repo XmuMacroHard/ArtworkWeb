@@ -30,4 +30,5 @@ public interface IUserService {
 	public List<Artist> getRecommendedArtists();
 	public String alterpassword(User user,String newpassword);
 	public String alterinfo(User user,Artist artist);
+	public JSONArray getArtistFinishedOrder(String state);	
 }

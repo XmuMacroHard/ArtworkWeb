@@ -42,8 +42,6 @@ public class Payment {
 	private int state;      				//付款状态  0未付款 1 已付款
 	private Date date;      				//付款时间
 	
-	
-	
 	public Payment() {
 		state = 0;
 	}

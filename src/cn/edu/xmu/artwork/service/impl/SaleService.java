@@ -178,7 +178,9 @@ public class SaleService extends BasicService implements ISaleService
 	
 	public PurchaseOrder getPurchaseOrderByid(long id)
 	{
-		return purchaseOrderDao.findById(id);
+		PurchaseOrder order = purchaseOrderDao.findById(id);	
+		
+		return order;
 	}
 	
 
@@ -248,11 +250,60 @@ public class SaleService extends BasicService implements ISaleService
 		}
 	}
 	
+	/**
+	 * 根据当前identification（艺术家或用户或管理员） 和 需要的订单状态获取订单
+	 * @param identification
+	 * @param state
+	 * @return
+	 */
+	@Override
+	public JSONArray getAllOrderByState(String identification,String state) 
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		System.out.println(user.getId());
+		System.out.println(state);
+		System.out.println(identification);
+		List<PurchaseOrder> orders = purchaseOrderDao.getPurchaseOrderByState(identification, user.getId(), state);	
+				
+		String[] excludes = {ITableConstants.PURCHASE_ORDER_COMMODITY, ITableConstants.PURCHASE_ORDER_PAYMENTS, ITableConstants.PURCHASE_ORDER_SHIPPING_ADDRESS, ITableConstants.PURCHASE_ORDER_ARTIST, ITableConstants.PURCHASE_ORDER_USER};
+		System.out.println(jsonUtils.List2JsonArray(orders, excludes));
+		
+		return jsonUtils.List2JsonArray(orders, excludes);
+	}
 
 	@Override
 	public boolean payToArtistByPurchaseOrder(long id) {
 		// TODO Auto-generated method stub
 		return false;
 	}
-
+	
+	@Override
+	public void getDetailPurchaseOrder(PurchaseOrder purchaseOrder)
+	{
+		Long id = purchaseOrder.getId();
+		purchaseOrder = purchaseOrderDao.findById(id);
+		
+		for(Commodity commodity : purchaseOrder.getCommodity())
+		{
+			initializeObject(commodity.getCommodityPices());
+		}		
+		
+		initializeObject(purchaseOrder.getPayments());
+		initializeObject(purchaseOrder.getArtist());
+		initializeObject(purchaseOrder.getUser());
+		initializeObject(purchaseOrder.getShippingAddress());
+		
+		setAttributeByRequest("purchaseOrder", purchaseOrder);
+	}
+	
+	/**
+	 * 艺术家发货
+	 * @param purchaseOrder
+	 */
+	@Override
+	public void dispatch(PurchaseOrder purchaseOrder)
+	{
+		PurchaseOrder order = purchaseOrderDao.findById(purchaseOrder.getId());
+		order.setState(ITableConstants.PURCHASE_ORDER_STATUS_MAKE_SURE);		
+	}
 }

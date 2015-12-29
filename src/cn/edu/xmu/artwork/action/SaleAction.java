@@ -2,6 +2,7 @@ package cn.edu.xmu.artwork.action;
 
 
 import java.io.File;
+import java.lang.Thread.State;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,6 +59,7 @@ public class SaleAction extends ActionSupport
 	private List<String> picturesFileName;
 	private long pid;
 	private int nowpage;
+	private String detailToWho;										//决定订单详情跳转的界面
 
 	@Autowired
 	private ISaleService saleService;
@@ -90,6 +92,7 @@ public class SaleAction extends ActionSupport
 		
 		return IResultCode.SUCCESS;
 	}
+	
 	
 	/*
 	 * upload the information of the commodity
@@ -159,6 +162,62 @@ public class SaleAction extends ActionSupport
 		
 		return SUCCESS;
 	}
+	
+	
+	/**
+	 * 根据前台需要，通过state来获取艺术家不同状态的买卖订单
+	 */
+	@Action(value="getArtistPurchaseOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getPurchaseOrderBySate()
+	{		
+		resultJsonArray = saleService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_ARTIST, purchaseOrder.getState());
+		return SUCCESS;
+	}	
+	
+	/**
+	 * 根据前台需要，通过state来获取普通用户不同状态的买卖订单
+	 * @return
+	 */
+	@Action(value="getUserPurchaseOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	public String getUserPurchaseOrderBySate()
+	{				
+		resultJsonArray = saleService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_USER, purchaseOrder.getState());
+		return SUCCESS;
+	}
+	
+	/**
+	 * 根据订单id获取详细订单
+	 * @return
+	 */
+	@Action(value="getDetailPuchaseOrderToArtist", results={@Result(name="success", location="/jsp/frontside/artist/detail_purchase_order.jsp")})
+	public String getDetailPuchaseOrderToArtist()
+	{		
+		saleService.getDetailPurchaseOrder(purchaseOrder);
+		
+		return SUCCESS;
+	}	
+	
+	/**
+	 * 根据订单id获取详细订单
+	 * @return
+	 */
+	@Action(value="getDetailPuchaseOrderToUser", results={@Result(name="success", location="/jsp/frontside/user/detail_purchase_order.jsp")})
+	public String getDetailPuchaseOrderToUser()
+	{		
+		saleService.getDetailPurchaseOrder(purchaseOrder);
+		
+		return SUCCESS;
+	}	
+	
+	/**
+	 * 艺术家发货
+	 */
+	@Action(value="dispatch", results={@Result(name="success", location="/jsp/frontside/artist/my_purchase_order.jsp")})
+	public String dispatch()
+	{		
+		saleService.dispatch(purchaseOrder);		
+		return SUCCESS;
+	}	
 	
 	/**
 	 * 
@@ -265,6 +324,14 @@ public class SaleAction extends ActionSupport
 
 	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
 		this.purchaseOrder = purchaseOrder;
+	}
+
+	public String getDetailToWho() {
+		return detailToWho;
+	}
+
+	public void setDetailToWho(String detailToWho) {
+		this.detailToWho = detailToWho;
 	}
 	
 	

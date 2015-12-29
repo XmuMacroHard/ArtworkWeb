@@ -61,33 +61,129 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <section class="col-sm-9 col-sm-push-3">
         <div class="col-main">
-        
-         	<div class="dropdown">			
-			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-			    订单类型
-			    <span class="caret"></span>
-			  </button>
-			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '0');return false;">待付款</a></li>
-			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '1');return false;">待发货</a></li>
-			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '2');return false;">待收货</a></li>
-			    <li><a onclick="getOrderByType('getArtistPurchaseOrderByState', '3');return false;">已完成</a></li>
-			  </ul>
-			</div> 
-        
          <div class="category-title">
-         	<h2>商品订单</h2>
-            <h1 id = "orderTypeTitle">待付款</h1>
-            
+            <h1 id = "orderTypeTitle">订单号<br/><span><c:out value="${purchaseOrder.orderid}"/></span></h1>
           </div> 
+			
+          <hr/>
+          <!-- 买家 与卖家 -->
+          <div>买家:<c:out value="${purchaseOrder.user.email}"/></div>
+          <div>卖家:<c:out value="${purchaseOrder.artist.realName}"/></div>
+          <!--end 买家  与卖家 -->
+          <hr/>          
+          <!-- 收货地址 -->
+       	  <div>收获地址:<c:out value="${purchaseOrder.shippingAddress.province}${purchaseOrder.shippingAddress.city}${purchaseOrder.shippingAddress.region}"/></div>
+          <div>收获人:<c:out value="${purchaseOrder.shippingAddress.consignee}"/></div>
+          <div>收获人电话:<c:out value="${purchaseOrder.shippingAddress.phone}"/></div> 
+          <!--end 收货地址 -->
+          <hr/>
           
-          <div id="orderList" class="category-products">
-          
-			<!-- 订单 -->
-			<!-- 订单 here -->
-        		
-        	<!--end 订单  -->
+          <c:if test = "${purchaseOrder.state != '4'}">
+          <!-- 买家付款状态 -->
+            <div class="category-products">
+          	        <div class="table-responsive">
+             <!-- <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key"/> -->
+             <!-- <fieldset>  -->
+              <table class="data-table cart-table" id="shopping-cart-table">
+                
+                <thead>
+                  <tr class="first last">
+                    <th rowspan="1">分期付款</th>
+                    <th rowspan="1"><span class="nobr">付款金额</span></th>                    
+                    <th colspan="1" class="a-center"><span class="nobr">付款状态</span></th>
+                  </tr>
+                </thead>
+                <tbody>
+                <c:set var="paymentNum" scope = "page" value="1"/>
+                <c:forEach items="${purchaseOrder.payments}" var="payment" >
+                  <tr class="first odd">
+                    <td class="a-right"><span class="cart-price"> <span class="price">第<c:out value="${paymentNum}"/>次支付</span> </span></td>
+                    <td class="a-right"><span class="cart-price"> <span class="price"><c:out value="${payment.money}"/></span> </span></td>
+                    <td class="a-right">
+                    	<span class="cart-price">
+                    		<c:if test="${payment.state == 1}"> 
+                    		<span class="price">已付款</span>
+                    		</c:if>
+							<c:if test="${payment.state == 0}"> 
+                    		<span class="price">未付款</span>
+                    		</c:if>
+                    	</span>
+                    </td>
+                  </tr>
+                </c:forEach>
+                </tbody>
+              </table>
+             <!-- </fieldset>  --> 
+        	</div>        	
+        	</div>
+          <!-- 买家付款状态 -->          
+          </c:if>
+          <hr/>
+          <!-- 商品详情 -->
+          <div class="category-products">
+          	        <div class="table-responsive">
+             <!-- <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key"/> -->
+             <!-- <fieldset>  -->
+              <table class="data-table cart-table" id="shopping-cart-table">
+                
+                <thead>
+                  <tr class="first last">
+                    <th rowspan="1">艺术品图</th>
+                    <th rowspan="1"><span class="nobr">艺术品名</span></th>                    
+                    <th colspan="1" class="a-center"><span class="nobr">价格</span></th>
+                  </tr>
+                </thead>
+                <tfoot>
+                  <tr class="first last">
+                    <td class="a-right last" colspan="50">
+                      <button onClick="{location.href='jsp/frontside/artist/my_purchase_order.jsp'}" class="button btn-continue" title="Continue Shopping" type="button"><span><span>返回</span></span></button>
+					  <c:choose>
+					  	<c:when test="${purchaseOrder.state == '0'}">
+					  	</c:when> 
+						<c:when test="${purchaseOrder.state == '1'}">
+							<button id="empty_cart_button" class="button btn-empty" onClick="{location.href='dispatch'}" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>发货</span></span></button> 
+					  	</c:when>
+					  	<c:when test="${purchaseOrder.state == '2'}">
+					  	</c:when> 		
+					  	<c:when test="${purchaseOrder.state == '3'}">
+					  	</c:when>
+						<c:when test="${purchaseOrder.state == '4'}">	<!-- 待接受 -->
+							<button id="" class="button btn-empty" onClick="{location.href=''}" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>拒绝订单</span></span></button>
+							<button id="" class="button btn-empty" onClick="{location.href=''}" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>接受订单</span></span></button>
+					  	</c:when> 							  				  	 
+					  </c:choose>                   
+                  </tr>
+                </tfoot>
+                <tbody>
+                <c:forEach items="${purchaseOrder.commodity}" var="commodity">
+                  <tr class="first odd">
+                    <td class="image">
+                     	<a class="product-image" title="Sample Product" href="product_detail.html">
+							         <c:set var="urlsNum" scope="page" value="1"/>  
+							         <c:forEach items="${commodity.commodityPices}" var="pic">   		 	
+								          <c:if test = "${urlsNum == 1}">
+									         <img width="75" alt="Sample Product" src="${server_path}${pic.url}"> 
+									         <c:set var="urlsNum" scope="page" value="2"/>		
+								          </c:if>
+	                     	</c:forEach> 
+                    	</a> 
+                    </td>
+                    <td><h2 class="product-name"> <a href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a> </h2></td>
+                    <td class="a-right"><span class="cart-price"> <span id="${commodity.id}" class="price"><c:out value="${commodity.price}"/></span> </span></td>
+                  </tr>
+                </c:forEach>
+                </tbody>
+              </table>
+             <!-- </fieldset>  --> 
+        </div>
+			
           </div>
+           <!--end 商品详情 -->
+           
+           <!-- 按钮 -->
+           
+           <!--end 按钮 -->
+           
 		  </div>
         </section>
       </div>
@@ -202,7 +298,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/frontside/artist/my_purchase_order.js"></script>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

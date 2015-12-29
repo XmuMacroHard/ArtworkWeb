@@ -9,14 +9,14 @@ $(document).ready(function(){
 
 function onload()
 {
-	getOrderByType("getArtistPurchaseOrderByState", "0");
+	getCustomizationOrderByType("getArtistCusOrderByState", "0");
 }
 
-//获得待处理的商品订单
+
 //action 请求 
 //type 这里没有订单类型，因为不同种类订单的action不同
 //state 订单状态
-function getOrderByType(action, state)
+function getCustomizationOrderByType(action, state)
 {
 	if(state == "0")
 	{
@@ -34,7 +34,10 @@ function getOrderByType(action, state)
 	{
 		$("#orderTypeTitle").text("已完成");
 	}
-
+	else if(state == "4")
+	{
+		$("#orderTypeTitle").text("待接受");
+	}
 	
 	$.ajax({
 		type:"post",
@@ -51,13 +54,13 @@ function getOrderByType(action, state)
 			{
 				list += "<div id='address' class='row'>" +    
 				"<div id=''  class='col-md-1  orderwrap'>" +
-        		"<div>订单号:" + item.orderid + "</div><hr/>" +
-        			"<div>" +
-        				"<button onclick='detail("+ item.id +")' class='button btn-empty' title='Clear Cart' value='empty_cart' name='update_cart_action' type='submit'><span><span>详情</span></span></button>" +
-        				"<button id='empty_cart_button' class='button btn-empty' title='Clear Cart' value='empty_cart' name='update_cart_action' type='submit'><span><span>取消订单</span></span></button>" +        				
-        			"</div>" +
-        		"</div>" +    
-        		"</div> ";
+      		"<div>订单号:" + item.orderid + "</div><hr/>" +
+      			"<div>" +
+      				"<button onclick='detail("+ item.id +")'  class='button btn-empty' title='Clear Cart' value='empty_cart' name='update_cart_action' type='submit'><span><span>详情</span></span></button>" +
+      				"<button id='empty_cart_button' class='button btn-empty' title='Clear Cart' value='empty_cart' name='update_cart_action' type='submit'><span><span>取消订单</span></span></button>" +        				
+      			"</div>" +
+      		"</div>" +    
+      		"</div> ";
 			});
 			
 			$orderList.append(list);
@@ -66,8 +69,8 @@ function getOrderByType(action, state)
 	});
 }
 
+
 function detail(id)
 {
 	window.location.href="getDetailPuchaseOrderToArtist?purchaseOrder.id=" + id;
 }
-

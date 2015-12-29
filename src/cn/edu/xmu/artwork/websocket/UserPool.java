@@ -1,4 +1,4 @@
-/*
+
 package cn.edu.xmu.artwork.websocket;
 
 import java.util.HashMap;
@@ -9,29 +9,26 @@ import javax.websocket.Session;
 
 public class UserPool 
 {
-	public static Map<Long, Object> USER_POOL = new HashMap<Long, Object>();
+	public static Map<String, Object> USER_POOL = new HashMap<String, Object>();
 	
-	public static void add(long id, Session session)
+	public static void add(Session session)
 	{
-		USER_POOL.put(id, session);
+		USER_POOL.put(session.getId(), session);
 	}
 	
-	public static void remove(long id)
+	public static void remove(Session session)
 	{
-		USER_POOL.remove(id);
+		USER_POOL.remove(session.getId());
 	}
 	
-	public static Session getSession(Long sessionId)
+	public static Session getSession(String id)
 	{
-		return (Session)USER_POOL.get(sessionId);
+		return (Session)USER_POOL.get(id);
 	}
 	
-	public static Map<Long, Object> getUserPool()
+	public static Map<String, Object> getUserPool()
 	{
 		return USER_POOL;
 	}
 	
-	
 }
-
-*/

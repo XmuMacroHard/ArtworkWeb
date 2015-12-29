@@ -1,5 +1,6 @@
 package cn.edu.xmu.artwork.dao.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.User;
 
 @Repository
@@ -151,6 +153,7 @@ public class UserDao extends GenericDao implements IUserDao
 		}
 		return list;
 	}
+	
 	
 	/**
 	 * 艺术家认证资料提交
