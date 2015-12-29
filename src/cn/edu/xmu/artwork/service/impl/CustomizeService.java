@@ -46,11 +46,15 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 	private IAddressDao addressDao;
 	
 	@Override
+
 	public void addCustomization(long artist_id, ShippingAddress address ,Commodity commodity) 
 	{
-						
-		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
-		Artist artist = artistDao.findById(artist_id);
+		long user_id = 1;
+		
+		User user = new User();
+		user.setId(user_id);
+		Artist artist = new Artist();
+		artist.setId(artist_id);
 		
 		CustomizationOrder customizationOrder = new CustomizationOrder();
 		

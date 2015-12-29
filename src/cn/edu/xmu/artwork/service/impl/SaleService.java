@@ -221,6 +221,7 @@ public class SaleService extends BasicService implements ISaleService
 		
 		setAttributeByRequest("totalprice", allprice);
 		setAttributeByRequest("purchaseOrderId", purchaseOrderId);
+
 	}
 	
 	public PurchaseOrder getPurchaseOrderByid(long id)

@@ -1,9 +1,7 @@
 package cn.edu.xmu.artwork.action;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -11,15 +9,10 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
-import cn.edu.xmu.artwork.dao.IArtistDao;
-import cn.edu.xmu.artwork.dao.ICustomizationDao;
-import cn.edu.xmu.artwork.dao.IUserDao;
-import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
@@ -49,8 +42,6 @@ public class CustomizationAction extends ActionSupport{
 	private IUserService userService;
 	@Autowired
 	private ISaleService saleService;
-	@Autowired
-	private ICustomizationDao customizationDao;
 	
 	/**
 	 * 发起定制，进入定制界面
@@ -71,7 +62,7 @@ public class CustomizationAction extends ActionSupport{
 	}
 	
 	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
-	public String setCustomizationPaymentAction()
+	public String setCustomizationPayment()
 	{
 		long id = 2;
 		List<Payment> payments = new ArrayList<Payment>();
