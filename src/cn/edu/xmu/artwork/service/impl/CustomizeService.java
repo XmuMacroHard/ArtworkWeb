@@ -1,6 +1,7 @@
 package cn.edu.xmu.artwork.service.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -170,13 +171,24 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 	}
 
 	@Override
-	public void setPaymentOfCustomization(long id, List<Payment> payments) {
+	public void setPaymentOfCustomization(long id, List<Float> moneys, List<Date> dates) 
+	{
+		List<Payment> payments = new ArrayList<Payment>();
+		for(int i = 0; i < moneys.size(); i++)
+		{
+			Payment payment = new Payment();
+			payment.setMoney(moneys.get(i));
+			payment.setDate(dates.get(i));
+			payments.add(payment);
+		}
+		
 		CustomizationOrder customizationOrder  = customizationDao.findById(id);	
 		for(Payment payment: payments)
 			{
 				payment.setPurchaseOrder(customizationOrder);
 				customizationOrder.getPayments().add(payment);
 			}
+		customizationOrder.setState(ITableConstants.PURCHASE_ORDER_STATUS_PAID);
 	}
 	
 	/**

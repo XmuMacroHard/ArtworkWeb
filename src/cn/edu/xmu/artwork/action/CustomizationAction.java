@@ -1,6 +1,7 @@
 package cn.edu.xmu.artwork.action;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -41,6 +42,9 @@ public class CustomizationAction extends ActionSupport{
 	private JSONArray resultJsonArray;
 	private JSONObject resultJsonObject;
 	
+	private List<Float> moneys;
+	private List<Date> dates;
+	
 	@Autowired
 	private ICustomizeService customizeService;
 	@Autowired
@@ -66,18 +70,14 @@ public class CustomizationAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	/**
+	 * 艺术家设置订单的分期付款价格
+	 * @return
+	 */
+	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/frontside/artist/my_customization_order.jsp")})
 	public String setCustomizationPayment()
 	{
-		long id = 2;
-		List<Payment> payments = new ArrayList<Payment>();
-		Payment payment = new Payment();
-		payment.setMoney((float) 100);
-		Payment payment2 = new Payment();
-		payment2.setMoney((float) 100);
-		payments.add(payment);
-		payments.add(payment2);
-		customizeService.setPaymentOfCustomization(id, payments);
+		customizeService.setPaymentOfCustomization(purchaseOrder.getId(), moneys, dates);
 		return SUCCESS;
 	}
 	
@@ -208,6 +208,22 @@ public class CustomizationAction extends ActionSupport{
 
 	public void setResultJsonObject(JSONObject resultJsonObject) {
 		this.resultJsonObject = resultJsonObject;
+	}
+
+	public List<Float> getMoneys() {
+		return moneys;
+	}
+
+	public void setMoneys(List<Float> moneys) {
+		this.moneys = moneys;
+	}
+
+	public List<Date> getDates() {
+		return dates;
+	}
+
+	public void setDates(List<Date> dates) {
+		this.dates = dates;
 	}
 	
 	

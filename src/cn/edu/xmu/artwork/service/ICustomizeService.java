@@ -1,5 +1,6 @@
 package cn.edu.xmu.artwork.service;
 
+import java.util.Date;
 import java.util.List;
 
 import net.sf.json.JSONArray;
@@ -20,7 +21,7 @@ public interface ICustomizeService {
 	public boolean rejuectCustomization(long id);
 	public boolean changeCustomizationArtworkToCommodity(long id);
 	//设置订单的付款
-	public void setPaymentOfCustomization(long id, List<Payment> payments);
+	public void setPaymentOfCustomization(long id, List<Float> moneys, List<Date> dates);
 	public void placeCustomization(Artist artist);
 	public JSONArray getAllOrderByState(String identification,String state);
 
