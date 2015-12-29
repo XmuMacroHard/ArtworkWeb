@@ -3,6 +3,7 @@
 <struts>
 	
 	<constant name="struts.action.excludePattern" value="/websocket"></constant>
+	<constant name="struts.action.excludePattern" value="/echo"></constant>
 	
     <package name="struts2" namespace="/" extends="struts-default">
         

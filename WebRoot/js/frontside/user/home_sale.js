@@ -6,12 +6,16 @@ $(document).ready(function(){
 	onload(1);
 });
 
+document.getElementById('country').onchange=function(){
+	onload(1);
+}
 function onload(nowpage)
 {
+	var country=document.getElementById("country").value;
 	$.ajax({
 		type:"post",
 		url:"showCommodityList",
-		data:{"commodity.type":"calligraphy"},
+		data:{"commodity.type":country},
 		dataType:"json",
 		success:function(data){
 			var server_path = "http://localhost:8080/ArtworkWeb";

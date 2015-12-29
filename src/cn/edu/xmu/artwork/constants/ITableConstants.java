@@ -49,4 +49,7 @@ public interface ITableConstants
 	String ARTIST_SHOPPING_CART = "shoppingCarts";
 	String ARTIST_CUSTOMIZATION = "customizations";
 	
+	/*Commodity*/
+	String COMMODITY_IS_BAN = "0";
+	String COMMODITY_IS_NOBAN = "1";
 }

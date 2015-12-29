@@ -72,9 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!--end 买家  与卖家 -->
           <hr/>          
           <!-- 收货地址 -->
-       	  <div>收获地址:<c:out value="${purchaseOrder.shippingAddress.province}${purchaseOrder.shippingAddress.city}${purchaseOrder.shippingAddress.region}"/></div>
-          <div>收获人:<c:out value="${purchaseOrder.shippingAddress.consignee}"/></div>
-          <div>收获人电话:<c:out value="${purchaseOrder.shippingAddress.phone}"/></div> 
+       	  <div>地址详情:<c:out value="${purchaseOrder.address}"/></div> 
           <!--end 收货地址 -->
           <hr/>
           

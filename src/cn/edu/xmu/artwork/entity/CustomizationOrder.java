@@ -46,6 +46,10 @@ public class CustomizationOrder extends PurchaseOrder implements java.io.Seriali
 		acceptState = IStrings.Customization_State_Uncheck;
 	}
 
+	public CustomizationOrder(String acceptState) {
+		super();
+		this.acceptState = acceptState;
+	}
 
 	@Column(name="acceptState", length = 20)
 	public String getAcceptState() {

@@ -1,9 +1,7 @@
 package cn.edu.xmu.artwork.action;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
@@ -14,24 +12,17 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Scope;
 
 import com.opensymphony.xwork2.ActionSupport;
 
 import cn.edu.xmu.artwork.constants.IClientConstants;
-import cn.edu.xmu.artwork.dao.IArtistDao;
-import cn.edu.xmu.artwork.dao.ICustomizationDao;
-import cn.edu.xmu.artwork.dao.IUserDao;
-import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
-import cn.edu.xmu.artwork.entity.Htest;
 import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
-import cn.edu.xmu.artwork.entity.Test;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 import cn.edu.xmu.artwork.service.ISaleService;
@@ -56,8 +47,6 @@ public class CustomizationAction extends ActionSupport{
 	private IUserService userService;
 	@Autowired
 	private ISaleService saleService;
-	@Autowired
-	private ICustomizationDao customizationDao;
 	
 	/**
 	 * 发起定制，进入定制界面
@@ -78,7 +67,7 @@ public class CustomizationAction extends ActionSupport{
 	}
 	
 	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
-	public String setCustomizationPaymentAction()
+	public String setCustomizationPayment()
 	{
 		long id = 2;
 		List<Payment> payments = new ArrayList<Payment>();

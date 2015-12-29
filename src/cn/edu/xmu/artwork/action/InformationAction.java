@@ -108,6 +108,7 @@ public class InformationAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	
 	private void setAttributeByRequest(String key, Object value)
 	{
 		ServletActionContext.getRequest().setAttribute(key, value);

@@ -20,7 +20,8 @@ public interface ISaleService {
 	public Commodity getCommodityById(long commodityId);
 	public void uploadCommodity(Commodity commodity, List<String> picPaths);
 	public JSONObject addToCart(Commodity commodity, User buyer);
-	public void SubmitsaleOrder(User user,List<Long> commodityid,ShippingAddress shippingAddress);
+	public void deleteFromCart(Commodity commodity);
+	public void SubmitsaleOrder(List<Long> commodityid,ShippingAddress shippingAddress);
 	public PurchaseOrder getPurchaseOrderByid(long id);
 	public List<Commodity> getRecommendedCommodity();
 	public void placeOrder(List<Long> commodityids);

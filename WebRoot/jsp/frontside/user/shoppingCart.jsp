@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <h2>购物车</h2>
         </div>
         
-		 <form method="post" action="placeOrder"> 
+		 <form method="post" action="placeOrder" onsubmit="return checkplaceOrder()">
         <div class="table-responsive">
             <!-- <input type="hidden" value="Vwww7itR3zQFe86m" name="form_key"/> -->
              <!-- <fieldset>  -->
@@ -55,7 +55,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                 <thead>
                   <tr class="first last">
-                  	<th rowspan="1"></th>
+                  	<th rowspan="1"><input  id="chooseallcard" type="checkbox" value="全选"/>全选</th>
                     <th rowspan="1">艺术品图</th>
                     <th rowspan="1"><span class="nobr">艺术品名</span></th>                    
                     <th colspan="1" class="a-center"><span class="nobr">价格</span></th>
@@ -65,7 +65,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tfoot>
                   <tr class="first last">
                     <td class="a-right last" colspan="50"><button onClick="{location.href='jsp/frontside/sale/home_sale.jsp'}" class="button btn-continue" title="Continue Shopping" type="button"><span><span>继续购物</span></span></button>
-                      <button id="empty_cart_button" class="button btn-empty" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>清空购物车</span></span></button>
                       <!-- <button class="button btn-update" title="Update Cart" value="update_qty" name="update_cart_action" type="submit"><span><span>刷新购物车</span></span></button></td> -->
                       <!-- <button id="place_order_button" class="button btn-proceed-checkout" title="Proceed to Checkout" type="submit"><span>结算</span></button> -->
                   </tr>
@@ -87,7 +86,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </td>
                     <td><h2 class="product-name"> <a href="getDetailedCommodity?commodity.id=${cartItem.commodity.id}"><c:out value="${cartItem.commodity.name}"/></a> </h2></td>
                     <td class="a-right"><span class="cart-price"> <span id="${cartItem.commodity.id}" class="price"><c:out value="${cartItem.commodity.price}"/></span> </span></td>
-                    <td class="a-center last"><a class="button remove-item" title="Remove item" href="#"><span><span>Remove item</span></span></a></td>
+                    <td class="a-center last"><a class="button remove-item" title="Remove item" href="deleteFromCart.action?commodity.id=${cartItem.commodity.id}" onclick="return confirm('确定删除该商品？');">
+                    <span><span>Remove item</span></span></a></td>
                   </tr>
                 </c:forEach>
                 </tbody>
@@ -105,11 +105,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tfoot>
                   <tr>
                     <td colspan="1" class="a-left" style=""><strong>合计</strong></td>
-                    <td class="a-right" style=""><strong><span id="total_price" class="price">0</span>&nbsp(元)</strong></td>
+                    <td class="a-right" style=""><strong><span id="total_price" class="price">0</span>&nbsp;(元)</strong></td>
                   </tr>
 				        	<tr>
                     <td colspan="1" class="a-left" style=""><strong>数量</strong></td>
-                    <td class="a-right" style=""><strong><span id="total_num" class="price">0</span>&nbsp(件)</strong></td>
+                    <td class="a-right" style=""><strong><span id="total_num" class="price">0</span>&nbsp;(件)</strong></td>
                   </tr>
                 </tfoot>
               </table>    

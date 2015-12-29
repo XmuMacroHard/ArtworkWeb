@@ -45,6 +45,4 @@ public class ChatServer
 	    UserPool.remove(session);
 	  }
 	  
-	  
-
 }

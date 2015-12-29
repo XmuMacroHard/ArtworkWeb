@@ -117,14 +117,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 </div>
                 <div class="pages">
                   <label>Page:</label>
-                  <ul class="pagination">
-                    <li><a href="#">&laquo;</a></li>
-                    <li class="active"><a href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a href="#">3</a></li>
-                    <li><a href="#">4</a></li>
-                    <li><a href="#">5</a></li>
-                    <li><a href="#">&raquo;</a></li>
+                  <ul class="pagination" id="page-list">
                   </ul>
                 </div>
               </div>
@@ -132,6 +125,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             
             <!-- artist list -->
             <ol id="products-list" class="products-list">
+            </ol>
+          </div></div>
+        </section>
+        <aside class="col-left sidebar col-sm-3 col-xs-12 col-sm-pull-9 wow bounceInUp animated">
+          <div class="side-nav-categories">
+            <div class="block-title"> Categories </div>
+            <div class="box-content box-category">
+              <ul id="magicat">
+          
                <li class="item odd">
                 <div class="product-image"> <a href="product_detail.html" title="HTC Rhyme Sense"> <img class="small-image" src="products-images/product1.jpg" alt="product-image" width="230"> </a> </div>
                 <div class="product-shop">
@@ -157,16 +159,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <button class="button btn-cart ajx-cart" title="Add to Cart" type="button"><span>Add to Cart</span></button>
                     <span class="add-to-links"> <a title="Add to Wishlist" class="button link-wishlist" href="wishlist.html"><span>Add to Wishlist</span></a> <a title="Add to Compare" class="button link-compare" href="#"><span>Add to Compare</span></a> </span> </div>
                 </div>
-              </li> 
-            </ol>
-          </div></div>
-        </section>
-        <aside class="col-left sidebar col-sm-3 col-xs-12 col-sm-pull-9 wow bounceInUp animated">
-          <div class="side-nav-categories">
-            <div class="block-title"> Categories </div>
-            <div class="box-content box-category">
-              <ul id="magicat">
-                <li class="level0- level0 open"> <span class="magicat-cat"><a href="#fashion.html"><span>Women</span></a></span>
+              </li>       <li class="level0- level0 open"> <span class="magicat-cat"><a href="#fashion.html"><span>Women</span></a></span>
                   <ul style="display: none;">
                     <li class="first level1- level1 open"> <span class="magicat-cat"><a href="#new-in.html"><span>New In</span></a></span>
                       <ul style="display: none;">

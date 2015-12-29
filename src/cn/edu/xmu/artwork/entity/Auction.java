@@ -21,22 +21,24 @@ import org.apache.commons.validator.routines.DateValidator;
 @Entity
 @Table(name = "auction", catalog = "artworkdb")
 public class Auction implements java.io.Serializable {
-	private long id;
+	private Long id;
 	private Date startTime;
 	private Date endTime;
-	//private Set<AuctionDate> dates;
 	private Commodity commodity;
-	private float startPrice;
-	private float currentPrice;
-	private float limit;
+	private Float startPrice;
+	private Float currentPrice;
+	private Float limitPerBid;
 	private User user;
 	private String state;   //拍卖状态
 	
 	public Auction(){
 	}
 	
-	public Auction(long id, Date startTime, Date endTime, Commodity commodity,
-			float startPrice, float currentPrice, float limit, User user,
+
+
+
+	public Auction(Long id, Date startTime, Date endTime, Commodity commodity,
+			Float startPrice, Float currentPrice, Float limitPerBid, User user,
 			String state) {
 		super();
 		this.id = id;
@@ -45,24 +47,25 @@ public class Auction implements java.io.Serializable {
 		this.commodity = commodity;
 		this.startPrice = startPrice;
 		this.currentPrice = currentPrice;
-		this.limit = limit;
+		this.limitPerBid = limitPerBid;
 		this.user = user;
 		this.state = state;
 	}
 
 
 
+
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 	@Column(name = "id", unique = true, nullable = false)
-	public long getId() {
+	public Long getId() {
 		return id;
 	}
-	public void setId(long id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 	
-	
+	@Column(name = "startTime", length=20)
 	public Date getStartTime() {
 		return startTime;
 	}
@@ -70,6 +73,7 @@ public class Auction implements java.io.Serializable {
 		this.startTime = startTime;
 	}
 	
+	@Column(name = "endTime", length=20)
 	public Date getEndTime() {
 		return endTime;
 	}
@@ -77,7 +81,7 @@ public class Auction implements java.io.Serializable {
 		this.endTime = endTime;
 	}
 	
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name ="commodity_id")
 	public Commodity getCommodity() {
 		return commodity;
@@ -85,30 +89,36 @@ public class Auction implements java.io.Serializable {
 	public void setCommodity(Commodity commodity) {
 		this.commodity = commodity;
 	}
-	
-	public float getStartPrice() {
+
+	@Column(name = "startPrice", length=20)
+	public Float getStartPrice() {
 		return startPrice;
 	}
-	public void setStartPrice(float startPrice) {
+	public void setStartPrice(Float startPrice) {
 		this.startPrice = startPrice;
 	}
 	
-	
-	public float getCurrentPrice() {
+
+	@Column(name = "currentPrice", length=20)
+	public Float getCurrentPrice() {
 		return currentPrice;
 	}
-	public void setCurrentPrice(float currentPrice) {
+	public void setCurrentPrice(Float currentPrice) {
 		this.currentPrice = currentPrice;
 	}
-	
-	public float getLimit() {
-		return limit;
-	}
-	public void setLimit(float limit) {
-		this.limit = limit;
+
+	@Column(name = "limitPerBid", length=20)
+	public Float getLimitPerBid() {
+		return limitPerBid;
 	}
 
-	@ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+
+	public void setLimitPerBid(Float limitPerBid) {
+		this.limitPerBid = limitPerBid;
+	}
+
+
+	@ManyToOne( fetch = FetchType.LAZY)
 	@JoinColumn(name ="user_id")
 	public User getUser() {
 		return user;
@@ -117,7 +127,7 @@ public class Auction implements java.io.Serializable {
 		this.user = user;
 	}
 	
-	
+	@Column(name = "state", length=20)
 	public String getState() {
 		return state;
 	}
@@ -125,6 +135,4 @@ public class Auction implements java.io.Serializable {
 		this.state = state;
 	}
 
-	
-	
 }

@@ -55,13 +55,18 @@ public class PurchaseOrder implements java.io.Serializable {
 	// Fields
 	private Long id;
 	private String orderid;
+
 	private String state;								//0-待付款的订单 1-待发货的订单 2-待收货的订单 3-完成的订单
 	private Artist artist;
+
 	private User user;
 	private Date date;
-	private ShippingAddress shippingAddress;
-	private Float totalprice;							//应付款
-	private Float leftprice;       						//未付款
+
+//	private ShippingAddress shippingAddress;			//修改
+
+	private String address;
+	private Float totalprice;				//应付款
+	private Float leftprice;       			//未付款
 	private Set<Commodity> commodity=new HashSet<Commodity>(0);
 	private Set<Payment> payments = new HashSet<Payment>(0);
 	// Constructors
@@ -70,17 +75,21 @@ public class PurchaseOrder implements java.io.Serializable {
 	}
 
 	/** full constructor */
-	public PurchaseOrder(Long id, String orderid, String state,
-			User user, Date date,
-			ShippingAddress shippingAddress, Set<Commodity> commodity) {
+	public PurchaseOrder(Long id, String orderid, String state, User user,
+			Artist artist, Date date, String address, Float totalprice,
+			Float leftprice, Set<Commodity> commodity, Set<Payment> payments) {
 		super();
 		this.id = id;
 		this.orderid = orderid;
 		this.state = state;
 		this.user = user;
+		this.artist = artist;
 		this.date = date;
-		this.shippingAddress = shippingAddress;
+		this.address = address;
+		this.totalprice = totalprice;
+		this.leftprice = leftprice;
 		this.commodity = commodity;
+		this.payments = payments;
 	}
 
 	
@@ -132,15 +141,15 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.date = date;
 	}
 	
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "address_id")
-	public ShippingAddress getShippingAddress() {
-		return shippingAddress;
+	@Column(name = "address", nullable = true, precision = 200)
+	public String getAddress() {
+		return address;
 	}
-	public void setShippingAddress(ShippingAddress shippingAddress) {
-		this.shippingAddress = shippingAddress;
+
+	public void setAddress(String address) {
+		this.address = address;
 	}
-	
+
 	@Column(name = "totalprice", nullable = true, precision = 15)
 	public Float getTotalprice() {
 		return totalprice;

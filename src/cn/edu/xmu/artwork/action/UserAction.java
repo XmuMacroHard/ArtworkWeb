@@ -200,14 +200,12 @@ public class UserAction extends ActionSupport
 	 * 充值
 	 * @author sheng
 	 */
-	@Action(value="userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
-	public  String userrecharge()
+	@Action(value="Userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	public  String Userrecharge()
 	{
 		userService.recharge(user.getBalance());
 		return SUCCESS;
 	}
-	
-
 	
 	private void setAttributeByRequest(String key, Object value)
 	{
