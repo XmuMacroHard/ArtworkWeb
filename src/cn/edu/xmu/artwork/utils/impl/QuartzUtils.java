@@ -1,5 +1,8 @@
 package cn.edu.xmu.artwork.utils.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import cn.edu.xmu.artwork.service.IAuctionService;
 import cn.edu.xmu.artwork.utils.IQuartzUtils;
 
 /**
@@ -9,6 +12,9 @@ import cn.edu.xmu.artwork.utils.IQuartzUtils;
  */
 public class QuartzUtils implements IQuartzUtils {
 
+	@Autowired
+	private IAuctionService auctionService;
+	
 	/**
 	 * 定时调度任务方法
 	 * @author asus1
@@ -17,6 +23,8 @@ public class QuartzUtils implements IQuartzUtils {
 	public void work() {
 		
 		System.out.println("任务调度测试");
+		
+		auctionService.createDailyAuctionOrder();
 	}
 
 }

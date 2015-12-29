@@ -1,4 +1,3 @@
-
 package cn.edu.xmu.artwork.websocket;
 
 import java.io.IOException;
