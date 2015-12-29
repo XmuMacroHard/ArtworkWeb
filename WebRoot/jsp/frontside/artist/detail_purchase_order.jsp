@@ -114,9 +114,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
              <!-- </fieldset>  --> 
         	</div>        	
         	</div>
+			<hr/>
           <!-- 买家付款状态 -->          
           </c:if>
-          <hr/>
           <!-- 商品详情 -->
           <div class="category-products">
           	        <div class="table-responsive">
@@ -146,8 +146,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 					  	<c:when test="${purchaseOrder.state == '3'}">
 					  	</c:when>
 						<c:when test="${purchaseOrder.state == '4'}">	<!-- 待接受 -->
-							<button id="" class="button btn-empty" onClick="{location.href=''}" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>拒绝订单</span></span></button>
-							<button id="" class="button btn-empty" onClick="{location.href=''}" title="Clear Cart" value="empty_cart" name="update_cart_action" type="submit"><span><span>接受订单</span></span></button>
+						    <button  class="button btn-empty" onclick="rejectOrder()"  type="submit"><span><span>拒绝订单</span></span></button>
 					  	</c:when> 							  				  	 
 					  </c:choose>                   
                   </tr>
@@ -177,6 +176,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			
           </div>
            <!--end 商品详情 -->
+           
+           <!--  分期付款 -->
+           
+           <c:if test = "${purchaseOrder.state == '4'}">
+           <form action="setCustomizationPaymentAction" method="post">
+           
+           <!-- hidden value -->
+           <input name="purchaseOrder.id" type="hidden" value="${purchaseOrder.id}"/>
+           <!--end hidden value -->
+           <div class="dropdown">
+					  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+					    分期付款
+					    <span class="caret"></span>
+					  </button>
+					  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+					    <li><a onclick="installment(1)">一次</a></li>
+					    <li><a onclick="installment(2)">两次</a></li>
+					    <li><a onclick="installment(3)">三次</a></li>
+					  </ul>
+			</div>		   
+		   
+            <div class="category-products">
+          	<div class="table-responsive">
+              <table class="data-table cart-table" id="shopping-cart-table">                
+                <thead>
+                  <tr class="first last">
+                    <th rowspan="1"><span class="nobr">付款金额</span></th>                    
+                    <th colspan="1" class="a-center"><span class="nobr">付款时间</span></th>
+                  </tr>
+                </thead>
+               <tfoot>
+                  <tr class="first last">
+                    <td class="a-right last" colspan="50">
+						<button  class="button btn-empty"  type="submit"><span><span>接受订单</span></span></button>
+					</td>                 
+                  </tr>
+                </tfoot>                
+                <tbody id="installment">
+                  <tr class="first odd">
+                    <td class="a-right"><input name="moneys" class="form-control" placeholder="金额"></input></td>
+                    <td class="a-right"><input name="dates" class="form-control" type="date"/></td>
+                  </tr>
+                </tbody>
+              </table>
+        	</div>        	
+        	</div>
+        	</form>
+        	</c:if>
+        	
+           <!-- end 分期付款 -->
+           
            
            <!-- 按钮 -->
            
@@ -296,6 +346,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/frontside/artist/artist_detail_order.js"></script>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

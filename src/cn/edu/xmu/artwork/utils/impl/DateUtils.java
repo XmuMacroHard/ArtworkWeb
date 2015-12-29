@@ -28,4 +28,12 @@ public class DateUtils implements IDateUtils
 		dateList.add(end.getTime());
 		return dateList;
 	}
+	
+	public Calendar getNextDay(Calendar today)
+	{
+
+        int day = today.get(Calendar.DATE);  
+        today.set(Calendar.DATE, day + 1);  
+        return today;
+	}
 }

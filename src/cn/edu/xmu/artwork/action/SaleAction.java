@@ -146,6 +146,19 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 用户确认收货
+	 * @return
+	 */
+	@Action(value="confirmCommodity", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	public String confirmCommodity()
+	{
+		saleService.confirmCommodity(purchaseOrder);
+		
+		return SUCCESS;
+	}
+	
+	
 	/*
 	 *show the list of shoppingcart 
 	 * */

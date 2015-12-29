@@ -51,6 +51,8 @@ public class CustomizationOrder extends PurchaseOrder implements java.io.Seriali
 		this.acceptState = acceptState;
 	}
 
+
+
 	@Column(name="acceptState", length = 20)
 	public String getAcceptState() {
 		return acceptState;

@@ -71,11 +71,11 @@ public class PurchaseOrderDao extends GenericDao implements IPurchaseOrderDao {
 			Query query = null;
 			if(identification.equals(IClientConstants.SESSION_VALUE_RANK_ARTIST))
 			{
-				query =  getSession().getNamedQuery("CustomizationOrder.getOrdersByStateAndArtist");
+				query =  getSession().getNamedQuery("PurchaseOrder.getOrdersByStateAndArtist");
 			}
 			else if(identification.equals(IClientConstants.SESSION_VALUE_RANK_USER))
 			{
-				query = getSession().getNamedQuery("CustomizationOrder.getOrdersByStateAndUser");
+				query = getSession().getNamedQuery("PurchaseOrder.getOrdersByStateAndUser");
 			}
 			
 			query.setParameter("id", id);

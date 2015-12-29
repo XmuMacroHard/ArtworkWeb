@@ -6,6 +6,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
+import javax.persistence.Id;
+
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JsonConfig;
@@ -344,6 +346,17 @@ public class SaleService extends BasicService implements ISaleService
 		initializeObject(purchaseOrder.getUser());
 		
 		setAttributeByRequest("purchaseOrder", purchaseOrder);
+	}
+	
+	/**
+	 * 用户确认收货
+	 */
+	@Override
+	public void  confirmCommodity(PurchaseOrder purchaseOrder)
+	{
+		long id = purchaseOrder.getId();
+		purchaseOrder = purchaseOrderDao.findById(id);
+		purchaseOrder.setState(ITableConstants.PURCHASE_ORDER_STATUS_FINISH);
 	}
 	
 	/**

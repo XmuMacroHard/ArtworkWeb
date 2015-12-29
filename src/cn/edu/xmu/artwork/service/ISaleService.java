@@ -32,4 +32,5 @@ public interface ISaleService {
 	public JSONArray getAllOrderByState(String identification,String state);
 	public void getDetailPurchaseOrder(PurchaseOrder purchaseOrder);
 	public void dispatch(PurchaseOrder purchaseOrder);
+	public void  confirmCommodity(PurchaseOrder purchaseOrder);
 }

@@ -1,6 +1,7 @@
 package cn.edu.xmu.artwork.action;
 
 
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -11,6 +12,7 @@ import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
+
 
 
 
@@ -32,27 +34,25 @@ public class AuctionAction {
 	@Autowired
 	private IAuctionService auctionService;
 	
+	//发起一个拍卖
 	@Action(value="createAuctionAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String createAuction()
 	{
-		commodity.setId((long) 4);
+//		auction = auctionService.getAuctionAuctionById(5);
+//		auctionService.createAuctionOrder(auction);
+//		commodity.setId((long) 4);
+//		auction.setStartPrice((float) 150);
+//		auction.setStartTime(new Date(2015, 12, 10));
+//		auction.setEndTime(new Date(2015, 12, 15));
+//		auction.setState("0");
+//		auction.setLimitPerBid((float) 100);
 		
-		auction.setCurrentPrice((float) 150);
-		auction.setStartPrice((float) 150);
-		auction.setStartTime(new Date());
-		auction.setEndTime(new Date());
-		auction.setState("0");
-		auction.setLimitPerBid((float) 100);
-		//auction.setCommodity(commodity);
-		
-		User user = new User();
-		user.setId((long) 1);
-		auction.setUser(user);
-		
-		auctionService.createAuction(auction);
+		auctionService.createAuction(commodity, auction);
 		return IResultCode.SUCCESS;
 	}
 	
+	
+	//显示当天所有拍卖
 	@Action(value="showTodayAuctionAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String showTodayAuction()
 	{
@@ -61,15 +61,17 @@ public class AuctionAction {
 		return IResultCode.SUCCESS;
 	}
 	
+	//显示拍卖详细信息
 	@Action(value="showAuctionDetailAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String showAuctionDetail()
 	{
-		long id = auction.getId();
-		Auction auc = auctionService.findById(id);
+		Long id = auction.getId();
+		Auction auc = auctionService.getAuctionAuctionById(id);
 		setAttributeByRequest("auction", auc);
 		return IResultCode.SUCCESS;
 	}
 	
+	//在一次拍卖中叫价
 	@Action(value="addBidAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String addBid()
 	{
@@ -105,6 +107,4 @@ public class AuctionAction {
 	public void setCommodity(Commodity commodity) {
 		this.commodity = commodity;
 	}
-	
-	
 }

@@ -50,7 +50,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/profile.jsp"> 个人信息 </a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="ShowAllAddressList">地址管理</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_purchase_order.jsp">商品订单</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="">定制订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_customization_order.jsp">定制订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="">拍卖订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="viewCart">我的购物车</a></li>                    
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>
