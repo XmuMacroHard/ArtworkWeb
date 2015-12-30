@@ -59,6 +59,7 @@ public class AuctionAction {
 	public String showTodayAuction()
 	{
 		List<Auction> list = auctionService.getTodayAuctions();
+		System.out.println("print prices of today");
 		setAttributeByRequest("auctionList", list);
 		return IResultCode.SUCCESS;
 	}
