@@ -23,7 +23,6 @@ import cn.edu.xmu.artwork.entity.User;
 public class CustomizationDao extends GenericDao implements ICustomizationDao{
 
 
-
 	@Override
 	public void save(CustomizationOrder customization) {
 		try {
@@ -34,7 +33,9 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 		// TODO Auto-generated method stub	
 	}
 
-
+	/**
+	 * 根据用户id获取其所有的定制订单
+	 */
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<CustomizationOrder> getCustomizationsByUser(long id) {
@@ -50,7 +51,9 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 		return list;
 	}
 
-
+	/**
+	 * 根据定制订单id获取定制订单
+	 */
 	@Override
 	public CustomizationOrder findById(long id) {
 		CustomizationOrder customization = null;

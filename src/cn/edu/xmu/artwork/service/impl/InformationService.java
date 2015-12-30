@@ -64,6 +64,7 @@ public class InformationService extends BasicService implements IInformationServ
 		
 		if(repeatableDates.size() <= 0)
 		{
+			
 			for(Date date : dates) 
 			{
 				DatePos tempDatePos = new DatePos();

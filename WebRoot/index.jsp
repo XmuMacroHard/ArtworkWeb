@@ -189,7 +189,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
           </div>
         </div>
-        <!-- Featured Slider -->
+<%--         <!-- Featured Slider -->
         <div class="featured-pro">
           <div class="slider-items-products">
             <div class="title col-lg-6">
@@ -454,8 +454,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
           </div>
         </div>
-        <!-- End Featured Slider -->
-      </div>
+        <!-- End Featured Slider --> 
+      </div> --%>
     </div>
   </section>
   <!-- End main container -->

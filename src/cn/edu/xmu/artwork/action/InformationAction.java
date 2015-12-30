@@ -63,8 +63,8 @@ public class InformationAction extends ActionSupport
 	}
 
 
-	/*
-	 * show the information list for the editor
+	/**
+	 * 为采编显示所有其编辑的资讯信息
 	 * */
 	public String showInforList()
 	{
@@ -108,7 +108,10 @@ public class InformationAction extends ActionSupport
 		setAttributeByRequest("information", infor);
 		return SUCCESS;
 	}
-	
+	/**
+	 * 根据资讯类型获取资讯列表
+	 * @return
+	 */
 	@Action(value="getInfoListByType", results={@Result(name="success", location="/jsp/frontside/information/informations.jsp")})
 	public String getInfoListByType()
 	{
@@ -118,6 +121,9 @@ public class InformationAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 根据采编id获取其编辑的所有资讯
+	 */
 	@Action(value="getInfoListByEditorId", results={@Result(name="success", location="/jsp/backstage/admin_editor_myinfo.jsp")})
 	public String getInfoListByEditorId()
 	{

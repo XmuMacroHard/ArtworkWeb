@@ -11,6 +11,11 @@ import cn.edu.xmu.artwork.utils.IMD5Util;
 @Component
 public class MD5Util implements IMD5Util{
 
+	/**
+	 * 生成MD5字符串，加密字符串
+	 * @param string
+	 * @return 加密后的字符串
+	 */
 	@Override
 	public String MD5(String s) {
 		 char hexDigits[]={'0','1','2','3','4','5','6','7','8','9','A','B','C','D','E','F'};       
@@ -39,10 +44,5 @@ public class MD5Util implements IMD5Util{
 	        }
 	}
 
-	public static void main(String[] args)
-	{		
-		System.out.println(new MD5Util().MD5("123"));
-		System.out.println(new MD5Util().MD5("123"));
-	}
 
 }

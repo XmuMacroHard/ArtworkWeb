@@ -39,6 +39,30 @@ public class AdminAction extends ActionSupport {
 	private List<String> fileContentType;
 	private String fileName;
 	
+	private String result;
+	
+	//@Autowired
+	private User user;
+	
+	//@Autowired
+	private Artist artist;
+	
+	//@Autowired
+	private Information information;
+	
+	//@Autowired
+	private List<User> userList;
+	
+	//@Autowired
+	private List<Artist> artistList;
+	
+	//@Autowired
+	private List<Information> infoList;
+
+	private Commodity item;
+	
+	private List<Commodity> itemList;
+	
 	public String getFileName() {
 		return fileName;
 	}
@@ -70,30 +94,6 @@ public class AdminAction extends ActionSupport {
 	public void setFileContentType(List<String> fileContentType) {
 		this.fileContentType = fileContentType;
 	}
-	
-	private String result;
-	
-	//@Autowired
-	private User user;
-	
-	//@Autowired
-	private Artist artist;
-	
-	//@Autowired
-	private Information information;
-	
-	//@Autowired
-	private List<User> userList;
-	
-	//@Autowired
-	private List<Artist> artistList;
-	
-	//@Autowired
-	private List<Information> infoList;
-
-	private Commodity item;
-	
-	private List<Commodity> itemList;
 	
 	public Commodity getItem() {
 		return item;

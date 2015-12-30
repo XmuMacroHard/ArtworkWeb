@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IDatePosDao;
+import cn.edu.xmu.artwork.entity.DatePos;
 
 @Repository
 public class DatePosDao extends GenericDao implements IDatePosDao
@@ -21,14 +22,16 @@ public class DatePosDao extends GenericDao implements IDatePosDao
 	public List<Date> getRepeatDate(String location, List<Date> dates)
 	{
 		List<Date> reapeatableDates = new ArrayList<Date>();
-		List<Date> records = new ArrayList<Date>();
-		Query query = getSession().getNamedQuery("DatePos.getRepeatableDatePos");
-		query.setParameter("location", location);
+		List<DatePos> records = new ArrayList<DatePos>();
+
 		
 		for(Date date : dates)
 		{
+			System.out.println("date before");
+			Query query = getSession().getNamedQuery("DatePos.getRepeatableDatePos");
+			query.setParameter("location", location);			
 			query.setDate("date", date);
-			records = (List<Date>)query.list();
+			records = (List<DatePos>)query.list();
 			if(location.equals(ITableConstants.INFO_LOCATION_1) && records.size() >= ITableConstants.INFO_LOCATION_1_NUM)
 			{			
 					reapeatableDates.add(date);
@@ -41,7 +44,11 @@ public class DatePosDao extends GenericDao implements IDatePosDao
 			{
 					reapeatableDates.add(date);
 			}
+			
+			System.out.println("date after");
 		}
+		
+		getSession().clear();
 		
 		return reapeatableDates;
 	}

@@ -62,4 +62,6 @@ public interface ITableConstants
 	
 	String COMMODITY_IS_BAN = "0";
 	String COMMODITY_IS_NOBAN = "1";
+	String COMMODITY_IS_BOUGHT_TRUE = "1";
+	String COMMODITY_IS_BOUGHT_FALSE = "0";
 }

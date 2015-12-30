@@ -57,6 +57,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/artist_certification.jsp">艺术家认证 </a></li>
                   </ul>
                 </div>
+                <c:if test="${sessionScope.user != null && sessionScope.rank == 'artist'}">
                 <!-- End Header Company -->
                 <div class="dropdown block-company-wrapper"> <a role="button" data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"> 艺术家中心 <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -68,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Advanced Search </a></li>
                   </ul>
                 </div>
-                
+                </c:if>
                 <c:choose>
           			<c:when test="${sessionScope.user == null}">
             			<div class="login"><a href="jsp/frontside/user/login.jsp"><span class="">请登录</span></a></div>

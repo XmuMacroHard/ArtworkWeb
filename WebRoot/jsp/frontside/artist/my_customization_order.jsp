@@ -80,14 +80,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          	<h2>定制订单</h2>
             <h1 id = "orderTypeTitle">待付款</h1>
           </div> 
-          
-           <div class="pager">
-                <div class="pages">
-                  <label>Page:</label>
-                  <ul class="pagination" id="page_list">
-                  </ul>
-                </div>
-             </div>
              
           <div id="orderList" class="category-products">
           
@@ -96,6 +88,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		
         	<!--end 订单  -->
           </div>
+          
+			<div class="pager">
+                <div class="pages">
+                  <ul class="pagination" id="page_list">
+                  </ul>
+                </div>
+             </div>
+          
 		  </div>
         </section>
       </div>

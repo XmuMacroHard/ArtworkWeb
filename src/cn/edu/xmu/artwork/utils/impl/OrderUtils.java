@@ -12,6 +12,11 @@ import cn.edu.xmu.artwork.utils.IOrderUtils;
 
 @Component
 public class OrderUtils implements IOrderUtils{
+	
+	/**
+	 * 根据userid生成订单号
+	 * 
+	 */
 	public String getordernum(User user)
 	{
 		SimpleDateFormat df = new SimpleDateFormat("yyMMddHHmmss");//设置日期格式
@@ -21,6 +26,9 @@ public class OrderUtils implements IOrderUtils{
 		return number;
 	}
 	
+	/**
+	 * 根据收货地址类获取收货地址的string类型
+	 */
 	public String changeaddress(ShippingAddress shippingAddress)
 	{
 		String addressString="";

@@ -43,6 +43,13 @@ function getOrderByType(action, state,nowpage)
 		dataType:"json",
 		success:function(data)
 		{		
+			if(data.result != null && data.result == "notLogin")
+			{
+				window.location.href="jsp/frontside/user/login.jsp"
+			}
+			else
+			{
+			
 			var list = "";
 			var $orderList = $("#orderList"); 
 			
@@ -85,17 +92,19 @@ function getOrderByType(action, state,nowpage)
 				var item=data[i];
 				list += "<div id='address' class='row'>" +    
 				"<div id=''  class='col-md-1  orderwrap'>" +
-        		"<div>订单号:" + item.orderid + "</div><hr/>" +
+        		"<div>订单号:" + item.orderid + "</div>" +
+        		"<div>订单时间:" + item.date + "</div>" +
+        		"<div>订单总价:" + item.totalprice + "</div>" +
+        				"<hr/>" +
         			"<div>" +
-        				"<button onclick='detail("+ item.id +")' class='button btn-empty' title='Clear Cart' value='empty_cart' name='update_cart_action' type='submit'><span><span>详情</span></span></button>" +
-        				"<button id='empty_cart_button' class='button btn-empty' title='Clear Cart' value='empty_cart' name='update_cart_action' type='submit'><span><span>取消订单</span></span></button>" +        				
+        				"<button onclick='detail("+ item.id +")' class='button btn-empty' title='Clear Cart' value='empty_cart' name='update_cart_action' type='submit'><span><span>详情</span></span></button>" +        				
         			"</div>" +
         		"</div>" +    
         		"</div> ";
 			}
 			
 			$orderList.append(list);
-			
+			}
 		}
 	});
 }

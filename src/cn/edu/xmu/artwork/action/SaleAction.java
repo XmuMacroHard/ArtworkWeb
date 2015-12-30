@@ -83,7 +83,7 @@ public class SaleAction extends ActionSupport
 		return IResultCode.SUCCESS;
 	}
 	
-	/*
+	/**
 	 * 获取商品的详细信息
 	 * */
 	@Action(value="getDetailedCommodity", results={@Result(name="success", location="/jsp/frontside/sale/detailCommodity.jsp")})
@@ -96,7 +96,7 @@ public class SaleAction extends ActionSupport
 	}
 	
 	
-	/*
+	/**
 	 * 艺术家上传商品
 	 * */
 	@Action(value="uploadCommodity", results={@Result(name="success",type="chain",location="showMyCommodity")},
@@ -276,7 +276,7 @@ public class SaleAction extends ActionSupport
 	}	
 	
 	/**
-	 * 
+	 * 设置request的attribute值，返回数据给前台
 	 * @param key
 	 * @param value
 	 */

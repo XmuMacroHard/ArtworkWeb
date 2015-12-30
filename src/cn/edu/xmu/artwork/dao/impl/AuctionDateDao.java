@@ -11,18 +11,28 @@ import cn.edu.xmu.artwork.entity.Auction;
 import cn.edu.xmu.artwork.entity.AuctionDate;
 @Repository
 public class AuctionDateDao extends GenericDao implements IAuctionDateDao{
-
+	
+	/**
+	 * 保存拍卖日期
+	 */
 	@Override
 	public void save(AuctionDate auctionDate) {
 		getSession().save(auctionDate);
 	}
-
+	
+	/**
+	 * 根据id查找
+	 * @return AuctionDate 
+	 */
 	@Override
 	public AuctionDate findById(long id) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
+	
+	/**
+	 * 根据日期查找拍卖日期列表
+	 */
 	@Override
 	public List<AuctionDate> getAuctionDatesByDate(Date date) {
 		List<AuctionDate> auctionDates = null;
@@ -36,6 +46,9 @@ public class AuctionDateDao extends GenericDao implements IAuctionDateDao{
 		return auctionDates;
 	}
 
+	/**
+	 * 根据日期查找拍卖日期列表
+	 */
 	@Override
 	public List<Auction> getAuctionsByDate(Date date) {
 		List<Auction> auctions = null;

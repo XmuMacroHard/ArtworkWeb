@@ -9,9 +9,10 @@ import cn.edu.xmu.artwork.utils.IImageUtils;
 @Component
 public class ImageUtils implements IImageUtils 
 {
-	/*
-	 * @param srcImgName  it is the picture's name
+	/**
 	 * create a new name by date.
+	 * @param srcImgName  it is the picture's name
+	 * 
 	 * */
 	public String createImgName(String srcImgName)
 	{
@@ -24,9 +25,10 @@ public class ImageUtils implements IImageUtils
 		return rootPath + "/" + imgName;
 	}
 	
-	/*
-	 * @param srcImgName it is the picture's name
+	/**
 	 * get the extension of the picture
+	 * @param srcImgName it is the picture's name
+	 * 
 	 * */
 	private String getExtension(String srcImgName)
 	{

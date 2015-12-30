@@ -23,7 +23,7 @@ import javax.persistence.PrimaryKeyJoinColumn;
 	),
 	@NamedQuery(
 			name = "Artist.getArtistBySort",
-			query = "from Artist where identification like :Search"
+			query = "from Artist where identification like :Search and isBanned = :isBanned"
 	),
 	@NamedQuery(
 			name = "Artist.getArtistByName",

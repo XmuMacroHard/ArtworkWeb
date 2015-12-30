@@ -35,7 +35,10 @@ public class AuctionAction {
 	@Autowired
 	private IAuctionService auctionService;
 	
-	//发起一个拍卖
+	/**
+	 * 发起一个拍卖
+	 * @return
+	 */
 	@Action(value="createAuctionAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String createAuction()
 	{
@@ -54,7 +57,10 @@ public class AuctionAction {
 	}
 	
 	
-	//显示当天所有拍卖
+	/**
+	 * 显示当天所有拍卖
+	 * @return
+	 */
 	@Action(value="showTodayAuctionAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String showTodayAuction()
 	{
@@ -64,7 +70,10 @@ public class AuctionAction {
 		return IResultCode.SUCCESS;
 	}
 	
-	//显示拍卖详细信息
+	/**
+	 * 显示拍卖详细信息
+	 * @return
+	 */
 	@Action(value="showAuctionDetailAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String showAuctionDetail()
 	{
@@ -74,7 +83,10 @@ public class AuctionAction {
 		return IResultCode.SUCCESS;
 	}
 	
-	//在一次拍卖中叫价
+	/**
+	 * 在一次拍卖中叫价
+	 * @return
+	 */
 	@Action(value="addBidAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String addBid()
 	{

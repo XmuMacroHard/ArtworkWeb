@@ -38,16 +38,27 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <div class="page">
-	<c:import url="../common/header.jsp"/>
-	<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+  <c:import url="../common/header.jsp"/>
   
+  <!-- breadcrumbs -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="row">
+        <ul>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End breadcrumbs --> 
+  <!-- Two columns content -->
   <div class="main-container col2-right-layout">
     <div class="main container">
       <div class="row">
-        <section class="col-main col-sm-9 wow bounceInUp animated">
+         <section class="col-main col-sm-9 wow bounceInUp animated">
           <div class="my-account">
             <div class="page-title">
-              <h2>My Wishlist</h2>
+              <h2>已发布的商品</h2>
             </div>
             <div class="my-wishlist">
               <div class="table-responsive">
@@ -69,16 +80,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <c:forEach items="${commodities}" var="commodity">
                         <tr id="item_31" class="first odd">
                           <td class="wishlist-cell0 customer-wishlist-item-image">
-                          	<a title="Softwear Women's Designer" href="product_detail.html" class="product-image"> 
-                          	<c:set var="urlsNum" scope="page" value="1"/>  
-							<c:forEach items="${commodity.commodityPices}" var="pic">   		 	
-								<c:if test = "${urlsNum == 1}">
-									<img width="80" height="60" alt="Softwear Women's Designer" src="${server_path}${pic.url}"> 
-									<c:set var="urlsNum" scope="page" value="2"/>		
-								</c:if>
-	                     	</c:forEach> 
-                          		 
-                          	</a>
+                            <a title="Softwear Women's Designer" href="product_detail.html" class="product-image"> 
+                            <c:set var="urlsNum" scope="page" value="1"/>  
+              <c:forEach items="${commodity.commodityPices}" var="pic">         
+                <c:if test = "${urlsNum == 1}">
+                  <img width="80" height="60" alt="Softwear Women's Designer" src="${server_path}${pic.url}"> 
+                  <c:set var="urlsNum" scope="page" value="2"/>   
+                </c:if>
+                        </c:forEach> 
+                               
+                            </a>
                           </td>
                           <td class="wishlist-cell1 customer-wishlist-item-info"><h3 class="product-name"><a title="Softwear Women's Designer" href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a></h3>
                             <div class="description std">
@@ -99,7 +110,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             <p><a href="#/wishlist/index/configure/id/31/" class="">Edit</a></p></td>
                           <td class="wishlist-cell5 customer-wishlist-item-remove last"><a class="remove-item" title="Clear Cart" onClick="return confirmRemoveWishlistItem();" href="#/wishlist/index/remove/item/31/"><span><span></span></span></a></td>
                         </tr>
-					</c:forEach>
+          </c:forEach>
                       </tbody>
                     </table>
                     <div class="buttons-set buttons-set2">
@@ -116,166 +127,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
           </div>
         </section>
-        <aside class="col-right sidebar col-sm-3 wow bounceInUp animated">
-          <div class="block block-account">
-            <div class="block-title">My Account</div>
-            <div class="block-content">
-              <ul>
-                <li ><a href="dashboard.html">Account Dashboard</a></li>
-                <li><a href="#customer/account/edit/">Account Information</a></li>
-                <li><a href="#customer/address/">Address Book</a></li>
-                <li><a href="#sales/order/history/">My Orders</a></li>
-                <li><a href="#sales/billing_agreement/">Billing Agreements</a></li>
-                <li><a href="#sales/recurring_profile/">Recurring Profiles</a></li>
-                <li><a href="#review/customer/">My Product Reviews</a></li>
-                <li><a href="#tag/customer/">My Tags</a></li>
-                <li class="current"><a href="#">My Wishlist</a></li>
-                <li><a href="#downloadable/customer/products/">My Downloadable</a></li>
-                <li class="last"><a href="#newsletter/manage/">Newsletter Subscriptions</a></li>
-              </ul>
-            </div>
-          </div>
-          <div class="block block-compare">
-            <div class="block-title ">Compare Products (2)</div>
-            <div class="block-content">
-              <ol id="compare-items">
-                <li class="item odd">
-                  <input type="hidden" value="2173" class="compare-item-id">
-                  <a class="btn-remove1" title="Remove This Item" href="#"></a> <a href="#" class="product-name"> Sofa with Box-Edge Polyester Wrapped Cushions</a> </li>
-                <li class="item last even">
-                  <input type="hidden" value="2174" class="compare-item-id">
-                  <a class="btn-remove1" title="Remove This Item" href="#"></a> <a href="#" class="product-name"> Sofa with Box-Edge Down-Blend Wrapped Cushions</a> </li>
-              </ol>
-              <div class="ajax-checkout">
-                <button type="submit" title="Submit" class="button button-compare"><span>Compare</span></button>
-                <button type="submit" title="Submit" class="button button-clear"><span>Clear</span></button>
-              </div>
-            </div>
-          </div>
-        </aside>
       </div>
     </div>
   </div>
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="inner">
-        <div class="brand-logo">
-          <div class="slider-items-products">
-            <div id="brand-logo-slider" class="product-flexslider hidden-buttons">
-              <div class="slider-items slider-width-col6">
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo1.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo2.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo3.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo4.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo5.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo6.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo1.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo4.png" alt="Image"></a> </div>
-                <!-- End Item -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-middle">
-          <div class="col-md-3 col-sm-12 col-xs-12">
-            <div class="footer-column-1">
-              <div class="footer-logo"><a href="index.html" title="Logo"><img src="images/footer-logo.png" alt="logo" ></a></div>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-              <div class="social">
-                <ul class="link">
-                  <li class="fb"><a href="#"></a></li>
-                  <li class="tw"><a href="#"></a></li>
-                  <li class="googleplus"><a href="#"></a></li>
-                  <li class="rss"><a href="#"></a></li>
-                  <!-- <li class="pintrest"><a href="#"></a></li>-->
-                  <li class="linkedin"><a href="#"></a></li>
-                  <li class="youtube"><a href="#"></a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="green">Shopping Guide</h4>
-            <ul class="links">
-              <li class="first"><a href="about_us.html" title="How to buy">About us</a></li>
-              <li><a href="faq.html" title="FAQs">FAQs</a></li>
-              <li><a href="#" title="Payment">Payment</a></li>
-              <li><a href="#" title="Shipment&lt;/a&gt;">Shipment</a></li>
-              <li><a href="#" title="Where is my order?">Where is my order?</a></li>
-              <li class="last"><a href="#" title="Return policy">Return policy</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="yellow">Style Advisor</h4>
-            <ul class="links">
-              <li class="first"><a title="Your Account" href="login.html">Your Account</a></li>
-              <li><a title="Information" href="#">Information</a></li>
-              <li><a title="Addresses" href="#">Addresses</a></li>
-              <li><a title="Addresses" href="#">Discount</a></li>
-              <li><a title="Orders History" href="#">Orders History</a></li>
-              <li class="last"><a title=" Additional Information" href="#">Additional Information</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="orange">Information</h4>
-            <ul class="links">
-              <li class="first"><a href="sitemap.html" title="Site Map">Site Map</a></li>
-              <li><a href="#/" title="Search Terms">Search Terms</a></li>
-              <li><a href="#" title="Advanced Search">Advanced Search</a></li>
-              <li><a href="contact_us.html" title="Contact Us">Contact Us</a></li>
-              <li><a href="#" title="Suppliers">Suppliers</a></li>
-              <li class=" last"><a href="#" title="Our stores" class="link-rss">Our stores</a></li>
-            </ul>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
-            <h4 class="blue">Contact Us</h4>
-            <div class="contacts-info">
-              <address>
-              <i class="add-icon">&nbsp;</i>123 Main Street, Anytown, <br>
-              &nbsp;CA 12345  USA
-              </address>
-              <div class="phone-footer"><i class="phone-icon">&nbsp;</i> +1 800 123 1234</div>
-              <div class="email-footer"><i class="email-icon">&nbsp;</i> <a href="mailto:support@magikcommerce.com">support@magikcommerce.com</a> </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <div class="col-sm-3 col-xs-12 coppyright"> &copy; 2015 Magikcommerce. All Rights Reserved.</div>
-          <div class="col-sm-9 col-xs-12 company-links">
-            <ul class="links">
-              <li><a href="#" title="Magento Themes">Magento Themes</a></li>
-              <li><a href="#" title="Premium Themes">Premium Themes</a></li>
-              <li><a href="#" title="Responsive Themes">Responsive Themes</a></li>
-              <li class="last"><a href="#" title="Magento Extensions">Magento Extensions</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- End Footer -->
+  <!-- End Two columns content --> 
+  
 </div>
 <div class="help_slider">
   <div class="text alignleft">Need Help?</div>
   <div class="icons"> <a class="show_hide" id="questionbox-side-phonebutton" href="javascript:void(0)"><i class="icon-phones">&nbsp;</i></a> <a class="show_hide1" id="questionbox-side-emailbutton" href="javascript:void(0)"><i class="icon-email">&nbsp;</i></a> </div>
 </div>
-<div id="hideShow" class="right-side-content" style="display: none;">
+<div id="hideShow" class="right-side-content" style="display: none">
   <!--Contact Static Block -->
   <div class="slider-phone active">
     <h2 class="">Talk To Us</h2>
@@ -330,7 +192,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="slider-email active">
       <div id="messages_product_view"></div>
       <div id="formSuccess" style="display:none;">Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.</div>
-      <form action="#" id="contactForm1" method="post">
+      <form id="contactForm1" method="post">
         <div class="column sixty">
           <h2>TALK TO US</h2>
           <ul>
@@ -347,8 +209,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
             </li>
           </ul>
-
-            <p class="required">* Required Fields</p>
+		  <p class="required">* Required Fields</p>
         </div>
         <!--column sixty-->
         <div class="column fourty last">
