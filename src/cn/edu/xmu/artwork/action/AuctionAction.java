@@ -16,6 +16,7 @@ import org.springframework.context.annotation.Scope;
 
 
 
+
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Auction;
 import cn.edu.xmu.artwork.entity.Bid;
@@ -38,16 +39,17 @@ public class AuctionAction {
 	@Action(value="createAuctionAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String createAuction()
 	{
-//		auction = auctionService.getAuctionAuctionById(5);
-//		auctionService.createAuctionOrder(auction);
+		
 //		commodity.setId((long) 4);
-//		auction.setStartPrice((float) 150);
+//		auction.setStartPrice((float) 16.15);
 //		auction.setStartTime(new Date(2015, 12, 10));
 //		auction.setEndTime(new Date(2015, 12, 15));
 //		auction.setState("0");
 //		auction.setLimitPerBid((float) 100);
-		
-		auctionService.createAuction(commodity, auction);
+
+		auctionService.createAuction(commodity, auction);		
+		System.out.println("in create Auction action");
+
 		return IResultCode.SUCCESS;
 	}
 	
@@ -57,6 +59,7 @@ public class AuctionAction {
 	public String showTodayAuction()
 	{
 		List<Auction> list = auctionService.getTodayAuctions();
+		System.out.println("print prices of today");
 		setAttributeByRequest("auctionList", list);
 		return IResultCode.SUCCESS;
 	}

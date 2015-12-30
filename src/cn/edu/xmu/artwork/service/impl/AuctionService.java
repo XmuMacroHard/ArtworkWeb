@@ -21,6 +21,7 @@ import cn.edu.xmu.artwork.entity.AuctionDate;
 import cn.edu.xmu.artwork.entity.AuctionOrder;
 import cn.edu.xmu.artwork.entity.Bid;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAuctionService;
 import cn.edu.xmu.artwork.utils.IDateUtils;
 
@@ -51,8 +52,14 @@ public class AuctionService extends BasicService implements IAuctionService{
 
 	@Override
 	public void createAuction(Commodity commodity, Auction auction) {
+		System.out.println("in create Auction service");
 		Commodity c = commodityDao.getCommodityById(commodity.getId());
+		System.out.println(c.getIntroduction());
 		c.setCategory("auction");
+		
+		User user = new User();
+		user.setId((long) 1);
+		auction.setUser(user);
 		
 		auction.setCommodity(commodity);
 		auction.setCurrentPrice(auction.getStartPrice());
@@ -77,9 +84,7 @@ public class AuctionService extends BasicService implements IAuctionService{
 	
 	@Override
 	public List<Auction> getTodayAuctions() {
-		
 		Calendar today = Calendar.getInstance();
-		createDailyAuctionOrder();
 		return getAuctionsByDate(today.getTime());
 	}
 

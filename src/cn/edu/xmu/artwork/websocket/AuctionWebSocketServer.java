@@ -13,22 +13,27 @@ import javax.websocket.Session;
 import javax.websocket.server.ServerEndpoint;
 
 import net.sf.json.JSON;
+import net.sf.json.JSONObject;
 
-@ServerEndpoint("/echo")
-public class EchoServer {
+@ServerEndpoint("/AuctionWebSocket")
+public class AuctionWebSocketServer {
 	public static final Set<Session> sessions = new HashSet<Session>();
 	
 	@OnOpen
-	public void onOpenC(Session session)
+	public void onOpen(Session session)
 	{
-		sessions.add(session);
+		UserPool.add(session);
 	}
 	
 	@OnMessage
-	public void onMessageM(String message) 
+	public void onMessage(String message, Session session) 
 	{
-		  
-		System.out.println("Received: " + message);
+		String[] me = message.split(" ");
+		int auction_id = Integer.parseInt(me[1]);
+		System.out.println("Received: " + message + " id: "+auction_id);
+		UserPool.addSession(auction_id, session);
+		Set<Session> sessions = UserPool.getAuctionSessions(auction_id);
+		
 		try {
 			for (Session s : sessions) {
 				s.getBasicRemote().sendText("I get " + message);
@@ -39,9 +44,8 @@ public class EchoServer {
 	}
 	  
 	@OnClose
-	public String closeM()
+	public void onClose(Session session)
 	{
-		
-		return "123";
+		UserPool.remove(session);
 	}
 }
