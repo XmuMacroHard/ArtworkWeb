@@ -13,8 +13,11 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
+import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.constants.ITableConstants;
+import cn.edu.xmu.artwork.dao.IDatePosDao;
 import cn.edu.xmu.artwork.dao.IInforPicsDao;
 import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
@@ -36,35 +39,53 @@ public class InformationService extends BasicService implements IInformationServ
 	public IUserDao userDao;
 	
 	@Autowired
+	public IDatePosDao datePosDao;
+	
+	@Autowired
 	private IFileService fileService;
 	
 	@Autowired
 	private IDateUtils dateUtils;
 	
+	/**
+	 * 提交资讯
+	 */
 	@Override
 	public void submit(Information information,DatePos datePos,List<File> pic, List<String> picFileName) {
 		
 		List<String> imgPaths = fileService.uploadPicture(pic, picFileName);
-		//long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");
-		long id = 1L;
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		
-		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());
-				
+		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());				
 		
-		for(Date date : dates) 
+		List<Date> repeatableDates = datePosDao.getRepeatDate(datePos.getLocation(), dates);
+		
+		System.out.println(repeatableDates.size());
+		
+		if(repeatableDates.size() <= 0)
 		{
-			DatePos tempDatePos = new DatePos();
-			tempDatePos.setColum(datePos.getColum());
-			tempDatePos.setLocation(datePos.getLocation());
-			tempDatePos.setPos(datePos.getPos());			
-			tempDatePos.setDate(date);
+			for(Date date : dates) 
+			{
+				DatePos tempDatePos = new DatePos();
+				tempDatePos.setColum(datePos.getColum());
+				tempDatePos.setLocation(datePos.getLocation());
+				tempDatePos.setPos(datePos.getPos());			
+				tempDatePos.setDate(date);
+				
+				information.addDatePos(tempDatePos);
+			}
+			information.setEditorId(user.getId());
+			information.addPicture(imgPaths);
+			information.setStatus(ITableConstants.INFO_STATUS_PENDING);
 			
-			information.addDatePos(tempDatePos);
+			InformationDao.save(information);
+			setAttributeByRequest(IResultCode.RESULT, IResultCode.SUCCESS);
 		}
-		information.setEditorId(id);
-		information.addPicture(imgPaths);
-		
-		InformationDao.save(information);
+		else
+		{
+			setAttributeByRequest(IResultCode.RESULT_DATA, repeatableDates);
+			setAttributeByRequest(IResultCode.RESULT, IResultCode.ERROR);
+		}
 	}
 	
 	@Override
@@ -130,6 +151,18 @@ public class InformationService extends BasicService implements IInformationServ
 			initializeObject(information.getInforPicses());
 		}
 		return infos;
+	}
+	
+	/**
+	 * 根据采编id获取其编辑过的所有资讯
+	 * @param user
+	 */
+	@Override
+	public void getInfoListByEditorId()
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		List<Information> infos =  InformationDao.getInfoListByEditorId(user.getId());
+		setAttributeByRequest("infoList", infos);
 	}
 	
 	/*

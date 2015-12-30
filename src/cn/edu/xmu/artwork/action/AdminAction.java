@@ -382,9 +382,7 @@ public class AdminAction extends ActionSupport {
 	 */
 	@Action(
 			value = "ShowInfoDetails",
-			results = {
-					@Result(name="success", location="/jsp/backstage/info_detail.jsp")
-			}
+			results = {@Result(name="success", location="/jsp/backstage/info_detail.jsp")}
 			)
 	public String ShowInfoDetails()
 	{
@@ -395,7 +393,7 @@ public class AdminAction extends ActionSupport {
 		}
 		ServletActionContext.getRequest().setAttribute("information", information);
 		
-		return "success";
+		return SUCCESS;
 	}
 	
 	/**

@@ -136,17 +136,24 @@ public class UserService extends BasicService implements IUserService
 			setSessionInBrower(IStrings.SESSION_USER, resultUser);
 			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_ADMIN);
 			resultJson.put(IResultCode.RESULT, IResultCode.ADMIN);
+			
+			System.out.println("in admin");
 		}
 		else if(resultUser instanceof Editor)
 		{
 			setSessionInBrower(IStrings.SESSION_USER, resultUser);
 			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_EDITOR);
 			resultJson.put(IResultCode.RESULT, IResultCode.EDITOR);
+			
+			System.out.println("in editor");
 		}
 		else if(resultUser instanceof Artist)
 		{
 			setSessionInBrower(IStrings.SESSION_USER, resultUser);
 			setSessionInBrower(IClientConstants.SESSION_KEY_RANK, IClientConstants.SESSION_VALUE_RANK_ARTIST);
+			
+			System.out.println("in artist");
+			
 			resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
 		}
 		else if(resultUser instanceof User)
@@ -299,11 +306,10 @@ public class UserService extends BasicService implements IUserService
 	{
 		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		artist.setId(user.getId());
-/*		System.out.println(user.getId());
-		System.out.println(artist.getIdentification());*/
 		List<String> storePath = fileservice.uploadPicture(pic, picFileName);
 		artist.setPortrait(storePath.get(0));
 		artist.setFileurl(storePath.get(1));
+		artist.setIsapprove(ITableConstants.USER_IS_APPROVED_PENDING);
 		artistDao.submitArtist(artist);
 	}
 	

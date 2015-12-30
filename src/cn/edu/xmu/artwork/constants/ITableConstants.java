@@ -14,9 +14,15 @@ public interface ITableConstants
 	int RECOMMENDED_ARTIST_NUM = 4;
 	int RECOMMENDED_COMMODITY_NUM = 4;
 	
+	/*information table*/
 	//the enum value of the information
 	String INFO_DEFAULT_INFO_STATUS = "default_info";
 	String INFO_DEFAULT_ADV_STATUS = "default_adv";
+	
+	String INFO_STATUS_PENDING = "-1";
+	String INFO_STATUS_UN_ACCEPTABLE = "0";
+	String INFO_STATUS_ACCEPTABLE = "1";
+	String INFO_STATUS = "state";
 	
 	//property
 	
@@ -34,8 +40,8 @@ public interface ITableConstants
 	String PURCHASE_ORDER_USER = "user";
 	
 	/*user table*/
-	String USER_IS_APPROVED_APPROVE = "approve";
-	String USER_IS_APPROVED_NOT_APPROVE = "notapprove";
+	String USER_IS_APPROVED_APPROVE = "approved";
+	String USER_IS_APPROVED_NOT_APPROVE = "notapproved";
 	String USER_IS_APPROVED_PENDING = "pending";
 	String USER_IS_BANNED_TRUE = "1";
 	String USER_IS_BANNED_FALSE = "0";

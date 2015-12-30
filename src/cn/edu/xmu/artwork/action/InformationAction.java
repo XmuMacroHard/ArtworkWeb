@@ -16,6 +16,7 @@ import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.DatePos;
 import cn.edu.xmu.artwork.entity.Information;
+import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IInformationService;
 import cn.edu.xmu.artwork.service.ISaleService;
 import cn.edu.xmu.artwork.service.IUserService;
@@ -52,7 +53,7 @@ public class InformationAction extends ActionSupport
 	/**
 	 * 提交咨询
 	 */
-	@Action(value="submitInfo", results={@Result(name="success", location="/jsp/success.jsp")},
+	@Action(value="submitInfo", results={@Result(name="success", location="/jsp/backstage/admin_submitInfo.jsp")},
 			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String submitInfo()
 	{	
@@ -117,6 +118,15 @@ public class InformationAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	@Action(value="getInfoListByEditorId", results={@Result(name="success", location="/jsp/backstage/admin_editor_myinfo.jsp")})
+	public String getInfoListByEditorId()
+	{
+		informationService.getInfoListByEditorId();
+		return SUCCESS;
+	}
+	
+	
+	
 	
 	private void setAttributeByRequest(String key, Object value)
 	{
@@ -177,8 +187,5 @@ public class InformationAction extends ActionSupport
 
 	public void setDatePos(DatePos datePos) {
 		this.datePos = datePos;
-	}
-	
-	
-	
+	}	
 }

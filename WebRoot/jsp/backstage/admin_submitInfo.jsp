@@ -5,6 +5,8 @@ String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@ taglib prefix="s" uri="/struts-tags"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%> 
 <!DOCTYPE html>
 
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -94,277 +96,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
     <!--  /Loading Container -->
     <!-- Navbar -->
-    <div class="navbar">
-        <div class="navbar-inner">
-            <div class="navbar-container">
-                <!-- Navbar Barnd -->
-                <div class="navbar-header pull-left">
-                    <a href="#" class="navbar-brand">
-                        <small>
-                            <img src="assets/img/logo.png" alt="" />
-                        </small>
-                    </a>
-                </div>
-                <!-- /Navbar Barnd -->
-                <!-- Sidebar Collapse -->
-                <div class="sidebar-collapse" id="sidebar-collapse">
-                    <i class="collapse-icon fa fa-bars"></i>
-                </div>
-                <!-- /Sidebar Collapse -->
-                <!-- Account Area and Settings --->
-                <div class="navbar-header pull-right">
-                    <div class="navbar-account">
-                        <ul class="account-area">
-                            <li>
-                                <a class=" dropdown-toggle" data-toggle="dropdown" title="Help" href="#">
-                                    <i class="icon fa fa-warning"></i>
-                                </a>
-                                <!--Notification Dropdown-->
-                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-notifications">
-                                </ul>
-                                <!--/Notification Dropdown-->
-                            </li>
-                            <li>
-                                <a class="wave in dropdown-toggle" data-toggle="dropdown" title="Help" href="#">
-                                    <i class="icon fa fa-envelope"></i>
-                                    <span class="badge">3</span>
-                                </a>
-                                <!--Messages Dropdown-->
-                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-messages">
-                                    <li>
-                                        <a href="#">
-                                            <img src="assets/img/avatars/divyia.jpg" class="message-avatar" alt="Divyia Austin">
-                                            <div class="message">
-                                                <span class="message-sender">
-                                                    Divyia Austin
-                                                </span>
-                                                <span class="message-time">
-                                                    2 minutes ago
-                                                </span>
-                                                <span class="message-subject">
-                                                    Here's the recipe for apple pie
-                                                </span>
-                                                <span class="message-body">
-                                                    to identify the sending application when the senders image is shown for the main icon
-                                                </span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <img src="assets/img/avatars/bing.png" class="message-avatar" alt="Microsoft Bing">
-                                            <div class="message">
-                                                <span class="message-sender">
-                                                    Bing.com
-                                                </span>
-                                                <span class="message-time">
-                                                    Yesterday
-                                                </span>
-                                                <span class="message-subject">
-                                                    Bing Newsletter: The January Issue‏
-                                                </span>
-                                                <span class="message-body">
-                                                    Discover new music just in time for the Grammy® Awards.
-                                                </span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="#">
-                                            <img src="assets/img/avatars/adam-jansen.jpg" class="message-avatar" alt="Divyia Austin">
-                                            <div class="message">
-                                                <span class="message-sender">
-                                                    Nicolas
-                                                </span>
-                                                <span class="message-time">
-                                                    Friday, September 22
-                                                </span>
-                                                <span class="message-subject">
-                                                    New 4K Cameras
-                                                </span>
-                                                <span class="message-body">
-                                                    The 4K revolution has come over the horizon and is reaching the general populous
-                                                </span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                </ul>
-                                <!--/Messages Dropdown-->
-                            </li>
-
-                            <li>
-                                <a class="dropdown-toggle" data-toggle="dropdown" title="Tasks" href="#">
-                                    <i class="icon fa fa-tasks"></i>
-                                    <span class="badge">4</span>
-                                </a>
-                                <!--Tasks Dropdown-->
-                                <ul class="pull-right dropdown-menu dropdown-tasks dropdown-arrow ">
-                                    <li class="dropdown-header bordered-darkorange">
-                                        <i class="fa fa-tasks"></i>
-                                        4 Tasks In Progress
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <div class="clearfix">
-                                                <span class="pull-left">Account Creation</span>
-                                                <span class="pull-right">65%</span>
-                                            </div>
-
-                                            <div class="progress progress-xs">
-                                                <div style="width:65%" class="progress-bar"></div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <div class="clearfix">
-                                                <span class="pull-left">Profile Data</span>
-                                                <span class="pull-right">35%</span>
-                                            </div>
-
-                                            <div class="progress progress-xs">
-                                                <div style="width:35%" class="progress-bar progress-bar-success"></div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <div class="clearfix">
-                                                <span class="pull-left">Updating Resume</span>
-                                                <span class="pull-right">75%</span>
-                                            </div>
-
-                                            <div class="progress progress-xs">
-                                                <div style="width:75%" class="progress-bar progress-bar-darkorange"></div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li>
-                                        <a href="#">
-                                            <div class="clearfix">
-                                                <span class="pull-left">Adding Contacts</span>
-                                                <span class="pull-right">10%</span>
-                                            </div>
-
-                                            <div class="progress progress-xs">
-                                                <div style="width:10%" class="progress-bar progress-bar-warning"></div>
-                                            </div>
-                                        </a>
-                                    </li>
-
-                                    <li class="dropdown-footer">
-                                        <a href="#">
-                                            See All Tasks
-                                        </a>
-                                        <button class="btn btn-xs btn-default shiny darkorange icon-only pull-right"><i class="fa fa-check"></i></button>
-                                    </li>
-                                </ul>
-                                <!--/Tasks Dropdown-->
-                            </li>
-                            <li>
-                                <a class="login-area dropdown-toggle" data-toggle="dropdown">
-                                    <div class="avatar" title="View your public profile">
-                                        <img src="assets/img/avatars/adam-jansen.jpg">
-                                    </div>
-                                    <section>
-                                    	<% User user = (User)session.getAttribute("user"); %>
-                                        <h2><span class="profile"><span><%=user.getEmail() %></span></span></h2>
-                                    </section>
-                                </a>
-                                <!--Login Area Dropdown-->
-                                <ul class="pull-right dropdown-menu dropdown-arrow dropdown-login-area">
-                                    <!--Avatar Area-->
-                                    <li>
-                                        <div class="avatar-area">
-                                            <img src="assets/img/avatars/adam-jansen.jpg" class="avatar">
-                                            <span class="caption">Change Photo</span>
-                                        </div>
-                                    </li>
-                                    <!--Avatar Area-->
-                                    <li class="edit">
-                                        <a href="profile.html" class="pull-left">个人资料</a>
-                                        <a href="#" class="pull-right">设置</a>
-                                    </li>
-                                    <!--/Theme Selector Area-->
-                                    <li class="dropdown-footer">
-                                        <a href="/ArtworkWeb/jsp/backstage/admin_login.jsp">
-                                            	登出
-                                        </a>
-                                    </li>
-                                </ul>
-                                <!--/Login Area Dropdown-->
-                            </li>
-                            <!-- /Account Area -->
-                            <!--Note: notice that setting div must start right after account area list.
-                            no space must be between these elements-->
-                            <!-- Settings -->
-                        </ul><div class="setting">
-                            <a id="btn-setting" title="Setting" href="#">
-                                <i class="icon glyphicon glyphicon-cog"></i>
-                            </a>
-                        </div><div class="setting-container">
-                            <label>
-                                <input type="checkbox" id="checkbox_fixednavbar">
-                                <span class="text">Fixed Navbar</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" id="checkbox_fixedsidebar">
-                                <span class="text">Fixed SideBar</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" id="checkbox_fixedbreadcrumbs">
-                                <span class="text">Fixed BreadCrumbs</span>
-                            </label>
-                            <label>
-                                <input type="checkbox" id="checkbox_fixedheader">
-                                <span class="text">Fixed Header</span>
-                            </label>
-                        </div>
-                        <!-- Settings -->
-                    </div>
-                </div>
-                <!-- /Account Area and Settings -->
-            </div>
-        </div>
-    </div>
+	<c:import url="common/header.jsp"/>
     <!-- /Navbar -->
     <!-- Main Container -->
     <div class="main-container container-fluid">
         <!-- Page Container -->
         <div class="page-container">
             <!-- Page Sidebar -->
-            <div class="page-sidebar" id="sidebar">
-                <!-- Page Sidebar Header-->
-                <div class="sidebar-header-wrapper">
-                    <input type="text" class="searchinput" />
-                    <i class="searchicon fa fa-search"></i>
-                    <div class="searchhelper">Search Reports, Charts, Emails or Notifications</div>
-                </div>
-                <!-- /Page Sidebar Header -->
-                <!-- Sidebar Menu -->
-                <ul class="nav sidebar-menu">
-                    <!--Dashboard-->
-                    <li>
-                        <a href="/ArtworkWeb/jsp/backstage/admin_submitAdvertise.jsp">
-                            <i class="menu-icon glyphicon glyphicon-home"></i>
-                            <span class="menu-text"> 广告上传 </span>
-                            
-                        </a>
-                    </li>
-                    <!--Databoxes-->
-                    <li class="active open">
-                        <a href="/ArtworkWeb/jsp/backstage/admin_submitInfo.jsp">
-                            <i class="menu-icon glyphicon glyphicon-tasks"></i>
-                            <span class="menu-text"> 资讯上传 </span>
-                        </a>
-                    </li>
-                </ul>
-                <!-- /Sidebar Menu -->
-            </div>
+			<c:import url="common/slider.jsp"/>
             <!-- /Page Sidebar -->
             <!-- Page Content -->
             <div class="page-content">
@@ -432,6 +171,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                     </div>
                                                                 </div>
                                                             </div> 
+                                                            <div>
+                                                            	
+                                                            <!-- 显示时间冲突的错误信息 -->
+                                                            <c:if test = "${result == 'error'}">
+                                                            	<span class="label label-danger">时间冲突:</span>
+                                                            	<c:forEach items="${result_data}" var="date">                                                            		
+                                                            		<span class="label label-danger" style="marging:10px;"><fmt:formatDate value="${date}" pattern="yyyy-MM-dd"/></span>
+                                                            	</c:forEach>
+                                                            </c:if>
+                                                            </div>                                                            
                                                             <div class="row">
                                                                 <div class="col-sm-6">
                                                                     <div class="form-group">

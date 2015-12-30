@@ -75,17 +75,14 @@ Purchase: http://wrapbootstrap.com
             <div class="rotator"></div>
         </div>
     </div>
-    <!--  /Loading Container -->
-    <!-- Navbar -->
 	<c:import url="common/header.jsp"/>
-    <!-- /Navbar -->
+
     <!-- Main Container -->
     <div class="main-container container-fluid">
-        <!-- Page Container -->
+  
+         <!-- Page Container -->
         <div class="page-container">
-            <!-- Page Sidebar -->
-			<c:import url="common/slider.jsp"/>
-            <!-- /Page Sidebar -->
+      		 <c:import url="common/slider.jsp"/>
             <!-- Page Content -->
             <div class="page-content">               
                 <!-- Page Body -->
@@ -124,7 +121,6 @@ Purchase: http://wrapbootstrap.com
                                                   	状态
                                                 </th>
                                                 <th>
-													操作
                                                 </th>
                                             </tr>
                                         </thead>
@@ -146,10 +142,7 @@ Purchase: http://wrapbootstrap.com
                                                 		<span class="label label-info">待审核</span>
                                                 	</s:elseif>
                                                 </td>
-                                                <td>
-                                                    <s:a href="JavaScript:InfoPass(%{id});" cssClass="btn btn-success btn-xs"><i class="fa fa-edit"></i> 通过</s:a>
-                                                    <s:a href="JavaScript:InfoRetreat(%{id});" cssClass="btn btn-danger btn-xs"><i class="fa fa-trash-o"></i> 退回</s:a>
-                                                </td>
+                                                <td></td>
                                             </tr>
                                         </s:iterator>
                                         </tbody>

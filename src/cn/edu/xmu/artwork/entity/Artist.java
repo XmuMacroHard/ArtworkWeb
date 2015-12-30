@@ -47,7 +47,7 @@ public class Artist extends User
 	private String identification;
 	private String introduction;
 	private String fileurl;
-	private String isapprove;
+	private String isapprove;									//pending 待审核    approved 同意认证  notapproved
 	private String portrait;									//头像路径
 	
 	public Artist(){}

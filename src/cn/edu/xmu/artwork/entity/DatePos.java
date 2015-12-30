@@ -6,6 +6,8 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
@@ -19,6 +21,12 @@ import javax.persistence.Table;
  */
 @Entity
 @Table(name = "date_pos", catalog = "artworkdb")
+@NamedQueries({
+	@NamedQuery(
+		name = "DatePos.getRepeatableDatePos",
+		query = "from DatePos where date = :date and location = :location"
+	)	
+})
 public class DatePos implements java.io.Serializable {
 
 	// Fields
