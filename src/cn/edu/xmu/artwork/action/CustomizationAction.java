@@ -63,9 +63,9 @@ public class CustomizationAction extends ActionSupport{
 		return SUCCESS;
 	}
 	
-	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/frontside/order/home_order.jsp")})
+	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/frontside/user/user_customization_order.jsp")})
 	public String CustomizationSubmitAction()
-	{		
+	{
 		customizeService.addCustomization(artist.getId(), address,commodity);
 		return SUCCESS;
 	}
@@ -120,14 +120,10 @@ public class CustomizationAction extends ActionSupport{
 			return ERROR;
 	}
 	
-	@Action(value="rejectCustomizationAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	@Action(value="rejectCustomizationAction",results={@Result(name="success", location="/jsp/frontside/artist/my_customization_order.jsp")})
 	public String rejectCustomization(){
-		int id = 3; // get from session;
-		boolean result = customizeService.rejuectCustomization(id);
-		if(result)
-			return SUCCESS;
-		else
-			return ERROR;
+		customizeService.rejuectCustomization(purchaseOrder.getId());
+		return SUCCESS;
 	}
 	
 	//转换定制品到普通商品

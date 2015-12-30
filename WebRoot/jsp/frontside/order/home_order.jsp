@@ -98,6 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <li><a href="javascript:onload(1,'handicraft')">手工品</a></li>
                     </ul>
                   </div>
+                  <span id="artistsort"></span>
               <div class="pager">
                 <div class="pages">
                   <label>Page:</label>

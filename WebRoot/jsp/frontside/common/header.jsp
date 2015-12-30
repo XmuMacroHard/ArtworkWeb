@@ -53,7 +53,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_customization_order.jsp">定制订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="">拍卖订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="viewCart">我的购物车</a></li>                    
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/pay/recharge.jsp">充值中心</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/artist_certification.jsp">艺术家认证 </a></li>
                   </ul>
                 </div>

@@ -5,6 +5,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
 
@@ -72,7 +73,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!--end 买家  与卖家 -->
           <hr/>          
           <!-- 收货地址 -->
-       	  <div>地址详情:<c:out value="${purchaseOrder.address}"/></div> 
+       	  <div>收货地址:<c:out value="${addressdetail}"/><br>
+       	  收货人:<c:out value="${addresspeople}"/><br>
+       	  联系电话:<c:out value="${addressphone}"/><br></div>
           <!--end 收货地址 -->
           <hr/>
           
@@ -86,7 +89,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                 <thead>
                   <tr class="first last">
-                    <th rowspan="1">分期付款</th>
+                    <th rowspan="1">付款期限</th>
                     <th rowspan="1"><span class="nobr">付款金额</span></th>                    
                     <th colspan="1" class="a-center"><span class="nobr">付款状态</span></th>
                   </tr>
@@ -95,7 +98,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <c:set var="paymentNum" scope = "page" value="1"/>
                 <c:forEach items="${purchaseOrder.payments}" var="payment" >
                   <tr class="first odd">
-                    <td class="a-right"><span class="cart-price"> <span class="price">第<c:out value="${paymentNum}"/>次支付</span> </span></td>
+                    <td class="a-right"><span class="cart-price"> <span class="price"><fmt:formatDate value="${payment.date}" pattern="yyyy-MM-dd"/></span> </span></td>
                     <td class="a-right"><span class="cart-price"> <span class="price"><c:out value="${payment.money}"/></span> </span></td>
                     <td class="a-right">
                     	<span class="cart-price">
@@ -108,6 +111,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     	</span>
                     </td>
                   </tr>
+                  <c:set var="paymentNum" scope = "page" value="${paymentNum+1}"/>
                 </c:forEach>
                 </tbody>
               </table>
@@ -168,6 +172,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <td><h2 class="product-name"> <a href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a> </h2></td>
                     <td class="a-right"><span class="cart-price"> <span id="${commodity.id}" class="price"><c:out value="${commodity.price}"/></span> </span></td>
                   </tr>
+                  <input name="totalprice" value="${commodity.price}" type="hidden"/>
                 </c:forEach>
                 </tbody>
               </table>
@@ -209,7 +214,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                <tfoot>
                   <tr class="first last">
                     <td class="a-right last" colspan="50">
-						<button  class="button btn-empty"  type="submit"><span><span>接受订单</span></span></button>
+						<button  class="button btn-empty"  type="submit" onclick="return checkacceptorder()"><span><span>接受订单</span></span></button>
 					</td>                 
                   </tr>
                 </tfoot>                
@@ -220,6 +225,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </tr>
                 </tbody>
               </table>
+              <span class="text-danger" id="acceptTip"></span>
         	</div>        	
         	</div>
         	</form>

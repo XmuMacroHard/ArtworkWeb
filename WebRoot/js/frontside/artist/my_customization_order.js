@@ -3,20 +3,20 @@
  */
 
 $(document).ready(function(){
-	onload();
+	onload("getArtistCusOrderByState", "4",1);
 });
 
 
-function onload()
+function onload(action, state,nowpage)
 {
-	getCustomizationOrderByType("getUserCusOrderByState", "0");
+	getCustomizationOrderByType(action, state,nowpage)
 }
 
 
 //action 请求 
 //type 这里没有订单类型，因为不同种类订单的action不同
 //state 订单状态
-function getCustomizationOrderByType(action, state)
+function getCustomizationOrderByType(action, state,nowpage)
 {
 	if(state == "0")
 	{
@@ -50,8 +50,43 @@ function getCustomizationOrderByType(action, state)
 			var $orderList = $("#orderList"); 
 			$orderList.empty();
 			
-			$.each(data, function(index, item)
+			var pages="";
+			var pagesize=6;
+			var totalcount=data.length;
+			var totalpage=Math.ceil(totalcount/pagesize);
+			var $pageList = $("#page_list");
+			
+			$pageList.empty();
+			if(nowpage!=1){
+				pages+="<li><a href=\"javascript:onload(\'"+action+"\',\'"+state+"\',1);\">&lt;&lt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(\'"+action+"\',\'"+state+"\',"+(nowpage-1)+
+				");\">&lt;</a></li>";
+			}
+			for(var i=nowpage-2;i<=nowpage+2;i++){
+				if(i==nowpage){
+					pages+="<li class=\"active\"><a href=\"javascript:onload(\'"+action+"\',\'"+state+"\',"+i+
+						");\">"+i+"</a></li>";
+					}
+				else{
+					if(i>0&&i<=totalpage){
+						pages+="<li><a href=\"javascript:onload(\'" +action+"\',\'"+state+"\',"+i+
+						");\">"+i+"</a></li>";
+					}
+				}
+			}
+			if(nowpage!=totalpage&&totalpage!=0){
+				pages+="<li><a href=\"javascript:onload(\'" +action+"\',\'"+state+"\',"+(nowpage+1)+
+				");\">&gt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(\'" +action+"\',\'"+state+"\',"+totalpage+
+				");\">&gt;&gt;</a></li>"
+			}
+			$pageList.append(pages);
+			
+			$orderList.empty();
+			var start=pagesize*(nowpage-1);
+			for(var i=start;i<=start+pagesize-1&&i<=totalcount-1;i++)
 			{
+				var item=data[i];
 				list += "<div id='address' class='row'>" +    
 				"<div id=''  class='col-md-1  orderwrap'>" +
       		"<div>订单号:" + item.orderid + "</div><hr/>" +
@@ -61,7 +96,7 @@ function getCustomizationOrderByType(action, state)
       			"</div>" +
       		"</div>" +    
       		"</div> ";
-			});
+			}
 			
 			$orderList.append(list);
 			
@@ -72,5 +107,5 @@ function getCustomizationOrderByType(action, state)
 
 function detail(id)
 {
-	window.location.href="getDetailPuchaseOrderToUser?purchaseOrder.id=" + id;
+	window.location.href="getDetailPuchaseOrderToArtist?purchaseOrder.id=" + id;
 }

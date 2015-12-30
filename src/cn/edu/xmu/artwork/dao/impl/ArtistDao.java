@@ -44,7 +44,7 @@ public class ArtistDao extends GenericDao implements IArtistDao{
 	{
 		Artist artist=null;
 		try {
-			Query query = getSession().getNamedQuery("Artist.getArtist").setParameter("Id", id);
+			Query query = getSession().getNamedQuery("Artist.getById").setParameter("Id", id);
 			artist = (Artist) query.uniqueResult();
 		} catch (Exception e) {
 			// TODO: handle exception

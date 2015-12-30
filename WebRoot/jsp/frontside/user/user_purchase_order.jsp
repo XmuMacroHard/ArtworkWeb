@@ -67,10 +67,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    <span class="caret"></span>
 			  </button>
 			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '0');return false;">待付款</a></li>
-			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '1');return false;">待发货</a></li>
-			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '2');return false;">待收货</a></li>
-			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '3');return false;">已完成</a></li>
+			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '0',1);return false;">待付款</a></li>
+			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '1',1);return false;">待发货</a></li>
+			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '2',1);return false;">待收货</a></li>
+			    <li><a onclick="getOrderByType('getUserPurchaseOrderByState', '3',1);return false;">已完成</a></li>
 			  </ul>
 			</div> 
         
@@ -79,6 +79,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <h1 id = "orderTypeTitle">待付款</h1>
             
           </div> 
+          
+           <div class="pager">
+                <div class="pages">
+                  <label>Page:</label>
+                  <ul class="pagination" id="page_list">
+                  </ul>
+                </div>
+             </div>
           
           <div id="orderList" class="category-products">
           

@@ -135,7 +135,7 @@ public class User implements java.io.Serializable {
 		this.nickname = nickname;
 	}
 
-	@Column(name = "balance", precision = 10)
+	@Column(name = "balance", precision = 10,scale=2)
 	public Float getBalance() {
 		return this.balance;
 	}

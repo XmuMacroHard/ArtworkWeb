@@ -5,6 +5,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 %>
 <%@ taglib prefix="s" uri="/struts-tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
 
@@ -73,7 +74,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <!--end 买家  与卖家 -->
           <hr/>          
           <!-- 收货地址 -->
-       	  <div>地址详情:<c:out value="${purchaseOrder.address}"/></div> 
+       	  <div>收货地址:<c:out value="${addressdetail}"/><br>
+       	  收货人:<c:out value="${addresspeople}"/><br>
+       	  联系电话:<c:out value="${addressphone}"/><br></div>
           <!--end 收货地址 -->
           <hr/>
           
@@ -87,16 +90,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 
                 <thead>
                   <tr class="first last">
-                    <th rowspan="1">分期付款</th>
-                    <th rowspan="1"><span class="nobr">付款金额</span></th>                    
+                    <th rowspan="1">付款期限</th>
+                    <th rowspan="1"><span class="nobr">付款金额</span></th>
                     <th colspan="1" class="a-center"><span class="nobr">付款状态</span></th>
                   </tr>
                 </thead>
                 <tbody>
-                <c:set var="paymentNum" scope = "page" value="1"/>
                 <c:forEach items="${purchaseOrder.payments}" var="payment" >
                   <tr class="first odd">
-                    <td class="a-right"><span class="cart-price"> <span class="price">第<c:out value="${paymentNum}"/>次支付</span> </span></td>
+                    <td class="a-right"><span class="cart-price"> <span class="price"><fmt:formatDate value="${payment.date}" pattern="yyyy-MM-dd"/></span> </span></td>
                     <td class="a-right"><span class="cart-price"> <span class="price"><c:out value="${payment.money}"/></span> </span></td>
                     <td class="a-right">
                     	<span class="cart-price">
@@ -105,6 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     		</c:if>
 							<c:if test="${payment.state == 0}"> 
                     		<span class="price">未付款</span>
+                    		<input name="price" value="${payment.money}" type="hidden"/>
                     		</c:if>
                     	</span>
                     </td>
@@ -136,12 +139,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <tfoot>
                   <tr class="first last">
                     <td class="a-right last" colspan="50">
-                      <button onClick="{location.href='jsp/frontside/artist/my_purchase_order.jsp'}" class="button btn-continue" title="Continue Shopping" type="button"><span><span>返回</span></span></button>
+                      <button onClick="{location.href='jsp/frontside/user/user_purchase_order.jsp'}" class="button btn-continue" title="Continue Shopping" type="button"><span><span>返回</span></span></button>
 					  <c:choose>
 					  	<c:when test="${purchaseOrder.state == '0'}">
+					  		<input type="hidden" name="usercount" value="${sessionScope.user.balance}"/>
+					  		<input type="hidden" name="totalprice" value="${purchaseOrder.totalprice}"/>
 					  		<button onclick="pay()" class="button btn-empty" type="submit"><span><span>付款</span></span></button>
 					  	</c:when> 
-						<c:when test="${purchaseOrder.state == '1'}"> 
+						<c:when test="${purchaseOrder.state == '1'}">
 					  	</c:when>
 					  	<c:when test="${purchaseOrder.state == '2'}">
 					  		<button onclick="confirmCommodity()"  class="button btn-empty"  type="submit"><span><span>确认收货</span></span></button>
@@ -155,12 +160,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <c:forEach items="${purchaseOrder.commodity}" var="commodity">
                   <tr class="first odd">
                     <td class="image">
-                     	<a class="product-image" title="Sample Product" href="product_detail.html">
+                     	<a class="product-image" title="Sample Product" href="getDetailedCommodity?commodity.id=${commodity.id}">
 							         <c:set var="urlsNum" scope="page" value="1"/>  
 							         <c:forEach items="${commodity.commodityPices}" var="pic">   		 	
 								          <c:if test = "${urlsNum == 1}">
 									         <img width="75" alt="Sample Product" src="${server_path}${pic.url}"> 
-									         <c:set var="urlsNum" scope="page" value="2"/>		
+									         <c:set var="urlsNum" scope="page" value="2"/>	
 								          </c:if>
 	                     	</c:forEach> 
                     	</a> 

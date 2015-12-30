@@ -101,6 +101,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </ul>
 
                   </div>
+                  <span id="commoditysort"></span>
                  </div>
               <div class="pager">
                 <div class="pages">

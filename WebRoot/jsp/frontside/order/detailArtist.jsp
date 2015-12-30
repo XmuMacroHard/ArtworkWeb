@@ -61,6 +61,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <!--hidden  -->
                 <input id="artistid_hidden_input" type="hidden" value="${artist.id}"/>
                 <input id="artistrn_hidden_input" type="hidden" value="${artist.realName}"/>
+                <input id="userid_hidden" name="user.id" value="${sessionScope.user.id}" type="hidden"/>
                 <!--end hidden  -->
                 
                 <div class="product-img-box col-sm-4 col-xs-12">
