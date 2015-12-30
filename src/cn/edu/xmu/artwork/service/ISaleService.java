@@ -18,6 +18,8 @@ public interface ISaleService {
 	public List<ShoppingCart> getShoppingCart();
 	public JSONArray getCommodityListByType(String commoType);
 	public Commodity getCommodityById(long commodityId);
+	public void deleteCommodityById(long id);
+	public String altercommodity(long id,Commodity commodity);
 	public void uploadCommodity(Commodity commodity, List<String> picPaths);
 	public JSONObject addToCart(Commodity commodity, User buyer);
 	public void deleteFromCart(Commodity commodity);

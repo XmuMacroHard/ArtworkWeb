@@ -73,6 +73,7 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 		commodity.setPurchaseOrder(customizationOrder);
 		commodity.setAuthorId(artist_id);
 		commodity.setStatus("0");
+		commodity.setIsBought(true);
 		
 		try {
 			customizationOrder.setAddress(orderUtils.changeaddress(addressDao.findById(address.getId())));

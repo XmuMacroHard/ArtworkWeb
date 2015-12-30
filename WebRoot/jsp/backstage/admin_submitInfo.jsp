@@ -122,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                 </div>
                                                 <div class="widget-body">
                                                     <div id="registration-form">
-                                                        <form action="submitInfo" method="POST" enctype="multipart/form-data">
+                                                        <form action="submitInfo" method="POST" enctype="multipart/form-data" onsubmit="return checkinfosubmit()">
                                                             <div class="form-title">
                                                                 	资讯
                                                             </div>
@@ -131,9 +131,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                     <div class="form-group">
                                                                         <label for="exampleInputEmail2">标题</label>
                                                                         <span class="input-icon icon-right">
-                                                                            <s:textfield cssClass="form-control" name="information.title"/>
+                                                                            <s:textfield cssClass="form-control" name="information.title" onblur="checkadname()"/>
                                                                             <i class="fa fa-envelope palegreen"></i>
                                                                         </span>
+                                                                        <span class="text-danger" id="adnameTip"></span>
                                                                     </div>
                                                                 </div>
                                                                  <div class="col-sm-6">
@@ -142,6 +143,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                         <span class="input-icon icon-right">
                                                                             <s:file name="pic" cssClass="form-control" label="uploadfile"/>
                                                                         </span>
+                                                                        <span class="text-danger" id="adpicTip"></span>
                                                                     </div>
                                                                 </div> 
                                                             </div>
@@ -156,6 +158,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                     							<i class="fa fa-calendar"></i>
                                                 							</span>
                                                 						</div>
+                                                						<span class="text-danger" id="adbegintimeTip"></span>
                                                                     </div>
                                                                 </div>
                                                                 <div class="col-sm-6">
@@ -168,6 +171,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                     							<i class="fa fa-calendar"></i>
                                                 							</span>
                                                 						</div>
+                                                						<span class="text-danger" id="adendtimeTip"></span>
                                                                     </div>
                                                                 </div>
                                                             </div> 
@@ -208,9 +212,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                     <div class="form-group">
                                                                         <label for="exampleInputName2">价格</label>
                                                                         <span class="input-icon icon-right">
-                                                                            <s:textfield cssClass="form-control" name="information.expense"/>
+                                                                            <s:textfield cssClass="form-control" name="information.expense" onblur="checkadprice()"/>
                                                                             <i class="fa fa-calendar blue"></i>
                                                                         </span>
+                                                                        <span class="text-danger" id="adpriceTip"></span>
                                                                     </div>
                                                                 </div>
                                                             </div>
@@ -219,8 +224,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                                                                     <div class="form-group">
                                                                         <label for="exampleInputEmail2">资讯内容</label>                                                                       	
                                                                          <span class="input-icon icon-right">
-                                                                            <textarea rows="10" width="100%" class = "form-control" name="information.content"></textarea>
+                                                                            <textarea rows="10" width="100%" class = "form-control" name="information.content" onblur="checkadcontent()"></textarea>
                                                                         </span>
+                                                                        <span class="text-danger" id="adcontentTip"></span>
                                                                     </div>
 
                                                                 </div>
@@ -261,7 +267,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
     <!--Bootstrap Date Picker-->
     <script src="assets/js/datetime/bootstrap-datepicker.js"></script>
-    
+    <script src="js/admin_advertise.js"></script>
     <!--Google Analytics::Demo Only-->
     <script>
     	//--Jquery Select2--

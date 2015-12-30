@@ -37,6 +37,19 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 	}
 	
 	/**
+	 * 艺术家删除商品
+	 */
+	public void deleteCommodity(long id)
+	{
+		Query query = getSession().getNamedQuery("Commodity.deletepicById")
+				.setParameter("id",id);
+		query.executeUpdate();
+		query = getSession().getNamedQuery("Commodity.deleteById")
+				.setParameter("id",id);
+		query.executeUpdate();
+	}
+	
+	/**
 	 * 获取num个推荐商品，暂时推荐方法为任取num个最新的商品
 	 * @param num
 	 * @return
