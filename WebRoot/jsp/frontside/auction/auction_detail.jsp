@@ -101,8 +101,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   </div>
                   <div class="price-block">
                     <div class="price-box">
-                      <p class="old-price"> <span class="price-label">起拍价:</span> <span id="old-price-48" class="price"> ￥600 </span> </p>
-                      <p class="special-price"> <span class="price-label">当前价:</span> <span id="product-price-48" class="price" style="color:red"> ￥2600 </span> </p>
+                      <p class="old-price"> <span class="price-label">起拍价:</span> <span id="old-price-48" class="price"> ￥<c:out value="${auction.startPrice}"/> </span> </p>
+                      <p class="special-price"> <span class="price-label">当前价:</span> <span id="product-price-48" class="price" style="color:red"> ￥<c:out value="${auction.currentPrice}"/> </span> </p>
                     </div>
                   </div>
                   <div class="add-to-box">

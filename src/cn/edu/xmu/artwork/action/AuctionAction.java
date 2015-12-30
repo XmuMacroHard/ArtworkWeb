@@ -5,6 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
 import org.apache.struts2.convention.annotation.Namespace;
@@ -13,9 +16,6 @@ import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-
-
-
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Auction;
 import cn.edu.xmu.artwork.entity.Bid;
@@ -23,6 +23,7 @@ import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAuctionService;
 import cn.edu.xmu.artwork.service.impl.AuctionService;
+import cn.edu.xmu.artwork.utils.IJsonUtils;
 
 @Scope("prototype")//支持多例  
 @ParentPackage("json-default")  //表示继承的父包  
@@ -53,21 +54,40 @@ public class AuctionAction {
 	
 	
 	//显示当天所有拍卖
-	@Action(value="showTodayAuctionAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
+	@Action(value="showTodayAuctionAction",results={@Result(name="success", location="/jsp/frontside/auction/home_auction.jsp")})
 	public String showTodayAuction()
 	{
-		List<Auction> list = auctionService.getTodayAuctions();
-		setAttributeByRequest("auctionList", list);
+		System.out.println("show today auction.");
+		
+		List<Auction> auctionList = auctionService.getTodayAuctions();
+		
+		for(Auction auc : auctionList)
+		{
+			System.out.println(auc.getStartPrice());
+		}
+		
+		setAttributeByRequest("auctionList", auctionList);
 		return IResultCode.SUCCESS;
 	}
 	
 	//显示拍卖详细信息
-	@Action(value="showAuctionDetailAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
+	@Action(value="showAuctionDetailAction",results={@Result(name="success", location="/jsp/frontside/auction/auction_detail.jsp")})
 	public String showAuctionDetail()
 	{
+		System.out.println("in auction detail 1");
+		
 		Long id = auction.getId();
+		
+		System.out.println("in auction detail 2");
+		
 		Auction auc = auctionService.getAuctionAuctionById(id);
+		
+		System.out.println("in auction detail 3");
+		
 		setAttributeByRequest("auction", auc);
+		
+		System.out.println("in auction detail 4");
+		
 		return IResultCode.SUCCESS;
 	}
 	
