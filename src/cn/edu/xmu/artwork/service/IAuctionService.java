@@ -8,13 +8,18 @@ import cn.edu.xmu.artwork.entity.Bid;
 import cn.edu.xmu.artwork.entity.Commodity;
 
 public interface IAuctionService {
-	public boolean addBid(Bid bid, Auction auction);
-	
-	public boolean createAuction(Auction auction);
-	//每天计算一次 当天结束拍卖的拍卖订单
-	public boolean createDailyAuctionOrder();
-	
-	public List<Bid> getByAuction(Auction auction);
+	//叫价
+	public void addBid(Bid bid, Auction auction);
+	//发起一个拍卖
+	public void createAuction(Commodity commodity, Auction auction);
+	//生成单个拍卖的订单
+	public void createAuctionOrder(Auction auction);
+	//通过计时器调用 计算每日结束拍卖的订单
+	public void createDailyAuctionOrder();
+	//得到一个拍卖的所有叫价
+	public List<Bid> getBidsByAuction(Auction auction);
+	//得到当天的所有拍卖
 	public List<Auction> getTodayAuctions();
-	public Auction findById(long id);
+	//根据id拿拍卖
+	public Auction getAuctionAuctionById(long id);
 }

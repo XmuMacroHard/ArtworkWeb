@@ -3,15 +3,20 @@
  */
 
 $(document).ready(function(){
-	onload(1);
+	onload(1,'calligraphy');
 });
 
-document.getElementById('country').onchange=function(){
-	onload(1);
-}
-function onload(nowpage)
+function onload(nowpage,country)
 {
-	var country=document.getElementById("country").value;
+	if(country=="calligraphy"){
+		document.getElementById("commoditysort").innerHTML="书法";
+	}else if(country=="painting"){
+		document.getElementById("commoditysort").innerHTML="绘画";
+	}else if(country=="sculpture"){
+		document.getElementById("commoditysort").innerHTML="雕刻";
+	}else{
+		document.getElementById("commoditysort").innerHTML="手工品";
+	}
 	$.ajax({
 		type:"post",
 		url:"showCommodityList",
@@ -29,27 +34,27 @@ function onload(nowpage)
 			var $pageList = $("#page_list");
 			$pageList.empty();
 			if(nowpage!=1){
-				pages+="<li><a href=\"javascript:onload(1);\">&lt;&lt;</a></li>";
-				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+
-				");\">&lt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(1,\'"+country+"\');\">&lt;&lt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(" +(nowpage-1)+",\'"+country+
+				"\');\">&lt;</a></li>";
 			}
 			for(var i=nowpage-2;i<=nowpage+2;i++){
 				if(i==nowpage){
-					pages+="<li class=\"active\"><a href=\"javascript:onload(" +i+
-						");\">"+i+"</a></li>";
+					pages+="<li class=\"active\"><a href=\"javascript:onload(" +i+",\'"+country+
+						"\');\">"+i+"</a></li>";
 					}
 				else{
 					if(i>0&&i<=totalpage){
-						pages+="<li><a href=\"javascript:onload(" +i+
-						");\">"+i+"</a></li>";
+						pages+="<li><a href=\"javascript:onload(" +i+",\'"+country+
+						"\');\">"+i+"</a></li>";
 					}
 				}
 			}
 			if(nowpage!=totalpage){
-				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+
-				");\">&gt;</a></li>";
-				pages+="<li><a href=\"javascript:onload(" +totalpage+
-				");\">&gt;&gt;</a></li>"
+				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+",\'"+country+
+				"\');\">&gt;</a></li>";
+				pages+="<li><a href=\"javascript:onload(" +totalpage+",\'"+country+
+				"\');\">&gt;&gt;</a></li>"
 			}
 			$pageList.append(pages);
 			

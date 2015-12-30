@@ -5,7 +5,9 @@ import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Scope;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.dao.impl.TestDao;
@@ -42,6 +44,5 @@ public class TestAction extends ActionSupport
 	public void setTest(Test test) {
 		this.test = test;
 	}
-	
 	
 }

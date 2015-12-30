@@ -3,7 +3,7 @@
 <struts>
 	
 	<constant name="struts.action.excludePattern" value="/websocket"></constant>
-	<constant name="struts.action.excludePattern" value="/echo"></constant>
+	<constant name="struts.action.excludePattern" value="/AuctionWebSocket"></constant>
 	
 	<package name="custom-default" extends="json-default">
 		<interceptors>

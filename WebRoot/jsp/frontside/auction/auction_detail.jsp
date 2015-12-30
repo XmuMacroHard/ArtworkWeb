@@ -33,7 +33,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <div class="page">
-  <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+ <c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
   <c:import url="../common/header.jsp"/>
   <!-- end breadcrumbs -->
   <div class="breadcrumbs">
@@ -57,291 +57,84 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="product-essential">
               <form action="#" method="post" id="product_addtocart_form">
                 <input name="form_key" value="6UbXroakyQlbfQzK" type="hidden">
-                
-                <!--hidden  -->
-                <input id="artistid_hidden_input" type="hidden" value="${artist.id}"/>
-                <input id="artistrn_hidden_input" type="hidden" value="${artist.realName}"/>
-                <input id="userid_hidden" name="user.id" value="${sessionScope.user.id}" type="hidden"/>
-                <!--end hidden  -->
-                
                 <div class="product-img-box col-sm-4 col-xs-12">
+                  <div class="new-label new-top-left"> New </div>
                   <div class="product-image">
-					<div class="large-image"> <a href="products-images/product1.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img alt="product-image" src="${server_path}${artist.portrait}"> </a> </div>                    
+                    <c:set var="urlsNum" scope="page" value="1"/>  
+							<c:forEach items="${auction.commodity.commodityPices}" var="pic">   		 	
+								<c:if test = "${urlsNum == 1}"> 
+                    				<div class="large-image" style="height: 350px"> <a href="products-images/product1.jpg" class="cloud-zoom" id="zoom1" rel="useWrapper: false, adjustY:0, adjustX:20"> <img width="100%" height="100" alt="product-image" src="${server_path }${pic.url}"> </a> </div>
+									<c:set var="urlsNum" scope="page" value="2"/> 		
+								</c:if> 
+	                     	</c:forEach>
+	                <div class="flexslider flexslider-thumb">
+                      <ul class="previews-list slides">
+                      	<c:forEach items="${auction.commodity.commodityPices}" var="pic">
+                        	<li><a href='products-images/product1.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'products-images/product1.jpg' "><img src="${server_path }${pic.url}" alt="Thumbnail 1"/></a></li>
+                        </c:forEach>
+                      </ul>
+                    </div>
                   </div>
                   <!-- end: more-images -->
                   <div class="clear"></div>
                 </div>
                 <div class="product-shop col-sm-5 col-xs-12">
+                  <div class="product-next-prev"> <a href="#" class="product-next"><span></span></a> <a href="#" class="product-prev"><span></span></a> </div>
                   <div class="product-name">
-                    <h1><c:out value="${artist.realName}"/></h1>
+                    <h1><c:out value="${auction.commodity.name}"/></h1>
                   </div>
+                  
                   <div class="ratings">
-                    <div class="rating-box">
-                      <div style="width:60%" class="rating"></div>
-                    </div>
-                    <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Your Review</a> </p>
+                    <span>距结束：</span>
+                    <span id="t_d" style="color:red">00天</span>
+                    <span id="t_h" style="color:red">00时</span>
+                    <span id="t_m" style="color:red">00分</span>
+                    <span id="t_s" style="color:red">00秒</span>
                   </div>
+                  
                   <div class="short-description">
-                    <h2>简介</h2>
-                    <p><c:out value="${artist.introduction}"/></p>
+                    <h2>商品简介</h2>
+                    <p><c:out value="${auction.commodity.introduction}"/></p>
+                    <p>天然水晶肯定不像人造水晶那么完美</p>
+                    <p>一般都会有冰裂、棉絮等甚至有手工打磨下的尺寸误差</p>
+                    <p>水晶以天然印记记录千秋岁月、万古沧桑</p>
+                  </div>
+                  <div class="price-block">
+                    <div class="price-box">
+                      <p class="old-price"> <span class="price-label">起拍价:</span> <span id="old-price-48" class="price"> ￥600 </span> </p>
+                      <p class="special-price"> <span class="price-label">当前价:</span> <span id="product-price-48" class="price" style="color:red"> ￥2600 </span> </p>
+                    </div>
                   </div>
                   <div class="add-to-box">
                     <div class="add-to-cart">
-                      <button id="orderButton" class="button btn-cart"  type="button"><span><i class="icon-basket"></i>定制</span></button> 
-                    </div>
-                    <div class="email-addto-box">
-                      <ul class="add-to-links">
-                        <li> <a class="link-wishlist" href="wishlist.html"><span>Add to Wishlist</span></a></li>
-                        <li><span class="separator">|</span> <a class="link-compare" href="compare.html"><span>Add to Compare</span></a></li>
-                      </ul>
-                      <p class="email-friend"><a href="#" class=""><span>Email to a Friend</span></a></p>
+                      <label for="qty">出价金额：</label>
+                      <div class="pull-left">
+                        <div class="custom pull-left">
+                          <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty &gt; 0 ) result.value--;return false;" class="reduced items-count" type="button"><i class="icon-minus">&nbsp;</i></button>
+                          <input type="text" class="input-text qty" title="Qty" value="0" maxlength="12" id="qty" name="qty">
+                          <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="icon-plus">&nbsp;</i></button>
+                        </div>
+                      </div>
+                      <button id="t_btn" onClick="alert('hello');" class="button btn-cart" title="叫价" type="button"><span><i class="icon-basket"></i> 参与竞价</span></button>
                     </div>
                   </div>
-                </div>
-                <div class="product-img-box col-sm-3 col-xs-12">
-                  <div class="product-additional"> <img alt="custom block" src="images/offer-banner1.png"> </div>
                 </div>
               </form>
             </div>
             <div class="product-collateral">
               <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
-                <li class="active"> <a href="#product_tabs_description" data-toggle="tab">个人介绍</a> </li>
-                <li><a href="#product_tabs_tags" data-toggle="tab">作品展示</a></li>
-                <li> <a href="#reviews_tabs" data-toggle="tab">Reviews</a> </li>
-                <li> <a href="#product_tabs_custom" data-toggle="tab">Custom Tab</a> </li>
-                <li> <a href="#product_tabs_custom1" data-toggle="tab">Custom Tab1</a> </li>
+                <li class="active"> <a href="#product_tabs_description" data-toggle="tab">竞价记录</a> </li>
               </ul>
               <div id="productTabContent" class="tab-content">
                 <div class="tab-pane fade in active" id="product_tabs_description">
                   <div class="std">
-                    <p>${artist.introduction}</p>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="product_tabs_tags">
-                  <div class="box-collateral box-tags">
-                    <div class="tags">
-                      <form id="addTagForm" action="#" method="get">
-                        <div class="form-add-tags">
-                          <label for="productTagName">Add Tags:</label>
-                          <div class="input-box">
-                            <input class="input-text required-entry" name="productTagName" id="productTagName" type="text">
-                            <button type="button" title="Add Tags" class=" button btn-add" onClick="submitTagForm()"> <span>Add Tags</span> </button>
-                          </div>
-                          <!--input-box-->
-                        </div>
-                      </form>
-                    </div>
-                    <!--tags-->
-                    <p class="note">Use spaces to separate tags. Use single quotes (') for phrases.</p>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="reviews_tabs">
-                  <div class="box-collateral box-reviews" id="customer-reviews">
-                    <div class="box-reviews1">
-                      <div class="form-add">
-                        <form id="review-form" method="post" action="#">
-                          <h3>Write Your Own Review</h3>
-                          <fieldset>
-                          <h4>How do you rate this product? <em class="required">*</em></h4>
-                          <span id="input-message-box"></span>
-                          <table id="product-review-table" class="data-table">
-                            <thead>
-                              <tr class="first last">
-                                <th>&nbsp;</th>
-                                <th><span class="nobr">1 *</span></th>
-                                <th><span class="nobr">2 *</span></th>
-                                <th><span class="nobr">3 *</span></th>
-                                <th><span class="nobr">4 *</span></th>
-                                <th><span class="nobr">5 *</span></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr class="first odd">
-                                <th>Price</th>
-                                <td class="value"><input type="radio" class="radio" value="11" id="Price_1" name="ratings[3]"></td>
-                                <td class="value"><input type="radio" class="radio" value="12" id="Price_2" name="ratings[3]"></td>
-                                <td class="value"><input type="radio" class="radio" value="13" id="Price_3" name="ratings[3]"></td>
-                                <td class="value"><input type="radio" class="radio" value="14" id="Price_4" name="ratings[3]"></td>
-                                <td class="value last"><input type="radio" class="radio" value="15" id="Price_5" name="ratings[3]"></td>
-                              </tr>
-                              <tr class="even">
-                                <th>Value</th>
-                                <td class="value"><input type="radio" class="radio" value="6" id="Value_1" name="ratings[2]"></td>
-                                <td class="value"><input type="radio" class="radio" value="7" id="Value_2" name="ratings[2]"></td>
-                                <td class="value"><input type="radio" class="radio" value="8" id="Value_3" name="ratings[2]"></td>
-                                <td class="value"><input type="radio" class="radio" value="9" id="Value_4" name="ratings[2]"></td>
-                                <td class="value last"><input type="radio" class="radio" value="10" id="Value_5" name="ratings[2]"></td>
-                              </tr>
-                              <tr class="last odd">
-                                <th>Quality</th>
-                                <td class="value"><input type="radio" class="radio" value="1" id="Quality_1" name="ratings[1]"></td>
-                                <td class="value"><input type="radio" class="radio" value="2" id="Quality_2" name="ratings[1]"></td>
-                                <td class="value"><input type="radio" class="radio" value="3" id="Quality_3" name="ratings[1]"></td>
-                                <td class="value"><input type="radio" class="radio" value="4" id="Quality_4" name="ratings[1]"></td>
-                                <td class="value last"><input type="radio" class="radio" value="5" id="Quality_5" name="ratings[1]"></td>
-                              </tr>
-                            </tbody>
-                          </table>
-                          <input type="hidden" value="" class="validate-rating" name="validate_rating">
-                          <div class="review1">
-                            <ul class="form-list">
-                              <li>
-                                <label class="required" for="nickname_field">Nickname<em>*</em></label>
-                                <div class="input-box">
-                                  <input type="text" class="input-text required-entry" id="nickname_field" name="nickname">
-                                </div>
-                              </li>
-                              <li>
-                                <label class="required" for="summary_field">Summary<em>*</em></label>
-                                <div class="input-box">
-                                  <input type="text" class="input-text required-entry" id="summary_field" name="title">
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                          <div class="review2">
-                            <ul>
-                              <li>
-                                <label class="label-wide" for="review_field">Review<em>*</em></label>
-                                <div class="input-box">
-                                  <textarea class="required-entry" rows="3" cols="5" id="review_field" name="detail"></textarea>
-                                </div>
-                              </li>
-                            </ul>
-                            <div class="buttons-set">
-                              <button class="button submit" title="Submit Review" type="submit"><span>Submit Review</span></button>
-                            </div>
-                          </div>
-                          </fieldset>
-                        </form>
-                      </div>
-                    </div>
-                    <div class="box-reviews2">
-                      <h3>Customer Reviews</h3>
-                      <div class="box visible">
-                        <ul>
-                          <li>
-                            <table class="ratings-table">
-                              <tbody>
-                                <tr>
-                                  <th>Value</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:100%;"></div>
-                                    </div></td>
-                                </tr>
-                                <tr>
-                                  <th>Quality</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:100%;"></div>
-                                    </div></td>
-                                </tr>
-                                <tr>
-                                  <th>Price</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:100%;"></div>
-                                    </div></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <div class="review">
-                              <h6><a href="#/catalog/product/view/id/61/">Excellent</a></h6>
-                              <small>Review by <span>Leslie Prichard </span>on 1/3/2014 </small>
-                              <div class="review-txt"> I have purchased shirts from Minimalism a few times and am never disappointed. The quality is excellent and the shipping is amazing. It seems like it's at your front door the minute you get off your pc. I have received my purchases within two days - amazing.</div>
-                            </div>
-                          </li>
-                          <li class="even">
-                            <table class="ratings-table">
-                              <tbody>
-                                <tr>
-                                  <th>Value</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:100%;"></div>
-                                    </div></td>
-                                </tr>
-                                <tr>
-                                  <th>Quality</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:100%;"></div>
-                                    </div></td>
-                                </tr>
-                                <tr>
-                                  <th>Price</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:80%;"></div>
-                                    </div></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <div class="review">
-                              <h6><a href="#/catalog/product/view/id/60/">Amazing</a></h6>
-                              <small>Review by <span>Sandra Parker</span>on 1/3/2014 </small>
-                              <div class="review-txt"> Minimalism is the online ! </div>
-                            </div>
-                          </li>
-                          <li>
-                            <table class="ratings-table">
-                              <tbody>
-                                <tr>
-                                  <th>Value</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:100%;"></div>
-                                    </div></td>
-                                </tr>
-                                <tr>
-                                  <th>Quality</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:100%;"></div>
-                                    </div></td>
-                                </tr>
-                                <tr>
-                                  <th>Price</th>
-                                  <td><div class="rating-box">
-                                      <div class="rating" style="width:80%;"></div>
-                                    </div></td>
-                                </tr>
-                              </tbody>
-                            </table>
-                            <div class="review">
-                              <h6><a href="#/catalog/product/view/id/59/">Nicely</a></h6>
-                              <small>Review by <span>Anthony  Lewis</span>on 1/3/2014 </small>
-                              <div class="review-txt"> Unbeatable service and selection. This store has the best business model I have seen on the net. They are true to their word, and go the extra mile for their customers. I felt like a purchasing partner more than a customer. You have a lifetime client in me. </div>
-                            </div>
-                          </li>
-                        </ul>
-                      </div>
-                      <div class="actions"> <a class="button view-all" id="revies-button"><span><span>View all</span></span></a> </div>
-                    </div>
-                    <div class="clear"></div>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="product_tabs_custom">
-                  <div class="product-tabs-content-inner clearfix">
-                    <p><strong>Lorem Ipsum</strong><span>&nbsp;is
-                      simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                      has been the industry's standard dummy text ever since the 1500s, when 
-                      an unknown printer took a galley of type and scrambled it to make a type
-                      specimen book. It has survived not only five centuries, but also the 
-                      leap into electronic typesetting, remaining essentially unchanged. It 
-                      was popularised in the 1960s with the release of Letraset sheets 
-                      containing Lorem Ipsum passages, and more recently with desktop 
-                      publishing software like Aldus PageMaker including versions of Lorem 
-                      Ipsum.</span></p>
-                  </div>
-                </div>
-                <div class="tab-pane fade" id="product_tabs_custom1">
-                  <div class="product-tabs-content-inner clearfix">
-                    <p> <strong> Comfortable </strong><span>&nbsp;preshrunk shirts. Highest Quality Printing.  6.1 oz. 100% preshrunk heavyweight cotton Shoulder-to-shoulder taping Double-needle sleeves and bottom hem     
-                      
-                      Lorem Ipsumis
-                      simply dummy text of the printing and typesetting industry. Lorem Ipsum
-                      has been the industry's standard dummy text ever since the 1500s, when 
-                      an unknown printer took a galley of type and scrambled it to make a type
-                      specimen book. It has survived not only five centuries, but also the 
-                      leap into electronic typesetting, remaining essentially unchanged. It 
-                      was popularised in the 1960s with the release of Letraset sheets 
-                      containing Lorem Ipsum passages, and more recently with desktop 
-                      publishing software like Aldus PageMaker including versions of Lorem 
-                      Ipsum.</span></p>
+                    <table class="data-table">
+                      <tr>
+                        <td><span class="small">￥2000</span></td>
+                        <td><span class="small">竞价人</span></td>
+                        <td><span class="small">2015/12/29 15:30:00</span></td>
+                      </tr>
+                    </table>
                   </div>
                 </div>
               </div>
@@ -569,7 +362,223 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     </div>
                   </div>
                 </div>
-
+                <div class="upsell-pro wow bounceInUp animated">
+                  <div class="slider-items-products">
+                    <div class="new_title center">
+                      <h2>Upsell Products</h2>
+                    </div>
+                    <div id="upsell-products-slider" class="product-flexslider hidden-buttons">
+                      <div class="slider-items slider-width-col4">
+                        <div class="item">
+                          <div class="item-inner">
+                            <div class="product-block">
+                              <div class="product-image"> <a href="product_detail.html">
+                                <figure class="product-display">
+                                  <div class="sale-label sale-top-left">Sale</div>
+                                  <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
+                                </a> </div>
+                              <div class="product-meta">
+                                <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
+                              </div>
+                            </div>
+                            <div class="item-info">
+                              <div class="info-inner">
+                                <div class="item-title"> <a href="#" title="Retis lapen casen"> Sample Product </a> </div>
+                                <div class="item-content">
+                                  <div class="item-price">
+                                    <div class="price-box"> <span class="regular-price" > <span class="price">$125.00</span> </span> </div>
+                                  </div>
+                                  <div class="rating">
+                                    <div class="ratings">
+                                      <div class="rating-box">
+                                        <div class="rating" style="width:80%"></div>
+                                      </div>
+                                      <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="item-inner">
+                            <div class="item-img">
+                              <div class="product-block">
+                                <div class="product-image"> <a href="product_detail.html">
+                                  <figure class="product-display">
+                                    <div class="new-label new-top-left">New</div>
+                                    <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
+                                  </a> </div>
+                                <div class="product-meta">
+                                  <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="item-info">
+                              <div class="info-inner">
+                                <div class="item-title"> <a href="#" title="Ut tincidunt tortor"> Sample Product </a> </div>
+                                <div class="item-content">
+                                  <div class="item-price">
+                                    <div class="price-box">
+                                      <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" > $567.00 </span> </p>
+                                      <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" > $456.00 </span> </p>
+                                    </div>
+                                  </div>
+                                  <div class="rating">
+                                    <div class="ratings">
+                                      <div class="rating-box">
+                                        <div class="rating" style="width:50%"></div>
+                                      </div>
+                                      <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="item-inner">
+                            <div class="item-img">
+                              <div class="product-block">
+                                <div class="product-image"> <a href="product_detail.html">
+                                  <figure class="product-display">
+                                    <div class="sale-label sale-top-right">Sale</div>
+                                    <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
+                                  </a> </div>
+                                <div class="product-meta">
+                                  <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="item-info">
+                              <div class="info-inner">
+                                <div class="item-title"> <a href="#" title="Ut tincidunt tortor"> Sample Product </a> </div>
+                                <div class="item-content">
+                                  <div class="item-price">
+                                    <div class="price-box">
+                                      <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" > $567.00 </span> </p>
+                                      <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" > $456.00 </span> </p>
+                                    </div>
+                                  </div>
+                                  <div class="rating">
+                                    <div class="ratings">
+                                      <div class="rating-box">
+                                        <div class="rating" style="width:80%"></div>
+                                      </div>
+                                      <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="item-inner">
+                            <div class="product-block">
+                              <div class="product-image"> <a href="product_detail.html">
+                                <figure class="product-display"> <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
+                                </a> </div>
+                              <div class="product-meta">
+                                <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
+                              </div>
+                            </div>
+                            <div class="item-info">
+                              <div class="info-inner">
+                                <div class="item-title"> <a href="#" title="Stablished fact reader"> Sample Product </a> </div>
+                                <div class="item-content">
+                                  <div class="item-price">
+                                    <div class="price-box">
+                                      <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" > $100.00 </span> </p>
+                                      <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" > $90.00 </span> </p>
+                                    </div>
+                                  </div>
+                                  <div class="rating">
+                                    <div class="ratings">
+                                      <div class="rating-box">
+                                        <div class="rating" style="width:0%"></div>
+                                      </div>
+                                      <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="item-inner">
+                            <div class="product-block">
+                              <div class="product-image"> <a href="product_detail.html">
+                                <figure class="product-display"> <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
+                                </a> </div>
+                              <div class="product-meta">
+                                <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
+                              </div>
+                            </div>
+                            <div class="item-info">
+                              <div class="info-inner">
+                                <div class="item-title"> <a href="#" title="Retis lapen casen"> Sample Product </a> </div>
+                                <div class="item-content">
+                                  <div class="item-price">
+                                    <div class="price-box"> <span class="regular-price" > <span class="price">$125.00</span> </span> </div>
+                                  </div>
+                                  <div class="rating">
+                                    <div class="ratings">
+                                      <div class="rating-box">
+                                        <div class="rating" style="width:80%"></div>
+                                      </div>
+                                      <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="item">
+                          <div class="item-inner">
+                            <div class="item-img">
+                              <div class="product-block">
+                                <div class="product-image"> <a href="product_detail.html">
+                                  <figure class="product-display">
+                                    <div class="new-label new-top-left">New</div>
+                                    <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="product-image" style="display: block;"> <img class="product-secondpic" alt="product-image" src="products-images/product1.jpg"> </figure>
+                                  </a> </div>
+                                <div class="product-meta">
+                                  <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="item-info">
+                              <div class="info-inner">
+                                <div class="item-title"> <a href="product_detail.html" title="Ut tincidunt tortor"> Sample Product </a> </div>
+                                <div class="item-content">
+                                  <div class="item-price">
+                                    <div class="price-box">
+                                      <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price" > $567.00 </span> </p>
+                                      <p class="special-price"> <span class="price-label">Special Price</span> <span class="price" > $456.00 </span> </p>
+                                    </div>
+                                  </div>
+                                  <div class="rating">
+                                    <div class="ratings">
+                                      <div class="rating-box">
+                                        <div class="rating" style="width:50%"></div>
+                                      </div>
+                                      <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -578,7 +587,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     </div>
   </section>
   <!--End main-container -->
-
 </div>
 <div class="help_slider">
   <div class="text alignleft">Need Help?</div>
@@ -685,10 +693,36 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/jquery.flexslider.js"></script>
 <script type="text/javascript" src="js/cloud-zoom.js"></script>
-<script type="text/javascript" src="js/frontside/order/order.js"></script>
+<script type="text/javascript" src="js/frontside/sale/addToCart.js"></script>
 <script>
 			new UISearch( document.getElementById( 'form-search' ) );
-		</script>
+</script>
+<script>
+                  function GetRTime(){
+                    var EndTime= new Date('2016/1/1 19:18:30');
+                    var NowTime = new Date();
+                    var t =EndTime.getTime() - NowTime.getTime();
+                    if(t >= 0)
+                    {
+                      document.getElementById("t_btn").disabled = false;
+                    
+                      var d=Math.floor(t/1000/60/60/24);
+                      var h=Math.floor(t/1000/60/60%24);
+                      var m=Math.floor(t/1000/60%60);
+                      var s=Math.floor(t/1000%60);
+
+                      document.getElementById("t_d").innerHTML = d + "天";
+                      document.getElementById("t_h").innerHTML = h + "时";
+                      document.getElementById("t_m").innerHTML = m + "分";
+                      document.getElementById("t_s").innerHTML = s + "秒";
+                    }
+                    else
+                    {
+                    	document.getElementById("t_btn").disabled = true;
+                    }       
+                  }
+                  setInterval(GetRTime,0);
+</script>
 </body>
 </html>
 

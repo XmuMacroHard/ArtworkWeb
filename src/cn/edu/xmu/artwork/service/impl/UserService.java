@@ -124,7 +124,8 @@ public class UserService extends BasicService implements IUserService
 	public String login(User user) {
 		MD5encypt(user);
 		User resultUser = userDao.search(user);		
-		
+		if(resultUser!=null)
+			resultUser.setBalance(resultUser.getBalance()*100/100);
 		JSONObject resultJson = new JSONObject();
 		if(resultUser == null)
 		{
@@ -249,7 +250,8 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public List<Artist> getArtistBySort(String identification)
 	{
-		List<Artist> artists = artistDao.getArtistBySort(identification);			
+		List<Artist> artists = artistDao.getArtistBySort(identification);		
+		System.out.println(artists.size());
 		return artists;
 	}
 	/**
@@ -404,6 +406,7 @@ public class UserService extends BasicService implements IUserService
 		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		user.setBalance(user.getBalance()+balance);
 		userDao.update(user);
+		user.setBalance(user.getBalance()*100/100);
 		setSessionInBrower(IStrings.SESSION_USER, user);
 	}
 

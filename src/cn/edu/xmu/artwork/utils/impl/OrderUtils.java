@@ -24,13 +24,12 @@ public class OrderUtils implements IOrderUtils{
 	public String changeaddress(ShippingAddress shippingAddress)
 	{
 		String addressString="";
-		addressString+="收货地址:";
-		addressString+=(shippingAddress.getProvince()+shippingAddress.getCity()+shippingAddress.getRegion()+shippingAddress.getDetailedAdress()+"\n");
-		addressString+="收货人:";
-		addressString+=(shippingAddress.getConsignee()+"\n");
-		addressString+="联系方式:";
+		addressString+=(shippingAddress.getProvince()+shippingAddress.getCity()+shippingAddress.getRegion()+shippingAddress.getDetailedAdress()+"<>");
+		System.out.println(addressString);
+		addressString+=(shippingAddress.getConsignee()+"<>");
+		System.out.println(addressString);
 		addressString+=shippingAddress.getPhone();
-		
+		System.out.println(addressString);
 		return addressString;
 	}
 }

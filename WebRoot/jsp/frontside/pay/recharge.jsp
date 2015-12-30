@@ -49,7 +49,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <h2>充值</h2>
         </div>
         <div class="table-responsive">
-			<div class="box payinfo"><span>账号余额<c:out value="${sessionScope.user.balance}"/></span></div>
+			<div class="box payinfo"><span>账号余额:<c:out value="${sessionScope.user.balance}"/></span></div>
 			<form action="Userrecharge" method="post" onsubmit="return checkrecharge()">
 			<div class="box">充值金额</div>
 			<div class="box"><input class="form-control" name="user.balance" onblur="checkrecharge()"/></div>

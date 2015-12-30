@@ -26,7 +26,11 @@ public class CustomizationDao extends GenericDao implements ICustomizationDao{
 
 	@Override
 	public void save(CustomizationOrder customization) {
-		getSession().save(customization);
+		try {
+			getSession().save(customization);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		// TODO Auto-generated method stub	
 	}
 

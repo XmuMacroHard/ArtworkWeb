@@ -14,8 +14,21 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.NamedQueries;
+import org.hibernate.annotations.NamedQuery;
+
 @Entity
 @Table(name = "auction_date", catalog = "artworkdb")
+@NamedQueries({
+	@NamedQuery(
+			name = "AuctionDate.getAucitionDateByDate",
+			query = "from AuctionDate where date = :date"
+			),
+	@NamedQuery(
+			name = "AuctionDate.getAucitionByDate",
+			query = "select auction from AuctionDate where date = :date"
+			)
+})
 public class AuctionDate implements java.io.Serializable {
 	private long id;
 	private Date date;

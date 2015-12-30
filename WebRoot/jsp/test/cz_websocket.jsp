@@ -18,7 +18,7 @@
             var websocket;
             if ('WebSocket' in window) {
                 alert("WebSocket");
-                websocket = new WebSocket("ws://localhost:8080/ArtworkWeb/echo");
+                websocket = new WebSocket("ws://localhost:8080/ArtworkWeb/AuctionWebSocket");
             } else if ('MozWebSocket' in window) {
                 alert("MozWebSocket");
                 websocket = new MozWebSocket("ws://echo");
@@ -35,20 +35,23 @@
             websocket.onerror = function (evnt) {
             };
             websocket.onclose = function (evnt) {
-                $("#tou").html("connection fail!")
+                 $("#tou").html("connection fail!") 
+               
             }
             $('#send').bind('click', function() {
                 send();
             });
-            function send(){
-                if (websocket != null) {
+            function send(){    
+                  if (websocket != null) {
                     var message = document.getElementById('message').value;
-                    websocket.send(message);
+                    var auction_id = document.getElementById('auction_id').value;
+                    websocket.send(message +" " + auction_id);
                 } else {
                     alert('Not connection');
-                }
-            }
-        });
+                }  
+            } 
+        }
+        );
     </script>
 
 </head>
@@ -62,6 +65,7 @@
 <div class="col-lg">
     <div class="input-group">
         <input type="text" class="form-control" placeholder="send message." id="message">
+        <input type="text" class="form-control" placeholder="auction_id" id="auction_id">
       <span class="input-group-btn">
         <button class="btn btn-default" type="button" id="send" >send</button>
       </span>

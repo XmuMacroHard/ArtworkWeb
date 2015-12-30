@@ -77,6 +77,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   				  	</div>
   				  </div>
   				  <div class="form-group">
+  				  	<label class="col-sm-2 control-label" >余额</label>
+  				  	<div class="col-sm-10" style="width:80%">
+  				  		<input class="form-control" name="user.balance" value="${sessionScope.user.balance}" readonly/>
+  				  	</div>
+  				  </div>	
+  				  <div class="form-group">
   				  	<label class="col-sm-2 control-label" >电话号码</label>
   				  	<div class="col-sm-10" style="width:80%">
   				  		<input class="form-control" name="user.phone" value="${sessionScope.user.phone}" onblur="checkphone()" readonly/>

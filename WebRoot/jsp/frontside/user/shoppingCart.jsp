@@ -74,7 +74,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <tr class="first odd">
 					          <td class="a-center"><input  name="commodityid" type="checkbox" value="${cartItem.commodity.id}"/></td>
                     <td class="image">
-                     	<a class="product-image" title="Sample Product" href="product_detail.html">
+                     	<a class="product-image" title="Sample Product" href="getDetailedCommodity?commodity.id=${cartItem.commodity.id}">
 							         <c:set var="urlsNum" scope="page" value="1"/>  
 							         <c:forEach items="${cartItem.commodity.commodityPices}" var="pic">   		 	
 								          <c:if test = "${urlsNum == 1}">

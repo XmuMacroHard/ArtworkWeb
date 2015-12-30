@@ -35,6 +35,7 @@ public interface ITableConstants
 	String PURCHASE_ORDER_STATUS_MAKE_SURE = "2";
 	String PURCHASE_ORDER_STATUS_FINISH = "3";
 	String PURCHASE_ORDER_STATUS_UN_ACCEPTED = "4";
+	String PURCHASE_ORDER_STATUS_REJECT = "-1";
 	
 	String PURCHASE_ORDER_ARTIST = "artist";
 	String PURCHASE_ORDER_USER = "user";
@@ -57,6 +58,8 @@ public interface ITableConstants
 	String ARTIST_CUSTOMIZATION = "customizations";
 	
 	/*Commodity*/
+	String TYPE_CUSTOMIZATION = "customization";
+	
 	String COMMODITY_IS_BAN = "0";
 	String COMMODITY_IS_NOBAN = "1";
 }

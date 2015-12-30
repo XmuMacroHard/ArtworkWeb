@@ -72,7 +72,7 @@ public class CustomizationAction extends ActionSupport{
 	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/frontside/order/home_order.jsp")},
 			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String CustomizationSubmitAction()
-	{		
+	{
 		customizeService.addCustomization(artist.getId(), address,commodity);
 		return SUCCESS;
 	}
@@ -147,12 +147,8 @@ public class CustomizationAction extends ActionSupport{
 	@Action(value="rejectCustomizationAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")},
 			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String rejectCustomization(){
-		int id = 3; // get from session;
-		boolean result = customizeService.rejuectCustomization(id);
-		if(result)
-			return SUCCESS;
-		else
-			return ERROR;
+		customizeService.rejuectCustomization(purchaseOrder.getId());
+		return SUCCESS;
 	}
 	
 	/**
