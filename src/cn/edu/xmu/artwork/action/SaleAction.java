@@ -128,7 +128,7 @@ public class SaleAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="payPurchaseOrderListAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
+	@Action(value="payPurchaseOrderListAction", results={@Result(name="success", location="/jsp/frontside/user/user_purchase_order.jsp")})
 	public String payPurchaseOrderList()
 	{
 		for (Long id : purchaseOrderIdList) {

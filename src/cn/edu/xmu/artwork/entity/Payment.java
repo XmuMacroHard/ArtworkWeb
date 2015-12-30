@@ -107,7 +107,8 @@ public class Payment implements java.io.Serializable , Comparable<Payment>{
 
 	@Override
 	public int compareTo(Payment o) {
-		
+		if(date.before(o.date))
+			return 1;
 		// TODO Auto-generated method stub
 		return 0;
 	}

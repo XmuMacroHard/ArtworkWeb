@@ -242,7 +242,8 @@ public class UserService extends BasicService implements IUserService
 	@Override
 	public List<Artist> getArtistBySort(String identification)
 	{
-		List<Artist> artists = artistDao.getArtistBySort(identification);			
+		List<Artist> artists = artistDao.getArtistBySort(identification);		
+		System.out.println(artists.size());
 		return artists;
 	}
 	/**

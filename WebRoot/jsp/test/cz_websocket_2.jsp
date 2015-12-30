@@ -84,8 +84,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     	var sender = "cz";
     	var receiver = $("#receiver").val();
     	var content = $("#inputMsg").val();
-    	webSocket.send(content);
-    	
+    	webSocket.send(content);    	
     }
   </script>
   </body>

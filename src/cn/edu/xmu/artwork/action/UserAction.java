@@ -200,7 +200,7 @@ public class UserAction extends ActionSupport
 	 * 充值
 	 * @author sheng
 	 */
-	@Action(value="Userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	@Action(value="Userrecharge", results={@Result(name="success", type="chain",location="showInfoOnHomePage")})
 	public  String Userrecharge()
 	{
 		userService.recharge(user.getBalance());
