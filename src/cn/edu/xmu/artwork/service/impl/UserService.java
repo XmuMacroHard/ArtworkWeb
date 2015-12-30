@@ -209,7 +209,6 @@ public class UserService extends BasicService implements IUserService
 			artist2.setIntroduction(artist.getIntroduction());
 			artistDao.update(artist2);
 		}
-		System.out.println("1");
 		resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
 		resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_SUCCESS);
 		return resultJson.toString();

@@ -80,7 +80,7 @@ public class SaleAction extends ActionSupport
 		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType());
 		setResultJsonArray(commoditiesJsonArray);
 		System.out.println(commoditiesJsonArray);
-		return IResultCode.SUCCESS;
+		return SUCCESS;
 	}
 	
 	/**
@@ -95,6 +95,40 @@ public class SaleAction extends ActionSupport
 		return IResultCode.SUCCESS;
 	}
 	
+	/*
+	 * 艺术家获取商品的详细信息
+	 * */
+	@Action(value="getDetailedCommodityByArtist", results={@Result(name="success", location="/jsp/frontside/artist/profile.jsp")})
+	public String getDetailedCommByArtist()
+	{
+		Commodity comm = saleService.getCommodityById(commodity.getId());
+		setAttributeByRequest("commodity", comm);	
+		return SUCCESS;
+	}
+	
+	/*
+	 * 艺术家删除未售出的商品
+	 * */
+	@Action(value="deleteCommodity", results={@Result(name="success", type="chain",location="showMyCommodity")})
+	public String deleteComm()
+	{
+		saleService.deleteCommodityById(commodity.getId());
+		
+		return SUCCESS;
+	}
+	
+	/*
+	 * 艺术家修改商品信息
+	 * */
+	@Action(value="altercommodityAction", 
+			results={@Result(name="success", type="json", params={"root", "result"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
+	public String altercommodity()
+	{
+		
+		result = saleService.altercommodity(commodity.getId(),commodity);
+		return SUCCESS;
+	}
 	
 	/**
 	 * 艺术家上传商品

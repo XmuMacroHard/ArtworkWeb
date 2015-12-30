@@ -109,6 +109,25 @@ public class SaleService extends BasicService implements ISaleService
 		return commodity;
 	}
 	
+	public void deleteCommodityById(long id)
+	{
+		commodityDao.deleteCommodity(id);
+	}
+	
+	public String altercommodity(long id,Commodity commodity)
+	{
+		JSONObject resultJson = new JSONObject();
+		Commodity commodity2=commodityDao.getCommodityById(id);
+		commodity2.setName(commodity.getName());
+		commodity2.setType(commodity.getType());
+		commodity2.setPrice(commodity.getPrice());
+		commodity2.setIntroduction(commodity.getIntroduction());
+		
+		resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+		resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_SUCCESS);
+		return resultJson.toString();
+	}
+	
 	public void uploadCommodity(Commodity commodity, List<String> picPaths)
 	{
 		Artist artist= (Artist)getSessionInBrower(IClientConstants.SESSION_USER);

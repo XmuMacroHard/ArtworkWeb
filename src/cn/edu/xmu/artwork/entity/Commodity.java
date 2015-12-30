@@ -53,7 +53,15 @@ import javax.persistence.Table;
 		@NamedQuery(
 					name="Commodity.getByOrderId",
 					query="from Commodity c where purchaseOrder_Id = :id"
-				)
+				),
+		@NamedQuery(
+				name="Commodity.deleteById",
+				query="delete from Commodity where id = :id"
+			),
+		@NamedQuery(
+				name="Commodity.deletepicById",
+				query="delete from CommodityPics where commodityId = :id"
+			)
 })
 public class Commodity implements java.io.Serializable {
 
