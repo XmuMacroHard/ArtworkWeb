@@ -10,6 +10,7 @@ import org.springframework.stereotype.Repository;
 import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.CommodityPics;
 
 
 @Repository
@@ -112,5 +113,11 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 		}
 		// TODO Auto-generated method stub
 		return commodities;
+	}
+	@Override
+	public void saveCommidityPic(CommodityPics commodityPics) {
+		getSession().save(commodityPics);
+		// TODO Auto-generated method stub
+		
 	}
 }

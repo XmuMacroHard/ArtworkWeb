@@ -33,6 +33,7 @@ import cn.edu.xmu.artwork.dao.impl.ShoppingCartDao;
 import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.CommodityPics;
 import cn.edu.xmu.artwork.entity.Payment;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
@@ -131,13 +132,22 @@ public class SaleService extends BasicService implements ISaleService
 	public void uploadCommodity(Commodity commodity, List<String> picPaths)
 	{
 		Artist artist= (Artist)getSessionInBrower(IClientConstants.SESSION_USER);
-		commodity.addPictures(picPaths);
 		commodity.setAuthorId(artist.getId());
+		//commodity.addPictures(picPaths);
 		commodity.setIsBought(false);
 		commodity.setCategory("sale");
 		commodity.setStatus(ITableConstants.COMMODITY_IS_NOBAN);
-		
 		commodityDao.saveCommodity(commodity);
+
+		for(String path : picPaths)
+		{
+			CommodityPics commodityPic = new CommodityPics();
+//			commodityPic.setCommodity(this);
+			commodityPic.setUrl(path);
+			commodityPic.setCommodity(commodity);
+			commodityDao.saveCommidityPic(commodityPic);
+		}
+		
 	}
 	
 	public JSONObject addToCart(Commodity commodity, User buyer)

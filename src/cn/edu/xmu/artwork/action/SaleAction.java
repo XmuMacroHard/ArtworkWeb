@@ -140,7 +140,6 @@ public class SaleAction extends ActionSupport
 		System.out.println("commodity.name" + commodity.getName());
 		List<String> picPaths = fileService.uploadPicture(pictures, picturesFileName);
 		saleService.uploadCommodity(commodity, picPaths);
-		
 		return SUCCESS;
 	}
 	

@@ -305,7 +305,7 @@ public class UserAction extends ActionSupport
 	public String DeleteAddress()
 	{
 		userService.DeleteAddress(address.getId());
-		List<ShippingAddress> addressList = userService.ShowAllAddressList();		
+		List<ShippingAddress> addressList = userService.ShowAllAddressList();
 		ServletActionContext.getRequest().setAttribute("addressList", addressList);
 		
 		return "success";

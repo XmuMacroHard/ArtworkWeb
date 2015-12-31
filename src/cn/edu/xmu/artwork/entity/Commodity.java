@@ -105,9 +105,10 @@ public class Commodity implements java.io.Serializable {
 	
 	public void addPictures(List<String> picPaths)
 	{
-		CommodityPics commodityPic = new CommodityPics();
+
 		for(String path : picPaths)
 		{
+			CommodityPics commodityPic = new CommodityPics();
 //			commodityPic.setCommodity(this);
 			commodityPic.setUrl(path);
 			commodityPices.add(commodityPic);
@@ -189,8 +190,7 @@ public class Commodity implements java.io.Serializable {
 		this.category = category;
 	}
 	
-	@OneToMany(cascade=CascadeType.ALL, fetch = FetchType.LAZY)
-	@JoinColumn(name="commodityId")
+	@OneToMany(fetch = FetchType.LAZY, mappedBy="commodity")
 	public Set<CommodityPics> getCommodityPices() {
 		return commodityPices;
 	}

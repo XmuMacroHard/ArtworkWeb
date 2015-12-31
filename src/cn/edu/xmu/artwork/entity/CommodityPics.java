@@ -23,6 +23,7 @@ public class CommodityPics implements java.io.Serializable {
 
 	private Long id;
 	private String url;
+	private Commodity commodity;
 
 	// Constructors
 
@@ -56,4 +57,15 @@ public class CommodityPics implements java.io.Serializable {
 		this.url = url;
 	}
 
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "commodityId", nullable = false)
+	public Commodity getCommodity() {
+		return commodity;
+	}
+
+	public void setCommodity(Commodity commodity) {
+		this.commodity = commodity;
+	}
+
+	
 }
