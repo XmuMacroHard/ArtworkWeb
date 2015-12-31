@@ -24,7 +24,12 @@ public class QuartzUtils implements IQuartzUtils {
 		
 		System.out.println("任务调度测试");
 		
-		auctionService.createDailyAuctionOrder();
+		try {
+			auctionService.createDailyAuctionOrder();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

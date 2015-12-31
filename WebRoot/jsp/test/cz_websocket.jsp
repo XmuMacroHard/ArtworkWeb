@@ -41,11 +41,19 @@
             $('#send').bind('click', function() {
                 send();
             });
-            function send(){    
+            function send(){
+            		alert('before send message');
+            		    
                   if (websocket != null) {
                     var message = document.getElementById('message').value;
                     var auction_id = document.getElementById('auction_id').value;
-                    websocket.send(message +" " + auction_id);
+                    
+                    var jsobj = {
+                    	"message":message,
+                    	"auctionId":auction_id 
+                    }
+                    
+                    websocket.send(JSON.stringify(jsobj));
                 } else {
                     alert('Not connection');
                 }  

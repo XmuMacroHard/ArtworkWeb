@@ -5,7 +5,9 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javassist.expr.NewArray;
 import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
@@ -16,10 +18,10 @@ import org.apache.struts2.convention.annotation.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 
-
 import com.opensymphony.xwork2.ActionSupport;
 
 import cn.edu.xmu.artwork.constants.IClientConstants;
+
 import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.entity.Auction;
 import cn.edu.xmu.artwork.entity.AuctionOrder;
@@ -29,6 +31,7 @@ import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAuctionService;
 import cn.edu.xmu.artwork.service.impl.AuctionService;
+import cn.edu.xmu.artwork.utils.IJsonUtils;
 
 @Scope("prototype")  
 @ParentPackage("custom-default")    
@@ -43,6 +46,8 @@ public class AuctionAction extends ActionSupport{
 	private PurchaseOrder purchaseOrder;
 	
 	private JSONArray resultJsonArray;
+	
+	private String result;
 	
 	/**
 	 * 发起一个拍卖
@@ -59,47 +64,59 @@ public class AuctionAction extends ActionSupport{
 //		auction.setState("0");
 //		auction.setLimitPerBid((float) 100);
 
-		auctionService.createAuction(commodity, auction);		
+		auctionService.createAuction(commodity, auction);	
 		System.out.println("in create Auction action");
 
 		return IResultCode.SUCCESS;
 	}
 	
 	
-	/**
-	 * 显示当天所有拍卖
-	 * @return
-	 */
-	@Action(value="showTodayAuctionAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
+	//显示当天所有拍卖
+	@Action(value="showTodayAuctionAction",results={@Result(name="success", location="/jsp/frontside/auction/home_auction.jsp")})
 	public String showTodayAuction()
 	{
-		List<Auction> list = auctionService.getTodayAuctions();
-		System.out.println("print prices of today");
-		setAttributeByRequest("auctionList", list);
+		System.out.println("show today auction.");
+		
+		List<Auction> auctionList = auctionService.getTodayAuctions();
+		
+		for(Auction auc : auctionList)
+		{
+			System.out.println(auc.getStartPrice());
+		}
+		
+		setAttributeByRequest("auctionList", auctionList);
+
 		return IResultCode.SUCCESS;
 	}
 	
-	/**
-	 * 显示拍卖详细信息
-	 * @return
-	 */
-	@Action(value="showAuctionDetailAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
+	//显示拍卖详细信息
+	@Action(value="showAuctionDetailAction",results={@Result(name="success", location="/jsp/frontside/auction/auction_detail.jsp")})
 	public String showAuctionDetail()
-	{
+	{		
 		Long id = auction.getId();
+		
 		Auction auc = auctionService.getAuctionAuctionById(id);
+		List<Bid> bids = auctionService.getBidsByAuction(auc);
+		
 		setAttributeByRequest("auction", auc);
+		setAttributeByRequest("bids", bids);
+		setAttributeByRequest("nowTime", new Date());
+		
 		return IResultCode.SUCCESS;
 	}
 	
-	/**
-	 * 在一次拍卖中叫价
-	 * @return
-	 */
-	@Action(value="addBidAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
+	//在一次拍卖中叫价
+	@Action(value="addBidAction",results={@Result(name="success", type="json", params={"root", "result"})})
 	public String addBid()
 	{
-		auctionService.addBid(bid, auction);
+		System.out.println("in bid action");
+		JSONObject jsobj = new JSONObject();
+		
+		auctionService.addBid(auction.getId(), bid.getPrice());
+		
+		jsobj.put("auctionId", auction.getId());
+
+		setResult(jsobj.toString());
 		return IResultCode.SUCCESS;
 	}
 	
@@ -145,7 +162,6 @@ public class AuctionAction extends ActionSupport{
 		this.commodity = commodity;
 	}
 
-
 	public PurchaseOrder getPurchaseOrder() {
 		return purchaseOrder;
 	}
@@ -164,6 +180,13 @@ public class AuctionAction extends ActionSupport{
 	public void setResultJsonArray(JSONArray resultJsonArray) {
 		this.resultJsonArray = resultJsonArray;
 	}
-	
-	
+
+	public String getResult() {
+		return result;
+	}
+
+
+	public void setResult(String result) {
+		this.result = result;
+	}
 }

@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="welcome-msg hidden-xs"> 欢迎游客，请登录 </div>
             </c:when>
           	<c:otherwise>
-            <div class="welcome-msg hidden-xs">您好,<c:out value="${sessionScope.user.email}"/></div>
+            <div class="welcome-msg hidden-xs" id="userItem"><c:out value="${sessionScope.user.email}"/></div>
            	</c:otherwise>         
             </c:choose>
             <!-- Header Top Links -->
@@ -160,7 +160,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         </li>
                       </ul>
                     </li>
-                    <li class="level0 nav-3 level-top parent"> <a href="grid.html" class="level-top"> <span>拍卖</span> </a>
+                    <li class="level0 nav-3 level-top parent"> <a href="showTodayAuctionAction.action" class="level-top"> <span>拍卖</span> </a>
                       <ul class="level0">
                         <li class="level1 nav-3-1 first parent"> <a href="grid.html"> <span>Mobiles</span> </a>
                           <ul class="level1">
@@ -400,7 +400,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
             </div>
           </li>
-          <li class="level0 nav-6 level-top parent"> <a href="grid.html" class="level-top"> <span>拍卖</span> <span class="category-label">New</span></a>
+          <li class="level0 nav-6 level-top parent"> <a href="showTodayAuctionAction.action" class="level-top"> <span>拍卖</span> <span class="category-label">New</span></a>
             <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
               <div class="level0-wrapper2">
                 <div class="nav-block nav-block-center grid13-8 itemgrid itemgrid-4col">

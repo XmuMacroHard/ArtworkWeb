@@ -25,6 +25,7 @@ import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.DatePos;
+import cn.edu.xmu.artwork.entity.InforPics;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -34,13 +35,15 @@ import cn.edu.xmu.artwork.utils.IDateUtils;
 @Transactional
 public class InformationService extends BasicService implements IInformationService {
 
-	
+	@Autowired
 	public IInformationDao InformationDao;
+	@Autowired
 	public IInforPicsDao inforPicsDao;
+	@Autowired
 	public IUserDao userDao;
-	
 	@Autowired
 	public IDatePosDao datePosDao;
+	
 	
 	@Autowired
 	private IFileService fileService;
@@ -61,14 +64,6 @@ public class InformationService extends BasicService implements IInformationServ
 		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());				
 
 		
-		
-		//List<Date> repeatableDates = datePosDao.getRepeatDate(datePos.getLocation(), dates);
-		
-		//System.out.println(repeatableDates.size());
-		
-		//if(repeatableDates.size() <= 0)
-		//{
-		
 		information.setEditorId(user.getId());
 		information.addPicture(imgPaths);
 		information.setStatus(ITableConstants.INFO_STATUS_PENDING);
@@ -87,21 +82,7 @@ public class InformationService extends BasicService implements IInformationServ
 				//information.getDatePoses().add(tempDatePos);
 				//information.addDatePos(tempDatePos);
 			}
-			//information.addDatePos(new DatePos());
-			//information.getDatePoses().add(new DatePos(information, new Date(), datePos.getColum()));
-/*			information.setEditorId(user.getId());
-			information.addPicture(imgPaths);
-			information.setStatus(ITableConstants.INFO_STATUS_PENDING);
-			
-			InformationDao.save(information);*/
 			setAttributeByRequest(IResultCode.RESULT, IResultCode.SUCCESS);
-		//}
-		//else
-		//{
-		//	setAttributeByRequest(IResultCode.RESULT_DATA, repeatableDates);
-		//	setAttributeByRequest(IResultCode.RESULT, IResultCode.ERROR);
-		//}
-			
 	}
 	
 	@Override
@@ -208,4 +189,12 @@ public class InformationService extends BasicService implements IInformationServ
 		this.userDao = userDao;
 	}
 
+	public IDatePosDao getDatePosDao() {
+		return datePosDao;
+	}
+
+	public void setDatePosDao(IDatePosDao datePosDao) {
+		this.datePosDao = datePosDao;
+	}
+	
 }

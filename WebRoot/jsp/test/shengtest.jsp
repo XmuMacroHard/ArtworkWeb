@@ -49,6 +49,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     
     <a href="ShowAllAddressList.action">地址列表</a><br><br><br>
     
+    <a href="showTodayAuctionAction.action">拍卖列表</a><br><br><br>
+    
     <a href="showArtist.action">艺术家列表</a><br>
     <a href="findArtist.action?user.id=3">艺术家1</a><br>
      <a href="getArtistBySort.action?artist.identification=4">艺术家列表(类别包含4)</a><br>
@@ -77,7 +79,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/frontside/user/home_sale.js"></script> 
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {
