@@ -7,11 +7,19 @@ import java.io.File;
 
 
 
+
+
+
+
+import org.springframework.stereotype.Repository;
+
+import cn.edu.xmu.artwork.dao.IInforPicsDao;
+import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.entity.InforPics;
 import cn.edu.xmu.artwork.utils.IFileUtils;
 import cn.edu.xmu.artwork.utils.IImageUtils;
-
-public class InforPicsDao extends GenericDao
+@Repository
+public class InforPicsDao extends GenericDao implements IInforPicsDao
 {
 	
 	private IFileUtils fileUtils;
@@ -20,7 +28,6 @@ public class InforPicsDao extends GenericDao
 	public void save(InforPics inforPics)
 	{
 		getSession().save(inforPics);
-		getSession().close();
 	}
 	
 

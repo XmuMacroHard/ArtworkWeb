@@ -23,6 +23,7 @@ import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.DatePos;
+import cn.edu.xmu.artwork.entity.InforPics;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -33,13 +34,15 @@ import cn.edu.xmu.artwork.utils.IDateUtils;
 
 public class InformationService extends BasicService implements IInformationService {
 
-	
+	@Autowired
 	public IInformationDao InformationDao;
+	@Autowired
 	public IInforPicsDao inforPicsDao;
+	@Autowired
 	public IUserDao userDao;
-	
 	@Autowired
 	public IDatePosDao datePosDao;
+	
 	
 	@Autowired
 	private IFileService fileService;
@@ -56,36 +59,29 @@ public class InformationService extends BasicService implements IInformationServ
 		List<String> imgPaths = fileService.uploadPicture(pic, picFileName);
 		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		
-		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());				
-		
-		List<Date> repeatableDates = datePosDao.getRepeatDate(datePos.getLocation(), dates);
-		
-		System.out.println(repeatableDates.size());
-		
-		if(repeatableDates.size() <= 0)
+
+		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());
+
+		information.setEditorId(user.getId());
+		InformationDao.save(information);
+
+		InforPics picture = new InforPics();
+		for(String aUrl : imgPaths)
 		{
-			
-			for(Date date : dates) 
-			{
-				DatePos tempDatePos = new DatePos();
-				tempDatePos.setColum(datePos.getColum());
-				tempDatePos.setLocation(datePos.getLocation());
-				tempDatePos.setPos(datePos.getPos());			
-				tempDatePos.setDate(date);
-				
-				information.addDatePos(tempDatePos);
-			}
-			information.setEditorId(user.getId());
-			information.addPicture(imgPaths);
-			information.setStatus(ITableConstants.INFO_STATUS_PENDING);
-			
-			InformationDao.save(information);
-			setAttributeByRequest(IResultCode.RESULT, IResultCode.SUCCESS);
+			picture.setInformation(information);
+			picture.setUrl(aUrl);		
 		}
-		else
+		inforPicsDao.save(picture);
+
+		for(Date date : dates)
 		{
-			setAttributeByRequest(IResultCode.RESULT_DATA, repeatableDates);
-			setAttributeByRequest(IResultCode.RESULT, IResultCode.ERROR);
+			DatePos tempDatePos = new DatePos();
+			tempDatePos.setColum(datePos.getColum());
+			tempDatePos.setLocation(datePos.getLocation());
+			tempDatePos.setPos(datePos.getPos());			
+			tempDatePos.setDate(date);
+			tempDatePos.setInformation(information);
+			datePosDao.save(tempDatePos);
 		}
 	}
 	
@@ -193,4 +189,12 @@ public class InformationService extends BasicService implements IInformationServ
 		this.userDao = userDao;
 	}
 
+	public IDatePosDao getDatePosDao() {
+		return datePosDao;
+	}
+
+	public void setDatePosDao(IDatePosDao datePosDao) {
+		this.datePosDao = datePosDao;
+	}
+	
 }

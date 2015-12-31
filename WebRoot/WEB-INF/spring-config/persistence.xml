@@ -9,8 +9,8 @@
 		class="org.apache.commons.dbcp.BasicDataSource">
 		<property name="driverClassName" value="com.mysql.jdbc.Driver"></property>
 		<property name="url" value="jdbc:mysql://localhost:3306/artworkdb?useUnicode=true&amp;characterEncoding=UTF8"></property>
-		<property name="username" value="root"></property>
-		<property name="password" value="software"></property>
+		<property name="username" value="hikalif"></property>
+		<property name="password" value="140030"></property>
 	</bean>
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
