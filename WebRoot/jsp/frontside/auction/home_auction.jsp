@@ -120,7 +120,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                         <div class="product-image"> <a href="showAuctionDetailAction?auction.id=${id}">
                           <figure class="product-display">
                             <div class="new-label new-top-left">New</div>
-                            <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt=" Sample Product" style="display: block;"> <img class="product-secondpic" alt=" Sample Product" src="products-images/product1.jpg"> 
+                                                <c:set var="urlsNum" scope="page" value="1"/>  
+							<c:forEach items="${auction.commodity.commodityPices}" var="pic">   		 	
+								<c:if test = "${urlsNum == 1}"> 
+									  <img src="${server_path }${pic.url}" class="lazyOwl product-mainpic" alt=" Sample Product" style="display: block;"> <img class="product-secondpic" alt=" Sample Product" src="${server_path }${pic.url}">
+									<c:set var="urlsNum" scope="page" value="2"/> 		
+								</c:if> 
+	                     	</c:forEach>
+                           
                           </figure>
                           </a> </div>
                         <div class="product-meta">

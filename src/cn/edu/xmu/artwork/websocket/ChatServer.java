@@ -27,16 +27,16 @@ public class ChatServer
 	    throws IOException, InterruptedException {
 	   
 	    System.out.println("Received: " + message);	   	    
-	    for(String key : UserPool.getUserPool().keySet())
-	    {
-	    	UserPool.getSession(key).getBasicRemote().sendText(message);
-	    }	    
+//	    for(String key : UserPool.getUserPool().keySet())
+//	    {
+//	    	UserPool.getSession(key).getBasicRemote().sendText(message);
+//	    }	    
 	  }
 	   
 	  @OnOpen
 	  public void onOpen(Session session) {
 	    System.out.println("Client connected");
-	    UserPool.add(session);	    
+	   // UserPool.add(session);	    
 	  }
 	  
 	  /*@OnOpen
@@ -48,6 +48,6 @@ public class ChatServer
 	  @OnClose
 	  public void onClose(Session session) {
 	    System.out.println("Connection closed");
-	    UserPool.remove(session);
+	    //UserPool.remove(session);
 	  }
 }

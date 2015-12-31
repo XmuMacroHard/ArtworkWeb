@@ -15,11 +15,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.constants.ITableConstants;
+import cn.edu.xmu.artwork.dao.IDatePosDao;
 import cn.edu.xmu.artwork.dao.IInforPicsDao;
 import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.DatePos;
+import cn.edu.xmu.artwork.entity.InforPics;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -30,10 +32,14 @@ import cn.edu.xmu.artwork.utils.IDateUtils;
 
 public class InformationService extends BasicService implements IInformationService {
 
-	
+	@Autowired
 	public IInformationDao InformationDao;
+	@Autowired
 	public IInforPicsDao inforPicsDao;
+	@Autowired
 	public IUserDao userDao;
+	@Autowired
+	public IDatePosDao datePosDao;
 	
 	@Autowired
 	private IFileService fileService;
@@ -49,7 +55,17 @@ public class InformationService extends BasicService implements IInformationServ
 		long id = 1L;
 		
 		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());
-				
+
+		information.setEditorId(id);
+		InformationDao.save(information);
+
+		InforPics picture = new InforPics();
+		for(String aUrl : imgPaths)
+		{
+			picture.setInformation(information);
+			picture.setUrl(aUrl);		
+		}
+		inforPicsDao.save(picture);
 		
 		for(Date date : dates) 
 		{
@@ -58,13 +74,16 @@ public class InformationService extends BasicService implements IInformationServ
 			tempDatePos.setLocation(datePos.getLocation());
 			tempDatePos.setPos(datePos.getPos());			
 			tempDatePos.setDate(date);
-			
-			information.addDatePos(tempDatePos);
+			tempDatePos.setInformation(information);
+			datePosDao.save(tempDatePos);
+			//information.addDatePos(tempDatePos);
 		}
-		information.setEditorId(id);
-		information.addPicture(imgPaths);
 		
-		InformationDao.save(information);
+		
+		
+		//information.addPicture(imgPaths);
+		
+		//InformationDao.save(information);
 	}
 	
 	@Override
@@ -159,4 +178,12 @@ public class InformationService extends BasicService implements IInformationServ
 		this.userDao = userDao;
 	}
 
+	public IDatePosDao getDatePosDao() {
+		return datePosDao;
+	}
+
+	public void setDatePosDao(IDatePosDao datePosDao) {
+		this.datePosDao = datePosDao;
+	}
+	
 }

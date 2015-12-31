@@ -87,7 +87,7 @@ public class Information implements java.io.Serializable {
 		}
 	}
 	
-	public void addDatePos(DatePos  datePos)
+	public void addDatePos(DatePos datePos)
 	{
 		datePos.setInformation(this);
 		datePoses.add(datePos);
@@ -189,7 +189,7 @@ public class Information implements java.io.Serializable {
 		this.status = status;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "information")
+	@OneToMany( fetch = FetchType.LAZY, mappedBy = "information")
 	public Set<DatePos> getDatePoses() {
 		return this.datePoses;
 	}
@@ -198,7 +198,7 @@ public class Information implements java.io.Serializable {
 		this.datePoses = datePoses;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "information")
+	@OneToMany( fetch = FetchType.LAZY, mappedBy = "information")
 	public Set<InforPics> getInforPicses() {
 		return this.inforPicses;
 	}

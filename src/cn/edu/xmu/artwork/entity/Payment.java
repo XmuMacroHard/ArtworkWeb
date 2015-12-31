@@ -36,7 +36,7 @@ import org.hibernate.annotations.NamedQuery;
 }
 )
 
-public class Payment implements java.io.Serializable {
+public class Payment implements java.io.Serializable , Comparable<Payment>{
 	private Long id;
 	private PurchaseOrder purchaseOrder;    //付款订单
 	private Float money;	 				//付款额度
@@ -102,6 +102,15 @@ public class Payment implements java.io.Serializable {
 	}
 	public void setDate(Date date) {
 		this.date = date;
+	}
+
+
+	@Override
+	public int compareTo(Payment o) {
+		if(date.before(o.date))
+			return 1;
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

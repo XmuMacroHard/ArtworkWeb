@@ -5,6 +5,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javassist.expr.NewArray;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
@@ -35,20 +36,23 @@ public class AuctionAction {
 	@Autowired
 	private IAuctionService auctionService;
 	
+	private String result;
+	
 	//发起一个拍卖
 	@Action(value="createAuctionAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String createAuction()
 	{
-//		auction = auctionService.getAuctionAuctionById(5);
-//		auctionService.createAuctionOrder(auction);
+		
 //		commodity.setId((long) 4);
-//		auction.setStartPrice((float) 150);
+//		auction.setStartPrice((float) 16.15);
 //		auction.setStartTime(new Date(2015, 12, 10));
 //		auction.setEndTime(new Date(2015, 12, 15));
 //		auction.setState("0");
 //		auction.setLimitPerBid((float) 100);
-		
-		auctionService.createAuction(commodity, auction);
+
+		auctionService.createAuction(commodity, auction);		
+		System.out.println("in create Auction action");
+
 		return IResultCode.SUCCESS;
 	}
 	
@@ -67,35 +71,39 @@ public class AuctionAction {
 		}
 		
 		setAttributeByRequest("auctionList", auctionList);
+
 		return IResultCode.SUCCESS;
 	}
 	
 	//显示拍卖详细信息
 	@Action(value="showAuctionDetailAction",results={@Result(name="success", location="/jsp/frontside/auction/auction_detail.jsp")})
 	public String showAuctionDetail()
-	{
-		System.out.println("in auction detail 1");
-		
+	{		
 		Long id = auction.getId();
 		
-		System.out.println("in auction detail 2");
-		
 		Auction auc = auctionService.getAuctionAuctionById(id);
-		
-		System.out.println("in auction detail 3");
+		List<Bid> bids = auctionService.getBidsByAuction(auc);
 		
 		setAttributeByRequest("auction", auc);
-		
-		System.out.println("in auction detail 4");
+		setAttributeByRequest("bids", bids);
+		setAttributeByRequest("nowTime", new Date());
 		
 		return IResultCode.SUCCESS;
 	}
 	
 	//在一次拍卖中叫价
-	@Action(value="addBidAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
+	@Action(value="addBidAction",results={@Result(name="success", type="json", params={"root", "result"})})
 	public String addBid()
 	{
-		auctionService.addBid(bid, auction);
+		System.out.println("in bid action");
+		JSONObject jsobj = new JSONObject();
+		
+		auctionService.addBid(auction.getId(), bid.getPrice());
+		
+		jsobj.put("auctionId", auction.getId());
+
+		setResult(jsobj.toString());
+		
 		return IResultCode.SUCCESS;
 	}
 	
@@ -126,5 +134,15 @@ public class AuctionAction {
 
 	public void setCommodity(Commodity commodity) {
 		this.commodity = commodity;
+	}
+
+
+	public String getResult() {
+		return result;
+	}
+
+
+	public void setResult(String result) {
+		this.result = result;
 	}
 }

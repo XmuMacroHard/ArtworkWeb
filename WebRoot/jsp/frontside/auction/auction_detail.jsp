@@ -1,9 +1,11 @@
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
 <html>
 <head>
@@ -70,7 +72,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	                <div class="flexslider flexslider-thumb">
                       <ul class="previews-list slides">
                       	<c:forEach items="${auction.commodity.commodityPices}" var="pic">
-                        	<li><a href='products-images/product1.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'products-images/product1.jpg' "><img src="${server_path }${pic.url}" alt="Thumbnail 1"/></a></li>
+                        	<li><a href='products-images/product1.jpg' class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage: 'products-images/product1.jpg' "><img src="${server_path}${pic.url}" alt="Thumbnail 1"/></a></li>
                         </c:forEach>
                       </ul>
                     </div>
@@ -81,6 +83,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                 <div class="product-shop col-sm-5 col-xs-12">
                   <div class="product-next-prev"> <a href="#" class="product-next"><span></span></a> <a href="#" class="product-prev"><span></span></a> </div>
                   <div class="product-name">
+                  	<input id="auctionId" value="${auction.id}" type="hidden"/>
+                  	<% 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                  		Date nowTime = (Date)request.getAttribute("nowTime");
+                  		String time = sdf.format(nowTime);
+                  	 %>
+                  	<input id="nowTime" value="<%=time%>" type="hidden"/>
+                  	<input id="endTime" value="${auction.endTime}" type="hidden"/>
+                  	<input id="currentPrice" value="${auction.currentPrice}" type="hidden"/>
                     <h1><c:out value="${auction.commodity.name}"/></h1>
                   </div>
                   
@@ -95,14 +105,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                   <div class="short-description">
                     <h2>商品简介</h2>
                     <p><c:out value="${auction.commodity.introduction}"/></p>
-                    <p>天然水晶肯定不像人造水晶那么完美</p>
-                    <p>一般都会有冰裂、棉絮等甚至有手工打磨下的尺寸误差</p>
-                    <p>水晶以天然印记记录千秋岁月、万古沧桑</p>
                   </div>
                   <div class="price-block">
                     <div class="price-box">
                       <p class="old-price"> <span class="price-label">起拍价:</span> <span id="old-price-48" class="price"> ￥<c:out value="${auction.startPrice}"/> </span> </p>
-                      <p class="special-price"> <span class="price-label">当前价:</span> <span id="product-price-48" class="price" style="color:red"> ￥<c:out value="${auction.currentPrice}"/> </span> </p>
+                      <p class="special-price"> <span class="price-label">当前价:</span> <span id="product-price-46" class="price" style="color:red"> ￥</span><span id="product-price-48" class="price" style="color:red"><c:out value="${auction.currentPrice}"/> </span> </p>
                     </div>
                   </div>
                   <div class="add-to-box">
@@ -115,7 +122,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="icon-plus">&nbsp;</i></button>
                         </div>
                       </div>
-                      <button id="t_btn" onClick="alert('hello');" class="button btn-cart" title="叫价" type="button"><span><i class="icon-basket"></i> 参与竞价</span></button>
+                      <button id="mysend" class="button btn-cart" title="叫价" type="button"><span><i class="icon-basket"></i> 参与竞价</span></button>
                     </div>
                   </div>
                 </div>
@@ -128,12 +135,23 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <div id="productTabContent" class="tab-content">
                 <div class="tab-pane fade in active" id="product_tabs_description">
                   <div class="std">
-                    <table class="data-table">
+                    <table class="data-table" id="records">
+                    	<thead>
+                    		<tr>
+                    			<th>价格</th>
+                    			<th>竞价人</th>
+                    			<th>日期</th>
+                    		</tr>
+                    	</thead>
+                    	<tbody id="records_body">
+                      <s:iterator id="bid" value="#request.bids">
                       <tr>
-                        <td><span class="small">￥2000</span></td>
-                        <td><span class="small">竞价人</span></td>
-                        <td><span class="small">2015/12/29 15:30:00</span></td>
+                        <td><span class="small"><s:property value="#bid.price"/></span></td>
+                        <td><span class="small"><s:property value="#bid.user.nickname"/></span></td>
+                        <td><span class="small"><s:property value="#bid.date"/></span></td>
                       </tr>
+                     </s:iterator>
+                     </tbody>
                     </table>
                   </div>
                 </div>
@@ -693,18 +711,113 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
 <script type="text/javascript" src="js/jquery.flexslider.js"></script>
 <script type="text/javascript" src="js/cloud-zoom.js"></script>
-<script type="text/javascript" src="js/frontside/sale/addToCart.js"></script>
+<script type="text/javascript">
+        $(function(){
+            var websocket;
+            if ('WebSocket' in window) {
+                alert("WebSocket");
+                websocket = new WebSocket("ws://localhost:8080/ArtworkWeb/AuctionWebSocket");
+            } else if ('MozWebSocket' in window) {
+                alert("MozWebSocket");
+                websocket = new MozWebSocket("ws://echo");
+            } else {
+                alert("SockJS");
+                websocket = new SockJS("http://localhost:8080/ArtworkWeb/sockjs/echo");
+            }
+            websocket.onopen = function (evnt) {
+                
+            };
+            websocket.onmessage = function (evnt) {
+            
+            	var jsobj = JSON.parse(event.data);
+            	
+                $("#product-price-48").html(jsobj.price+".0");
+                
+                var newRow = "<tr>"+
+                        		"<td><span class='small'>"+jsobj.price+"</span></td>"+
+                        		"<td><span class='small'>"+jsobj.username+"</span></td>"+
+                        		"<td><span class='small'>"+jsobj.date+"</span></td>"+
+                      		 "</tr>";
+                
+                $("#records_body").html(newRow + $("#records_body").html());
+				
+            };
+            websocket.onerror = function (evnt) {
+            };
+            websocket.onclose = function (evnt) {
+
+            }
+            $('#mysend').bind('click', function() {
+                bidfunc();
+            });
+            function sendbid(){
+                 if (websocket != null) {
+                    var price = $('#qty').val();
+                    var auctionId = document.getElementById('auctionId').value;
+                    
+                    var jsobj = {
+                    	"price":price,
+                    	"auctionId":auctionId 
+                    }
+                    
+                    websocket.send(JSON.stringify(jsobj));
+                } else {
+                    alert('Not connection');
+                }  
+            }
+            
+            function bid(){
+            	var price = $('#qty').val();
+                var auctionId = document.getElementById('auctionId').value;
+            
+            	$.ajax({
+				type:"post",
+				url:"addBidAction",
+				data:{
+					"auction.id":auctionId,
+					"bid.price":price
+				},
+				dataType:"json",
+				beforeSend:function(){
+				},
+				success:function(result){
+					var jsobj = eval("(" + result + ")");
+				},
+				error:function(result){
+					alert("ajax error");
+				}
+				});
+            }
+            
+            function bidfunc(){
+            	var bidPrice = $('#qty').val();
+            	var currentPrice = $('#product-price-48').text();
+            	
+            	if(parseInt(bidPrice) > parseInt(currentPrice))
+            	{
+            		bid();
+            		sendbid();
+            	}
+            	else
+            	{
+            		alert("请以更高价竞拍");
+            	}
+            }            
+        }
+        );
+    </script>
 <script>
 			new UISearch( document.getElementById( 'form-search' ) );
 </script>
 <script>
                   function GetRTime(){
-                    var EndTime= new Date('2016/1/1 19:18:30');
+                    var EndTime = new Date(document.getElementById('endTime').value);
                     var NowTime = new Date();
+                    
                     var t =EndTime.getTime() - NowTime.getTime();
                     if(t >= 0)
                     {
-                      document.getElementById("t_btn").disabled = false;
+                      document.getElementById("mysend").disabled = false;
                     
                       var d=Math.floor(t/1000/60/60/24);
                       var h=Math.floor(t/1000/60/60%24);
@@ -718,7 +831,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     }
                     else
                     {
-                    	document.getElementById("t_btn").disabled = true;
+                    	document.getElementById("mysend").disabled = true;
                     }       
                   }
                   setInterval(GetRTime,0);
