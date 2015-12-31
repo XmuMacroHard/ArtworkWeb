@@ -47,8 +47,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="container">
       <div class="row">
         <ul>
-          <li class="home"> <a title="Go to Home Page" href="http://www.magikcommerce.com/">Home</a><span>&mdash;›</span></li>
-          <li class="category13"><strong>About Us</strong></li>
+<%--           <li class="home"> <a title="Go to Home Page" href="http://www.magikcommerce.com/"></a><span>&mdash;›</span></li>
+          <li class="category13"><strong></strong></li> --%>
         </ul>
       </div>
     </div>
@@ -102,20 +102,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
    		  </div>
           </div>
         </section>
-        <aside class="col-right sidebar col-sm-3 wow">
-          <div class="block block-company">
-            <div class="block-title">Company </div>
-            <div class="block-content">
-              <ol id="recently-viewed-items">
-                <li class="item odd"><a href="about_us.html">About Us</a></li>
-                <li class="item even"><a href="sitemap.html">Sitemap</a></li>
-                <li class="item  odd"><a href="#">Terms of Service</a></li>
-                <li class="item even"><a href="#">Search Terms</a></li>
-                <li class="item last"><strong>Contact Us</strong></li>
-              </ol>
-            </div>
-          </div>
-        </aside>
+
       </div>
     </div>
   </div>

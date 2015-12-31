@@ -109,6 +109,25 @@ public class SaleService extends BasicService implements ISaleService
 		return commodity;
 	}
 	
+	public void deleteCommodityById(long id)
+	{
+		commodityDao.deleteCommodity(id);
+	}
+	
+	public String altercommodity(long id,Commodity commodity)
+	{
+		JSONObject resultJson = new JSONObject();
+		Commodity commodity2=commodityDao.getCommodityById(id);
+		commodity2.setName(commodity.getName());
+		commodity2.setType(commodity.getType());
+		commodity2.setPrice(commodity.getPrice());
+		commodity2.setIntroduction(commodity.getIntroduction());
+		
+		resultJson.put(IResultCode.RESULT, IResultCode.SUCCESS);
+		resultJson.put(IResultCode.MESSAGE, IResultCode.ALTER_PASSWORD_SUCCESS);
+		return resultJson.toString();
+	}
+	
 	public void uploadCommodity(Commodity commodity, List<String> picPaths)
 	{
 		Artist artist= (Artist)getSessionInBrower(IClientConstants.SESSION_USER);
@@ -183,7 +202,9 @@ public class SaleService extends BasicService implements ISaleService
 			purchaseOrder.setOrderid(orderUtils.getordernum(user));
 			purchaseOrder.setState("0");
 			purchaseOrder.setDate(new Date());
-			purchaseOrder.setAddress(orderUtils.changeaddress(shippingAddress));
+			try {
+				purchaseOrder.setAddress(orderUtils.changeaddress(addressDao.findById(shippingAddress.getId())));
+			} catch (Exception e) {e.printStackTrace();}
 			
 			Commodity commodity=commodityDao.getCommodityById(commodityid.get(i));//查找第一个未添加进订单的商品信息
 			purchaseOrder.getCommodity().add(commodity);
@@ -219,6 +240,11 @@ public class SaleService extends BasicService implements ISaleService
 			purchaseOrder.getPayments().add(payment);
 			purchaseOrderDao.savePurchaseOrder(purchaseOrder);
 			purchaseOrderId.add(purchaseOrder.getId());
+		}
+		
+		for(int i=0;i<commodityid.size();i++)
+		{
+			shoppingCartDao.delete(commodityid.get(i), user.getId());
 		}
 		
 		setAttributeByRequest("totalprice", allprice);
@@ -291,8 +317,9 @@ public class SaleService extends BasicService implements ISaleService
 				for(Commodity commodity:commodities)
 					commodity.setIsBought(true);
 			}
-			
+			user.setBalance(user.getBalance()*100/100);
 			setSessionInBrower(IStrings.SESSION_USER, user);
+			setAttributeByRequest("purchaseOrder.id", id);
 			return true;
 		}
 		catch(Exception e)
@@ -346,6 +373,16 @@ public class SaleService extends BasicService implements ISaleService
 		initializeObject(purchaseOrder.getUser());
 		
 		setAttributeByRequest("purchaseOrder", purchaseOrder);
+		String addresString[] = purchaseOrder.getAddress().split("<>");
+		setAttributeByRequest("addressdetail", addresString[0]);
+		if(addresString.length>1)
+			setAttributeByRequest("addresspeople", addresString[1]);
+		else 
+			setAttributeByRequest("addresspeople", "");
+		if(addresString.length>2)
+			setAttributeByRequest("addressphone", addresString[2]);
+		else 
+			setAttributeByRequest("addressphone", "");
 	}
 	
 	/**
@@ -357,6 +394,10 @@ public class SaleService extends BasicService implements ISaleService
 		long id = purchaseOrder.getId();
 		purchaseOrder = purchaseOrderDao.findById(id);
 		purchaseOrder.setState(ITableConstants.PURCHASE_ORDER_STATUS_FINISH);
+		
+		//钱添加到艺术家账户
+		Artist artist=purchaseOrder.getArtist();
+		artist.setBalance(purchaseOrder.getTotalprice()+artist.getBalance());
 	}
 	
 	/**

@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -15,6 +16,7 @@ import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.DatePos;
 import cn.edu.xmu.artwork.entity.Information;
+import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IInformationService;
 import cn.edu.xmu.artwork.service.ISaleService;
 import cn.edu.xmu.artwork.service.IUserService;
@@ -22,7 +24,7 @@ import cn.edu.xmu.artwork.service.IUserService;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Scope("prototype")
-@ParentPackage("json-default")
+@ParentPackage("custom-default")
 @Namespace("/")
 public class InformationAction extends ActionSupport 
 {
@@ -48,8 +50,11 @@ public class InformationAction extends ActionSupport
 	@Autowired
 	public ISaleService saleService;
 	 
-	
-	@Action(value="submitInfo", results={@Result(name="success", location="/jsp/success.jsp")})
+	/**
+	 * 提交咨询
+	 */
+	@Action(value="submitInfo", results={@Result(name="success", location="/jsp/backstage/admin_submitInfo.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String submitInfo()
 	{	
 		informationService.submit(getInformation(),getDatePos(),pic, picFileName);
@@ -58,8 +63,8 @@ public class InformationAction extends ActionSupport
 	}
 
 
-	/*
-	 * show the information list for the editor
+	/**
+	 * 为采编显示所有其编辑的资讯信息
 	 * */
 	public String showInforList()
 	{
@@ -89,8 +94,13 @@ public class InformationAction extends ActionSupport
 		setAttributeByRequest("commodityList", commodities);
 		return SUCCESS;
 	}
-
-	@Action(value="getDetailInfo", results={@Result(name="success", location="/jsp/frontside/information/info_detail.jsp")})
+	
+	/**
+	 * 获取资讯详细信息
+	 * @return
+	 */
+	@Action(value="getDetailInfo", results={@Result(name="success", location="/jsp/frontside/information/info_detail.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getDetailInfo()
 	{		
 		long id =information.getId();
@@ -98,7 +108,10 @@ public class InformationAction extends ActionSupport
 		setAttributeByRequest("information", infor);
 		return SUCCESS;
 	}
-	
+	/**
+	 * 根据资讯类型获取资讯列表
+	 * @return
+	 */
 	@Action(value="getInfoListByType", results={@Result(name="success", location="/jsp/frontside/information/informations.jsp")})
 	public String getInfoListByType()
 	{
@@ -107,6 +120,18 @@ public class InformationAction extends ActionSupport
 		setAttributeByRequest("informationList", infos);
 		return SUCCESS;
 	}
+	
+	/**
+	 * 根据采编id获取其编辑的所有资讯
+	 */
+	@Action(value="getInfoListByEditorId", results={@Result(name="success", location="/jsp/backstage/admin_editor_myinfo.jsp")})
+	public String getInfoListByEditorId()
+	{
+		informationService.getInfoListByEditorId();
+		return SUCCESS;
+	}
+	
+	
 	
 	
 	private void setAttributeByRequest(String key, Object value)
@@ -168,8 +193,5 @@ public class InformationAction extends ActionSupport
 
 	public void setDatePos(DatePos datePos) {
 		this.datePos = datePos;
-	}
-	
-	
-	
+	}	
 }

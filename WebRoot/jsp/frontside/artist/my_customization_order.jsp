@@ -68,11 +68,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 			    <span class="caret"></span>
 			  </button>
 			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-			  	<li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '4');return false;">待接受</a></li>
-			    <li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '0');return false;">待付款</a></li>
-			    <li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '1');return false;">待发货</a></li>
-			    <li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '2');return false;">待收货</a></li>
-			    <li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '3');return false;">已完成</a></li>			    
+			  	<li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '4',1);return false;">待接受</a></li>
+			    <li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '0',1);return false;">待付款</a></li>
+			    <li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '1',1);return false;">待发货</a></li>
+			    <li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '2',1);return false;">待收货</a></li>
+			    <li><a onclick="getCustomizationOrderByType('getArtistCusOrderByState', '3',1);return false;">已完成</a></li>			    
 			  </ul>
 			</div>
         <!-- end 订单类型选择 -->
@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          	<h2>定制订单</h2>
             <h1 id = "orderTypeTitle">待付款</h1>
           </div> 
-          
+             
           <div id="orderList" class="category-products">
           
 			<!-- 订单 -->
@@ -88,6 +88,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         		
         	<!--end 订单  -->
           </div>
+          
+			<div class="pager">
+                <div class="pages">
+                  <ul class="pagination" id="page_list">
+                  </ul>
+                </div>
+             </div>
+          
 		  </div>
         </section>
       </div>

@@ -37,6 +37,51 @@ function checkcomfirmorder(){
 	}
 }
 
+function checkcustitle(){
+	var name = document.getElementsByName("commodity.name")[0].value;
+	if(name==""||name==null){
+		document.getElementById("custitleTip").innerHTML="标题不能为空";
+		return false;
+	}
+	else{
+		document.getElementById("custitleTip").innerHTML="";
+		return true;
+	}
+}
+
+function checkcusprice(){
+	var count = document.getElementsByName("commodity.price")[0].value;
+	var reg = new RegExp("^(0|[1-9][0-9]{0,9})(\.[0-9]{1,2})?$");
+	if(!reg.test(count))
+	{
+		var temp=document.getElementById("cuspriceTip").innerHTML = "价格格式错误!";
+		return false;
+	}
+	else
+	{
+		var temp=document.getElementById("cuspriceTip").innerHTML = "";
+		return true;
+	}
+}
+
+function checkusercustomization(){
+	var addressid = document.getElementsByName("shippingAddress.id")[0].value;
+	if(addressid==null||addressid==""){
+		document.getElementById("addressTip").innerHTML="请选择收货地址";
+		return false;
+	}else{
+		document.getElementById("addressTip").innerHTML="";
+		if(checkcustitle()){
+			if(checkcusprice()){
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	
+}
+
 function checkispay(){
 	var count = document.getElementsByName("usercount")[0].value;
 	var totalprice = document.getElementsByName("totalprice")[0].value;

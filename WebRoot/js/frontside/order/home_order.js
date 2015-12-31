@@ -8,6 +8,15 @@ $(document).ready(function(){
 
 function onload(nowpage,type)
 {
+	if(type=="calligraphy"){
+		document.getElementById("artistsort").innerHTML="书法";
+	}else if(type=="painting"){
+		document.getElementById("artistsort").innerHTML="绘画";
+	}else if(type=="sculpture"){
+		document.getElementById("artistsort").innerHTML="雕刻";
+	}else{
+		document.getElementById("artistsort").innerHTML="手工品";
+	}
 	$.ajax({
 		type:'post',
 		url:'getBriefArtistBySort',
@@ -56,19 +65,11 @@ function onload(nowpage,type)
                 "<div class='product-image'> <a href='findArtist?user.id=" + item.id +"' title='HTC Rhyme Sense'> <img class='small-image' src='" + server_path +item.portrait + "' alt='product-image' width='230'> </a> </div>" +
                 "<div class='product-shop'>" +
                  " <h2 class='product-name'><a title=' Sample Product' href='findArtist?user.id=" + item.id  +"'>" + item.name + "</a></h2>" +
-                  "<div class='ratings'>" +
-                    "<div class='rating-box'>" +
-                      "<div style='width:50%' class='rating'></div>" +
-                    "</div>" +
-                    "<p class='rating-links'> <a href='#'>1 Review(s)</a> <span class='separator'>|</span> <a href='#review-form'>Add Your Review</a> </p>" +
-                  "</div>" +
                   "<div class='desc std'>" +
                     "<p>" + item.introduction + "</p>" +
-                    "<a class='link-learn' title='' href='#'>Learn More</a> </p>" +
                   "</div> " +
                   "<div class='actions'> " +
-                    "<button class='button btn-cart ajx-cart' title='Add to Cart' type='button' onclick='{location.href='findArtist?userid=" + item.id + "'}'><span>了解详情</span></button>" +
-                    "<span class='add-to-links'> <a title='Add to Wishlist' class='button link-wishlist' href='wishlist.html'><span>Add to Wishlist</span></a> <a title='Add to Compare' class='button link-compare' href='#'><span>Add to Compare</span></a> </span> </div>" +
+                    "<button class='button btn-cart ajx-cart' title='Add to Cart' type='button' onclick='window.location.href=\"findArtist?user.id=" + item.id +"\"'><span>了解详情</span></button>" +
                 "</div>" +
               "</li>";
 					

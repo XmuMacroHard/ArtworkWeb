@@ -13,6 +13,12 @@ import cn.edu.xmu.artwork.utils.IDateUtils;
 @Component
 public class DateUtils implements IDateUtils 
 {
+	/**
+	 * 获取开始时间和结束时间之间的所有日期
+	 * @param startTime 开始时间
+	 * @param endTime 结束时间
+	 * @return date列表
+	 */
 	public List<Date> getDatesBetweenTwoDate(Date startTime, Date endTime)
 	{
 		List<Date> dateList = new ArrayList<Date>();
@@ -29,6 +35,11 @@ public class DateUtils implements IDateUtils
 		return dateList;
 	}
 	
+	/**
+	 * 获取某一天的下一天
+	 * @param today 今天
+	 * @return 下一天
+	 */
 	public Calendar getNextDay(Calendar today)
 	{
 

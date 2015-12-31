@@ -13,6 +13,9 @@ import cn.edu.xmu.artwork.entity.User;
 @Repository
 public class ArtistDao extends GenericDao implements IArtistDao{
 	
+	/**
+	 * 根据艺术家id获取艺术家
+	 */
 	@Override
 	public Artist findById(long id)
 	{
@@ -27,7 +30,10 @@ public class ArtistDao extends GenericDao implements IArtistDao{
 		return user;
 	}
 	
-	public List<Artist> getArtistList()//获得所有艺术家列表
+	/**
+	 * 获得所有艺术家列表
+	 */
+	public List<Artist> getArtistList()
 	{
 		List<Artist> list=null;
 		try {
@@ -40,11 +46,14 @@ public class ArtistDao extends GenericDao implements IArtistDao{
 		return list;
 	}
 	
-	public Artist getArtist(long id)//获得一个艺术家资料
+	/**
+	 * 获得一个艺术家资料
+	 */
+	public Artist getArtist(long id)
 	{
 		Artist artist=null;
 		try {
-			Query query = getSession().getNamedQuery("Artist.getArtist").setParameter("Id", id);
+			Query query = getSession().getNamedQuery("Artist.getById").setParameter("Id", id);
 			artist = (Artist) query.uniqueResult();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -53,11 +62,16 @@ public class ArtistDao extends GenericDao implements IArtistDao{
 		return artist;
 	}
 	
-	public List<Artist> getArtistBySort(String identification)//按类别查找艺术家
+	/**
+	 * 按类别查找艺术家
+	 */
+	public List<Artist> getArtistBySort(String identification)
 	{
 		List<Artist> list=null;
 		try {
-			Query query = getSession().getNamedQuery("Artist.getArtistBySort").setParameter("Search", identification);
+			Query query = getSession().getNamedQuery("Artist.getArtistBySort");
+			query.setParameter("Search", identification);
+			query.setParameter("isBanned", ITableConstants.USER_IS_BANNED_FALSE);
 			list = query.list();
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -66,7 +80,10 @@ public class ArtistDao extends GenericDao implements IArtistDao{
 		return list;
 	}
 	
-	public List<Artist> getArtistByName(String name)//按名字查找艺术家
+	/**
+	 * 按名字查找艺术家
+	 */
+	public List<Artist> getArtistByName(String name)
 	{
 		List<Artist> list=null;
 		try {
@@ -117,7 +134,7 @@ public class ArtistDao extends GenericDao implements IArtistDao{
 		query.setParameter("isApproved", ITableConstants.USER_IS_APPROVED_APPROVE);
 		return (List<Artist>)query.list();
 	}
-	/*
+	/**
 	 * 更新艺术家审核状态
 	 * @author asus1
 	 * @param id

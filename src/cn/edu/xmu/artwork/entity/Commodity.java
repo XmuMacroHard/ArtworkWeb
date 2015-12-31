@@ -28,7 +28,7 @@ import javax.persistence.Table;
 @NamedQueries({
 		@NamedQuery(
 			name = "Commodity.getAllByType",
-			query = "from Commodity c where c.type = :commType"
+			query = "from Commodity c where c.type = :commType and c.isBought = :isBought"
 		),		
 		@NamedQuery(
 				name = "Commodity.getById",
@@ -53,7 +53,15 @@ import javax.persistence.Table;
 		@NamedQuery(
 					name="Commodity.getByOrderId",
 					query="from Commodity c where purchaseOrder_Id = :id"
-				)
+				),
+		@NamedQuery(
+				name="Commodity.deleteById",
+				query="delete from Commodity where id = :id"
+			),
+		@NamedQuery(
+				name="Commodity.deletepicById",
+				query="delete from CommodityPics where commodityId = :id"
+			)
 })
 public class Commodity implements java.io.Serializable {
 
@@ -65,7 +73,7 @@ public class Commodity implements java.io.Serializable {
 	private Float price;
 	private Long authorId;
 	private String type;									//商品所属种类,如书法等
-	private Boolean isBought;
+	private Boolean isBought;								//0-未卖出  1-已卖出
 	private String category;
 	private PurchaseOrder purchaseOrder;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);

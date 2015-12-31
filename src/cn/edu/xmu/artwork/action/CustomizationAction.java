@@ -9,6 +9,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -30,7 +31,7 @@ import cn.edu.xmu.artwork.service.ISaleService;
 import cn.edu.xmu.artwork.service.IUserService;
 
 @Scope("prototype")
-@ParentPackage("json-default")
+@ParentPackage("custom-default")
 @Namespace(value="/")
 public class CustomizationAction extends ActionSupport{
 	private CustomizationOrder customization;
@@ -56,16 +57,22 @@ public class CustomizationAction extends ActionSupport{
 	 * 发起定制，进入定制界面
 	 * @return
 	 */
-	@Action(value="placeCustomization",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
+	@Action(value="placeCustomization",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String placeCustomization()
 	{
 		customizeService.placeCustomization(artist);
 		return SUCCESS;
 	}
 	
-	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/frontside/order/home_order.jsp")})
+	/**
+	 * 提交定制
+	 * @return
+	 */
+	@Action(value="CustomizationSubmitAction",results={@Result(name="success", location="/jsp/frontside/order/home_order.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String CustomizationSubmitAction()
-	{		
+	{
 		customizeService.addCustomization(artist.getId(), address,commodity);
 		return SUCCESS;
 	}
@@ -74,14 +81,20 @@ public class CustomizationAction extends ActionSupport{
 	 * 艺术家设置订单的分期付款价格
 	 * @return
 	 */
-	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/frontside/artist/my_customization_order.jsp")})
+	@Action(value="setCustomizationPaymentAction",results={@Result(name="success", location="/jsp/frontside/artist/my_customization_order.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String setCustomizationPayment()
 	{
 		customizeService.setPaymentOfCustomization(purchaseOrder.getId(), moneys, dates);
 		return SUCCESS;
 	}
 	
-	@Action(value="getCustomizationsByUserAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	/**
+	 * 获取定制的内容
+	 * @return
+	 */
+	@Action(value="getCustomizationsByUserAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getCustomizationsByUser(){
 		int id = 1; // get from session;
 		List<CustomizationOrder> lists = customizeService.getCustomizationsByUser(id);
@@ -92,7 +105,8 @@ public class CustomizationAction extends ActionSupport{
 	/**
 	 * 根据前台需要，通过state来获取艺术家不同状态的买卖订单
 	 */
-	@Action(value="getArtistCusOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	@Action(value="getArtistCusOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getPurchaseOrderBySate()
 	{		
 		resultJsonArray = customizeService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_ARTIST, purchaseOrder.getState());
@@ -103,14 +117,20 @@ public class CustomizationAction extends ActionSupport{
 	 * 根据前台需要，通过state来获取普通用户不同状态的买卖订单
 	 * @return
 	 */
-	@Action(value="getUserCusOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	@Action(value="getUserCusOrderByState",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getUserPurchaseOrderBySate()
 	{				
 		resultJsonArray = customizeService.getAllOrderByState(IClientConstants.SESSION_VALUE_RANK_USER, purchaseOrder.getState());
 		return SUCCESS;
 	}
 
-	@Action(value="acceptCustomizationAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	/**
+	 *接受定制 
+	 * @return
+	 */
+	@Action(value="acceptCustomizationAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String acceptCustomization(){
 		int id = 3; // get from session;
 		boolean result = customizeService.accetpCustomization(id);
@@ -120,18 +140,23 @@ public class CustomizationAction extends ActionSupport{
 			return ERROR;
 	}
 	
-	@Action(value="rejectCustomizationAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	/**
+	 * 拒绝定制 
+	 * @return
+	 */
+	@Action(value="rejectCustomizationAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String rejectCustomization(){
-		int id = 3; // get from session;
-		boolean result = customizeService.rejuectCustomization(id);
-		if(result)
-			return SUCCESS;
-		else
-			return ERROR;
+		customizeService.rejuectCustomization(purchaseOrder.getId());
+		return SUCCESS;
 	}
 	
-	//转换定制品到普通商品
-	@Action(value="changeCustomizationArtworkToCommodityAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")})
+	/**
+	 * 转换定制品到普通商品
+	 * @return
+	 */
+	@Action(value="changeCustomizationArtworkToCommodityAction",results={@Result(name="success", location="/jsp/test/shengtest.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String changeCustomizationArtworkToCommodity(){
 		int id = 2; // get from session;
 		boolean result = customizeService.changeCustomizationArtworkToCommodity(id);

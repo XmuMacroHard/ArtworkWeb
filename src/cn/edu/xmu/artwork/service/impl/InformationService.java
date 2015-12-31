@@ -13,13 +13,17 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
+import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.constants.ITableConstants;
+import cn.edu.xmu.artwork.dao.IDatePosDao;
 import cn.edu.xmu.artwork.dao.IInforPicsDao;
 import cn.edu.xmu.artwork.dao.IInformationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.DatePos;
+import cn.edu.xmu.artwork.entity.InforPics;
 import cn.edu.xmu.artwork.entity.Information;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IFileService;
@@ -30,10 +34,15 @@ import cn.edu.xmu.artwork.utils.IDateUtils;
 
 public class InformationService extends BasicService implements IInformationService {
 
-	
+	@Autowired
 	public IInformationDao InformationDao;
+	@Autowired
 	public IInforPicsDao inforPicsDao;
+	@Autowired
 	public IUserDao userDao;
+	@Autowired
+	public IDatePosDao datePosDao;
+	
 	
 	@Autowired
 	private IFileService fileService;
@@ -41,30 +50,39 @@ public class InformationService extends BasicService implements IInformationServ
 	@Autowired
 	private IDateUtils dateUtils;
 	
+	/**
+	 * 提交资讯
+	 */
 	@Override
 	public void submit(Information information,DatePos datePos,List<File> pic, List<String> picFileName) {
 		
 		List<String> imgPaths = fileService.uploadPicture(pic, picFileName);
-		//long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");
-		long id = 1L;
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		
+
 		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());
-				
-		
-		for(Date date : dates) 
+
+		information.setEditorId(user.getId());
+		InformationDao.save(information);
+
+		InforPics picture = new InforPics();
+		for(String aUrl : imgPaths)
+		{
+			picture.setInformation(information);
+			picture.setUrl(aUrl);		
+		}
+		inforPicsDao.save(picture);
+
+		for(Date date : dates)
 		{
 			DatePos tempDatePos = new DatePos();
 			tempDatePos.setColum(datePos.getColum());
 			tempDatePos.setLocation(datePos.getLocation());
 			tempDatePos.setPos(datePos.getPos());			
 			tempDatePos.setDate(date);
-			
-			information.addDatePos(tempDatePos);
+			tempDatePos.setInformation(information);
+			datePosDao.save(tempDatePos);
 		}
-		information.setEditorId(id);
-		information.addPicture(imgPaths);
-		
-		InformationDao.save(information);
 	}
 	
 	@Override
@@ -132,6 +150,18 @@ public class InformationService extends BasicService implements IInformationServ
 		return infos;
 	}
 	
+	/**
+	 * 根据采编id获取其编辑过的所有资讯
+	 * @param user
+	 */
+	@Override
+	public void getInfoListByEditorId()
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		List<Information> infos =  InformationDao.getInfoListByEditorId(user.getId());
+		setAttributeByRequest("infoList", infos);
+	}
+	
 	/*
 	 * find the information by id
 	 * */
@@ -159,4 +189,12 @@ public class InformationService extends BasicService implements IInformationServ
 		this.userDao = userDao;
 	}
 
+	public IDatePosDao getDatePosDao() {
+		return datePosDao;
+	}
+
+	public void setDatePosDao(IDatePosDao datePosDao) {
+		this.datePosDao = datePosDao;
+	}
+	
 }

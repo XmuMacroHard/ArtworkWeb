@@ -12,7 +12,6 @@ import javax.websocket.Session;
 
 import net.sf.json.JSONArray;
 
-import org.apache.struts2.json.JSONUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,16 +24,15 @@ import cn.edu.xmu.artwork.dao.IArtistDao;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.dao.ICustomizationDao;
 import cn.edu.xmu.artwork.dao.IUserDao;
-import cn.edu.xmu.artwork.dao.impl.UserDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.CustomizationOrder;
 import cn.edu.xmu.artwork.entity.Payment;
-import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ICustomizeService;
 import cn.edu.xmu.artwork.utils.impl.JsonUtils;
+import cn.edu.xmu.artwork.utils.impl.OrderUtils;
 
 @Transactional
 @Service
@@ -52,36 +50,38 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 	
 	@Autowired
 	private JsonUtils jsonUtils;
+	@Autowired
+	private OrderUtils orderUtils;
 	
 	@Override
 
-	public void addCustomization(long artist_id, ShippingAddress address ,Commodity commodity) 
+	public void addCustomization(long artist_id, ShippingAddress address,Commodity commodity) 
 	{
-		long user_id = 1;
-		
-		User user = new User();
-		user.setId(user_id);
+		User user=(User)getSessionInBrower(IClientConstants.SESSION_USER);
 		Artist artist = new Artist();
 		artist.setId(artist_id);
 		
 		CustomizationOrder customizationOrder = new CustomizationOrder();
 		
-		commodity.setCategory("customization");//设置商品为定制品
+		commodity.setCategory(ITableConstants.TYPE_CUSTOMIZATION);//设置商品为定制品
 		commodity.setPurchaseOrder(customizationOrder);
 		commodity.setAuthorId(artist_id);
+		commodity.setStatus("0");
+		commodity.setIsBought(true);
 		
+		try {
+			customizationOrder.setAddress(orderUtils.changeaddress(addressDao.findById(address.getId())));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		customizationOrder.setTotalprice(commodity.getPrice());
 		customizationOrder.setLeftprice(commodity.getPrice());
 		customizationOrder.setUser(user);
 		customizationOrder.setArtist(artist);
 		customizationOrder.getCommodity().add(commodity);
-		
-		//customization.setOrderid(getordernum(user));	
-		//这里需要修改！！！！！
-		//！！！！
-		//！！！！！
-		customizationOrder.setOrderid("1234");
-		customizationOrder.setState("0");
+		customizationOrder.setOrderid(orderUtils.getordernum(user));
+		customizationOrder.setState(ITableConstants.PURCHASE_ORDER_STATUS_UN_ACCEPTED);
 		customizationOrder.setDate(new Date());
 		
 		customizationDao.save(customizationOrder);
@@ -111,10 +111,9 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 		try {
 			User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 			List<ShippingAddress> shippingAddresses = addressDao.findAllByUserId(user.getId());
-			
 						
 			setAttributeByRequest("addressList", shippingAddresses);
-			setAttributeByRequest("artist", artist);
+			setAttributeByRequest("artist", artistDao.getArtist(artist.getId()));
 			
 		} catch (Exception e) {
 			// TODO: handle exception
@@ -148,7 +147,7 @@ public class CustomizeService extends BasicService implements ICustomizeService{
 	public boolean rejuectCustomization(long id) {
 		try {
 			CustomizationOrder customization = customizationDao.findById(id);
-			customization.setAcceptState(IStrings.Customization_State_Reject);
+			customization.setState(ITableConstants.PURCHASE_ORDER_STATUS_REJECT);
 			return true;
 		} catch (Exception e) {
 			e.printStackTrace();

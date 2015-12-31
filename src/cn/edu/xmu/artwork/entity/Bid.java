@@ -27,7 +27,7 @@ import org.hibernate.annotations.NamedQuery;
 			),
 	@NamedQuery(
 			name = "Bid.getBidsByAuctionId",
-			query = "from Bid where auction_id = :id"
+			query = "from Bid where auction_id = :id order by date desc"
 			)
 })
 public class Bid implements java.io.Serializable {
@@ -88,7 +88,7 @@ public class Bid implements java.io.Serializable {
 	
 
 
-	@ManyToOne( fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name="auction_id")
 	public Auction getAuction() {
 		return auction;

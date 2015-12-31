@@ -10,6 +10,12 @@ $(document).ready(function(){
 function order()
 {
 	var id = $("#artistid_hidden_input").val();
-	var name = $("#artistrn_hidden_input").val();
-	window.location.href = "placeCustomization?artist.id=" + id + "&artist.realName=" + name;
+	var user_id= $("#userid_hidden").val();
+	if(user_id==""){
+		alert("请先登录");
+		window.location.href = "jsp/frontside/user/login.jsp";
+	}
+	else{
+		window.location.href = "placeCustomization?artist.id=" + id;
+	}
 }

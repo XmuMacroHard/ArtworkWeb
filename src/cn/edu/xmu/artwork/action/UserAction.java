@@ -8,6 +8,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.convention.annotation.Action;
+import org.apache.struts2.convention.annotation.InterceptorRef;
 import org.apache.struts2.convention.annotation.Namespace;
 import org.apache.struts2.convention.annotation.ParentPackage;
 import org.apache.struts2.convention.annotation.Result;
@@ -18,6 +19,7 @@ import org.springframework.context.annotation.Scope;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.PurchaseOrder;
+import cn.edu.xmu.artwork.entity.ShippingAddress;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.ISaleService;
 import cn.edu.xmu.artwork.service.IUserService;
@@ -26,7 +28,7 @@ import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 @Scope("prototype")
-@ParentPackage("json-default")
+@ParentPackage("custom-default")
 @Namespace(value="/")
 public class UserAction extends ActionSupport 
 {
@@ -39,6 +41,7 @@ public class UserAction extends ActionSupport
 	private Artist artist;
 	private PurchaseOrder purchaseOrder;
 	private String newpassword;
+	private ShippingAddress address;
 	
 	@Autowired
 	private IUserService userService;
@@ -53,12 +56,12 @@ public class UserAction extends ActionSupport
 
 	private long orderid = 1;
 
-
-	@Action(
-			value="loginAction", 
-			results={
-					@Result(name="success", type="json", params={"root", "result"})
-					}
+	/**
+	 * 用户登录
+	 * @return
+	 */
+	@Action(value="loginAction", 
+			results={@Result(name="success", type="json", params={"root", "result"})}
 			)
 	public String login()
 	{
@@ -67,6 +70,10 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 用户注册
+	 * @return
+	 */
 	@Action(
 			value="registerAction",
 			results={
@@ -86,9 +93,8 @@ public class UserAction extends ActionSupport
 	 */
 	@Action(
 			value="alterpasswordAction", 
-			results={
-					@Result(name="success", type="json", params={"root", "result"})
-					}
+			results={@Result(name="success", type="json", params={"root", "result"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")}
 			)
 	public String alterpassword()
 	{
@@ -102,9 +108,8 @@ public class UserAction extends ActionSupport
 	 */
 	@Action(
 			value="alterinfoAction", 
-			results={
-					@Result(name="success", type="json", params={"root", "result"})
-					}
+			results={@Result(name="success", type="json", params={"root", "result"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")}
 			)
 	public String alterinfo()
 	{
@@ -112,7 +117,10 @@ public class UserAction extends ActionSupport
 		
 		return SUCCESS;
 	}
-	
+	/**
+	 * 用户登出
+	 * @return
+	 */
 	@Action(value="logoutAction",results={@Result(name="success", location="/jsp/frontside/user/login.jsp")})
 	public String logout()
 	{
@@ -144,6 +152,9 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 根据艺术家分类获取简要的艺术家信息列表
+	 * */
 	@Action(value="getBriefArtistBySort", results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
 	public String getBriefArtistBySort()
 	{
@@ -155,6 +166,10 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
+	/**
+	 * 通过艺术家姓名获取艺术家
+	 * @return
+	 */
 	@Action(value="getArtistByName", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")})
 	public String getArtistByName()
 	{
@@ -164,7 +179,12 @@ public class UserAction extends ActionSupport
 		return SUCCESS;
 	}
 	
-	@Action(value="submitArtist", results={@Result(name="success", location="/jsp/frontside/user/profile.jsp")})
+	/**
+	 * 艺术家认证
+	 * @return
+	 */
+	@Action(value="submitArtist", results={@Result(name="success", location="/jsp/frontside/user/profile.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String submitArtist()
 	{
 		userService.submitArtist(artist,pic,picFileName);
@@ -172,11 +192,12 @@ public class UserAction extends ActionSupport
 	}
 	
 	/**
-	 * 显示艺术家发布的作品
+	 * 显示艺术家自己发布的作品
 	 * @author cz
 	 * @return
 	 */
-	@Action(value="showMyCommodity", results={@Result(name="success", location="/jsp/frontside/artist/artistCommodity.jsp")})
+	@Action(value="showMyCommodity", results={@Result(name="success", location="/jsp/frontside/artist/artistCommodity.jsp")}, 
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public  String showMyCommodity()
 	{
 		List<Commodity> myCommodities = userService.showMyCommodity();
@@ -188,24 +209,108 @@ public class UserAction extends ActionSupport
 	/**
 	 * 获取已完成的所有订单
 	 */
-	@Action(value="getArtistFinishedOrder",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})})
+	@Action(value="getArtistFinishedOrder",results={@Result(name="success", type="json", params={"root", "resultJsonArray"})},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String getFinishedOrder()
-	{
-		
+	{		
 		resultJsonArray = userService.getArtistFinishedOrder(purchaseOrder.getState());
 		return SUCCESS;
 	}
 	
 	/**
-	 * 充值
+	 * 用户充值
 	 * @author sheng
 	 */
-	@Action(value="Userrecharge", results={@Result(name="success", type="chain",location="showInfoOnHomePage")})
+	@Action(value="Userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public  String Userrecharge()
 	{
 		userService.recharge(user.getBalance());
 		return SUCCESS;
 	}
+	
+	/**
+	 * 查看个人所有地址列表
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "ShowAllAddressList",
+			results = {
+					@Result(name="success", location="/jsp/frontside/address/address_list.jsp")
+			},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")}
+			)
+	public String ShowAllAddressList()
+	{
+		List<ShippingAddress> addressList = userService.ShowAllAddressList();
+		
+		ServletActionContext.getRequest().setAttribute("addressList", addressList);
+		
+		
+		return "success";
+	}
+	
+	/**
+	 * 选择地址
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "SelectAddress",
+			results = {
+					@Result(name="success", location="#")
+			},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")}
+			)
+	public String SelectAddress()
+	{
+		userService.SelectAddress(address.getId());
+		
+		return "success";
+	}
+	
+	/**
+	 * 新增地址
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "AddNewAddress",
+			results = {
+					@Result(name="success", location="/jsp/frontside/address/address_list.jsp")
+			},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")}
+			)
+	public String AddNewAddress()
+	{
+		
+		userService.AddNewAddress(address);
+		
+		return "success";
+	}
+	
+	/**
+	 * 删除地址
+	 * @author asus1
+	 * @return
+	 */
+	@Action(
+			value = "DeleteAddress",
+			results = {
+					@Result(name="success", location="/jsp/frontside/address/address_list.jsp")
+			},
+			interceptorRefs ={@InterceptorRef(value="checkLoginStack")}
+			)
+	public String DeleteAddress()
+	{
+		userService.DeleteAddress(address.getId());
+		List<ShippingAddress> addressList = userService.ShowAllAddressList();		
+		ServletActionContext.getRequest().setAttribute("addressList", addressList);
+		
+		return "success";
+	}
+	
 	
 	private void setAttributeByRequest(String key, Object value)
 	{
@@ -309,6 +414,14 @@ public class UserAction extends ActionSupport
 
 	public void setPurchaseOrder(PurchaseOrder purchaseOrder) {
 		this.purchaseOrder = purchaseOrder;
+	}
+
+	public ShippingAddress getAddress() {
+		return address;
+	}
+
+	public void setAddress(ShippingAddress address) {
+		this.address = address;
 	}
 	
 	

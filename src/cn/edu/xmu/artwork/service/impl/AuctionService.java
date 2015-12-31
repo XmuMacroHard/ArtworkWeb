@@ -5,17 +5,23 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+import net.sf.json.JSONObject;
+
 import org.apache.commons.collections.functors.ForClosure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import cn.edu.xmu.artwork.constants.IStrings;
+import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.dao.IAuctionDao;
 import cn.edu.xmu.artwork.dao.IAuctionDateDao;
 import cn.edu.xmu.artwork.dao.IAuctionOrderDao;
 import cn.edu.xmu.artwork.dao.IBidDao;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
+import cn.edu.xmu.artwork.dao.impl.AuctionDao;
+import cn.edu.xmu.artwork.dao.impl.BidDao;
 import cn.edu.xmu.artwork.entity.Artist;
 import cn.edu.xmu.artwork.entity.Auction;
 import cn.edu.xmu.artwork.entity.AuctionDate;
@@ -26,6 +32,7 @@ import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAuctionService;
 import cn.edu.xmu.artwork.utils.IDateUtils;
 import cn.edu.xmu.artwork.utils.IOrderUtils;
+import cn.edu.xmu.artwork.utils.IJsonUtils;
 
 @Service
 @Transactional
@@ -46,9 +53,25 @@ public class AuctionService extends BasicService implements IAuctionService{
 	@Autowired
 	private IDateUtils dateUtils;
 	
+	@Autowired
+	IJsonUtils jsonUtils;
+	
 	@Override
 	public void addBid(Bid bid, Auction auction) {
+
+		
+		long id = 1;
+		User user = new User();
+		user.setId(id);
+
+		auction = auctionDao.findById(auction.getId());
+		auction.setUser(user);
+		auction.setCurrentPrice(bid.getPrice());
+		
+		bid.setUser(user);
+		bid.setDate(new Date());
 		bid.setAuction(auction);
+		
 		bidDao.save(bid);
 		// TODO Auto-generated method stub
 	}
@@ -89,12 +112,20 @@ public class AuctionService extends BasicService implements IAuctionService{
 	@Override
 	public List<Auction> getTodayAuctions() {
 		Calendar today = Calendar.getInstance();
-		return getAuctionsByDate(today.getTime());
+
+		List<Auction> auctionList = getAuctionsByDate(today.getTime());
+		
+		return auctionList;
 	}
 
 	@Override
 	public Auction getAuctionAuctionById(long id) {
-		return auctionDao.findById(id);
+		Auction auction = auctionDao.findById(id);
+		
+		initializeObject(auction.getCommodity());
+		initializeObject(auction.getCommodity().getCommodityPices());
+		
+		return auction;
 	}
 
 	@Override
@@ -154,9 +185,34 @@ public class AuctionService extends BasicService implements IAuctionService{
 		List<Auction> auctions = new ArrayList<Auction>();
 		for(AuctionDate auctionDate: auctionDates)
 		{
+			initializeObject(auctionDate.getAuction());
+			initializeObject(auctionDate.getAuction().getCommodity());
+			initializeObject(auctionDate.getAuction().getCommodity().getCommodityPices());
 			auctions.add(auctionDate.getAuction());
 			System.out.println(auctionDate.getDate() + " " + auctionDate.getAuction().getId());
 		}
 		return auctions;
+	}
+
+	@Override
+	public void addBid(long auctionId, float price) {
+		User user = new User();
+		user.setId((long) 1);
+		System.out.println(auctionId + "   " + price);
+		
+		Auction auction = auctionDao.findById(auctionId);
+		auction.setUser(user);
+		auction.setCurrentPrice(price);
+
+		//User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);	
+		Bid bid = new Bid();
+		bid.setPrice(price);
+		bid.setDate(new Date());
+		bid.setAuction(auction);
+		bid.setUser(user);
+		
+		bidDao.save(bid);
+		// TODO Auto-generated method stub
+		
 	}
 }

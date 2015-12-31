@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(
 		name = "Information.getInfoShownOnHomePage",
-		query = "select i from Information i inner join i.datePoses d where d.date = :today and d.location = :location"
+		query = "select i from Information i inner join i.datePoses d where d.date = :today and d.location = :location and i.status = :status"
 	),
 	@NamedQuery(
 			name = "Information.getInfoById",
@@ -42,7 +42,17 @@ import javax.persistence.Table;
 	@NamedQuery(
 			name = "Information.getDefaultInfos",
 			query = "from Information i where i.status = :default"
-		)	
+		),
+		@NamedQuery(
+				name = "Information.updateInfoStatus",
+				query = "update Information info set info.status = :status where info.id = :id"
+			),
+	@NamedQuery(
+			name = "Information.getInfoByEditorId",
+			query = "from Information i where editorid = :editorid"
+		)		
+			
+	
 })
 public class Information implements java.io.Serializable {
 
@@ -55,7 +65,7 @@ public class Information implements java.io.Serializable {
 	private Timestamp startTime;
 	private Timestamp endTime;
 	private Float expense;
-	private String status;
+	private String status;								// -1:待审核  0:审核不通过 1:审核通过	2:默认资讯	
 	private Set<DatePos> datePoses = new HashSet<DatePos>(0);
 	private Set<InforPics> inforPicses = new HashSet<InforPics>(0);
 
@@ -87,7 +97,7 @@ public class Information implements java.io.Serializable {
 		}
 	}
 	
-	public void addDatePos(DatePos  datePos)
+	public void addDatePos(DatePos datePos)
 	{
 		datePos.setInformation(this);
 		datePoses.add(datePos);
@@ -189,7 +199,7 @@ public class Information implements java.io.Serializable {
 		this.status = status;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "information")
+	@OneToMany( fetch = FetchType.LAZY, mappedBy = "information")
 	public Set<DatePos> getDatePoses() {
 		return this.datePoses;
 	}
@@ -198,7 +208,7 @@ public class Information implements java.io.Serializable {
 		this.datePoses = datePoses;
 	}
 
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "information")
+	@OneToMany( fetch = FetchType.LAZY, mappedBy = "information")
 	public Set<InforPics> getInforPicses() {
 		return this.inforPicses;
 	}

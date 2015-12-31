@@ -11,7 +11,7 @@ import com.opensymphony.xwork2.ActionContext;
 
 public class BasicService {
 	@Autowired
-	private SessionFactory sessionFactory;
+	protected SessionFactory sessionFactory;
 	
 	void initializeObject(Object obj)
 	{

@@ -58,7 +58,7 @@ public class UserPool
 		Set<Integer> keys = AUCTION_POOL.keySet();
 		for(Integer key: keys)
 		{
-			getAuctionSessions(key).remove(session);
+			AUCTION_POOL.get(key).remove(session);
 		}
 		USER_POOL.remove(session.getId());
 	}

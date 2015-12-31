@@ -15,6 +15,10 @@ public abstract class GenericDao
 	Session session;
 	Transaction transaction;
 	
+	/**
+	 * 获取session值
+	 * @return
+	 */
 	protected Session getSession()
 	{
 		session = sessionFactory.getCurrentSession();
@@ -22,20 +26,32 @@ public abstract class GenericDao
 		return session;
 	}
 	
+	/**
+	 * 开启事务
+	 */
 	protected void beginTransaction()
 	{
 		transaction = session.beginTransaction();
 	}
 	
+	/**
+	 * 提交事务
+	 */
 	protected void commit()
 	{
 		transaction.commit();
 	}
-
+	/**
+	 * 注入sessionFactory
+	 * @param sessionFactory
+	 */
 	public void setSessionFactory(SessionFactory sessionFactory) {
 		this.sessionFactory = sessionFactory;
 	}
 	
+	/**
+	 * 关闭session
+	 */
 	protected void closeSession()
 	{
 		session.close();

@@ -2,7 +2,9 @@ package cn.edu.xmu.artwork.dao.impl;
 
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.struts2.ServletActionContext;
@@ -57,18 +59,18 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		return list;
 	}
 	
-	/*get today informations*/
-	@SuppressWarnings("unchecked")
-	@Override
 	/**
 	 * 按照资讯的位置， 数量， 默认咨询来获取今天的所有资讯
 	 */
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<Information> getTodayInfoByLocation(String location, int number, String default_status)
 	{
 		Calendar today = Calendar.getInstance();
 		Query query = getSession().getNamedQuery("Information.getInfoShownOnHomePage");
 		query.setDate("today", today.getTime());
 		query.setParameter("location", location);
+		query.setParameter("status", ITableConstants.INFO_STATUS_ACCEPTABLE);
 		query.setMaxResults(number);
 		List<Information> informations = query.list();
 		if(informations.size() < number)
@@ -104,7 +106,6 @@ public class InformationDao extends GenericDao implements IInformationDao {
 		}
 		return Infor;
 	}
-
 	
 	
 	public IFileUtils getFileUtils() {
@@ -133,13 +134,24 @@ public class InformationDao extends GenericDao implements IInformationDao {
 	@Override
 	public void updateInfoStatus(long id, String status) {
 		
-		String hql=String.format("update Information info set info.status = %s where info.id = %d", status, id);
-		Query queryupdate= getSession().createQuery(hql);
+		Query queryupdate= getSession().getNamedQuery("Information.updateInfoStatus");
+		queryupdate.setParameter("status", status);
+		queryupdate.setParameter("id", id);
 		int ret=queryupdate.executeUpdate();
 		
 	}
 
-	
-	
-	
+	/**
+	 * 根据采编id获取其编辑的所有咨询
+	 */
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<Information> getInfoListByEditorId(long editorId)
+	{
+		Query query = getSession().getNamedQuery("Information.getInfoByEditorId");
+		query.setParameter("editorid", editorId);
+		
+		return query.list();
+	}
+		
 }

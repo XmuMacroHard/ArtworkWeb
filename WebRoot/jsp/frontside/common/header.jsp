@@ -53,10 +53,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_customization_order.jsp">定制订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="">拍卖订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="viewCart">我的购物车</a></li>                    
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Search Terms </a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/pay/recharge.jsp">充值中心</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/artist_certification.jsp">艺术家认证 </a></li>
                   </ul>
                 </div>
+                <c:if test="${sessionScope.user != null && sessionScope.rank == 'artist'}">
                 <!-- End Header Company -->
                 <div class="dropdown block-company-wrapper"> <a role="button" data-toggle="dropdown" data-target="#" class="dropdown-toggle" href="#"> 艺术家中心 <span class="caret"></span></a>
                   <ul class="dropdown-menu" role="menu">
@@ -68,7 +69,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="#">Advanced Search </a></li>
                   </ul>
                 </div>
-                
+                </c:if>
                 <c:choose>
           			<c:when test="${sessionScope.user == null}">
             			<div class="login"><a href="jsp/frontside/user/login.jsp"><span class="">请登录</span></a></div>

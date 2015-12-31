@@ -64,13 +64,13 @@ Purchase: http://wrapbootstrap.com
             <div class="loginbox-social">
                 <div class="social-title ">使用第三方登录</div>
                 <div class="social-buttons">
-                    <a href="" class="button-facebook">
+                    <a href="#" class="button-facebook">
                         <i class="social-icon fa fa-facebook"></i>
                     </a>
-                    <a href="" class="button-twitter">
+                    <a href="#" class="button-twitter">
                         <i class="social-icon fa fa-twitter"></i>
                     </a>
-                    <a href="" class="button-google">
+                    <a href="#" class="button-google">
                         <i class="social-icon fa fa-google-plus"></i>
                     </a>
                 </div>
@@ -86,9 +86,6 @@ Purchase: http://wrapbootstrap.com
             <div class="loginbox-textbox">
                 <s:password id="password" name="user.password" cssClass="form-control" placeholder="密码" onblur="checkPassword()"/>
                 <span class="text-danger" id="passwordTip"></span>
-            </div>
-            <div class="loginbox-forgot">
-                <a href="">忘记密码?</a>
             </div>
             <div class="loginbox-submit">
                 <s:submit id="loginButton" cssClass="btn btn-primary pull-right" value="登录"/>

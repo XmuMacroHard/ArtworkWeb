@@ -8,6 +8,15 @@ $(document).ready(function(){
 
 function onload(nowpage,country)
 {
+	if(country=="calligraphy"){
+		document.getElementById("commoditysort").innerHTML="书法";
+	}else if(country=="painting"){
+		document.getElementById("commoditysort").innerHTML="绘画";
+	}else if(country=="sculpture"){
+		document.getElementById("commoditysort").innerHTML="雕刻";
+	}else{
+		document.getElementById("commoditysort").innerHTML="手工品";
+	}
 	$.ajax({
 		type:"post",
 		url:"showCommodityList",
