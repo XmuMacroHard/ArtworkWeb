@@ -47,7 +47,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div class="page">
   <%-- <c:import url="/jsp/support/constant.jsp"/> --%>
   <c:import url="/jsp/frontside/common/header.jsp"/> 
-   
+   <c:set var="server_path" value="http://192.168.199.196:8080/ArtworkWeb" scope="page"/>
   <!-- Slider -->
   <div class="slider-section">
     <div class="container">
@@ -107,7 +107,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
       <div class="row">
         <div class="newsletter-wrap">
           <div class="newsletter">
-            <form action="#" method="post" id="newsletter-validate-detail">
+            <form action="jsp/frontside/order/home_order.jsp" method="post" id="newsletter-validate-detail">
               <div>
                 <h4><span>艺术家推荐</span></h4>
                 <button type="submit" title="Subscribe" class="subscribe"><span>艺术品定制</span></button>
@@ -118,7 +118,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         <c:forEach items="${artistList}" var = "artist">
         <div class="col-lg-3 col-sm-3 col-xs-12">
           <div class="col" >
-          	<img class="img-circle" src="${server_path}${artist.portrait}" alt="offer banner">
+          	<img class="img-circle" src="${server_path}${artist.portrait}" alt="offer banner" height="300px">
           	<div class="textcenter"><span class="label label-default"><c:out value="${artist.realName}"/></span></div>
           </div>
         </div>
@@ -149,7 +149,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 							<c:set var="urlsNum" scope="page" value="1"/>  
 							<c:forEach items="${commodity.commodityPices}" var="pic">   		 	
 								<c:if test = "${urlsNum == 1}"> 
-									<img src="${server_path}${pic.url}" class="lazyOwl product-mainpic" alt="Product image" style="display: block;"/>
+									<img src="${server_path}${pic.url}" class="lazyOwl product-mainpic" height="300px" alt="Product image" style="display: block;"/>
 									<c:set var="urlsNum" scope="page" value="2"/> 		
 								</c:if> 
 	                     	</c:forEach> 

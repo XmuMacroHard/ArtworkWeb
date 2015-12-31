@@ -78,6 +78,7 @@ public class SaleAction extends ActionSupport
 	{
 		System.out.println(commodity.getType());
 		JSONArray commoditiesJsonArray = saleService.getCommodityListByType(commodity.getType());
+		
 		setResultJsonArray(commoditiesJsonArray);
 		System.out.println(commoditiesJsonArray);
 		return SUCCESS;

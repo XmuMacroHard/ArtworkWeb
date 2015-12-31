@@ -37,7 +37,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <body>
 <div class="page">
 <c:import url="../common/header.jsp"/>
-<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+<c:set var="server_path" value="http://192.168.199.196:8080/ArtworkWeb" scope="page"/>
   
 <section class="main-container col1-layout">
   <div class="main container">

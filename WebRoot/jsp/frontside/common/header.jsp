@@ -109,108 +109,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="level0 nav-1 level-top first parent"> <a href="jsp/frontside/sale/home_sale.jsp" class="level-top"> <span>商城</span> </a>
                     </li>
                     <li class="level0 nav-2 level-top parent"> <a href="jsp/frontside/order/home_order.jsp" class="level-top"> <span>定制</span> </a>
-                      <ul class="level0">
-                        <li class="level1 nav-2-1 first parent"> <a href="grid.html"> <span>Shoes</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-2-1-1 first"> <a href="grid.html"> <span>Sport Shoes</span> </a> </li>
-                            <li class="level2 nav-2-1-2"> <a href="grid.html"> <span>Casual Shoes</span> </a> </li>
-                            <li class="level2 nav-2-1-3"> <a href="grid.html"> <span>Leather Shoes</span> </a> </li>
-                            <li class="level2 nav-2-1-4 last"> <a href="grid.html"> <span>canvas shoes</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-2-2 parent"> <a href="grid.html"> <span>Dresses</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-2-2-5 first"> <a href="grid.html"> <span>Casual Dresses</span> </a> </li>
-                            <li class="level2 nav-2-2-6"> <a href="grid.html"> <span>Evening</span> </a> </li>
-                            <li class="level2 nav-2-2-7"> <a href="grid.html"> <span>Designer</span> </a> </li>
-                            <li class="level2 nav-2-2-8 last"> <a href="grid.html"> <span>Party</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-2-3 parent"> <a href="grid.html"> <span>Jackets</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-2-3-9 first"> <a href="grid.html"> <span>Coats</span> </a> </li>
-                            <li class="level2 nav-2-3-10"> <a href="grid.html"> <span>Formal Jackets</span> </a> </li>
-                            <li class="level2 nav-2-3-11"> <a href="grid.html"> <span>Leather Jackets</span> </a> </li>
-                            <li class="level2 nav-2-3-12 last"> <a href="grid.html"> <span>Blazers</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-2-4 parent"> <a href="grid.html"> <span>Watches</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-2-4-13 first"> <a href="grid.html"> <span>Fastrack</span> </a> </li>
-                            <li class="level2 nav-2-4-14"> <a href="grid.html"> <span>Casio</span> </a> </li>
-                            <li class="level2 nav-2-4-15"> <a href="grid.html"> <span>Titan</span> </a> </li>
-                            <li class="level2 nav-2-4-16 last"> <a href="grid.html"> <span>Tommy-Hilfiger</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-2-5 parent"> <a href="grid.html"> <span>Sunglasses</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-2-5-17 first"> <a href="grid.html"> <span>Ray Ban</span> </a> </li>
-                            <li class="level2 nav-2-5-18"> <a href="grid.html"> <span>Fastrack</span> </a> </li>
-                            <li class="level2 nav-2-5-19"> <a href="grid.html"> <span>Police</span> </a> </li>
-                            <li class="level2 nav-2-5-20 last"> <a href="grid.html"> <span>Oakley</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-2-6 last parent"> <a href="grid.html"> <span>Accessories</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-2-6-21 first"> <a href="grid.html"> <span>Backpacks</span> </a> </li>
-                            <li class="level2 nav-2-6-22"> <a href="grid.html"> <span>Wallets</span> </a> </li>
-                            <li class="level2 nav-2-6-23"> <a href="grid.html"> <span>Laptop Bags</span> </a> </li>
-                            <li class="level2 nav-2-6-24 last"> <a href="grid.html"> <span>Belts</span> </a> </li>
-                          </ul>
-                        </li>
-                      </ul>
+
                     </li>
-                    <li class="level0 nav-3 level-top parent"> <a href="grid.html" class="level-top"> <span>拍卖</span> </a>
-                      <ul class="level0">
-                        <li class="level1 nav-3-1 first parent"> <a href="grid.html"> <span>Mobiles</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-3-1-1 first"> <a href="grid.html"> <span>Samsung</span> </a> </li>
-                            <li class="level2 nav-3-1-2"> <a href="grid.html"> <span>Nokia</span> </a> </li>
-                            <li class="level2 nav-3-1-3"> <a href="grid.html"> <span>iPhone</span> </a> </li>
-                            <li class="level2 nav-3-1-4 last"> <a href="grid.html"> <span>Sony</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-3-2 parent"> <a href="grid.html"> <span>Accessories</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-3-2-5 first"> <a href="grid.html"> <span>Mobile Memory Cards</span> </a> </li>
-                            <li class="level2 nav-3-2-6"> <a href="grid.html"> <span>Cases &amp; Covers</span> </a> </li>
-                            <li class="level2 nav-3-2-7"> <a href="grid.html"> <span>Mobile Headphones</span> </a> </li>
-                            <li class="level2 nav-3-2-8 last"> <a href="grid.html"> <span>Bluetooth Headsets</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-3-3 parent"> <a href="grid.html"> <span>Cameras</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-3-3-9 first"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
-                            <li class="level2 nav-3-3-10"> <a href="grid.html"> <span>Point &amp; Shoot</span> </a> </li>
-                            <li class="level2 nav-3-3-11"> <a href="grid.html"> <span>Digital SLR</span> </a> </li>
-                            <li class="level2 nav-3-3-12 last"> <a href="grid.html"> <span>Camera Accessories</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-3-4 parent"> <a href="grid.html"> <span>Audio &amp; Video</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-3-4-13 first"> <a href="grid.html"> <span>MP3 Players</span> </a> </li>
-                            <li class="level2 nav-3-4-14"> <a href="grid.html"> <span>iPods</span> </a> </li>
-                            <li class="level2 nav-3-4-15"> <a href="grid.html"> <span>Speakers</span> </a> </li>
-                            <li class="level2 nav-3-4-16 last"> <a href="grid.html"> <span>Video Players</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-3-5 parent"> <a href="grid.html"> <span>Computer</span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-3-5-17 first"> <a href="grid.html"> <span>External Hard Disks</span> </a> </li>
-                            <li class="level2 nav-3-5-18"> <a href="grid.html"> <span>Pendrives</span> </a> </li>
-                            <li class="level2 nav-3-5-19"> <a href="grid.html"> <span>Headphones</span> </a> </li>
-                            <li class="level2 nav-3-5-20 last"> <a href="grid.html"> <span>PC Components</span> </a> </li>
-                          </ul>
-                        </li>
-                        <li class="level1 nav-3-6 last parent"> <a href="grid.html"> <span>Appliances </span> </a>
-                          <ul class="level1">
-                            <li class="level2 nav-3-6-21 first"> <a href="grid.html"> <span>Vacuum Cleaners</span> </a> </li>
-                            <li class="level2 nav-3-6-22"> <a href="grid.html"> <span>Indoor Lighting</span> </a> </li>
-                            <li class="level2 nav-3-6-23"> <a href="grid.html"> <span>Kitchen Tools</span> </a> </li>
-                            <li class="level2 nav-3-6-24 last"> <a href="grid.html"> <span>Water Purifiers</span> </a> </li>
-                          </ul>
-                        </li>
-                      </ul>
+                     <li class="level0 nav-3 level-top parent"> <a href="showTodayAuctionAction.action" class="level-top"> <span>拍卖</span> </a>
+
                     </li>
                     <li class="level0 nav-4 level-top parent"> <a href="grid.html" class="level-top"> <span>Furniture</span> </a>
                       <ul class="level0">
@@ -400,7 +302,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               </div>
             </div>
           </li>
-          <li class="level0 nav-6 level-top parent"> <a href="grid.html" class="level-top"> <span>拍卖</span> <span class="category-label">New</span></a>
+          <li class="level0 nav-6 level-top parent"> <a href="showTodayAuctionAction.action" class="level-top"> <span>拍卖</span> <span class="category-label">New</span></a>
             <div style="display: none; left: 0px;" class="level0-wrapper dropdown-6col">
               <div class="level0-wrapper2">
                 <div class="nav-block nav-block-center grid13-8 itemgrid itemgrid-4col">

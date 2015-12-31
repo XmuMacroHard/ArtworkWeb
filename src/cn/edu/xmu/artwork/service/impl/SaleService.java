@@ -86,9 +86,23 @@ public class SaleService extends BasicService implements ISaleService
 		{
 			initializeObject(commodity.getCommodityPices());
 		}
-		String[] excludes = {"purchaseOrder"};
-		return jsonUtils.List2JsonArray(commodities, excludes);
+		JSONArray jsonArray = new JSONArray();
+		for(Commodity commodity : commodities)
+		{
+			JSONObject jo = new JSONObject();
+			jo.put("id", commodity.getId());
+			jo.put("price", commodity.getPrice());
+			jo.put("name", commodity.getName());
+			for(CommodityPics pics : commodity.getCommodityPices())
+			{
+				jo.put("url", pics.getUrl());
+			}
+			jsonArray.add(jo);
+		}
 		
+		//String[] excludes = {"purchaseOrder"};
+		//return jsonUtils.List2JsonArray(commodities, excludes);
+		return jsonArray;
 	}
 	
 	@Override
@@ -252,10 +266,11 @@ public class SaleService extends BasicService implements ISaleService
 			purchaseOrderId.add(purchaseOrder.getId());
 		}
 		
-		for(int i=0;i<commodityid.size();i++)
+/*		for(int i=0;i<commodityid.size();i++)
 		{
-			shoppingCartDao.delete(commodityid.get(i), user.getId());
-		}
+			if(shoppingCartDao.isExisted(user.getId(), commodityid.get(i)))
+				shoppingCartDao.delete(commodityid.get(i), user.getId());
+		}*/
 		
 		setAttributeByRequest("totalprice", allprice);
 		setAttributeByRequest("purchaseOrderId", purchaseOrderId);

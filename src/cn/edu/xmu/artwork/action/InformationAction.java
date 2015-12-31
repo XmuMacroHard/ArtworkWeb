@@ -99,8 +99,7 @@ public class InformationAction extends ActionSupport
 	 * 获取资讯详细信息
 	 * @return
 	 */
-	@Action(value="getDetailInfo", results={@Result(name="success", location="/jsp/frontside/information/info_detail.jsp")},
-			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
+	@Action(value="getDetailInfo", results={@Result(name="success", location="/jsp/frontside/information/info_detail.jsp")})
 	public String getDetailInfo()
 	{		
 		long id =information.getId();

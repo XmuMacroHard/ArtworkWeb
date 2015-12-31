@@ -23,7 +23,7 @@ function onload(nowpage,type)
 		data:{'artist.identification':type},
 		dataType:'json',
 		success:function(data){
-			var server_path = 'http://localhost:8080/ArtworkWeb';
+			var server_path = 'http://192.168.199.196:8080/ArtworkWeb';
 			var	artist = '';
 			var pages='';
 			var $artists = $('#products-list');

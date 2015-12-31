@@ -24,7 +24,7 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 	{
 		Query getCommodities = getSession().getNamedQuery("Commodity.getAllByType");
 		getCommodities.setParameter("commType", commoType);
-		getCommodities.setParameter("isBought", ITableConstants.COMMODITY_IS_BOUGHT_FALSE);
+		getCommodities.setParameter("isBought",false);
 		List<Commodity> commodities = (List<Commodity>)getCommodities.list();
 		return commodities;
 	}

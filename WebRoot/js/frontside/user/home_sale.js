@@ -23,10 +23,10 @@ function onload(nowpage,country)
 		data:{"commodity.type":country},
 		dataType:"json",
 		success:function(data){
-			var server_path = "http://localhost:8080/ArtworkWeb";
+			var server_path = "http://192.168.199.196:8080/ArtworkWeb";
 			var pages = "";
 			var	commodities = "";
-			
+
 			var pagesize=9;
 			var totalcount=data.length;
 			var totalpage=Math.ceil(totalcount/pagesize);
@@ -50,7 +50,7 @@ function onload(nowpage,country)
 					}
 				}
 			}
-			if(nowpage!=totalpage){
+			if(nowpage!=totalpage&&totalpage!=0){
 				pages+="<li><a href=\"javascript:onload(" +(nowpage+1)+",\'"+country+
 				"\');\">&gt;</a></li>";
 				pages+="<li><a href=\"javascript:onload(" +totalpage+",\'"+country+
@@ -68,11 +68,9 @@ function onload(nowpage,country)
                   				"<div class='product-block'>" +
                   				"<div class='product-image'> <a href='getDetailedCommodity?commodity.id=" + item.id + "'>" +
                   				"<figure class='product-display'>" +
-                            "<div class='sale-label sale-top-left'>Sale</div>";
-				if(item.commodityPices.length > 0)
-				{
-                    commodities += "<img src='" + server_path + item.commodityPices[0].url +"' class='lazyOwl product-mainpic' alt='Sample Product' style='display: block;'> <img class='product-secondpic' alt=' Sample Product' src='" + server_path + item.commodityPices[0].url + "'> </figure>" ;
-				}
+                            "<div class='sale-label sale-top-left'>Sale</div>"  +
+						"<img src='" + server_path + item.url +"' class='lazyOwl product-mainpic' alt='Sample Product' style='display: block;'> <img class='product-secondpic' alt=' Sample Product' src='" + server_path + item.url + "'> </figure>" ;
+
 				commodities +=" </a> </div>" +
                         "<div class='product-meta'>"+
                           "<div class='product-action'> <a class='addcart' href='shopping_cart.html'> <i class='icon-shopping-cart'>&nbsp;</i> Add to cart </a>" +                 
