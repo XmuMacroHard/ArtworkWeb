@@ -5,11 +5,12 @@ public interface IResultCode
 	String ADMIN = "admin";
 	String EDITOR = "editor";
 	String SUCCESS = "success";
+	String ERROR = "error";	
 	String ArtistSuccess = "artistsuccess";
 	String AdmistratorSuccess = "admistratorsuccess";
 	
-	String ERROR = "error";	
 	String RESULT = "result";
+	String RESULT_DATA = "result_data";
 	
 	String MESSAGE = "message";
 	String LOGIN_ERROR_MESSAGE = "用户名或密码错误";

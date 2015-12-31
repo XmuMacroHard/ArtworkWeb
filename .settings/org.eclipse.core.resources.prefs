@@ -4,6 +4,7 @@
 eclipse.preferences.version=1
 encoding//WebRoot/index.jsp=UTF-8
 encoding//WebRoot/jsp/backstage/artist_detail.jsp=UTF-8
+encoding//WebRoot/jsp/backstage/common/header.jsp=UTF-8
 encoding//WebRoot/jsp/fail.jsp=UTF-8
 encoding//WebRoot/jsp/frontside/address/address_list.jsp=UTF-8
 encoding//WebRoot/jsp/frontside/address/address_new.jsp=UTF-8

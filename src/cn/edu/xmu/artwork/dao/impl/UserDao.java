@@ -34,7 +34,9 @@ public class UserDao extends GenericDao implements IUserDao
 		System.out.println("success");
 	} 
 	
-	//search user by the email and password
+	/**
+	 * search user by the email and password
+	 */
 	public User search(User user)
 	{
 		System.out.println("search in dao："+ user.getEmail() + "  " + user.getPassword());
@@ -71,7 +73,7 @@ public class UserDao extends GenericDao implements IUserDao
 	}
 	
 	/**
-	 * 
+	 * 根据email查看用户是否存在
 	 */
 	public boolean findByEmail(String email)
 	{

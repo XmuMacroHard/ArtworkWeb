@@ -248,13 +248,13 @@ function login()
 			{
 				window.location.href="/ArtworkWeb/ShowAllUserList";
 			}
-			else if(d.result = "editor")
+			else if(d.result == "editor")
 			{
 				window.location.href="/ArtworkWeb/jsp/backstage/admin_submitAdvertise.jsp";
 			}
-			else
+			else if(d.result == "success")
 			{
-				alert("hello world");
+				window.location.href="/ArtworkWeb/showInfoOnHomePage";
 			}
 		}			
 	});

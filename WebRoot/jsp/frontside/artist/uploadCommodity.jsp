@@ -41,12 +41,24 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
 <div class="page">
- 	<c:import url="../common/header.jsp"/>
+  <c:import url="../common/header.jsp"/>
   
+  <!-- breadcrumbs -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="row">
+        <ul>
+
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- End breadcrumbs --> 
+  <!-- Two columns content -->
   <div class="main-container col2-right-layout">
     <div class="main container">
       <div class="row">
-        <div class="col-main col-sm-9 wow bounceInUp animated">
+			        <div class="col-main col-sm-9 wow bounceInUp animated">
           
           <div class="blog-wrapper" id="main"><div class="page-title new_page_title">
             <h2>商品上传</h2>
@@ -74,12 +86,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           <option value="handicraft">手工品</option>
                         </select>
                       </div>
-					  <div class="field">
+            <div class="field">
                         <label>商品价格<em class="required">*</em></label>
                         <input style="width:60%" type="text" class="input-text validate-email" title="Email" value="" name="commodity.price" onblur="checkcommodityprice()">
-                      	<span class="text-danger" id="commoditypriceTip"></span>
+                        <span class="text-danger" id="commoditypriceTip"></span>
                       </div >
-  						<div class="field" >
+              <div class="field" >
                         <label>商品图片<em class="required">*</em></label>
                         <s:file style="width:60%" name="pictures" cssClass="input-text"/>
                         <span class="text-danger" id="commoditypictureTip"></span>
@@ -88,7 +100,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <div class="field aw-blog-comment-area" > 
                         <label>商品描述<em class="required">*</em></label>
                         <textarea style="width:90%" rows="5" cols="5" class="input-text" title="Comment" id="comment1" name="commodity.introduction" onblur="checkcommodityintroduction()"></textarea>
-                      	<span class="text-danger" id="commodityintroductionTip"></span>
+                        <span class="text-danger" id="commodityintroductionTip"></span>
                       </div> 
                       <div style="width:96%" class="button-set"> 
                         <button id="uploadCommodity" type="submit" class="bnt-comment"><span><span>商品上传</span></span></button>
@@ -105,194 +117,17 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>            
           </div>
         </div>
-        
-        <div class="col-right sidebar col-sm-3 wow bounceInUp animated">
-          <div role="complementary" class="widget_wrapper13" id="secondary">
-            <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
-              <h3 class="widget-title">Most Popular Post</h3>
-              <div class="widget-content">
-                <ul class="posts-list unstyled clearfix">
-                  <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
-                    <!--featured-thumb-->
-                    <h4><a title="Pellentesque posuere" href="blog_detail.html">Pellentesque posuere</a></h4>
-                    <p class="post-meta"><i class="icon-calendar"></i>
-                      <time datetime="2014-07-10T07:09:31+00:00" class="entry-date">Jul 10, 2014</time>
-                      .</p>
-                  </li>
-                  <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
-                    <!--featured-thumb-->
-                    <h4><a title="Dolor lorem ipsum" href="blog_detail.html">Dolor lorem ipsum</a></h4>
-                    <p class="post-meta"><i class="icon-calendar"></i>
-                      <time datetime="2014-07-10T07:01:18+00:00" class="entry-date">Jul 10, 2014</time>
-                      .</p>
-                  </li>
-                  <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
-                    <!--featured-thumb-->
-                    <h4><a title="Aliquam eget sapien placerat" href="blog_detail.html">Aliquam eget sapien placerat</a></h4>
-                    <p class="post-meta"><i class="icon-calendar"></i>
-                      <time datetime="2014-07-10T06:59:14+00:00" class="entry-date">Jul 10, 2014</time>
-                      .</p>
-                  </li>
-                  <li>
-                    <figure class="featured-thumb"> <a href="blog_detail.html"> <img width="80" height="53" alt="blog image" src="images/blog-img1.jpg"> </a> </figure>
-                    <!--featured-thumb-->
-                    <h4><a title="Pellentesque habitant morbi" href="blog_detail.html">Pellentesque habitant morbi</a></h4>
-                    <p class="post-meta"><i class="icon-calendar"></i>
-                      <time datetime="2014-07-10T06:53:43+00:00" class="entry-date">Jul 10, 2014</time>
-                      .</p>
-                  </li>
-                </ul>
-              </div>
-              <!--widget-content--> 
-            </div>
-            <div class="popular-posts widget widget_categories" id="categories-2">
-              <h3 class="widget-title">Categories</h3>
-              <ul>
-                <li class="cat-item cat-item-19599"><a href="#first-category">First Category</a></li>
-                <li class="cat-item cat-item-19599"><a href="#second-category">Second Category</a></li>
-              </ul>
-            </div>
-            <!-- Banner Ad Block -->
-            <div class="ad-spots widget widget__sidebar">
-              <h3 class="widget-title">Ad Spots</h3>
-              <div class="widget-content"><a target="_self" href="#" title=""><img alt="offer banner" src="images/offerBanner.jpg"></a></div>
-            </div>
-            <!-- Banner Text Block -->
-            <div class="text-widget widget widget__sidebar">
-              <h3 class="widget-title">Text Widget</h3>
-              <div class="widget-content">Mauris at blandit erat. Nam vel tortor non quam scelerisque cursus. Praesent nunc vitae magna pellentesque auctor. Quisque id lectus.<br>
-                <br>
-                Massa, eget eleifend tellus. Proin nec ante leo ssim nunc sit amet velit malesuada pharetra. Nulla neque sapien, sollicitudin non ornare quis, malesuada.</div>
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
- 
-  <!-- Footer -->
-  <footer>
-    <div class="container">
-      <div class="inner">
-        <div class="brand-logo">
-          <div class="slider-items-products">
-            <div id="brand-logo-slider" class="product-flexslider hidden-buttons">
-              <div class="slider-items slider-width-col6">
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo1.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo2.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo3.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo4.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo5.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo6.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo1.png" alt="Image"></a> </div>
-                <!-- End Item -->
-                <!-- Item -->
-                <div class="item"> <a href="#x"><img src="images/b-logo4.png" alt="Image"></a> </div>
-                <!-- End Item -->
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-middle">
-          <div class="col-md-3 col-sm-12 col-xs-12">
-            <div class="footer-column-1">
-              <div class="footer-logo"><a href="index.html" title="Logo"><img src="images/footer-logo.png" alt="logo" ></a></div>
-              <p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
-              <div class="social">
-                <ul class="link">
-                  <li class="fb"><a href="#"></a></li>
-                  <li class="tw"><a href="#"></a></li>
-                  <li class="googleplus"><a href="#"></a></li>
-                  <li class="rss"><a href="#"></a></li>
-                  <!-- <li class="pintrest"><a href="#"></a></li>-->
-                  <li class="linkedin"><a href="#"></a></li>
-                  <li class="youtube"><a href="#"></a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="green">Shopping Guide</h4>
-            <ul class="links">
-              <li class="first"><a href="about_us.html" title="How to buy">About us</a></li>
-              <li><a href="faq.html" title="FAQs">FAQs</a></li>
-              <li><a href="#" title="Payment">Payment</a></li>
-              <li><a href="#" title="Shipment&lt;/a&gt;">Shipment</a></li>
-              <li><a href="#" title="Where is my order?">Where is my order?</a></li>
-              <li class="last"><a href="#" title="Return policy">Return policy</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="yellow">Style Advisor</h4>
-            <ul class="links">
-              <li class="first"><a title="Your Account" href="login.html">Your Account</a></li>
-              <li><a title="Information" href="#">Information</a></li>
-              <li><a title="Addresses" href="#">Addresses</a></li>
-              <li><a title="Addresses" href="#">Discount</a></li>
-              <li><a title="Orders History" href="#">Orders History</a></li>
-              <li class="last"><a title=" Additional Information" href="#">Additional Information</a></li>
-            </ul>
-          </div>
-          <div class="col-md-2 col-sm-6 col-xs-12">
-            <h4 class="orange">Information</h4>
-            <ul class="links">
-              <li class="first"><a href="sitemap.html" title="Site Map">Site Map</a></li>
-              <li><a href="#/" title="Search Terms">Search Terms</a></li>
-              <li><a href="#" title="Advanced Search">Advanced Search</a></li>
-              <li><a href="contact_us.html" title="Contact Us">Contact Us</a></li>
-              <li><a href="#" title="Suppliers">Suppliers</a></li>
-              <li class=" last"><a href="#" title="Our stores" class="link-rss">Our stores</a></li>
-            </ul>
-          </div>
-          <div class="col-md-3 col-sm-6 col-xs-12">
-            <h4 class="blue">Contact Us</h4>
-            <div class="contacts-info">
-              <address>
-              <i class="add-icon">&nbsp;</i>123 Main Street, Anytown, <br>
-              &nbsp;CA 12345  USA
-              </address>
-              <div class="phone-footer"><i class="phone-icon">&nbsp;</i> +1 800 123 1234</div>
-              <div class="email-footer"><i class="email-icon">&nbsp;</i> <a href="mailto:support@magikcommerce.com">support@magikcommerce.com</a> </div>
-            </div>
-          </div>
-        </div>
-        <div class="footer-bottom">
-          <div class="col-sm-3 col-xs-12 coppyright"> &copy; 2015 Magikcommerce. All Rights Reserved.</div>
-          <div class="col-sm-9 col-xs-12 company-links">
-            <ul class="links">
-              <li><a href="#" title="Magento Themes">Magento Themes</a></li>
-              <li><a href="#" title="Premium Themes">Premium Themes</a></li>
-              <li><a href="#" title="Responsive Themes">Responsive Themes</a></li>
-              <li class="last"><a href="#" title="Magento Extensions">Magento Extensions</a></li>
-            </ul>
-          </div>
-        </div>
-      </div>
-    </div>
-  </footer>
-  <!-- End Footer -->
+  <!-- End Two columns content --> 
+  
 </div>
 <div class="help_slider">
   <div class="text alignleft">Need Help?</div>
   <div class="icons"> <a class="show_hide" id="questionbox-side-phonebutton" href="javascript:void(0)"><i class="icon-phones">&nbsp;</i></a> <a class="show_hide1" id="questionbox-side-emailbutton" href="javascript:void(0)"><i class="icon-email">&nbsp;</i></a> </div>
 </div>
-<div id="hideShow" class="right-side-content" style="display: none;">
+<div id="hideShow" class="right-side-content" style="display: none">
   <!--Contact Static Block -->
   <div class="slider-phone active">
     <h2 class="">Talk To Us</h2>
@@ -347,7 +182,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
     <div class="slider-email active">
       <div id="messages_product_view"></div>
       <div id="formSuccess" style="display:none;">Your inquiry was submitted and will be responded to as soon as possible. Thank you for contacting us.</div>
-      <form action="#" id="contactForm1" method="post">
+      <form id="contactForm1" method="post">
         <div class="column sixty">
           <h2>TALK TO US</h2>
           <ul>
@@ -364,7 +199,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
               <input name="telephone" id="telephone" title="Telephone" value="" class="input-text" type="text">
             </li>
           </ul>
-		  <p class="required">* Required Fields</p>		  
+		  <p class="required">* Required Fields</p>
         </div>
         <!--column sixty-->
         <div class="column fourty last">
@@ -373,8 +208,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <textarea name="comment" title="Comment" class="required-entry input-text" cols="5" rows="3"></textarea>
             <div class="textright">
               <input type="text" name="hideit" value="" style="display:none !important;">
-              <button id="uploadCommodity" type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
-              <img src="images/mgkloading1.gif" id="loader" alt="loader" style="display:none;"> </div>
+              <button type="submit" title="Submit" class="button btn-sent"><span>Submit</span></button>
+              <img src="images/mgkloading1.gif" alt="loader" id="loader" style="display:none;"> </div>
             <!--textright-->
           </div>
           <!--padding-->

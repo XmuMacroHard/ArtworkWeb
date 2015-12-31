@@ -17,6 +17,10 @@ public class FileUtils implements IFileUtils {
 
 	private static final int BUFFER_SIZE = 16 * 1024;
 	
+	/**
+	 * @param fromFile 源文件
+	 * @param toFile 目的文件
+	 */
 	@Override
 	public void copy(File fromFile, File toFile)
 	{
@@ -46,6 +50,10 @@ public class FileUtils implements IFileUtils {
 		}
 	}
 	
+	/**
+	 * @param fromFile 源文件
+	 * @param toImgPath 目的文件路径
+	 */
 	@Override
 	public void copy(File fromFile, String toImgPath)
 	{

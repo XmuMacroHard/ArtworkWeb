@@ -26,9 +26,10 @@ import com.opensymphony.xwork2.ActionSupport;
  * @author asus1
  *
  */
-@Scope("prototype")//支持多例  
-@ParentPackage("json-default")  //表示继承的父包  
-@Namespace(value="/") //表示当前Action所在命名空间
+@Scope("prototype")  
+@ParentPackage("custom-default")    
+@Namespace(value="/")
+@InterceptorRefs({@InterceptorRef("checkLoginStack")})
 public class AdminAction extends ActionSupport {
 
 	private static final long serialVersionUID = 1L;
@@ -37,6 +38,30 @@ public class AdminAction extends ActionSupport {
 	private List<String> fileFileName;
 	private List<String> fileContentType;
 	private String fileName;
+	
+	private String result;
+	
+	//@Autowired
+	private User user;
+	
+	//@Autowired
+	private Artist artist;
+	
+	//@Autowired
+	private Information information;
+	
+	//@Autowired
+	private List<User> userList;
+	
+	//@Autowired
+	private List<Artist> artistList;
+	
+	//@Autowired
+	private List<Information> infoList;
+
+	private Commodity item;
+	
+	private List<Commodity> itemList;
 	
 	public String getFileName() {
 		return fileName;
@@ -69,30 +94,6 @@ public class AdminAction extends ActionSupport {
 	public void setFileContentType(List<String> fileContentType) {
 		this.fileContentType = fileContentType;
 	}
-	
-	private String result;
-	
-	//@Autowired
-	private User user;
-	
-	//@Autowired
-	private Artist artist;
-	
-	//@Autowired
-	private Information information;
-	
-	//@Autowired
-	private List<User> userList;
-	
-	//@Autowired
-	private List<Artist> artistList;
-	
-	//@Autowired
-	private List<Information> infoList;
-
-	private Commodity item;
-	
-	private List<Commodity> itemList;
 	
 	public Commodity getItem() {
 		return item;
@@ -381,9 +382,7 @@ public class AdminAction extends ActionSupport {
 	 */
 	@Action(
 			value = "ShowInfoDetails",
-			results = {
-					@Result(name="success", location="/jsp/backstage/info_detail.jsp")
-			}
+			results = {@Result(name="success", location="/jsp/backstage/info_detail.jsp")}
 			)
 	public String ShowInfoDetails()
 	{
@@ -394,7 +393,7 @@ public class AdminAction extends ActionSupport {
 		}
 		ServletActionContext.getRequest().setAttribute("information", information);
 		
-		return "success";
+		return SUCCESS;
 	}
 	
 	/**

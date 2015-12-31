@@ -62,7 +62,7 @@ public class User implements java.io.Serializable {
 	private String password;
 	private String nickname;
 	private Float balance;
-	private String isBanned;//bool->string @author asus1
+	private String isBanned;							//0: 未被禁用 1: 被禁用
 	private String phone;
 	private Set<ShippingAddress> shippingAddresses = new HashSet<ShippingAddress>(
 			0);
@@ -135,7 +135,7 @@ public class User implements java.io.Serializable {
 		this.nickname = nickname;
 	}
 
-	@Column(name = "balance", precision = 10)
+	@Column(name = "balance", precision = 10,scale=2)
 	public Float getBalance() {
 		return this.balance;
 	}

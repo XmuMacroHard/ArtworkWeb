@@ -13,6 +13,8 @@ import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
+import cn.edu.xmu.artwork.constants.IResultCode;
 import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IDatePosDao;
@@ -41,22 +43,26 @@ public class InformationService extends BasicService implements IInformationServ
 	@Autowired
 	public IDatePosDao datePosDao;
 	
+	
 	@Autowired
 	private IFileService fileService;
 	
 	@Autowired
 	private IDateUtils dateUtils;
 	
+	/**
+	 * 提交资讯
+	 */
 	@Override
 	public void submit(Information information,DatePos datePos,List<File> pic, List<String> picFileName) {
 		
 		List<String> imgPaths = fileService.uploadPicture(pic, picFileName);
-		//long id = (long)ServletActionContext.getRequest().getSession().getAttribute("userid");
-		long id = 1L;
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		
+
 		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());
 
-		information.setEditorId(id);
+		information.setEditorId(user.getId());
 		InformationDao.save(information);
 
 		InforPics picture = new InforPics();
@@ -66,8 +72,8 @@ public class InformationService extends BasicService implements IInformationServ
 			picture.setUrl(aUrl);		
 		}
 		inforPicsDao.save(picture);
-		
-		for(Date date : dates) 
+
+		for(Date date : dates)
 		{
 			DatePos tempDatePos = new DatePos();
 			tempDatePos.setColum(datePos.getColum());
@@ -76,14 +82,7 @@ public class InformationService extends BasicService implements IInformationServ
 			tempDatePos.setDate(date);
 			tempDatePos.setInformation(information);
 			datePosDao.save(tempDatePos);
-			//information.addDatePos(tempDatePos);
 		}
-		
-		
-		
-		//information.addPicture(imgPaths);
-		
-		//InformationDao.save(information);
 	}
 	
 	@Override
@@ -149,6 +148,18 @@ public class InformationService extends BasicService implements IInformationServ
 			initializeObject(information.getInforPicses());
 		}
 		return infos;
+	}
+	
+	/**
+	 * 根据采编id获取其编辑过的所有资讯
+	 * @param user
+	 */
+	@Override
+	public void getInfoListByEditorId()
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		List<Information> infos =  InformationDao.getInfoListByEditorId(user.getId());
+		setAttributeByRequest("infoList", infos);
 	}
 	
 	/*

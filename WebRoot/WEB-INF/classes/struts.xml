@@ -5,6 +5,20 @@
 	<constant name="struts.action.excludePattern" value="/websocket"></constant>
 	<constant name="struts.action.excludePattern" value="/AuctionWebSocket"></constant>
 	
+	<package name="custom-default" extends="json-default">
+		<interceptors>
+			<interceptor name="checkLoginInterceptor" class="cn.edu.xmu.artwork.interceptors.CheckLoginInterceptor"/>
+			<interceptor-stack name="checkLoginStack">
+				<interceptor-ref name="checkLoginInterceptor"/>
+				<interceptor-ref name="defaultStack"/>
+			</interceptor-stack>			
+		</interceptors>
+		
+		<global-results>
+    		 <result name="login">/jsp/frontside/user/login.jsp</result>
+    	</global-results>
+	</package>
+	
     <package name="struts2" namespace="/" extends="struts-default">
         
         <action name="submitInfor" class="inforAction" method="submitInfor">
@@ -34,4 +48,5 @@
             <result name="success">/jsp/DetailInfo.jsp</result>
         </action>  
     </package>
+    
 </struts>    

@@ -7,6 +7,7 @@ import org.hibernate.annotations.NamedQueries;
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.stereotype.Repository;
 
+import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.ICommodityDao;
 import cn.edu.xmu.artwork.entity.Commodity;
 
@@ -14,14 +15,21 @@ import cn.edu.xmu.artwork.entity.Commodity;
 @Repository
 public class CommodityDao extends GenericDao implements ICommodityDao 
 {
+	/**
+	 * 根据商品类型获取所有未出售的商品
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Commodity> getCommodityListByType(String commoType)
 	{
-		Query getCommodities = getSession().getNamedQuery("Commodity.getAllByType").setParameter("commType", commoType);
+		Query getCommodities = getSession().getNamedQuery("Commodity.getAllByType");
+		getCommodities.setParameter("commType", commoType);
+		getCommodities.setParameter("isBought", ITableConstants.COMMODITY_IS_BOUGHT_FALSE);
 		List<Commodity> commodities = (List<Commodity>)getCommodities.list();
 		return commodities;
 	}
-	
+	/**
+	 * 根据艺术家id获取所有商品
+	 */
 	@SuppressWarnings("unchecked")
 	public List<Commodity> getAllByAuthorId(long authorid)
 	{
@@ -30,10 +38,26 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 		return commodities;		
 	}
 	
+	/**
+	 * 嗯据商品id获取商品
+	 */
 	public Commodity getCommodityById(long id)
 	{
 		Query getCommunity = getSession().getNamedQuery("Commodity.getById").setParameter("commId", id);
 		return (Commodity)getCommunity.uniqueResult();
+	}
+	
+	/**
+	 * 艺术家删除商品
+	 */
+	public void deleteCommodity(long id)
+	{
+		Query query = getSession().getNamedQuery("Commodity.deletepicById")
+				.setParameter("id",id);
+		query.executeUpdate();
+		query = getSession().getNamedQuery("Commodity.deleteById")
+				.setParameter("id",id);
+		query.executeUpdate();
 	}
 	
 	/**
@@ -53,13 +77,19 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 	{
 		getSession().save(commodity);
 	}
-
+	
+	/**
+	 * 更新商品状态
+	 */
 	@Override
 	public void updateStatus(long id, String status) {
 		Query query = getSession().getNamedQuery("Commodity.updateStatus").setParameter("id", id).setParameter("status", status);
 		query.executeUpdate();
 	}
-
+	
+	/**
+	 * 获取所有的商品
+	 */
 	@Override
 	public List<Commodity> getCommodityList() {
 		Query query = getSession().getNamedQuery("Commodity.getAll");
@@ -67,6 +97,9 @@ public class CommodityDao extends GenericDao implements ICommodityDao
 		return itemList;
 	}
 	
+	/**
+	 * 根据订单id获取所有商品
+	 */
 	@Override
 	public List<Commodity> getCommodityByOrderId(long id) {
 		List<Commodity> commodities = null;

@@ -6,6 +6,7 @@ import java.util.List;
 import cn.edu.xmu.artwork.entity.DatePos;
 import cn.edu.xmu.artwork.entity.InforPics;
 import cn.edu.xmu.artwork.entity.Information;
+import cn.edu.xmu.artwork.entity.User;
 
 public interface IInformationService 
 {
@@ -19,5 +20,6 @@ public interface IInformationService
 	public List<Information> getTodayInformations();
 	
 	public List<Information> getInfoByColum(String colum);
+	public void getInfoListByEditorId();
 
 }

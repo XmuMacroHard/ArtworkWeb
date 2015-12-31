@@ -10,6 +10,7 @@ import java.io.File;
 
 
 
+
 import org.springframework.stereotype.Repository;
 
 import cn.edu.xmu.artwork.dao.IInforPicsDao;
@@ -23,14 +24,6 @@ public class InforPicsDao extends GenericDao implements IInforPicsDao
 	
 	private IFileUtils fileUtils;
 	private IImageUtils imgUtils;
-	
-	public void storePicures(File file, String filename)
-	{
-		//String storedPath = storeImg(file, filename);
-		//InforPics inforPics = new InforPics();
-		//inforPics.setInformaionId(id);
-		
-	}
 	
 	public void save(InforPics inforPics)
 	{

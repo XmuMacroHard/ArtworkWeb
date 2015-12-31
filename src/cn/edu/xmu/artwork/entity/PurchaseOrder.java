@@ -1,8 +1,11 @@
 package cn.edu.xmu.artwork.entity;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.TreeSet;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -67,7 +70,7 @@ public class PurchaseOrder implements java.io.Serializable {
 	private Float totalprice;				//应付款
 	private Float leftprice;       			//未付款
 	private Set<Commodity> commodity=new HashSet<Commodity>(0);
-	private Set<Payment> payments = new HashSet<Payment>(0);
+	private Set<Payment> payments = new TreeSet<Payment>();
 	// Constructors
 	/** default constructor */
 	public PurchaseOrder() {
@@ -140,7 +143,7 @@ public class PurchaseOrder implements java.io.Serializable {
 		this.date = date;
 	}
 	
-	@Column(name = "address", nullable = true, precision = 200)
+	@Column(name = "address", nullable = true, length = 200)
 	public String getAddress() {
 		return address;
 	}

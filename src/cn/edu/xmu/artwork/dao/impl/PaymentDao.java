@@ -23,7 +23,10 @@ public class PaymentDao extends GenericDao implements IPaymentDao{
 		// TODO Auto-generated method stub
 		return payment;
 	}
-
+	
+	/**
+	 * 根据订单id获得订单的所有支付单
+	 */
 	@Override
 	public List<Payment> getPaymentsByOrderId(long id) {
 		List<Payment> payments = null;
@@ -37,7 +40,9 @@ public class PaymentDao extends GenericDao implements IPaymentDao{
 		return payments;
 	}
 
-
+	/**
+	 * 根据艺术家id获取所有未支付的payment
+	 */
 	@Override
 	public List<Payment> getUnPaidPaymentsByArtistId(long id) {
 
