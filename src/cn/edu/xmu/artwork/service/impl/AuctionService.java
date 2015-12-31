@@ -9,6 +9,7 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.functors.ForClosure;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -56,11 +57,15 @@ public class AuctionService extends BasicService implements IAuctionService{
 	@Override
 	public void addBid(Bid bid, Auction auction) {
 
-		
-		long id = 1;
+		System.out.println("in add Bid");
+		/*long id = 1;
 		User user = new User();
-		user.setId(id);
-
+		user.setId(id);*/
+		
+		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		
+		System.out.println("userId : " + user.getId());
+		
 		auction = auctionDao.findById(auction.getId());
 		auction.setUser(user);
 		auction.setCurrentPrice(bid.getPrice());
@@ -101,9 +106,13 @@ public class AuctionService extends BasicService implements IAuctionService{
 
 	@Override
 	public List<Bid> getBidsByAuction(Auction auction) {
-		return bidDao.getBidsByAuctionId(auction.getId());
+		List<Bid> bids = bidDao.getBidsByAuctionId(auction.getId());
+		for(Bid bid : bids)
+		{
+			initializeObject(bid.getUser());
+		}
+		return bids;
 	}
-
 	
 	@Override
 	public List<Auction> getTodayAuctions() {
@@ -186,9 +195,13 @@ public class AuctionService extends BasicService implements IAuctionService{
 
 	@Override
 	public void addBid(long auctionId, float price) {
-		User user = new User();
+		/*User user = new User();
 		user.setId((long) 1);
-		System.out.println(auctionId + "   " + price);
+		System.out.println(auctionId + "   " + price);*/
+		
+		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		
+		System.out.println("userId : " + user.getId());
 		
 		Auction auction = auctionDao.findById(auctionId);
 		auction.setUser(user);

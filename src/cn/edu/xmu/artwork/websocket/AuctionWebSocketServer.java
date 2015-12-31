@@ -41,7 +41,7 @@ public class AuctionWebSocketServer {
 	@OnMessage
 	public void onMessage(String message, Session session) 
 	{
-		//System.out.println(message);
+		System.out.println("in websocket");
 		
 		JSONObject msg = JSONObject.fromObject(message);
 		
@@ -54,11 +54,11 @@ public class AuctionWebSocketServer {
 		//auctionService.addBid(auctionId, p);
 		
 		//User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		User user = new User();
-		user.setId((long) 1);
-		user.setNickname("haha");
+		//System.out.println("in websocket userid:" + user.getId());
+		//User user = new User();
+		//user.setId((long) 1);
+		//user.setNickname("haha");
 
-		msg.put("username", user.getNickname());
 		msg.put("date", new Date().toLocaleString());
 		
 		try {
