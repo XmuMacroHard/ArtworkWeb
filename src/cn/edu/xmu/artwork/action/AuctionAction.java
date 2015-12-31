@@ -50,7 +50,7 @@ public class AuctionAction {
 //		auction.setState("0");
 //		auction.setLimitPerBid((float) 100);
 
-		auctionService.createAuction(commodity, auction);		
+		auctionService.createAuction(commodity, auction);	
 		System.out.println("in create Auction action");
 
 		return IResultCode.SUCCESS;
@@ -103,7 +103,6 @@ public class AuctionAction {
 		jsobj.put("auctionId", auction.getId());
 
 		setResult(jsobj.toString());
-		
 		return IResultCode.SUCCESS;
 	}
 	
