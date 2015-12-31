@@ -29,7 +29,7 @@ import javax.persistence.Table;
 @NamedQueries({
 	@NamedQuery(
 		name = "Information.getInfoShownOnHomePage",
-		query = "select i from Information i inner join i.datePoses d where d.date = :today and d.location = :location and i.status = :status"
+		query = "select i from Information i inner join i.datePoses d where d.date = :today and d.location = :location and i.status = :status order by d.pos"
 	),
 	@NamedQuery(
 			name = "Information.getInfoById",
@@ -99,7 +99,7 @@ public class Information implements java.io.Serializable {
 	
 	public void addDatePos(DatePos  datePos)
 	{
-		datePos.setInformation(this);
+		//datePos.setInformation(this);
 		datePoses.add(datePos);
 	}
 	// Constructors

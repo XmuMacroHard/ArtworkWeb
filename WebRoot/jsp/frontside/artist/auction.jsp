@@ -58,72 +58,21 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
          <section class="col-main col-sm-9 wow bounceInUp animated">
           <div class="my-account">
             <div class="page-title">
-              <h2>商品列表</h2>
+              <h2>拍卖详情</h2>
             </div>
             <div class="my-wishlist">
+            
               <div class="table-responsive">
-                <form method="post" action="#/wishlist/index/update/wishlist_id/1/" id="wishlist-view-form">
-                  <fieldset>
-                    <input type="hidden" value="ROBdJO5tIbODPZHZ" name="form_key">
-                    <table id="wishlist-table" class="clean-table linearize-table data-table">
-                      <thead>
-                        <tr class="first last">
-                          <th class="customer-wishlist-item-image">商品图</th>
-                          <th class="customer-wishlist-item-info">商品名</th>
-                          <th class="customer-wishlist-item-price">金额（元）</th>
-                          <th class="customer-wishlist-item-cart"></th>
-                          <th class="customer-wishlist-item-remove"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      <c:forEach items="${commodities}" var="commodity">
-                        <tr id="item_31" class="first odd">
-                          <td class="wishlist-cell0 customer-wishlist-item-image">
-
-                          	<a title="Softwear Women's Designer" href="getDetailedCommodity?commodity.id=${commodity.id}" class="product-image"> 
-                          	<c:set var="urlsNum" scope="page" value="1"/>  
-							<c:forEach items="${commodity.commodityPices}" var="pic">   		 	
-								<c:if test = "${urlsNum == 1}">
-									<img width="80" height="60" alt="Softwear Women's Designer" src="${server_path}${pic.url}"> 
-									<c:set var="urlsNum" scope="page" value="2"/>		
-								</c:if>
-	                     	</c:forEach> 
-                          		 
-                          	</a>
-
-                          </td>
-                          <td class="wishlist-cell1 customer-wishlist-item-info"><h3 class="product-name"><a title="Softwear Women's Designer" href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a></h3>
-                            <div class="description std">
-                              <div class="inner"><c:out value="${commodity.introduction}"/></div>
-                            </div>
-                            </td>
-                          <td data-rwd-label="Price" class="wishlist-cell3 customer-wishlist-item-price"><div class="cart-cell">
-                              <div class="price-box"> <span   class="regular-price"> <span class="price"><c:out value="${commodity.price }"/></span> </span> </div>
-                            </div></td>
-                           <c:if test="${!commodity.isBought}">
-                          <td class="wishlist-cell4 customer-wishlist-item-cart">
-                            <p><a href="getDetailedCommodityByArtist?commodity.id=${commodity.id}" class="">Edit</a></p>
-                            <Button onclick="auction(${commodity.id})"  type="button">拍卖</Button>
-                            </td>
-                          <td class="wishlist-cell5 customer-wishlist-item-remove last"><a class="remove-item" title="Clear Cart" onClick="return confirm('确认删除?');" href="deleteCommodity?commodity.id=${commodity.id}"><span><span></span></span></a></td>
-                       		</c:if>
-                       		<c:if test="${commodity.isBought}">
-                       		<td></td>
-                           <td class="wishlist-cell4 customer-wishlist-item-cart">
-                            <p>已售出</p></td>
-                       		</c:if>
-                       		
-                        </tr>
-          </c:forEach>
-                      </tbody>
-                    </table>
-                  </fieldset>
-                </form>
+              <form action="createAuctionAction" method="post">
+              	<input id="commodityid" name="commodity.id" type="hidden">
+ 				<span>开始时间:</span><input name="auction.startTime" type="date"/><br/>
+ 				<span>结束时间:</span><input name="auction.endTime" type="date"/><br/>
+ 				<span>起拍价格</span><input name="auction.startPrice" type="text"/><br/>
+ 				<button type="submit">发起拍卖</button>
+ 				</form>
               </div>
             </div>
-            <div class="buttons-set">
-              <p class="back-link"><a href="#/customer/account/"><small>« </small>Back</a></p>
-            </div>
+
           </div>
         </section>
       </div>
@@ -247,11 +196,14 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 	});
     //]]>
     
-    function auction(id)
-    {
-    	window.location.href="jsp/frontside/artist/auction.jsp?commodityid="+id;
-    	return false;
-    }
+		function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        
+        $("#commodityid").val(getUrlParam("commodityid"));
+        //alert(getUrlParam("commodityid"));
     
     </script> 
 <script>

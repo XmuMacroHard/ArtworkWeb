@@ -3,6 +3,7 @@ package cn.edu.xmu.artwork.service;
 import java.sql.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
 import cn.edu.xmu.artwork.entity.Auction;
 import cn.edu.xmu.artwork.entity.Bid;
 import cn.edu.xmu.artwork.entity.Commodity;
@@ -22,4 +23,6 @@ public interface IAuctionService {
 	public List<Auction> getTodayAuctions();
 	//根据id拿拍卖
 	public Auction getAuctionAuctionById(long id);
+	
+	public JSONArray getAllOrderByState(String identification,String state) ;
 }

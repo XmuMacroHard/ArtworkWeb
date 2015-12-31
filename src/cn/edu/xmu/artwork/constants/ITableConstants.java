@@ -41,9 +41,9 @@ public interface ITableConstants
 	String PURCHASE_ORDER_USER = "user";
 	
 	/*user table*/
-	String USER_IS_APPROVED_APPROVE = "approved";
-	String USER_IS_APPROVED_NOT_APPROVE = "notapproved";
-	String USER_IS_APPROVED_PENDING = "pending";
+	String USER_IS_APPROVED_APPROVE = "1";
+	String USER_IS_APPROVED_NOT_APPROVE = "0";
+	String USER_IS_APPROVED_PENDING = "2";
 	String USER_IS_BANNED_TRUE = "1";
 	String USER_IS_BANNED_FALSE = "0";
 	

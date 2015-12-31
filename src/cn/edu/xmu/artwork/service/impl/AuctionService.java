@@ -5,11 +5,15 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import net.sf.json.JSONArray;
+
 import org.apache.commons.collections.functors.ForClosure;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IClientConstants;
+import cn.edu.xmu.artwork.constants.ITableConstants;
 import cn.edu.xmu.artwork.dao.IAuctionDao;
 import cn.edu.xmu.artwork.dao.IAuctionDateDao;
 import cn.edu.xmu.artwork.dao.IAuctionOrderDao;
@@ -21,9 +25,11 @@ import cn.edu.xmu.artwork.entity.AuctionDate;
 import cn.edu.xmu.artwork.entity.AuctionOrder;
 import cn.edu.xmu.artwork.entity.Bid;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAuctionService;
 import cn.edu.xmu.artwork.utils.IDateUtils;
+import cn.edu.xmu.artwork.utils.impl.JsonUtils;
 
 @Service
 @Transactional
@@ -42,6 +48,9 @@ public class AuctionService extends BasicService implements IAuctionService{
 
 	@Autowired
 	private IDateUtils dateUtils;
+	
+	@Autowired
+	private JsonUtils jsonUtils;
 	
 	@Override
 	public void addBid(Bid bid, Auction auction) {
@@ -148,5 +157,26 @@ public class AuctionService extends BasicService implements IAuctionService{
 			System.out.println(auctionDate.getDate() + " " + auctionDate.getAuction().getId());
 		}
 		return auctions;
+	}
+	
+	/**
+	 * 根据当前identification（艺术家或用户或管理员） 和 需要的订单状态获取订单
+	 * @param identification
+	 * @param state
+	 * @return
+	 */
+	@Override
+	public JSONArray getAllOrderByState(String identification,String state) 
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		System.out.println(user.getId());
+		System.out.println(state);
+		System.out.println(identification);
+		List<AuctionOrder> orders = auctionOrderDao.getAuctionOrderByState(identification, user.getId(), state);	
+				
+		String[] excludes = {ITableConstants.PURCHASE_ORDER_COMMODITY, ITableConstants.PURCHASE_ORDER_PAYMENTS, ITableConstants.PURCHASE_ORDER_SHIPPING_ADDRESS, ITableConstants.PURCHASE_ORDER_ARTIST, ITableConstants.PURCHASE_ORDER_USER};
+		System.out.println(jsonUtils.List2JsonArray(orders, excludes));
+		
+		return jsonUtils.List2JsonArray(orders, excludes);
 	}
 }

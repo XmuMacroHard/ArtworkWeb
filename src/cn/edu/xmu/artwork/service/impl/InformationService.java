@@ -9,6 +9,8 @@ import java.util.List;
 
 import java.util.Set;
 
+import javax.websocket.Session;
+
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,6 @@ import cn.edu.xmu.artwork.service.IInformationService;
 import cn.edu.xmu.artwork.utils.IDateUtils;
 
 @Transactional
-
 public class InformationService extends BasicService implements IInformationService {
 
 	
@@ -53,17 +54,26 @@ public class InformationService extends BasicService implements IInformationServ
 	@Override
 	public void submit(Information information,DatePos datePos,List<File> pic, List<String> picFileName) {
 		
+		System.out.println(" pic num:  " + picFileName.size());
 		List<String> imgPaths = fileService.uploadPicture(pic, picFileName);
 		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		
 		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());				
+
 		
-		List<Date> repeatableDates = datePosDao.getRepeatDate(datePos.getLocation(), dates);
 		
-		System.out.println(repeatableDates.size());
+		//List<Date> repeatableDates = datePosDao.getRepeatDate(datePos.getLocation(), dates);
 		
-		if(repeatableDates.size() <= 0)
-		{
+		//System.out.println(repeatableDates.size());
+		
+		//if(repeatableDates.size() <= 0)
+		//{
+		
+		information.setEditorId(user.getId());
+		information.addPicture(imgPaths);
+		information.setStatus(ITableConstants.INFO_STATUS_PENDING);
+		
+		InformationDao.save(information);
 			
 			for(Date date : dates) 
 			{
@@ -72,21 +82,26 @@ public class InformationService extends BasicService implements IInformationServ
 				tempDatePos.setLocation(datePos.getLocation());
 				tempDatePos.setPos(datePos.getPos());			
 				tempDatePos.setDate(date);
-				
-				information.addDatePos(tempDatePos);
+				tempDatePos.setInformation(information);
+				datePosDao.save(tempDatePos);
+				//information.getDatePoses().add(tempDatePos);
+				//information.addDatePos(tempDatePos);
 			}
-			information.setEditorId(user.getId());
+			//information.addDatePos(new DatePos());
+			//information.getDatePoses().add(new DatePos(information, new Date(), datePos.getColum()));
+/*			information.setEditorId(user.getId());
 			information.addPicture(imgPaths);
 			information.setStatus(ITableConstants.INFO_STATUS_PENDING);
 			
-			InformationDao.save(information);
+			InformationDao.save(information);*/
 			setAttributeByRequest(IResultCode.RESULT, IResultCode.SUCCESS);
-		}
-		else
-		{
-			setAttributeByRequest(IResultCode.RESULT_DATA, repeatableDates);
-			setAttributeByRequest(IResultCode.RESULT, IResultCode.ERROR);
-		}
+		//}
+		//else
+		//{
+		//	setAttributeByRequest(IResultCode.RESULT_DATA, repeatableDates);
+		//	setAttributeByRequest(IResultCode.RESULT, IResultCode.ERROR);
+		//}
+			
 	}
 	
 	@Override

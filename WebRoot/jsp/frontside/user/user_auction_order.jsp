@@ -1,12 +1,15 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
-<%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
+<%@ taglib prefix="s" uri="/struts-tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<!DOCTYPE>
-<html>
+<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
+
+<!DOCTYPE html>
+<html lang="en">
 <head>
 <base href="<%=basePath%>">
 <meta charset="utf-8">
@@ -27,11 +30,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- CSS Style -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
+<link rel="stylesheet" href="css/revslider.css" type="text/css">
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.theme.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
-
+<link rel="stylesheet" href="css/my_frontside.css" type="text/css">
 
 <!-- Google Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,700,800,400,600' rel='stylesheet' type='text/css'>
@@ -52,79 +56,47 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <!-- End breadcrumbs --> 
   <!-- Two columns content -->
-  <div class="main-container col2-right-layout">
+  <div class="main-container col2-left-layout">
     <div class="main container">
       <div class="row">
-         <section class="col-main col-sm-9 wow bounceInUp animated">
-          <div class="my-account">
-            <div class="page-title">
-              <h2>商品列表</h2>
-            </div>
-            <div class="my-wishlist">
-              <div class="table-responsive">
-                <form method="post" action="#/wishlist/index/update/wishlist_id/1/" id="wishlist-view-form">
-                  <fieldset>
-                    <input type="hidden" value="ROBdJO5tIbODPZHZ" name="form_key">
-                    <table id="wishlist-table" class="clean-table linearize-table data-table">
-                      <thead>
-                        <tr class="first last">
-                          <th class="customer-wishlist-item-image">商品图</th>
-                          <th class="customer-wishlist-item-info">商品名</th>
-                          <th class="customer-wishlist-item-price">金额（元）</th>
-                          <th class="customer-wishlist-item-cart"></th>
-                          <th class="customer-wishlist-item-remove"></th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                      <c:forEach items="${commodities}" var="commodity">
-                        <tr id="item_31" class="first odd">
-                          <td class="wishlist-cell0 customer-wishlist-item-image">
-
-                          	<a title="Softwear Women's Designer" href="getDetailedCommodity?commodity.id=${commodity.id}" class="product-image"> 
-                          	<c:set var="urlsNum" scope="page" value="1"/>  
-							<c:forEach items="${commodity.commodityPices}" var="pic">   		 	
-								<c:if test = "${urlsNum == 1}">
-									<img width="80" height="60" alt="Softwear Women's Designer" src="${server_path}${pic.url}"> 
-									<c:set var="urlsNum" scope="page" value="2"/>		
-								</c:if>
-	                     	</c:forEach> 
-                          		 
-                          	</a>
-
-                          </td>
-                          <td class="wishlist-cell1 customer-wishlist-item-info"><h3 class="product-name"><a title="Softwear Women's Designer" href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a></h3>
-                            <div class="description std">
-                              <div class="inner"><c:out value="${commodity.introduction}"/></div>
-                            </div>
-                            </td>
-                          <td data-rwd-label="Price" class="wishlist-cell3 customer-wishlist-item-price"><div class="cart-cell">
-                              <div class="price-box"> <span   class="regular-price"> <span class="price"><c:out value="${commodity.price }"/></span> </span> </div>
-                            </div></td>
-                           <c:if test="${!commodity.isBought}">
-                          <td class="wishlist-cell4 customer-wishlist-item-cart">
-                            <p><a href="getDetailedCommodityByArtist?commodity.id=${commodity.id}" class="">Edit</a></p>
-                            <Button onclick="auction(${commodity.id})"  type="button">拍卖</Button>
-                            </td>
-                          <td class="wishlist-cell5 customer-wishlist-item-remove last"><a class="remove-item" title="Clear Cart" onClick="return confirm('确认删除?');" href="deleteCommodity?commodity.id=${commodity.id}"><span><span></span></span></a></td>
-                       		</c:if>
-                       		<c:if test="${commodity.isBought}">
-                       		<td></td>
-                           <td class="wishlist-cell4 customer-wishlist-item-cart">
-                            <p>已售出</p></td>
-                       		</c:if>
-                       		
-                        </tr>
-          </c:forEach>
-                      </tbody>
-                    </table>
-                  </fieldset>
-                </form>
-              </div>
-            </div>
-            <div class="buttons-set">
-              <p class="back-link"><a href="#/customer/account/"><small>« </small>Back</a></p>
-            </div>
+        <section class="col-sm-9 col-sm-push-3">
+        <div class="col-main">
+         			<div class="dropdown">			
+			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+			    订单类型
+			    <span class="caret"></span>
+			  </button>
+			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+			    <li><a onclick="getOrderByType('getUserAuctionOrderByState', '0',1);return false;">待付款</a></li>
+			    <li><a onclick="getOrderByType('getUserAuctionOrderByState', '1',1);return false;">待发货</a></li>
+			    <li><a onclick="getOrderByType('getUserAuctionOrderByState', '2',1);return false;">待收货</a></li>
+			    <li><a onclick="getOrderByType('getUserAuctionOrderByState', '3',1);return false;">已完成</a></li>
+			  </ul>
+			</div> 
+        
+         <div class="category-title">
+         	<h2>商品订单</h2>
+            <h1 id = "orderTypeTitle">待付款</h1>
+            
+          </div> 
+          
+          
+          <div id="orderList" class="category-products">
+          
+			<!-- 订单 -->
+			<!-- 订单 here -->
+        		
+        	<!--end 订单  -->
           </div>
+          
+			<div class="pager">
+                <div class="pages">
+                  <ul class="pagination" id="page_list">
+                  </ul>
+                </div>
+             </div>
+          
+		  </div>
         </section>
       </div>
     </div>
@@ -230,12 +202,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <!--right-side-content hidden1-->
 </div>
+
+
 <!-- JavaScript --> 
 <script type="text/javascript" src="js/jquery.min.js"></script> 
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
-<script type="text/javascript" src="js/owl.carousel.min.js"></script> 
+<script type="text/javascript" src="js/owl.carousel.min.js"></script>
+<script type="text/javascript" src="js/frontside/user/user_auction_order.js"></script>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {
@@ -246,13 +221,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 	});
     //]]>
-    
-    function auction(id)
-    {
-    	window.location.href="jsp/frontside/artist/auction.jsp?commodityid="+id;
-    	return false;
-    }
-    
     </script> 
 <script>
 			new UISearch( document.getElementById( 'form-search' ) );

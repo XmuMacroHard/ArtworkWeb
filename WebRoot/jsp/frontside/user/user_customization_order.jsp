@@ -211,7 +211,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
 <script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/frontside/user/user_customization_order.js"></script>
+<script type="text/javascript" src="js/frontside/user/user_cus_order.js"></script>
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {

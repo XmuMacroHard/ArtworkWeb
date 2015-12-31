@@ -52,4 +52,9 @@ public class DatePosDao extends GenericDao implements IDatePosDao
 		
 		return reapeatableDates;
 	}
+	
+	public void save(DatePos datePos)
+	{
+		getSession().save(datePos);
+	}
 }
