@@ -17,7 +17,6 @@ import net.sf.json.JSONObject;
 
 @ServerEndpoint("/AuctionWebSocket")
 public class AuctionWebSocketServer {
-	public static final Set<Session> sessions = new HashSet<Session>();
 	
 	@OnOpen
 	public void onOpen(Session session)
@@ -30,6 +29,14 @@ public class AuctionWebSocketServer {
 	{
 		String[] me = message.split(" ");
 		int auction_id = Integer.parseInt(me[1]);
+		if(session.isOpen())
+		{
+			System.out.println("session is open " + session.getId());
+		}
+		else
+		{
+			System.out.println("session is close" + session.getId());
+		}
 		System.out.println("Received: " + message + " id: "+auction_id);
 		UserPool.addSession(auction_id, session);
 		Set<Session> sessions = UserPool.getAuctionSessions(auction_id);
@@ -46,6 +53,7 @@ public class AuctionWebSocketServer {
 	@OnClose
 	public void onClose(Session session)
 	{
+		System.out.println("on close" + session.getId());
 		UserPool.remove(session);
 	}
 }

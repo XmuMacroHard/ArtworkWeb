@@ -10,4 +10,7 @@ public interface IStrings
 	String Customization_State_Uncheck = "uncheck";
 	String Customization_State_Accept = "accept";
 	String Customization_State_Reject = "reject";
+	
+	String AUCTION_STATE_ON = "0";
+	String AUCTION_STATE_OFF = "1";
 }

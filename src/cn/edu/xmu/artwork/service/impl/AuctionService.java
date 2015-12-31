@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.dao.IAuctionDao;
 import cn.edu.xmu.artwork.dao.IAuctionDateDao;
 import cn.edu.xmu.artwork.dao.IAuctionOrderDao;
@@ -24,6 +25,7 @@ import cn.edu.xmu.artwork.entity.Commodity;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAuctionService;
 import cn.edu.xmu.artwork.utils.IDateUtils;
+import cn.edu.xmu.artwork.utils.IOrderUtils;
 
 @Service
 @Transactional
@@ -39,7 +41,8 @@ public class AuctionService extends BasicService implements IAuctionService{
 	private IAuctionDateDao  auctionDateDao;
 	@Autowired
 	private ICommodityDao commodityDao;
-
+	@Autowired
+	private IOrderUtils orderUtils;
 	@Autowired
 	private IDateUtils dateUtils;
 	
@@ -63,6 +66,7 @@ public class AuctionService extends BasicService implements IAuctionService{
 		
 		auction.setCommodity(commodity);
 		auction.setCurrentPrice(auction.getStartPrice());
+		auction.setState(IStrings.AUCTION_STATE_ON);
 		auctionDao.save(auction);
 		
 		List<Date> dates = dateUtils.getDatesBetweenTwoDate(auction.getStartTime(), auction.getEndTime());
@@ -95,8 +99,9 @@ public class AuctionService extends BasicService implements IAuctionService{
 
 	@Override
 	public void createAuctionOrder(Auction auction) {
+		System.out.println("in create auctionOrder " + auction.getId());
+		auction.setState(IStrings.AUCTION_STATE_OFF);
 		AuctionOrder auctionOrder = new AuctionOrder();
-		System.out.println(auction.getId());
 		Commodity commodity = commodityDao.getCommodityById(auction.getCommodity().getId());
 		commodity.setPrice(auction.getCurrentPrice());
 		commodity.setPurchaseOrder(auctionOrder);
@@ -105,7 +110,8 @@ public class AuctionService extends BasicService implements IAuctionService{
 		auctionOrder.setDate(new Date());
 		auctionOrder.setTotalprice(auction.getCurrentPrice());
 		auctionOrder.setLeftprice(auction.getCurrentPrice());
-		auctionOrder.setOrderid("123");
+		
+		auctionOrder.setOrderid(orderUtils.getordernum(auction.getUser()));
 		auctionOrder.setState("0");
 		Artist artist = new Artist();
 		artist.setId(commodity.getAuthorId());
@@ -123,11 +129,13 @@ public class AuctionService extends BasicService implements IAuctionService{
 		//用今天的拍卖列表 - 明天的拍卖列表  得到今天结束的拍卖列表
 		for(Auction today_auction : today_auctions)
 		{
-			if(!tomorrow_auctions.contains(today_auction))
+			if( !tomorrow_auctions.contains(today_auction))
 			{
 				//拍卖的用户如果为空则为未完成的拍卖 需要对商品做处理
-				if(today_auction.getUser() != null)
-					createAuctionOrder(today_auction);
+				if(today_auction.getState().equals(IStrings.AUCTION_STATE_ON) && today_auction.getUser() != null)
+				{
+					createAuctionOrder(today_auction);	
+				}
 				else
 				{
 					long commodity_id = today_auction.getCommodity().getId();
@@ -137,6 +145,8 @@ public class AuctionService extends BasicService implements IAuctionService{
 			}
 		}
 	}
+	
+	
 
 	private List<Auction> getAuctionsByDate(Date date)
 	{

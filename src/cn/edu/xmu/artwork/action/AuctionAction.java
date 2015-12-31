@@ -47,7 +47,7 @@ public class AuctionAction {
 //		auction.setState("0");
 //		auction.setLimitPerBid((float) 100);
 
-		auctionService.createAuction(commodity, auction);		
+		auctionService.createAuction(commodity, auction);	
 		System.out.println("in create Auction action");
 
 		return IResultCode.SUCCESS;
@@ -78,6 +78,12 @@ public class AuctionAction {
 	@Action(value="addBidAction",results={@Result(name="success", location="/jsp/frontside/order/order.jsp")})
 	public String addBid()
 	{
+		auction.setId((long) 2);
+		User user = new User();
+		user.setId((long) 1);
+		bid.setPrice(100);
+		bid.setUser(user);
+		bid.setDate(new Date());
 		auctionService.addBid(bid, auction);
 		return IResultCode.SUCCESS;
 	}
