@@ -189,7 +189,7 @@ public class SaleAction extends ActionSupport
 	 * 订单支付
 	 * @return
 	 */
-	@Action(value="payPurchaseOrderAction", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")},
+	@Action(value="payPurchaseOrderAction", results={@Result(name="success", type="chain",location="getDetailPuchaseOrderToUser")},
 			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String payPurchaseOrder()
 	{
@@ -201,7 +201,7 @@ public class SaleAction extends ActionSupport
 	 * 用户确认收货
 	 * @return
 	 */
-	@Action(value="confirmCommodity", results={@Result(name="success", location="/jsp/test/shengartistlist.jsp")},
+	@Action(value="confirmCommodity", results={@Result(name="success", location="/jsp/frontside/user/user_purchase_order.jsp")},
 			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public String confirmCommodity()
 	{

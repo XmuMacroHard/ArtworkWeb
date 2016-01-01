@@ -266,11 +266,11 @@ public class SaleService extends BasicService implements ISaleService
 			purchaseOrderId.add(purchaseOrder.getId());
 		}
 		
-/*		for(int i=0;i<commodityid.size();i++)
+		for(int i=0;i<commodityid.size();i++)
 		{
-			if(shoppingCartDao.isExisted(user.getId(), commodityid.get(i)))
+			//if(shoppingCartDao.isExisted(user.getId(), commodityid.get(i)))
 				shoppingCartDao.delete(commodityid.get(i), user.getId());
-		}*/
+		}
 		
 		setAttributeByRequest("totalprice", allprice);
 		setAttributeByRequest("purchaseOrderId", purchaseOrderId);

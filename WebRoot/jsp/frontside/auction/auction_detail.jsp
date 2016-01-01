@@ -147,7 +147,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                       <s:iterator id="bid" value="#request.bids">
                       <tr>
                         <td><span class="small"><s:property value="#bid.price"/></span></td>
-                        <td><span class="small"><s:property value="#bid.user.nickname"/></span></td>
+                        <td><span class="small"><s:property value="#bid.user.email"/></span></td>
                         <td><span class="small"><s:property value="#bid.date"/></span></td>
                       </tr>
                      </s:iterator>
@@ -715,8 +715,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
         $(function(){
             var websocket;
             if ('WebSocket' in window) {
-                alert("WebSocket");
-                websocket = new WebSocket("ws://localhost:8080/ArtworkWeb/AuctionWebSocket");
+                websocket = new WebSocket("ws://192.168.199.196:8080/ArtworkWeb/AuctionWebSocket");
             } else if ('MozWebSocket' in window) {
                 alert("MozWebSocket");
                 websocket = new MozWebSocket("ws://echo");
@@ -733,9 +732,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             	
                 $("#product-price-48").html(jsobj.price+".0");
                 
+                
                 var newRow = "<tr>"+
                         		"<td><span class='small'>"+jsobj.price+"</span></td>"+
-                        		"<td><span class='small'>"+jsobj.username+"</span></td>"+
+                        		"<td><span class='small'>"+jsobj.userEmail+"</span></td>"+
                         		"<td><span class='small'>"+jsobj.date+"</span></td>"+
                       		 "</tr>";
                 
@@ -752,10 +752,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             });
             function sendbid(){
                  if (websocket != null) {
+                 	var userEmail = $('#userItem').text();
                     var price = $('#qty').val();
                     var auctionId = document.getElementById('auctionId').value;
                     
                     var jsobj = {
+                    	"userEmail":userEmail,
                     	"price":price,
                     	"auctionId":auctionId 
                     }

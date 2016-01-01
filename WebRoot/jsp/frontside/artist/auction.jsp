@@ -1,15 +1,12 @@
 <%@ page language="java" import="java.util.*" pageEncoding="utf-8"%>
+<%@taglib  prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%
 String path = request.getContextPath();
 String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.getServerPort()+path+"/";
 %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<c:set var="server_path" value="http://localhost:8080/ArtworkWeb" scope="page"/>
-
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE>
+<html>
 <head>
 <base href="<%=basePath%>">
 <meta charset="utf-8">
@@ -30,12 +27,11 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 
 <!-- CSS Style -->
 <link rel="stylesheet" href="css/bootstrap.min.css" type="text/css">
-<link rel="stylesheet" href="css/revslider.css" type="text/css">
 <link rel="stylesheet" href="css/owl.carousel.css" type="text/css">
 <link rel="stylesheet" href="css/owl.theme.css" type="text/css">
 <link rel="stylesheet" href="css/font-awesome.css" type="text/css">
 <link rel="stylesheet" href="css/style.css" type="text/css">
-<link rel="stylesheet" href="css/my_frontside.css" type="text/css">
+
 
 <!-- Google Fonts -->
 <link href='https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,300,700,800,400,600' rel='stylesheet' type='text/css'>
@@ -56,48 +52,28 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <!-- End breadcrumbs --> 
   <!-- Two columns content -->
-  <div class="main-container col2-left-layout">
+  <div class="main-container col2-right-layout">
     <div class="main container">
       <div class="row">
-        <section class="col-sm-9 col-sm-push-3">
-        <div class="col-main">
-        <!-- 订单类型选择 -->
-        			<div class="dropdown">			
-			  <button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-			    订单类型
-			    <span class="caret"></span>
-			  </button>
-			  <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-			  	<li><a onclick="getOrderByType('getUserCusOrderByState', '4',1);return false;">待接受</a></li>
-			    <li><a onclick="getOrderByType('getUserCusOrderByState', '0',1);return false;">待付款</a></li>
-			    <li><a onclick="getOrderByType('getUserCusOrderByState', '1',1);return false;">待发货</a></li>
-			    <li><a onclick="getOrderByType('getUserCusOrderByState', '2',1);return false;">待收货</a></li>
-			    <li><a onclick="getOrderByType('getUserCusOrderByState', '3',1);return false;">已完成</a></li>			    
-			  </ul>
-			</div>
-        <!-- end 订单类型选择 -->
-         <div class="category-title">
-         	<h2>定制订单</h2>
-            <h1 id = "orderTypeTitle">待付款</h1>
-          </div> 
-          
-             
-          <div id="orderList" class="category-products">
-          
-			<!-- 订单 -->
-			<!-- 订单 here -->
-        		
-        	<!--end 订单  -->
+         <section class="col-main col-sm-9 wow bounceInUp animated">
+          <div class="my-account">
+            <div class="page-title">
+              <h2>拍卖详情</h2>
+            </div>
+            <div class="my-wishlist">
+            
+              <div class="table-responsive">
+              <form action="createAuctionAction" method="post">
+              	<input id="commodityid" name="commodity.id" type="hidden">
+ 				<span>开始时间:</span><input name="auction.startTime" type="date"/><br/>
+ 				<span>结束时间:</span><input name="auction.endTime" type="date"/><br/>
+ 				<span>起拍价格</span><input name="auction.startPrice" type="text"/><br/>
+ 				<button type="submit">发起拍卖</button>
+ 				</form>
+              </div>
+            </div>
+
           </div>
-          
-			<div class="pager">
-                <div class="pages">
-                  <ul class="pagination" id="page_list">
-                  </ul>
-                </div>
-             </div>
-             
-		  </div>
         </section>
       </div>
     </div>
@@ -203,15 +179,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   </div>
   <!--right-side-content hidden1-->
 </div>
-
-
 <!-- JavaScript --> 
 <script type="text/javascript" src="js/jquery.min.js"></script> 
 <script type="text/javascript" src="js/bootstrap.min.js"></script> 
 <script type="text/javascript" src="js/common.js"></script> 
 <script type="text/javascript" src="js/slider.js"></script> 
-<script type="text/javascript" src="js/owl.carousel.min.js"></script>
-<script type="text/javascript" src="js/frontside/user/user_cus_order.js"></script>
+<script type="text/javascript" src="js/owl.carousel.min.js"></script> 
 <script type="text/javascript">
     //<![CDATA[
 	jQuery(function() {
@@ -222,6 +195,16 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 	});
     //]]>
+    
+		function getUrlParam(name) {
+            var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)"); //构造一个含有目标参数的正则表达式对象
+            var r = window.location.search.substr(1).match(reg);  //匹配目标参数
+            if (r != null) return unescape(r[2]); return null; //返回参数值
+        }
+        
+        $("#commodityid").val(getUrlParam("commodityid"));
+        //alert(getUrlParam("commodityid"));
+    
     </script> 
 <script>
 			new UISearch( document.getElementById( 'form-search' ) );

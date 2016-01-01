@@ -9,6 +9,8 @@ import java.util.List;
 
 import java.util.Set;
 
+import javax.websocket.Session;
+
 import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -31,7 +33,6 @@ import cn.edu.xmu.artwork.service.IInformationService;
 import cn.edu.xmu.artwork.utils.IDateUtils;
 
 @Transactional
-
 public class InformationService extends BasicService implements IInformationService {
 
 	@Autowired
@@ -56,33 +57,32 @@ public class InformationService extends BasicService implements IInformationServ
 	@Override
 	public void submit(Information information,DatePos datePos,List<File> pic, List<String> picFileName) {
 		
+		System.out.println(" pic num:  " + picFileName.size());
 		List<String> imgPaths = fileService.uploadPicture(pic, picFileName);
 		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
 		
+		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());				
 
-		List<Date> dates = dateUtils.getDatesBetweenTwoDate(information.getStartTime(), information.getEndTime());
-
+		
 		information.setEditorId(user.getId());
+		information.addPicture(imgPaths);
+		information.setStatus(ITableConstants.INFO_STATUS_PENDING);
+		
 		InformationDao.save(information);
-
-		InforPics picture = new InforPics();
-		for(String aUrl : imgPaths)
-		{
-			picture.setInformation(information);
-			picture.setUrl(aUrl);		
-		}
-		inforPicsDao.save(picture);
-
-		for(Date date : dates)
-		{
-			DatePos tempDatePos = new DatePos();
-			tempDatePos.setColum(datePos.getColum());
-			tempDatePos.setLocation(datePos.getLocation());
-			tempDatePos.setPos(datePos.getPos());			
-			tempDatePos.setDate(date);
-			tempDatePos.setInformation(information);
-			datePosDao.save(tempDatePos);
-		}
+			
+			for(Date date : dates) 
+			{
+				DatePos tempDatePos = new DatePos();
+				tempDatePos.setColum(datePos.getColum());
+				tempDatePos.setLocation(datePos.getLocation());
+				tempDatePos.setPos(datePos.getPos());			
+				tempDatePos.setDate(date);
+				tempDatePos.setInformation(information);
+				datePosDao.save(tempDatePos);
+				//information.getDatePoses().add(tempDatePos);
+				//information.addDatePos(tempDatePos);
+			}
+			setAttributeByRequest(IResultCode.RESULT, IResultCode.SUCCESS);
 	}
 	
 	@Override

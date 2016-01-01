@@ -78,7 +78,6 @@ public class Commodity implements java.io.Serializable {
 	private PurchaseOrder purchaseOrder;
 	private Set<CommodityPics> commodityPices = new HashSet<CommodityPics>(0);
 	private String status; //商品状态
-	// Constructors
 
 	/** default constructor */
 	public Commodity() {

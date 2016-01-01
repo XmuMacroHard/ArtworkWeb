@@ -221,7 +221,7 @@ public class UserAction extends ActionSupport
 	 * 用户充值
 	 * @author sheng
 	 */
-	@Action(value="Userrecharge", results={@Result(name="success", location="/jsp/test/shengtest.jsp")},
+	@Action(value="Userrecharge", results={@Result(name="success", type="chain",location="showInfoOnHomePage")},
 			interceptorRefs ={@InterceptorRef(value="checkLoginStack")})
 	public  String Userrecharge()
 	{

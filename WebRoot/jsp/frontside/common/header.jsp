@@ -38,7 +38,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             <div class="welcome-msg hidden-xs"> 欢迎游客，请登录 </div>
             </c:when>
           	<c:otherwise>
-            <div class="welcome-msg hidden-xs">您好,<c:out value="${sessionScope.user.email}"/></div>
+            <div class="welcome-msg hidden-xs" id="userItem"><c:out value="${sessionScope.user.email}"/></div>
            	</c:otherwise>         
             </c:choose>
             <!-- Header Top Links -->
@@ -51,7 +51,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="ShowAllAddressList">地址管理</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_purchase_order.jsp">商品订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_customization_order.jsp">定制订单</a></li>
-                    <li role="presentation"><a role="menuitem" tabindex="-1" href="">拍卖订单</a></li>
+                    <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/user_auction_order.jsp">拍卖订单</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="viewCart">我的购物车</a></li>                    
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/pay/recharge.jsp">充值中心</a></li>
                     <li role="presentation"><a role="menuitem" tabindex="-1" href="jsp/frontside/user/artist_certification.jsp">艺术家认证 </a></li>
@@ -111,8 +111,57 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                     <li class="level0 nav-2 level-top parent"> <a href="jsp/frontside/order/home_order.jsp" class="level-top"> <span>定制</span> </a>
 
                     </li>
-                     <li class="level0 nav-3 level-top parent"> <a href="showTodayAuctionAction.action" class="level-top"> <span>拍卖</span> </a>
-
+                    <li class="level0 nav-3 level-top parent"> <a href="showTodayAuctionAction.action" class="level-top"> <span>拍卖</span> </a>
+                      <ul class="level0">
+                        <li class="level1 nav-3-1 first parent"> <a href="grid.html"> <span>Mobiles</span> </a>
+                          <ul class="level1">
+                            <li class="level2 nav-3-1-1 first"> <a href="grid.html"> <span>Samsung</span> </a> </li>
+                            <li class="level2 nav-3-1-2"> <a href="grid.html"> <span>Nokia</span> </a> </li>
+                            <li class="level2 nav-3-1-3"> <a href="grid.html"> <span>iPhone</span> </a> </li>
+                            <li class="level2 nav-3-1-4 last"> <a href="grid.html"> <span>Sony</span> </a> </li>
+                          </ul>
+                        </li>
+                        <li class="level1 nav-3-2 parent"> <a href="grid.html"> <span>Accessories</span> </a>
+                          <ul class="level1">
+                            <li class="level2 nav-3-2-5 first"> <a href="grid.html"> <span>Mobile Memory Cards</span> </a> </li>
+                            <li class="level2 nav-3-2-6"> <a href="grid.html"> <span>Cases &amp; Covers</span> </a> </li>
+                            <li class="level2 nav-3-2-7"> <a href="grid.html"> <span>Mobile Headphones</span> </a> </li>
+                            <li class="level2 nav-3-2-8 last"> <a href="grid.html"> <span>Bluetooth Headsets</span> </a> </li>
+                          </ul>
+                        </li>
+                        <li class="level1 nav-3-3 parent"> <a href="grid.html"> <span>Cameras</span> </a>
+                          <ul class="level1">
+                            <li class="level2 nav-3-3-9 first"> <a href="grid.html"> <span>Camcorders</span> </a> </li>
+                            <li class="level2 nav-3-3-10"> <a href="grid.html"> <span>Point &amp; Shoot</span> </a> </li>
+                            <li class="level2 nav-3-3-11"> <a href="grid.html"> <span>Digital SLR</span> </a> </li>
+                            <li class="level2 nav-3-3-12 last"> <a href="grid.html"> <span>Camera Accessories</span> </a> </li>
+                          </ul>
+                        </li>
+                        <li class="level1 nav-3-4 parent"> <a href="grid.html"> <span>Audio &amp; Video</span> </a>
+                          <ul class="level1">
+                            <li class="level2 nav-3-4-13 first"> <a href="grid.html"> <span>MP3 Players</span> </a> </li>
+                            <li class="level2 nav-3-4-14"> <a href="grid.html"> <span>iPods</span> </a> </li>
+                            <li class="level2 nav-3-4-15"> <a href="grid.html"> <span>Speakers</span> </a> </li>
+                            <li class="level2 nav-3-4-16 last"> <a href="grid.html"> <span>Video Players</span> </a> </li>
+                          </ul>
+                        </li>
+                        <li class="level1 nav-3-5 parent"> <a href="grid.html"> <span>Computer</span> </a>
+                          <ul class="level1">
+                            <li class="level2 nav-3-5-17 first"> <a href="grid.html"> <span>External Hard Disks</span> </a> </li>
+                            <li class="level2 nav-3-5-18"> <a href="grid.html"> <span>Pendrives</span> </a> </li>
+                            <li class="level2 nav-3-5-19"> <a href="grid.html"> <span>Headphones</span> </a> </li>
+                            <li class="level2 nav-3-5-20 last"> <a href="grid.html"> <span>PC Components</span> </a> </li>
+                          </ul>
+                        </li>
+                        <li class="level1 nav-3-6 last parent"> <a href="grid.html"> <span>Appliances </span> </a>
+                          <ul class="level1">
+                            <li class="level2 nav-3-6-21 first"> <a href="grid.html"> <span>Vacuum Cleaners</span> </a> </li>
+                            <li class="level2 nav-3-6-22"> <a href="grid.html"> <span>Indoor Lighting</span> </a> </li>
+                            <li class="level2 nav-3-6-23"> <a href="grid.html"> <span>Kitchen Tools</span> </a> </li>
+                            <li class="level2 nav-3-6-24 last"> <a href="grid.html"> <span>Water Purifiers</span> </a> </li>
+                          </ul>
+                        </li>
+                      </ul>
                     </li>
                     <li class="level0 nav-4 level-top parent"> <a href="grid.html" class="level-top"> <span>Furniture</span> </a>
                       <ul class="level0">

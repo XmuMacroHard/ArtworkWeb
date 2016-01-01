@@ -24,12 +24,14 @@ public class InformationDao extends GenericDao implements IInformationDao {
 	
 	@Override
 	public void save(Information information) {
+		
 		try {			
 			getSession().save(information);	
 		} catch (Exception e) {
 			// TODO: handle exception
 			e.printStackTrace();
 		}
+		
 	}
 
 	

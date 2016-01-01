@@ -10,6 +10,8 @@ import javax.websocket.Session;
 
 import org.apache.catalina.filters.AddDefaultCharsetFilter;
 
+import com.opensymphony.xwork2.util.Key;
+
 
 public class UserPool 
 {
@@ -50,6 +52,7 @@ public class UserPool
 	{
 		USER_POOL.put(session.getId(), session);
 	}
+	
 	public static void remove(Session session)
 	{
 		Set<Integer> keys = AUCTION_POOL.keySet();

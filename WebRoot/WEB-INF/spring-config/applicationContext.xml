@@ -55,6 +55,7 @@
 	<bean id="customizationOrder" class="cn.edu.xmu.artwork.entity.CustomizationOrder"></bean>
 	<bean id="purchaseOrder" class="cn.edu.xmu.artwork.entity.PurchaseOrder"></bean>
 	<bean id="commodity" class="cn.edu.xmu.artwork.entity.Commodity"></bean>
+
 	<bean id="payment" class="cn.edu.xmu.artwork.entity.Payment"></bean>
 	<bean id="auction" class="cn.edu.xmu.artwork.entity.Auction"></bean>
 	<bean id="auctionDate" class="cn.edu.xmu.artwork.entity.AuctionDate"></bean>

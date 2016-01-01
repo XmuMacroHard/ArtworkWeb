@@ -94,7 +94,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                           </td>
                           <td class="wishlist-cell1 customer-wishlist-item-info"><h3 class="product-name"><a title="Softwear Women's Designer" href="getDetailedCommodity?commodity.id=${commodity.id}"><c:out value="${commodity.name}"/></a></h3>
                             <div class="description std">
-                              <div class="inner"><c:out value="${commodity.introduction}"/></div>
+                              <div class="inner"><c:out value=""/></div>
                             </div>
                             </td>
                           <td data-rwd-label="Price" class="wishlist-cell3 customer-wishlist-item-price"><div class="cart-cell">
@@ -102,7 +102,9 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
                             </div></td>
                            <c:if test="${!commodity.isBought}">
                           <td class="wishlist-cell4 customer-wishlist-item-cart">
-                            <p><a href="getDetailedCommodityByArtist?commodity.id=${commodity.id}" class="">Edit</a></p></td>
+                            <p><a href="getDetailedCommodityByArtist?commodity.id=${commodity.id}" class="">Edit</a></p>
+                            <Button onclick="auction(${commodity.id})"  type="button">拍卖</Button>
+                            </td>
                           <td class="wishlist-cell5 customer-wishlist-item-remove last"><a class="remove-item" title="Clear Cart" onClick="return confirm('确认删除?');" href="deleteCommodity?commodity.id=${commodity.id}"><span><span></span></span></a></td>
                        		</c:if>
                        		<c:if test="${commodity.isBought}">
@@ -244,6 +246,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		});
 	});
     //]]>
+    
+    function auction(id)
+    {
+    	window.location.href="jsp/frontside/artist/auction.jsp?commodityid="+id;
+    	return false;
+    }
+    
     </script> 
 <script>
 			new UISearch( document.getElementById( 'form-search' ) );

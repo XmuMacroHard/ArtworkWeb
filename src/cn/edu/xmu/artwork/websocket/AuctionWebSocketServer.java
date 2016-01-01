@@ -29,9 +29,6 @@ import net.sf.json.JSONObject;
 @ServerEndpoint("/AuctionWebSocket")
 public class AuctionWebSocketServer {
 	
-	@Autowired
-	private IAuctionService auctionService = new AuctionService();
-	
 	@OnOpen
 	public void onOpen(Session session)
 	{
@@ -40,9 +37,7 @@ public class AuctionWebSocketServer {
 	
 	@OnMessage
 	public void onMessage(String message, Session session) 
-	{
-		//System.out.println(message);
-		
+	{	
 		JSONObject msg = JSONObject.fromObject(message);
 		
 		int auctionId = msg.getInt("auctionId");
@@ -54,11 +49,11 @@ public class AuctionWebSocketServer {
 		//auctionService.addBid(auctionId, p);
 		
 		//User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
-		User user = new User();
-		user.setId((long) 1);
-		user.setNickname("haha");
+		//System.out.println("in websocket userid:" + user.getId());
+		//User user = new User();
+		//user.setId((long) 1);
+		//user.setNickname("haha");
 
-		msg.put("username", user.getNickname());
 		msg.put("date", new Date().toLocaleString());
 		
 		try {
@@ -74,7 +69,7 @@ public class AuctionWebSocketServer {
 	@OnClose
 	public void onClose(Session session)
 	{
-		System.out.println("on close "+ session.getId());
+		System.out.println("on close" + session.getId());
 		UserPool.remove(session);
 	}
 }

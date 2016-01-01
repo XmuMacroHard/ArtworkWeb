@@ -80,7 +80,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
           <div class="the-slideshow slideshow-wrapper">
             <ul id="info_location_2" style="overflow: hidden;" class="slideshow">
             	<c:forEach items="${informationList}" var="information" varStatus = "i">
-              		<c:if test="${i.index >= 4 && i.index < 7 }">
+              		<c:if test="${i.index >= 4 && i.index <= 7 }">
               		<li class="slide">
               			<c:set var="urlsNum2" scope="page" value="1"/>
               			<c:forEach items="${information.inforPicses}" var="pic">   		 	
@@ -189,273 +189,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
             </div>
           </div>
         </div>
-<%--         <!-- Featured Slider -->
-        <div class="featured-pro">
-          <div class="slider-items-products">
-            <div class="title col-lg-6">
-              <div class="new_title center">
-                <h2><span>Featured Products</span></h2>
-              </div>
-              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec pharetra tristique eros dignissim venenatis. Nam et dolor id arcu efficitur tincidunt quis non nisi. Duis commodo pellentesque quam, id mollis ligula dictum id. Morbi cursus consectetur magna a egestas. Sed eu sagittis leo. Mauris euismod dapibus nisl, at euismod nunc commodo vel. Nulla semper non nisi in placerat. Aenean at nisl eu odio ullamcorper varius non ac ante. Quisque dictum, felis lobortis faucibus ornare, enim mi mollis ex, ac vestibulum neque nibh at nisi. </p>
-              <a title="Subscribe" class="view-all" href="#"><span>View All Products</span></a> </div>
-            <div id="featured-slider" class="product-flexslider hidden-buttons col-lg-6">
-              <div class="slider-items slider-width-col4">
-                <div class="item">
-                  <div class="item-inner">
-                    <div class="item-img">
-                      <div class="product-block">
-                        <div class="product-image"> <a href="product_detail.html">
-                          <figure class="product-display">
-                            <div class="new-label new-top-left">New</div>
-                            <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="Product image" style="display: block;"> <img class="product-secondpic" alt="Product image" src="products-images/product1.jpg"> </figure>
-                          </a> </div>
-                        <div class="product-meta">
-                          <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a href="product_detail.html" title="Ut tincidunt tortor"> Sample Product</a> </div>
-                        <div class="item-content">
-                          <div class="item-price">
-                            <div class="price-box">
-                              <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"  > $567.00 </span> </p>
-                              <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"  > $456.00 </span> </p>
-                            </div>
-                          </div>
-                          <div class="rating">
-                            <div class="ratings">
-                              <div class="rating-box">
-                                <div class="rating" style="width:50%"></div>
-                              </div>
-                              <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="item-inner">
-                    <div class="item-img">
-                      <div class="product-block">
-                        <div class="product-image"> <a href="product_detail.html">
-                          <figure class="product-display">
-                            <div class="new-label new-top-left">New</div>
-                            <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="Product image" style="display: block;"> <img class="product-secondpic" alt="Product image" src="products-images/product1.jpg"> </figure>
-                          </a> </div>
-                        <div class="product-meta">
-                          <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a href="product_detail.html" title="Ut tincidunt tortor"> Sample Product</a> </div>
-                        <div class="item-content">
-                          <div class="item-price">
-                            <div class="price-box">
-                              <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"  > $567.00 </span> </p>
-                              <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"  > $456.00 </span> </p>
-                            </div>
-                          </div>
-                          <div class="rating">
-                            <div class="ratings">
-                              <div class="rating-box">
-                                <div class="rating" style="width:80%"></div>
-                              </div>
-                              <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="item-inner">
-                    <div class="product-block">
-                      <div class="product-image"> <a href="product_detail.html">
-                        <figure class="product-display">
-                          <div class="new-label new-top-left">New</div>
-                          <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="Product image" style="display: block;"> <img class="product-secondpic" alt="Product image" src="products-images/product1.jpg"> </figure>
-                        </a> </div>
-                      <div class="product-meta">
-                        <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                      </div>
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a href="product_detail.html" title="Stablished fact reader"> Sample Product</a> </div>
-                        <div class="item-content">
-                          <div class="item-price">
-                            <div class="price-box">
-                              <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"  > $100.00 </span> </p>
-                              <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"  > $90.00 </span> </p>
-                            </div>
-                          </div>
-                          <div class="rating">
-                            <div class="ratings">
-                              <div class="rating-box">
-                                <div class="rating" style="width:0%"></div>
-                              </div>
-                              <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="item-inner">
-                    <div class="product-block">
-                      <div class="product-image"> <a href="product_detail.html">
-                        <figure class="product-display">
-                          <div class="sale-label sale-top-left">Sale</div>
-                          <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="Product image" style="display: block;"> <img class="product-secondpic" alt="Product image" src="products-images/product1.jpg"> </figure>
-                        </a> </div>
-                      <div class="product-meta">
-                        <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                      </div>
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a href="product_detail.html" title="Retis lapen casen"> Sample Product</a> </div>
-                        <div class="item-content">
-                          <div class="item-price">
-                            <div class="price-box"> <span class="regular-price"> <span class="price">$125.00</span> </span> </div>
-                          </div>
-                          <div class="rating">
-                            <div class="ratings">
-                              <div class="rating-box">
-                                <div class="rating" style="width:80%"></div>
-                              </div>
-                              <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="item-inner">
-                    <div class="item-img">
-                      <div class="product-block">
-                        <div class="product-image"> <a href="product_detail.html">
-                          <figure class="product-display">
-                            <div class="new-label new-top-left">New</div>
-                            <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="Product image" style="display: block;"> <img class="product-secondpic" alt="Product image" src="products-images/product1.jpg"> </figure>
-                          </a> </div>
-                        <div class="product-meta">
-                          <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a href="product_detail.html" title="Ut tincidunt tortor"> Sample Product</a> </div>
-                        <div class="item-content">
-                          <div class="item-price">
-                            <div class="price-box">
-                              <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"  > $567.00 </span> </p>
-                              <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"  > $456.00 </span> </p>
-                            </div>
-                          </div>
-                          <div class="rating">
-                            <div class="ratings">
-                              <div class="rating-box">
-                                <div class="rating" style="width:50%"></div>
-                              </div>
-                              <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="item-inner">
-                    <div class="item-img">
-                      <div class="product-block">
-                        <div class="product-image"> <a href="product_detail.html">
-                          <figure class="product-display">
-                            <div class="new-label new-top-left">New</div>
-                            <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="Product image" style="display: block;"> <img class="product-secondpic" alt="Product image" src="products-images/product1.jpg"> </figure>
-                          </a> </div>
-                        <div class="product-meta">
-                          <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a href="product_detail.html" title="Ut tincidunt tortor"> Sample Product</a> </div>
-                        <div class="item-content">
-                          <div class="item-price">
-                            <div class="price-box">
-                              <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"  > $567.00 </span> </p>
-                              <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"  > $456.00 </span> </p>
-                            </div>
-                          </div>
-                          <div class="rating">
-                            <div class="ratings">
-                              <div class="rating-box">
-                                <div class="rating" style="width:80%"></div>
-                              </div>
-                              <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="item">
-                  <div class="item-inner">
-                    <div class="product-block">
-                      <div class="product-image"> <a href="product_detail.html">
-                        <figure class="product-display">
-                          <div class="new-label new-top-left">New</div>
-                          <img src="products-images/product1.jpg" class="lazyOwl product-mainpic" alt="Product image" style="display: block;"> <img class="product-secondpic" alt="Product image" src="products-images/product1.jpg"> </figure>
-                        </a> </div>
-                      <div class="product-meta">
-                        <div class="product-action"> <a class="addcart" href="shopping_cart.html"> <i class="icon-shopping-cart">&nbsp;</i> Add to cart </a> <a class="wishlist" href="wishlist.html"> <i class="icon-heart">&nbsp;</i> </a> <a href="quick_view.html" class="quickview"> <i class="icon-zoom">&nbsp;</i> </a> </div>
-                      </div>
-                    </div>
-                    <div class="item-info">
-                      <div class="info-inner">
-                        <div class="item-title"> <a href="product_detail.html" title="Stablished fact reader"> Sample Product</a> </div>
-                        <div class="item-content">
-                          <div class="item-price">
-                            <div class="price-box">
-                              <p class="old-price"> <span class="price-label">Regular Price:</span> <span class="price"  > $100.00 </span> </p>
-                              <p class="special-price"> <span class="price-label">Special Price</span> <span class="price"  > $90.00 </span> </p>
-                            </div>
-                          </div>
-                          <div class="rating">
-                            <div class="ratings">
-                              <div class="rating-box">
-                                <div class="rating" style="width:0%"></div>
-                              </div>
-                              <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Review</a> </p>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End Featured Slider --> 
-      </div> --%>
     </div>
   </section>
   <!-- End main container -->
@@ -463,32 +196,29 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
   <section class="latest-blog container">
     <div class="blog_post">
       <div class="blog-title">
-        <h2><span>Latest Blog</span></h2>
+        <h2><span>最近资讯</span></h2>
       </div>
-      <div class="col-xs-12 col-sm-4">
-        <div class="blog-img"> <img src="images/blog-img1.jpg" alt="blog image">
-          <div class="mask"> <a class="info" href="blog_detail.html">Read More</a> </div>
+      
+      <c:forEach items="${informationList}" var="information" varStatus="i">
+	      <c:if test = "${i.index > 7 && i.index < 12}"> 
+	       
+		<div class="col-xs-12 col-sm-4">
+        <div class="blog-img"> 
+        		<c:forEach items="${information.inforPicses}" var="pic">   		 	
+					<c:if test = "${urlsNum == 1}">
+						<img src="${server_path}${pic.url}" alt="blog image"/>
+						<c:set var="urlsNum" scope="page" value="2"/>		
+					</c:if>
+				</c:forEach>
+        
+          <div class="mask"> <a class="info" href="getDetailInfo?information.id=${information.id}">详情</a> </div>
         </div>
-        <h2><a href="blog_detail.html">Pellentesque habitant morbi</a> </h2>
-        <div class="post-date"><i class="icon-calendar"></i> Apr 10, 2014</div>
-        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce sit  ... </p>
-      </div>
-      <div class="col-xs-12 col-sm-4">
-        <div class="blog-img"> <img src="images/blog-img1.jpg" alt="blog image">
-          <div class="mask"> <a class="info" href="blog_detail.html">Read More</a> </div>
-        </div>
-        <h2><a href="blog_detail.html">Pellentesque habitant morbi</a> </h2>
-        <div class="post-date"><i class="icon-calendar"></i> Apr 10, 2014</div>
-        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce sit  ... </p>
-      </div>
-      <div class="col-xs-12 col-sm-4">
-        <div class="blog-img"> <img src="images/blog-img1.jpg" alt="blog image">
-          <div class="mask"> <a class="info" href="blog_detail.html">Read More</a> </div>
-        </div>
-        <h2><a href="blog_detail.html">Pellentesque habitant morbi</a> </h2>
-        <div class="post-date"><i class="icon-calendar"></i> Apr 10, 2014</div>
-        <p>Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce sit  ... </p>
-      </div>
+        <h2><a href="blog_detail.html"><c:out value="${information.title}"/></a> </h2>
+     	   </div>
+	       </c:if> 	               	
+      </c:forEach>
+      
+      
     </div>
   </section>
   <!-- End Latest Blog -->

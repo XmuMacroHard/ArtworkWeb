@@ -4,14 +4,16 @@ import java.sql.Date;
 import java.util.List;
 
 import net.sf.json.JSONArray;
+
 import cn.edu.xmu.artwork.action.AuctionAction;
+
 import cn.edu.xmu.artwork.entity.Auction;
 import cn.edu.xmu.artwork.entity.Bid;
 import cn.edu.xmu.artwork.entity.Commodity;
 
 public interface IAuctionService {
 	//叫价
-	public void addBid(Bid bid, Auction auction);
+	//public void addBid(Bid bid, Auction auction);
 	public void addBid(long auctionId, float price);
 	//发起一个拍卖
 	public void createAuction(Commodity commodity, Auction auction);
@@ -25,4 +27,6 @@ public interface IAuctionService {
 	public List<Auction> getTodayAuctions();
 	//根据id拿拍卖
 	public Auction getAuctionAuctionById(long id);
+	
+	public JSONArray getAllOrderByState(String identification,String state) ;
 }

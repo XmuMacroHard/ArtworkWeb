@@ -9,10 +9,14 @@ import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.collections.functors.ForClosure;
+import org.apache.struts2.ServletActionContext;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import cn.edu.xmu.artwork.constants.ITableConstants;
+
+import cn.edu.xmu.artwork.constants.IStrings;
 import cn.edu.xmu.artwork.constants.IClientConstants;
 import cn.edu.xmu.artwork.dao.IAuctionDao;
 import cn.edu.xmu.artwork.dao.IAuctionDateDao;
@@ -27,9 +31,12 @@ import cn.edu.xmu.artwork.entity.AuctionDate;
 import cn.edu.xmu.artwork.entity.AuctionOrder;
 import cn.edu.xmu.artwork.entity.Bid;
 import cn.edu.xmu.artwork.entity.Commodity;
+import cn.edu.xmu.artwork.entity.PurchaseOrder;
 import cn.edu.xmu.artwork.entity.User;
 import cn.edu.xmu.artwork.service.IAuctionService;
 import cn.edu.xmu.artwork.utils.IDateUtils;
+import cn.edu.xmu.artwork.utils.impl.JsonUtils;
+import cn.edu.xmu.artwork.utils.IOrderUtils;
 import cn.edu.xmu.artwork.utils.IJsonUtils;
 
 @Service
@@ -46,21 +53,26 @@ public class AuctionService extends BasicService implements IAuctionService{
 	private IAuctionDateDao  auctionDateDao;
 	@Autowired
 	private ICommodityDao commodityDao;
-
+	@Autowired
+	private IOrderUtils orderUtils;
 	@Autowired
 	private IDateUtils dateUtils;
 	
 	@Autowired
-	IJsonUtils jsonUtils;
+	private JsonUtils jsonUtils;
 	
-	@Override
+	/*@Override
 	public void addBid(Bid bid, Auction auction) {
 
-		
+		System.out.println("in add Bid");
 		long id = 1;
 		User user = new User();
 		user.setId(id);
-
+		
+		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		
+		System.out.println("userId : " + user.getId());
+		
 		auction = auctionDao.findById(auction.getId());
 		auction.setUser(user);
 		auction.setCurrentPrice(bid.getPrice());
@@ -71,7 +83,7 @@ public class AuctionService extends BasicService implements IAuctionService{
 		
 		bidDao.save(bid);
 		// TODO Auto-generated method stub
-	}
+	}*/
 
 	@Override
 	public void createAuction(Commodity commodity, Auction auction) {
@@ -79,13 +91,14 @@ public class AuctionService extends BasicService implements IAuctionService{
 		Commodity c = commodityDao.getCommodityById(commodity.getId());
 		System.out.println(c.getIntroduction());
 		c.setCategory("auction");
-		
+/*		
 		User user = new User();
 		user.setId((long) 1);
-		auction.setUser(user);
+		auction.setUser(user);*/
 		
 		auction.setCommodity(commodity);
 		auction.setCurrentPrice(auction.getStartPrice());
+		auction.setState(IStrings.AUCTION_STATE_ON);
 		auctionDao.save(auction);
 		
 		List<Date> dates = dateUtils.getDatesBetweenTwoDate(auction.getStartTime(), auction.getEndTime());
@@ -101,9 +114,13 @@ public class AuctionService extends BasicService implements IAuctionService{
 
 	@Override
 	public List<Bid> getBidsByAuction(Auction auction) {
-		return bidDao.getBidsByAuctionId(auction.getId());
+		List<Bid> bids = bidDao.getBidsByAuctionId(auction.getId());
+		for(Bid bid : bids)
+		{
+			initializeObject(bid.getUser());
+		}
+		return bids;
 	}
-
 	
 	@Override
 	public List<Auction> getTodayAuctions() {
@@ -126,8 +143,9 @@ public class AuctionService extends BasicService implements IAuctionService{
 
 	@Override
 	public void createAuctionOrder(Auction auction) {
+		System.out.println("in create auctionOrder " + auction.getId());
+		auction.setState(IStrings.AUCTION_STATE_OFF);
 		AuctionOrder auctionOrder = new AuctionOrder();
-		System.out.println(auction.getId());
 		Commodity commodity = commodityDao.getCommodityById(auction.getCommodity().getId());
 		commodity.setPrice(auction.getCurrentPrice());
 		commodity.setPurchaseOrder(auctionOrder);
@@ -136,7 +154,8 @@ public class AuctionService extends BasicService implements IAuctionService{
 		auctionOrder.setDate(new Date());
 		auctionOrder.setTotalprice(auction.getCurrentPrice());
 		auctionOrder.setLeftprice(auction.getCurrentPrice());
-		auctionOrder.setOrderid("123");
+		
+		auctionOrder.setOrderid(orderUtils.getordernum(auction.getUser()));
 		auctionOrder.setState("0");
 		Artist artist = new Artist();
 		artist.setId(commodity.getAuthorId());
@@ -154,11 +173,13 @@ public class AuctionService extends BasicService implements IAuctionService{
 		//用今天的拍卖列表 - 明天的拍卖列表  得到今天结束的拍卖列表
 		for(Auction today_auction : today_auctions)
 		{
-			if(!tomorrow_auctions.contains(today_auction))
+			if( !tomorrow_auctions.contains(today_auction))
 			{
 				//拍卖的用户如果为空则为未完成的拍卖 需要对商品做处理
-				if(today_auction.getUser() != null)
-					createAuctionOrder(today_auction);
+				if(today_auction.getState().equals(IStrings.AUCTION_STATE_ON) && today_auction.getUser() != null)
+				{
+					createAuctionOrder(today_auction);	
+				}
 				else
 				{
 					long commodity_id = today_auction.getCommodity().getId();
@@ -168,6 +189,8 @@ public class AuctionService extends BasicService implements IAuctionService{
 			}
 		}
 	}
+	
+	
 
 	private List<Auction> getAuctionsByDate(Date date)
 	{
@@ -183,12 +206,37 @@ public class AuctionService extends BasicService implements IAuctionService{
 		}
 		return auctions;
 	}
+	
+	/**
+	 * 根据当前identification（艺术家或用户或管理员） 和 需要的订单状态获取订单
+	 * @param identification
+	 * @param state
+	 * @return
+	 */
+	@Override
+	public JSONArray getAllOrderByState(String identification,String state) 
+	{
+		User user = (User)getSessionInBrower(IClientConstants.SESSION_USER);
+		System.out.println(user.getId());
+		System.out.println(state);
+		System.out.println(identification);
+		List<AuctionOrder> orders = auctionOrderDao.getAuctionOrderByState(identification, user.getId(), state);	
+				
+		String[] excludes = {ITableConstants.PURCHASE_ORDER_COMMODITY, ITableConstants.PURCHASE_ORDER_PAYMENTS, ITableConstants.PURCHASE_ORDER_SHIPPING_ADDRESS, ITableConstants.PURCHASE_ORDER_ARTIST, ITableConstants.PURCHASE_ORDER_USER};
+		System.out.println(jsonUtils.List2JsonArray(orders, excludes));
+		
+		return jsonUtils.List2JsonArray(orders, excludes);
+	}
 
 	@Override
 	public void addBid(long auctionId, float price) {
-		User user = new User();
+		/*User user = new User();
 		user.setId((long) 1);
-		System.out.println(auctionId + "   " + price);
+		System.out.println(auctionId + "   " + price);*/
+		
+		User user = (User)ServletActionContext.getRequest().getSession().getAttribute("user");
+		
+		System.out.println("userId : " + user.getId());
 		
 		Auction auction = auctionDao.findById(auctionId);
 		auction.setUser(user);
@@ -203,6 +251,5 @@ public class AuctionService extends BasicService implements IAuctionService{
 		
 		bidDao.save(bid);
 		// TODO Auto-generated method stub
-		
 	}
 }
